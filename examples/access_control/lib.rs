@@ -31,7 +31,7 @@ pub mod my_access_control {
 
     #[overrider(PSP34Burnable)]
     fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
-        access_control::InternalImpl::_check_role(self, MINTER, Some(self.env().caller()))?;
+        Internal::_check_role(self, MINTER, Some(self.env().caller()))?;
         PSP34BurnableImpl::burn(self, account, id)
     }
 
