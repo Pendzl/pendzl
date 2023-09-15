@@ -30,11 +30,12 @@ use openbrush::traits::{
 
 /// The idea of PSP22Wrapper is that it is PSP22 by itself.
 /// Wrapper only adds 2 additional methods for depositing and withdrawing.
-#[openbrush::wrapper]
-pub type PSP22WrapperRef = dyn PSP22Wrapper + PSP22;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP22WrapperRef = contract_ref!(PSP22Wrapper, DefaultEnvironment);
 
-#[openbrush::trait_definition]
-pub trait PSP22Wrapper: PSP22 {
+#[ink::trait_definition]
+pub trait PSP22Wrapper {
     /// Allow a user to deposit `amount` of underlying tokens and mint `amount` of the wrapped tokens to `account`
     #[ink(message)]
     fn deposit_for(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error>;

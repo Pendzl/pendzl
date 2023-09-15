@@ -30,10 +30,11 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP37BatchRef = dyn PSP37Batch;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP37BatchRef = contract_ref!(PSP37Batch, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP37Batch {
     #[ink(message)]
     fn batch_transfer(

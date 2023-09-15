@@ -28,10 +28,11 @@ use openbrush::traits::{
 };
 pub use openbrush::utils::crypto::Signature;
 
-#[openbrush::wrapper]
-pub type PSP22PermitRef = dyn PSP22Permit;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP22PermitRef = contract_ref!(PSP22Permit, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Permit {
     /// Permit allows `spender` to spend `value` tokens on behalf of `owner` with a signature
     ///

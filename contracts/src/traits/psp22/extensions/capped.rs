@@ -22,10 +22,13 @@
 /// Extension of [`PSP22`] that allows to set a limit on the total funding
 use openbrush::traits::Balance;
 
-#[openbrush::wrapper]
-pub type PSP22CappedRef = dyn PSP22Capped;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP22CappedRef = contract_ref!(PSP22Capped, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Capped {
     /// Returns the token's cap
     #[ink(message)]

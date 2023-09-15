@@ -1,6 +1,6 @@
 pub struct Env;
 
-impl ink_env::Environment for Env {
+impl ink::env::Environment for Env {
     const MAX_EVENT_TOPICS: usize = 3;
     type AccountId = [u8; 32];
     type Balance = u64;
@@ -17,15 +17,13 @@ mod base_psp22 {
     #[ink(storage)]
     #[derive(Storage)]
     pub struct PSP22Struct {
-        pub value: bool
+        pub value: bool,
     }
 
     impl PSP22Struct {
         #[ink(constructor)]
         pub fn new(value: bool) -> Self {
-            Self {
-                value
-            }
+            Self { value }
         }
 
         #[ink(message)]

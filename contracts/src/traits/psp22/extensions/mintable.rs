@@ -27,10 +27,11 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP22MintableRef = dyn PSP22Mintable;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP22MintableRef = contract_ref!(PSP22Mintable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Mintable {
     /// Minting `amount` tokens to the account.
     ///

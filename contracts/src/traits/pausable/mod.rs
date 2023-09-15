@@ -21,12 +21,15 @@
 
 pub use crate::traits::errors::PausableError;
 
-#[openbrush::wrapper]
-pub type PausableRef = dyn Pausable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PausableRef = contract_ref!(Pausable, DefaultEnvironment);
 
 /// Contract trait, which allows children to implement an emergency stop
 /// mechanism that an authorized account can trigger.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Pausable {
     /// Returns true if the contract is paused, and false otherwise.
     #[ink(message)]

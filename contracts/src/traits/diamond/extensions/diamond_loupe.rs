@@ -23,11 +23,14 @@ pub use crate::traits::diamond::*;
 use ink::prelude::vec::Vec;
 use openbrush::traits::Hash;
 
-#[openbrush::wrapper]
-pub type DiamondLoupeRef = dyn DiamondLoupe;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type DiamondLoupeRef = contract_ref!(DiamondLoupe, DefaultEnvironment);
 
 /// Trait which implements functions of Diamond Loupe to lookup the functionality of the diamond contract
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait DiamondLoupe {
     /// Returns code hashes of all registered facets along with their registered function selectors
     #[ink(message)]

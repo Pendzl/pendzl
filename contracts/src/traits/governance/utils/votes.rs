@@ -31,7 +31,7 @@ use openbrush::traits::{
 };
 
 /// Common interface for `PSP22Votes`, and other `Votes`-enabled contracts.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Votes {
     /// The amount of votes owned by `account`.
     #[ink(message)]
@@ -65,5 +65,8 @@ pub trait Votes {
     ) -> Result<(), GovernanceError>;
 }
 
-#[openbrush::wrapper]
-pub type VotesRef = dyn Votes;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type VotesRef = contract_ref!(Votes, DefaultEnvironment);

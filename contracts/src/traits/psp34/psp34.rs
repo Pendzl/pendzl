@@ -32,11 +32,14 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP34Ref = dyn PSP34;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP34Ref = contract_ref!(PSP34, DefaultEnvironment);
 
 /// Contract module which provides a basic implementation of non fungible token.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP34 {
     /// Returns the collection `Id` of the NFT token.
     ///

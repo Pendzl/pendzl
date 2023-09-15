@@ -29,10 +29,13 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type FlashLenderRef = dyn FlashLender;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type FlashLenderRef = contract_ref!(FlashLender, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait FlashLender {
     /// Call this function in `max_flashloan` function in `impl` block of FlashLender
     /// Maximum amount of `token` available to mint
@@ -64,10 +67,9 @@ pub trait FlashLender {
     ) -> Result<(), FlashLenderError>;
 }
 
-#[openbrush::wrapper]
-pub type FlashBorrowerRef = dyn FlashBorrower;
+pub type FlashBorrowerRef = contract_ref!(FlashBorrower, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait FlashBorrower {
     #[ink(message)]
     fn on_flashloan(

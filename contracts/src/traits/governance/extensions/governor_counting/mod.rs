@@ -30,7 +30,7 @@ pub use crate::traits::{
 use openbrush::traits::AccountId;
 
 /// Extension of `Governor` for simple, 3 options, vote counting.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait GovernorCounting {
     /// Returns `true` if the account has voted for the proposal, `false` otherwise
     #[ink(message)]
@@ -43,5 +43,8 @@ pub trait GovernorCounting {
     fn proposal_votes(&self, proposal_id: ProposalId) -> Result<ProposalVote, GovernanceError>;
 }
 
-#[openbrush::wrapper]
-pub type GovernorCountingRef = dyn GovernorCounting;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type GovernorCountingRef = contract_ref!(GovernorCounting, DefaultEnvironment);

@@ -4,10 +4,13 @@ use openbrush::{
     traits::AccountId,
 };
 
-#[openbrush::wrapper]
-pub type FlipperRef = dyn Flipper;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type FlipperRef = contract_ref!(Flipper, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Flipper {
     #[ink(message)]
     fn get_value(&self) -> bool;

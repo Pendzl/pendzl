@@ -20,15 +20,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::errors::PSP22TokenTimelockError;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
 use openbrush::traits::{
     AccountId,
     Timestamp,
 };
 
-#[openbrush::wrapper]
-pub type PSP22TokenTimelockRef = dyn PSP22TokenTimelock;
+pub type PSP22TokenTimelockRef = contract_ref!(PSP22TokenTimelock, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22TokenTimelock {
     /// Returns the token address
     #[ink(message)]

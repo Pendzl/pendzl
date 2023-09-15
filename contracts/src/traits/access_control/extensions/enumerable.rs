@@ -22,11 +22,14 @@
 pub use crate::traits::access_control::*;
 use openbrush::traits::AccountId;
 
-#[openbrush::wrapper]
-pub type AccessControlEnumerableRef = dyn AccessControlEnumerable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type AccessControlEnumerableRef = contract_ref!(AccessControlEnumerable, DefaultEnvironment);
 
 /// Extension of AccessControl that allows enumerating the members of each role.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait AccessControlEnumerable {
     /// Returns one of the accounts that have `role`.
     ///

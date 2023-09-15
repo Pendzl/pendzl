@@ -25,8 +25,11 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PaymentSplitterRef = dyn PaymentSplitter;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PaymentSplitterRef = contract_ref!(PaymentSplitter, DefaultEnvironment);
 
 /// This contract allows splitting native token payments among a group of accounts. The sender does not need to be aware
 /// that the native token will be split in this way, since it is handled transparently by the contract.
@@ -38,7 +41,7 @@ pub type PaymentSplitterRef = dyn PaymentSplitter;
 /// `PaymentSplitter` follows a pull payment model. This means that payments are not automatically forwarded to the
 /// accounts but kept in this contract, and the actual transfer is triggered as a separate step by calling the `release`
 /// function.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PaymentSplitter {
     /// Getter for the total shares held by payees.
     #[ink(message)]

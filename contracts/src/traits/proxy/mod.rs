@@ -25,14 +25,17 @@ pub use crate::traits::{
 };
 use openbrush::traits::Hash;
 
-#[openbrush::wrapper]
-pub type ProxyRef = dyn Proxy + Ownable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type ProxyRef = contract_ref!(Proxy, DefaultEnvironment);
 
 // Delegate calls were marked as a possible attack vector in ink!
 // Therefore the proxy and diamond contracts will be disabled within OpenBrush until this is reimplemented in ink! 4.
 
-#[openbrush::trait_definition]
-pub trait Proxy: Ownable {
+#[ink::trait_definition]
+pub trait Proxy {
     #[ink(message)]
     fn get_delegate_code(&self) -> Hash;
 

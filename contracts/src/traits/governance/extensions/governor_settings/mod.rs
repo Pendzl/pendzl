@@ -23,7 +23,7 @@
 pub use crate::traits::errors::GovernanceError;
 
 /// Extension of `Governor` for settings updatable through governance.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait GovernorSettings {
     /// Sets the voting delay
     #[ink(message)]
@@ -50,5 +50,8 @@ pub trait GovernorSettings {
     fn proposal_threshold(&self) -> u128;
 }
 
-#[openbrush::wrapper]
-pub type GovernorSettingsRef = dyn GovernorSettings;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type GovernorSettingsRef = contract_ref!(GovernorSettings, DefaultEnvironment);

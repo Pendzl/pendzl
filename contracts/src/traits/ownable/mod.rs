@@ -22,13 +22,16 @@
 pub use crate::traits::errors::OwnableError;
 use openbrush::traits::AccountId;
 
-#[openbrush::wrapper]
-pub type OwnableRef = dyn Ownable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type OwnableRef = contract_ref!(Ownable, DefaultEnvironment);
 
 /// Contract module which provides a basic access control mechanism, where
 /// there is an account (an owner) that can be granted exclusive access to
 /// specific functions.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Ownable {
     /// Returns the address of the current owner.
     #[ink(message)]

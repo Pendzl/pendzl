@@ -21,11 +21,14 @@
 
 use openbrush::traits::String;
 
-#[openbrush::wrapper]
-pub type PSP22MetadataRef = dyn PSP22Metadata;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP22MetadataRef = contract_ref!(PSP22Metadata, DefaultEnvironment);
 
 /// Trait that contains metadata
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Metadata {
     /// Returns the token name.
     #[ink(message)]

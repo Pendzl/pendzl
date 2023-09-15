@@ -24,10 +24,13 @@ pub use crate::traits::errors::PSP34Error;
 pub use crate::traits::psp34::Id;
 use openbrush::traits::AccountId;
 
-#[openbrush::wrapper]
-pub type PSP34BurnableRef = dyn PSP34Burnable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP34BurnableRef = contract_ref!(PSP34Burnable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP34Burnable {
     /// Destroys token with id equal to `id` from `account`
     ///

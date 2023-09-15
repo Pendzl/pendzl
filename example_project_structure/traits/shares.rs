@@ -10,8 +10,14 @@ use openbrush::contracts::traits::{
     },
 };
 
-#[openbrush::wrapper]
-pub type SharesRef = dyn PSP22 + PSP22Mintable + PSP22Burnable + PSP22Metadata + Ownable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type SharesRef = contract_ref!(
+    PSP22 + PSP22Mintable + PSP22Burnable + PSP22Metadata + Ownable,
+    DefaultEnvironment
+);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Shares: PSP22 + PSP22Mintable + PSP22Burnable + PSP22Metadata + Ownable {}

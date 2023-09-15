@@ -1,18 +1,11 @@
 [workspace]
-members = [
-    "contracts",
-    "lang",
-]
+members = ["contracts", "lang"]
 
-exclude = [
-    "examples",
-    "example_project_structure",
-    "mocks"
-]
+exclude = ["examples", "example_project_structure", "mocks"]
 
 [package]
 name = "openbrush"
-version= "4.0.0-beta.1"
+version = "4.0.0-beta.1"
 authors = ["Brushfam <green@727.ventures>"]
 edition = "2018"
 
@@ -28,8 +21,12 @@ include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
 ink = { version = "4.3.0", default-features = false }
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"] }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+] }
 
 openbrush_contracts = { version = "~4.0.0-beta.1", path = "contracts", default-features = false }
 openbrush_lang = { version = "~4.0.0-beta.1", path = "lang", default-features = false }
@@ -37,9 +34,7 @@ openbrush_lang = { version = "~4.0.0-beta.1", path = "lang", default-features = 
 [lib]
 name = "openbrush"
 path = "src/lib.rs"
-crate-type = [
-    "rlib",
-]
+crate-type = ["rlib"]
 
 [dev-dependencies]
 ink_env = "4.3.0"
@@ -68,7 +63,10 @@ timelock_controller = ["openbrush_contracts/timelock_controller"]
 proxy = ["openbrush_contracts/proxy"]
 diamond = ["openbrush_contracts/diamond"]
 upgradeable = ["openbrush_contracts/upgradeable"]
-governance = ["openbrush_contracts/governance", "openbrush_contracts/checkpoints"]
+governance = [
+    "openbrush_contracts/governance",
+    "openbrush_contracts/checkpoints",
+]
 crypto = ["openbrush_contracts/crypto"]
 nonces = ["openbrush_contracts/nonces"]
 checkpoints = ["openbrush_contracts/checkpoints"]
@@ -90,7 +88,7 @@ test-all = [
     "governance",
     "crypto",
     "nonces",
-    "checkpoints"
+    "checkpoints",
 ]
 
 [profile.release]

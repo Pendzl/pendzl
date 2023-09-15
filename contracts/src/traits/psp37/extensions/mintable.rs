@@ -30,10 +30,11 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP37MintableRef = dyn PSP37Mintable;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP37MintableRef = contract_ref!(PSP37Mintable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP37Mintable {
     /// Mints `amount` tokens of token type `id` to `to`
     ///

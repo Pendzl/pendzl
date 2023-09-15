@@ -6,8 +6,11 @@ use openbrush::contracts::traits::psp22::{
     *,
 };
 
-#[openbrush::wrapper]
-pub type StableCoinRef = dyn PSP22 + PSP22Metadata + PSP22Mintable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type StableCoinRef = contract_ref!(PSP22 + PSP22Metadata + PSP22Mintable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait StableCoin: PSP22 + PSP22Metadata + PSP22Mintable {}

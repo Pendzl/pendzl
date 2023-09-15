@@ -25,7 +25,7 @@ use openbrush::traits::Timestamp;
 
 /// Extension of `Governor` for voting weight extraction from an `PSP22Votes` token and a quorum expressed as a
 /// fraction of the total supply.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Quorum {
     /// Returns the current quorum numerator
     #[ink(message)]
@@ -48,5 +48,8 @@ pub trait Quorum {
     fn update_quorum_numerator(&mut self, numerator: u128) -> Result<(), GovernanceError>;
 }
 
-#[openbrush::wrapper]
-pub type QuorumRef = dyn Quorum;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type QuorumRef = contract_ref!(Quorum, DefaultEnvironment);

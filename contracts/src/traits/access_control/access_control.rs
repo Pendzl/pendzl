@@ -24,8 +24,11 @@ use openbrush::traits::AccountId;
 
 pub type RoleType = u32;
 
-#[openbrush::wrapper]
-pub type AccessControlRef = dyn AccessControl;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type AccessControlRef = contract_ref!(AccessControl, DefaultEnvironment);
 
 /// Contract module that allows children to implement role-based access
 /// control mechanisms. This is a lightweight version that doesn't allow enumerating role
@@ -34,7 +37,7 @@ pub type AccessControlRef = dyn AccessControl;
 /// Roles can be granted and revoked dynamically via the `grant_role` and
 /// `revoke_role`. functions. Each role has an associated admin role, and only
 /// accounts that have a role's admin role can call `grant_role` and `revoke_role`.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait AccessControl {
     /// Returns `true` if `account` has been granted `role`.
     #[ink(message)]

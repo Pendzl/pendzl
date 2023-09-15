@@ -46,7 +46,7 @@ use openbrush::traits::{
 /// - A counting module must implement `quorum`, `_quorum_reached`, `_vote_succeeded` and `_count_vote`}
 /// - A voting module must implement `_get_votes`
 /// - Additionally, `voting_period` must also be implemented
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Governor {
     /// Hashing function used to (re)build the proposal id from the proposal details.
     #[ink(message)]
@@ -143,5 +143,8 @@ pub trait Governor {
     fn relay(&mut self, target: AccountId, transaction: Transaction) -> Result<(), GovernanceError>;
 }
 
-#[openbrush::wrapper]
-pub type GovernorRef = dyn Governor;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type GovernorRef = contract_ref!(Governor, DefaultEnvironment);

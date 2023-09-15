@@ -24,10 +24,13 @@ pub use crate::traits::errors::PSP34Error;
 pub use crate::traits::psp34::Id;
 use openbrush::traits::AccountId;
 
-#[openbrush::wrapper]
-pub type PSP34MintableRef = dyn PSP34Mintable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP34MintableRef = contract_ref!(PSP34Mintable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP34Mintable {
     /// Mints a new token with `id`.
     ///

@@ -44,10 +44,13 @@ impl Default for LoanInfo {
     }
 }
 
-#[openbrush::wrapper]
-pub type LoanRef = dyn Loan + PSP34 + PSP34Metadata + Ownable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type LoanRef = contract_ref!(Loan + PSP34 + PSP34Metadata + Ownable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Loan: PSP34 + PSP34Metadata + Ownable {
     /// This function initalizes data of a loan and mint token inside it
     #[ink(message)]

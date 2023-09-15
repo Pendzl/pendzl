@@ -24,10 +24,13 @@ pub use crate::traits::errors::PSP34Error;
 pub use crate::traits::psp34::Id;
 use openbrush::traits::String;
 
-#[openbrush::wrapper]
-pub type PSP34MetadataRef = dyn PSP34Metadata;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP34MetadataRef = contract_ref!(PSP34Metadata, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP34Metadata {
     /// Returns the attribute of `id` for the given `key`.
     ///

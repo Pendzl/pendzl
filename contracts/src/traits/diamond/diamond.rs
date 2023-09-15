@@ -29,8 +29,11 @@ pub use crate::traits::{
 use ink::prelude::vec::Vec;
 use openbrush::traits::Hash;
 
-#[openbrush::wrapper]
-pub type DiamondRef = dyn Diamond;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type DiamondRef = contract_ref!(Diamond, DefaultEnvironment);
 
 pub type Selector = [u8; 4];
 
@@ -57,7 +60,7 @@ pub struct InitCall {
 }
 
 /// Trait to be implemented in the contract which holds the diamond storage
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Diamond {
     /// This function is used to add, replace and remove facets from the diamond
     ///

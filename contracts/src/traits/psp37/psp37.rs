@@ -32,13 +32,16 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP37Ref = dyn PSP37;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP37Ref = contract_ref!(PSP37, DefaultEnvironment);
 
 /// Contract module which provides a basic implementation of multiple token types.
 /// A single deployed contract may include any combination of fungible tokens,
 /// non-fungible tokens or other configurations (e.g. semi-fungible tokens).
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP37 {
     /// Returns the amount of tokens of token type `id` owned by `account`.
     ///

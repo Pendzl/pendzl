@@ -24,11 +24,14 @@
 pub use crate::traits::psp34::*;
 use openbrush::traits::AccountId;
 
-#[openbrush::wrapper]
-pub type PSP34EnumerableRef = dyn PSP34Enumerable + PSP34;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP34EnumerableRef = contract_ref!(PSP34Enumerable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
-pub trait PSP34Enumerable: PSP34 {
+#[ink::trait_definition]
+pub trait PSP34Enumerable {
     /// Returns a token `Id` owned by `owner` at a given `index` of its token list.
     /// Use along with `balance_of` to enumerate all of ``owner``'s tokens.
     ///

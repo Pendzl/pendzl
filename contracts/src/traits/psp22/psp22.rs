@@ -29,11 +29,14 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP22Ref = dyn PSP22;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP22Ref = contract_ref!(PSP22, DefaultEnvironment);
 
 /// Trait implemented by all PSP-22 respecting smart traits.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22 {
     /// Returns the total token supply.
     #[ink(message)]

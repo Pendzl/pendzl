@@ -15,13 +15,20 @@ use openbrush::{
 };
 
 /// Combination of all traits of the contract to simplify calls to the contract
-#[openbrush::wrapper]
-pub type LendingContractRef = dyn Lending + LendingPermissioned + AccessControl + Pausable;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type LendingContractRef = contract_ref!(
+    Lending + LendingPermissioned + AccessControl + Pausable,
+    DefaultEnvironment
+);
 
-#[openbrush::wrapper]
-pub type LendingRef = dyn Lending;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type LendingRef = contract_ref!(Lending, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Lending {
     /// This function will return the total amount of assets available to borrow
     /// along with amount of the same asset borrowed
@@ -120,10 +127,13 @@ pub trait Lending {
     fn liquidate_loan(&mut self, loan_id: Id) -> Result<(), LendingError>;
 }
 
-#[openbrush::wrapper]
-pub type LendingPermissionedRef = dyn LendingPermissioned;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type LendingPermissionedRef = contract_ref!(LendingPermissioned, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait LendingPermissioned {
     /// This function will allow an asset to be accepted by the contract
     /// It will also create the contracts for the shares token and lended reserves token

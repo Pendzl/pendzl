@@ -30,10 +30,11 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP37BurnableRef = dyn PSP37Burnable;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP37BurnableRef = contract_ref!(PSP37Burnable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP37Burnable {
     /// Destroys `amount` tokens of token type `id` from `from`
     ///

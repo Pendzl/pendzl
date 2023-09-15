@@ -35,8 +35,10 @@ use openbrush::traits::{
 };
 
 /// TimelockController is AccessControl itself, so creating wrapper for both traits
-#[openbrush::wrapper]
-pub type TimelockControllerRef = dyn TimelockController + AccessControl;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type TimelockControllerRef = contract_ref!(TimelockController, DefaultEnvironment);
+pub type AccessControlRef = contract_ref!(AccessControl, DefaultEnvironment);
 
 /// Contract module which acts as a time-locked controller. When set as the
 /// owner of an `Ownable` smart contract, it enforces a timelock on all
@@ -49,8 +51,8 @@ pub type TimelockControllerRef = dyn TimelockController + AccessControl;
 /// is in charge of proposing (resp executing) operations. A common use case is
 /// to position this `TimelockController` as the owner of a smart contract, with
 /// a multisig or a DAO as the sole proposer.
-#[openbrush::trait_definition]
-pub trait TimelockController: AccessControl {
+#[ink::trait_definition]
+pub trait TimelockController {
     /// Returns whether an id correspond to a registered operation. This
     /// includes both Pending, Ready and Done operations.
     #[ink(message)]

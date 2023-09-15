@@ -23,10 +23,11 @@
 pub use crate::traits::psp37::Id;
 use openbrush::traits::String;
 
-#[openbrush::wrapper]
-pub type PSP37MetadataRef = dyn PSP37Metadata;
+use ink::contract_ref;
+use ink::env::DefaultEnvironment;
+pub type PSP37MetadataRef = contract_ref!(PSP37Metadata, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP37Metadata {
     #[ink(message)]
     fn get_attribute(&self, id: Id, key: String) -> Option<String>;

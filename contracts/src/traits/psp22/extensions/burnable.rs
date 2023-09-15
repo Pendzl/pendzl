@@ -27,10 +27,13 @@ use openbrush::traits::{
     Balance,
 };
 
-#[openbrush::wrapper]
-pub type PSP22BurnableRef = dyn PSP22Burnable;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP22BurnableRef = contract_ref!(PSP22Burnable, DefaultEnvironment);
 
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Burnable {
     /// Destroys `amount` tokens from `account`, deducting from the caller's
     /// allowance.
