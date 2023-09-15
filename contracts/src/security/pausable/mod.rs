@@ -40,30 +40,6 @@ pub struct Data {
     pub paused: bool,
 }
 
-pub fn ensure_paused<T, E>(instance: &mut T) -> Result<(), E>
-where
-    T: Storage<Data>,
-    E: From<PausableError>,
-{
-    if !instance.data().paused.get_or_default() {
-        return Err(From::from(PausableError::NotPaused))
-    }
-
-    Ok(())
-}
-
-pub fn ensure_not_paused<T, E>(instance: &mut T) -> Result<(), E>
-where
-    T: Storage<Data>,
-    E: From<PausableError>,
-{
-    if instance.data().paused.get_or_default() {
-        return Err(From::from(PausableError::Paused))
-    }
-
-    Ok(())
-}
-
 pub trait PausableImpl: Storage<Data> + Internal {
     fn paused(&self) -> bool {
         self._paused()
@@ -90,6 +66,10 @@ pub trait Internal {
 
     /// Function which changes state to unpaused if paused and vice versa
     fn _switch_pause(&mut self) -> Result<(), PausableError>;
+
+    fn _ensure_paused(&self) -> Result<(), PausableError>;
+
+    fn _ensure_not_paused(&self) -> Result<(), PausableError>;
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
@@ -102,14 +82,14 @@ pub trait InternalImpl: Storage<Data> + Internal {
     }
 
     fn _pause(&mut self) -> Result<(), PausableError> {
-        ensure_not_paused(self)?;
+        Internal::_ensure_not_paused(self)?;
         self.data().paused.set(&true);
         Internal::_emit_paused_event(self, Self::env().caller());
         Ok(())
     }
 
     fn _unpause(&mut self) -> Result<(), PausableError> {
-        ensure_paused(self)?;
+        Internal::_ensure_paused(self)?;
         self.data().paused.set(&false);
         Internal::_emit_unpaused_event(self, Self::env().caller());
         Ok(())
@@ -121,5 +101,21 @@ pub trait InternalImpl: Storage<Data> + Internal {
         } else {
             Internal::_pause(self)
         }
+    }
+
+    fn _ensure_paused(&self) -> Result<(), PausableError> {
+        if !self.data().paused.get_or_default() {
+            return Err(From::from(PausableError::NotPaused))
+        }
+
+        Ok(())
+    }
+
+    fn _ensure_not_paused(&self) -> Result<(), PausableError> {
+        if self.data().paused.get_or_default() {
+            return Err(From::from(PausableError::Paused))
+        }
+
+        Ok(())
     }
 }

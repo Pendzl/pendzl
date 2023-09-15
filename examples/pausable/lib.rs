@@ -21,7 +21,7 @@ pub mod my_pausable {
 
         #[ink(message)]
         pub fn flip(&mut self) -> Result<(), PausableError> {
-            ensure_not_paused(self)?;
+            Internal::_ensure_not_paused(self)?;
             self.flipped = !self.flipped;
             Ok(())
         }

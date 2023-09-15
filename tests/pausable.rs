@@ -64,7 +64,7 @@ mod pausable {
 
         #[ink(message)]
         pub fn flip(&mut self) -> Result<bool, PausableError> {
-            ensure_paused(self)?;
+            self._ensure_paused()?;
             let previous = self.flipped;
             self.flipped = !previous;
 

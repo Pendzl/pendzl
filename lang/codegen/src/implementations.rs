@@ -2295,6 +2295,14 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
             fn _switch_pause(&mut self) -> Result<(), PausableError> {
                 pausable::InternalImpl::_switch_pause(self)
             }
+
+            fn _ensure_paused(&self) -> Result<(), PausableError> {
+                pausable::InternalImpl::_ensure_paused(self)
+            }
+
+            fn _ensure_not_paused(&self) -> Result<(), PausableError> {
+                pausable::InternalImpl::_ensure_not_paused(self)
+            }
         }
     ))
     .expect("Should parse");

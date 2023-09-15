@@ -81,7 +81,7 @@ pub trait LendingImpl: Storage<data::Data> + lending_internal::Internal + Storag
     }
 
     fn lend_assets(&mut self, asset_address: AccountId, amount: Balance) -> Result<(), LendingError> {
-        ensure_not_paused(self)?;
+        self._ensure_not_paused()?;
         // we will be using these often so we store them in variables
         let lender = Self::env().caller();
         let contract = Self::env().account_id();
@@ -117,7 +117,7 @@ pub trait LendingImpl: Storage<data::Data> + lending_internal::Internal + Storag
         collateral_address: AccountId,
         amount: Balance,
     ) -> Result<(), LendingError> {
-        ensure_not_paused(self)?;
+        self._ensure_not_paused()?;
         // we will be using these often so we store them in variables
         let borrower = Self::env().caller();
         let contract = Self::env().account_id();
