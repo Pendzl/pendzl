@@ -40,7 +40,7 @@ use syn::{
     ImplItemMethod,
 };
 
-const INSTANCE: &str = "__openbrush_instance_modifier";
+const INSTANCE: &str = "__pendzl_instance_modifier";
 
 pub fn generate(_attrs: TokenStream, _input: TokenStream) -> TokenStream {
     let modifiers: AttributeArgs = parse2(_attrs).unwrap();

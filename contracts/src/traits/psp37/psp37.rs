@@ -27,7 +27,7 @@ pub use crate::traits::{
     types::Id,
 };
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };

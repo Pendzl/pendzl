@@ -69,9 +69,9 @@ fn correct_storage_key() {
         }
     }
 
-    let expected_hash_psp22 = ConstHasher::hash("openbrush_lang::macros::contracts::psp22::Data");
+    let expected_hash_psp22 = ConstHasher::hash("pendzl_lang::macros::contracts::psp22::Data");
     assert_eq!(expected_hash_psp22, <contracts::psp22::Data as StorageKey>::KEY);
 
-    let expected_hash_psp34 = ConstHasher::hash("openbrush_lang::macros::contracts::psp34::Data");
+    let expected_hash_psp34 = ConstHasher::hash("pendzl_lang::macros::contracts::psp34::Data");
     assert_eq!(expected_hash_psp34, <contracts::psp34::Data as StorageKey>::KEY);
 }

@@ -31,7 +31,7 @@ use ink::{
     prelude::vec::Vec,
     primitives::AccountId,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     Balance,
     Storage,
     Timestamp,

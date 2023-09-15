@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(AccessControl, TimelockController)]
-#[openbrush::contract]
+#[pendzl::implementation(AccessControl, TimelockController)]
+#[pendzl::contract]
 pub mod my_timelock_controller {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -37,7 +37,7 @@ pub mod my_timelock_controller {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::timelock_controller::timelockcontroller_external::TimelockController;
+        use pendzl::contracts::timelock_controller::timelockcontroller_external::TimelockController;
 
         #[rustfmt::skip]
         use super::*;

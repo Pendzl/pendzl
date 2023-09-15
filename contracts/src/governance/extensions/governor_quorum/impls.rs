@@ -42,7 +42,7 @@ use crate::{
     },
     traits::governance::utils::votes::*,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     Storage,
     Timestamp,
 };
@@ -113,7 +113,7 @@ pub trait QuorumImpl:
     }
 
     /// Updates the quorum numerator
-    #[openbrush::modifiers(only_governance)]
+    #[pendzl::modifiers(only_governance)]
     fn update_quorum_numerator(&mut self, numerator: u128) -> Result<(), GovernanceError> {
         self._update_quorum_numerator(numerator)
     }

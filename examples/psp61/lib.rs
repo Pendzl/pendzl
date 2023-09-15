@@ -1,13 +1,13 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP61, Ownable, AccessControl, Pausable, Upgradeable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP61, Ownable, AccessControl, Pausable, Upgradeable)]
+#[pendzl::contract]
 pub mod my_psp61 {
     use ink::prelude::{
         vec,
         vec::Vec,
     };
-    use openbrush::{
+    use pendzl::{
         contracts::supported_interfaces,
         traits::{
             Storage,
@@ -77,7 +77,7 @@ pub mod my_psp61 {
     #[cfg(test)]
     mod tests {
         use super::Contract;
-        use openbrush::contracts::{
+        use pendzl::contracts::{
             access_control,
             ownable,
             pausable,

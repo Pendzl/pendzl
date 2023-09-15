@@ -1,6 +1,6 @@
 // Importing everything publicly from traits allows you to import every stuff related to lending
 // by one import
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         TypeGuard,
@@ -12,10 +12,10 @@ use openbrush::{
     },
 };
 
-pub const STORAGE_KEY: u32 = openbrush::storage_unique_key!(Data);
+pub const STORAGE_KEY: u32 = pendzl::storage_unique_key!(Data);
 
 #[derive(Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 /// define the struct with the data that our smart contract will be using
 /// this will isolate the logic of our smart contract from its storage
 pub struct Data {

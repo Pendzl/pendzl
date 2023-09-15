@@ -14,9 +14,7 @@ scale-info = { version = "2.6", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-openbrush = { path = "../../..", default-features = false, features = [
-    "psp22",
-] }
+pendzl = { path = "../../..", default-features = false, features = ["psp22"] }
 ecdsa = { version = "0.16.7", default-features = false, optional = true }
 
 [dev-dependencies]
@@ -39,7 +37,7 @@ std = [
     "scale/std",
     "scale-info/std",
     # These dependencies
-    "openbrush/std",
+    "pendzl/std",
 ]
 ink-as-dependency = []
 e2e-tests = ["ecdsa"]

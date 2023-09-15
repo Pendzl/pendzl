@@ -27,7 +27,7 @@ pub use crate::traits::{
     ownable::*,
 };
 use ink::prelude::vec::Vec;
-use openbrush::traits::Hash;
+use pendzl::traits::Hash;
 
 use ink::{
     contract_ref,

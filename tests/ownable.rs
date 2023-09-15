@@ -20,14 +20,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "ownable")]
-#[openbrush::implementation(Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable)]
+#[pendzl::contract]
 mod ownable {
     use ink::codegen::{
         EmitEvent,
         Env,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::change_caller,
         traits::Storage,
     };

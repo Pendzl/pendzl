@@ -1,11 +1,11 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-use openbrush::traits::Storage;
+use pendzl::traits::Storage;
 
 // we declare the data struct outside of the contract
-// since we need to expand the macros on it before the openbrush::contract macro expansion
+// since we need to expand the macros on it before the pendzl::contract macro expansion
 
-#[openbrush::accessors(AccessDataAccessors)]
+#[pendzl::accessors(AccessDataAccessors)]
 #[derive(Default, Debug)]
 #[ink::storage_item]
 pub struct AccessData {
@@ -18,10 +18,10 @@ pub struct AccessData {
     write_only: u32,
 }
 
-#[openbrush::contract]
+#[pendzl::contract]
 pub mod accessors_attr {
     use crate::*;
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Storage, Default)]

@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP34, PSP34Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Metadata)]
+#[pendzl::contract]
 pub mod my_psp34_metadata {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[derive(Default, Storage)]
     #[ink(storage)]
@@ -31,14 +31,14 @@ pub mod my_psp34_metadata {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp34::extensions::metadata::psp34metadata_external::PSP34Metadata;
+        use pendzl::contracts::psp34::extensions::metadata::psp34metadata_external::PSP34Metadata;
 
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
         use ink_e2e::build_message;
 
-        use openbrush::traits::String;
+        use pendzl::traits::String;
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 

@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// The minimum number of votes required for a proposal to be accepted
     #[lazy]

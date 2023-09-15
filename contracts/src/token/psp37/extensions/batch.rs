@@ -29,7 +29,7 @@ pub use crate::{
 };
 pub use batch::Internal as _;
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,

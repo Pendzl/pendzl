@@ -39,7 +39,7 @@ use syn::{
     ItemImpl,
 };
 
-pub(crate) const BRUSH_PREFIX: &str = "__openbrush";
+pub(crate) const BRUSH_PREFIX: &str = "__pendzl";
 
 pub(crate) struct MetaList {
     pub path: syn::Path,

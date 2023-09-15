@@ -3,7 +3,7 @@ pub use crate::{
     traits::upgradeable::*,
     upgradeable,
 };
-use openbrush::{
+use pendzl::{
     modifiers,
     traits::{
         Hash,

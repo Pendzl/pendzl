@@ -4,17 +4,17 @@ members = ["contracts", "lang"]
 exclude = ["examples", "example_project_structure", "mocks"]
 
 [package]
-name = "openbrush"
+name = "pendzl"
 version = "4.0.0-beta.1"
 authors = ["Brushfam <green@727.ventures>"]
 edition = "2018"
 
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/Brushfam/openbrush-contracts"
-documentation = "https://learn.brushfam.io/docs/openbrush"
+repository = "https://github.com/Brushfam/pendzl-contracts"
+documentation = "https://learn.brushfam.io/docs/pendzl"
 homepage = "https://brushfam.io/"
-description = "OpenBrush library for smart contract development on ink!."
+description = "pendzl library for smart contract development on ink!."
 keywords = ["wasm", "brushfam", "smart-contracts", "blockchain", "ink"]
 categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
@@ -28,11 +28,11 @@ scale-info = { version = "2.6", default-features = false, features = [
     "derive",
 ] }
 
-openbrush_contracts = { version = "~4.0.0-beta.1", path = "contracts", default-features = false }
-openbrush_lang = { version = "~4.0.0-beta.1", path = "lang", default-features = false }
+pendzl_contracts = { version = "~4.0.0-beta.1", path = "contracts", default-features = false }
+pendzl_lang = { version = "~4.0.0-beta.1", path = "lang", default-features = false }
 
 [lib]
-name = "openbrush"
+name = "pendzl"
 path = "src/lib.rs"
 crate-type = ["rlib"]
 
@@ -47,30 +47,27 @@ std = [
     "ink/std",
     "scale/std",
     "scale-info/std",
-    "openbrush_contracts/std",
-    "openbrush_lang/std",
+    "pendzl_contracts/std",
+    "pendzl_lang/std",
 ]
-psp22 = ["openbrush_contracts/psp22"]
-psp22_pallet = ["openbrush_contracts/psp22_pallet"]
-psp34 = ["openbrush_contracts/psp34"]
-psp37 = ["openbrush_contracts/psp37"]
-access_control = ["openbrush_contracts/access_control"]
-ownable = ["openbrush_contracts/ownable"]
-payment_splitter = ["openbrush_contracts/payment_splitter"]
-reentrancy_guard = ["openbrush_contracts/reentrancy_guard"]
-pausable = ["openbrush_contracts/pausable"]
-timelock_controller = ["openbrush_contracts/timelock_controller"]
-proxy = ["openbrush_contracts/proxy"]
-diamond = ["openbrush_contracts/diamond"]
-upgradeable = ["openbrush_contracts/upgradeable"]
-governance = [
-    "openbrush_contracts/governance",
-    "openbrush_contracts/checkpoints",
-]
-crypto = ["openbrush_contracts/crypto"]
-nonces = ["openbrush_contracts/nonces"]
-checkpoints = ["openbrush_contracts/checkpoints"]
-psp61 = ["openbrush_contracts/psp61"]
+psp22 = ["pendzl_contracts/psp22"]
+psp22_pallet = ["pendzl_contracts/psp22_pallet"]
+psp34 = ["pendzl_contracts/psp34"]
+psp37 = ["pendzl_contracts/psp37"]
+access_control = ["pendzl_contracts/access_control"]
+ownable = ["pendzl_contracts/ownable"]
+payment_splitter = ["pendzl_contracts/payment_splitter"]
+reentrancy_guard = ["pendzl_contracts/reentrancy_guard"]
+pausable = ["pendzl_contracts/pausable"]
+timelock_controller = ["pendzl_contracts/timelock_controller"]
+proxy = ["pendzl_contracts/proxy"]
+diamond = ["pendzl_contracts/diamond"]
+upgradeable = ["pendzl_contracts/upgradeable"]
+governance = ["pendzl_contracts/governance", "pendzl_contracts/checkpoints"]
+crypto = ["pendzl_contracts/crypto"]
+nonces = ["pendzl_contracts/nonces"]
+checkpoints = ["pendzl_contracts/checkpoints"]
+psp61 = ["pendzl_contracts/psp61"]
 
 test-all = [
     "psp22",

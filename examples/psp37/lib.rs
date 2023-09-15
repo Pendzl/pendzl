@@ -1,10 +1,10 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP37)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37)]
+#[pendzl::contract]
 pub mod my_psp37 {
     use ink::prelude::vec;
-    use openbrush::{
+    use pendzl::{
         storage::Mapping,
         traits::{
             Storage,
@@ -42,7 +42,7 @@ pub mod my_psp37 {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp37::psp37_external::PSP37;
+        use pendzl::contracts::psp37::psp37_external::PSP37;
 
         #[rustfmt::skip]
         use super::*;

@@ -21,8 +21,8 @@ pub use crate::{
 use ink::prelude::vec::Vec;
 pub use lending_internal::Internal as _;
 pub use lending_permissioned::LendingPermissionedImpl;
-pub use openbrush::contracts::traits::psp34::Id;
-use openbrush::{
+pub use pendzl::contracts::traits::psp34::Id;
+use pendzl::{
     contracts::{
         pausable::*,
         traits::psp22::PSP22Ref,

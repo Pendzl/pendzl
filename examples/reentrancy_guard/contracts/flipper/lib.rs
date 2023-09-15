@@ -2,14 +2,14 @@
 
 pub use self::my_flipper_guard::*;
 
-#[openbrush::contract]
+#[pendzl::contract]
 pub mod my_flipper_guard {
     use flipper::traits::{
         flip_on_me::*,
         flipper::*,
     };
     use ink::env::CallFlags;
-    use openbrush::{
+    use pendzl::{
         modifiers,
         traits::{
             DefaultEnv,
@@ -39,7 +39,7 @@ pub mod my_flipper_guard {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(non_reentrant)]
+        #[pendzl::modifiers(non_reentrant)]
         fn flip(&mut self) -> Result<(), ReentrancyGuardError> {
             self.value = !self.value;
             Ok(())

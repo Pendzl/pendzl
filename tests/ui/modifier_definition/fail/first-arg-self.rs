@@ -1,17 +1,16 @@
-#[openbrush::contract]
+#[pendzl::contract]
 mod base_psp22 {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Storage)]
     pub struct Contract {
         pub value: bool,
-        pub initialized: bool
+        pub initialized: bool,
     }
 
-
     impl Contract {
-        #[openbrush::modifier_definition]
+        #[pendzl::modifier_definition]
         fn once<BodyFn: FnOnce(&mut Contract)>(instance: &self, body: BodyFn) {
             assert!(!instance.initialized, "Contract is already initialized");
             body(instance);
@@ -22,7 +21,7 @@ mod base_psp22 {
         pub fn new(value: bool) -> Self {
             Self {
                 value,
-                initialized: false
+                initialized: false,
             }
         }
 

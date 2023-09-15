@@ -20,10 +20,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-pub use openbrush::utils::checkpoints::Checkpoints;
+pub use pendzl::utils::checkpoints::Checkpoints;
 
 #[derive(Debug, Default)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Stores the quorum numerator history of the governor
     #[lazy]

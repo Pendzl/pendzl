@@ -10,9 +10,9 @@ impl ink::env::Environment for Env {
     type ChainExtension = ();
 }
 
-#[openbrush::contract(env = super::Env)]
+#[pendzl::contract(env = super::Env)]
 mod base_psp22 {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Storage)]

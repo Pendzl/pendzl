@@ -23,10 +23,10 @@
 
 // use proc_macro::TokenStream;
 
-use openbrush_lang_codegen::{
+use pendzl_lang_codegen::{
     // trait_definition,
     // wrapper,
-    // accessors,
+    accessors,
     // contract,
     implementation,
     // modifier_definition,
@@ -36,11 +36,11 @@ use openbrush_lang_codegen::{
 };
 use proc_macro::TokenStream;
 
-/// Entry point for use OpenBrush's macros in ink! smart contracts.
+/// Entry point for use pendzl's macros in ink! smart contracts.
 ///
 /// # Description
 ///
-/// The macro consumes OpenBrush's macros to simplify the usage of the library.
+/// The macro consumes pendzl's macros to simplify the usage of the library.
 /// After consumption, it pastes ink! code and then ink!'s macros will be processed.
 ///
 /// This macro consumes impl section for traits defined with [`#[ink::trait_definition]`](`macro@crate::trait_definition`).
@@ -49,14 +49,14 @@ use proc_macro::TokenStream;
 //     contract::generate(_attrs.into(), ink_module.into()).into()
 // }
 
-/// Defines extensible trait in the scope of `openbrush::contract`.
+/// Defines extensible trait in the scope of `pendzl::contract`.
 /// It is a common rust trait, so you can use any features of rust inside of this trait.
 /// If this trait contains some methods marked with `#[ink(message)]` or `#[ink(constructor)]` attributes,
 /// this macro will extract these attributes and will put them into a separate trait
 /// (the separate trait only is used to call methods from the original trait), but the macro will not touch methods.
 ///
 /// This macro stores definition of the trait in a temporary file during build process.
-/// Based on this definition [`#[openbrush::contract]`](`macro@crate::contract`)
+/// Based on this definition [`#[pendzl::contract]`](`macro@crate::contract`)
 /// will generate implementation of additional traits.
 ///
 ///  ** Note ** The name of the trait defined via this macro must be unique for the whole project.
@@ -67,7 +67,7 @@ use proc_macro::TokenStream;
 /// ```
 /// mod doc {
 /// use ink::storage::Mapping;
-/// use openbrush::traits::{ AccountId, Balance, Storage };
+/// use pendzl::traits::{ AccountId, Balance, Storage };
 ///
 /// #[derive(Debug)]
 /// #[ink::storage_item]
@@ -103,12 +103,12 @@ use proc_macro::TokenStream;
 /// # Example: Implementation
 ///
 /// ```
-/// #[openbrush::contract]
+/// #[pendzl::contract]
 /// mod base_psp22 {
 ///     use ink::storage::traits::ManualKey;
 ///     use ink::storage::Mapping;
 ///     use ink::storage::Lazy;
-///     use openbrush::traits::Storage;
+///     use pendzl::traits::Storage;
 ///
 ///     const STORAGE_KEY_1: u32 = 101;
 ///     const STORAGE_KEY_2: u32 = 102;
@@ -190,7 +190,7 @@ use proc_macro::TokenStream;
 ///     initialized: bool,
 /// }
 ///
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn once<BodyFn: FnOnce(&mut Contract)>(instance: &mut Contract, body: BodyFn, _example_data1: u8, _example_data2: u8) {
 ///     assert!(!instance.initialized, "Contract is already initialized");
 ///     body(instance);
@@ -216,7 +216,7 @@ use proc_macro::TokenStream;
 ///
 /// Let's define next modifiers.
 /// ```
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn A<T>(instance: &T, body: impl FnOnce(&T) -> &'static str) -> &'static str {
 ///     println!("A before");
 ///     let result = body(instance);
@@ -224,7 +224,7 @@ use proc_macro::TokenStream;
 ///     result
 /// }
 ///
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn B<T, F: FnOnce(&T) -> &'static str>(instance: &T, body: F, data1: u8, data2: u8) -> &'static str {
 ///     println!("B before {} {}", data1, data2);
 ///     let result = body(instance);
@@ -232,7 +232,7 @@ use proc_macro::TokenStream;
 ///     result
 /// }
 ///
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn C<T, F>(instance: &T, body: F) -> &'static str
 ///     where F: FnOnce(&T) -> &'static str
 /// {
@@ -245,7 +245,7 @@ use proc_macro::TokenStream;
 /// struct Contract {}
 ///
 /// impl Contract {
-///     #[openbrush::modifiers(A, B(_data, 13), C)]
+///     #[pendzl::modifiers(A, B(_data, 13), C)]
 ///     fn main_logic(&self, _data: u8) -> &'static str {
 ///         return "Return value";
 ///     }
@@ -253,7 +253,7 @@ use proc_macro::TokenStream;
 /// ```
 /// The code above will be expanded into:
 /// ```
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn A<T>(instance: &T, body: impl FnOnce(&T) -> &'static str) -> &'static str {
 ///     println!("A before");
 ///     let result = body(instance);
@@ -261,7 +261,7 @@ use proc_macro::TokenStream;
 ///     result
 /// }
 ///
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn B<T, F: FnOnce(&T) -> &'static str>(instance: &T, body: F, data1: u8, data2: u8) -> &'static str {
 ///     println!("B before {} {}", data1, data2);
 ///     let result = body(instance);
@@ -269,7 +269,7 @@ use proc_macro::TokenStream;
 ///     result
 /// }
 ///
-/// #[openbrush::modifier_definition]
+/// #[pendzl::modifier_definition]
 /// fn C<T, F>(instance: &T, body: F) -> &'static str
 ///     where F: FnOnce(&T) -> &'static str
 /// {
@@ -283,16 +283,16 @@ use proc_macro::TokenStream;
 ///
 /// impl Contract {
 ///     fn main_logic(&self, _data: u8) -> &'static str {
-///         let mut __openbrush_body_2 = |__openbrush_instance_modifier: &Self| {
-///             let __openbrush_cloned_0 = _data.clone();
-///             let __openbrush_cloned_1 = 13.clone();
-///             let mut __openbrush_body_1 = |__openbrush_instance_modifier: &Self| {
-///                 let mut __openbrush_body_0 = |__openbrush_instance_modifier: &Self| return "Return value";;
-///                 C(__openbrush_instance_modifier, __openbrush_body_0)
+///         let mut __pendzl_body_2 = |__pendzl_instance_modifier: &Self| {
+///             let __pendzl_cloned_0 = _data.clone();
+///             let __pendzl_cloned_1 = 13.clone();
+///             let mut __pendzl_body_1 = |__pendzl_instance_modifier: &Self| {
+///                 let mut __pendzl_body_0 = |__pendzl_instance_modifier: &Self| return "Return value";;
+///                 C(__pendzl_instance_modifier, __pendzl_body_0)
 ///             };
-///             B(__openbrush_instance_modifier, __openbrush_body_1, __openbrush_cloned_0, __openbrush_cloned_1)
+///             B(__pendzl_instance_modifier, __pendzl_body_1, __pendzl_cloned_0, __pendzl_cloned_1)
 ///         };
-///         A(self, __openbrush_body_2)
+///         A(self, __pendzl_body_2)
 ///     }
 /// }
 /// ```
@@ -300,7 +300,7 @@ use proc_macro::TokenStream;
 /// # Example: Usage
 ///
 /// ```
-/// #[openbrush::contract]
+/// #[pendzl::contract]
 /// mod example {
 ///     #[ink(storage)]
 ///     pub struct Contract {
@@ -317,7 +317,7 @@ use proc_macro::TokenStream;
 ///         }
 ///     }
 ///
-///     #[openbrush::modifier_definition]
+///     #[pendzl::modifier_definition]
 ///     fn once(instance: &mut Contract, body: impl FnOnce(&mut Contract)) {
 ///         assert!(!instance.initialized, "Contract is already initialized");
 ///         body(instance);
@@ -331,7 +331,7 @@ use proc_macro::TokenStream;
 ///         }
 ///
 ///         #[ink(message)]
-///         #[openbrush::modifiers(once)]
+///         #[pendzl::modifiers(once)]
 ///         pub fn init(&mut self, owner: AccountId) {
 ///             self.owner = owner;
 ///         }
@@ -365,7 +365,7 @@ use proc_macro::TokenStream;
 ///
 /// ```should_panic
 /// {
-/// use openbrush::traits::AccountId;
+/// use pendzl::traits::AccountId;
 ///
 /// #[ink::trait_definition]
 /// pub trait Trait1 {
@@ -373,26 +373,23 @@ use proc_macro::TokenStream;
 ///     fn foo(&mut self) -> bool;
 /// }
 ///
-/// ///
+///
 /// #[ink::trait_definition]
 /// pub trait Trait2 {
 ///     #[ink(message)]
-///     fn bar(&mut self, callee: openbrush::traits::AccountId) {
+///     fn bar(&mut self, callee: pendzl::traits::AccountId) {
 ///         let foo_bool = Trait1Ref::foo(&callee);
 ///     }
 /// }
 ///
-/// ///
-/// // Example of explicit call
+// Example of explicit call
 /// let to: AccountId = [0; 32].into();
 /// let callee: AccountId = [0; 32].into();
 /// Trait1and2Ref::bar(&to, callee);
-///
-/// // Example of implicit call
+// Example of implicit call
 /// let to: &Trait1and2Ref = &to;
 /// to.bar(callee);
-///
-/// // Example how to get ink! call builder
+// Example how to get ink! call builder
 /// let to: AccountId = [0; 32].into();
 /// let builder_for_foo: ::ink::env::call::CallBuilder<_, _, _, _> = Trait1and2Ref::foo_builder(&to);
 /// let ink_result: Result<bool, ink::LangError> = builder_for_foo.try_invoke().unwrap();
@@ -403,9 +400,9 @@ use proc_macro::TokenStream;
 //     wrapper::generate(attrs.into(), input.into()).into()
 // }
 
-/// The macro implements `openbrush::traits::Storage`
+/// The macro implements `pendzl::traits::Storage`
 /// trait for each field marked by `#[storage_field]` attribute,
-/// so it will be possible to access them via `self.data::<Type>()` method. It is mostly used for OpenBrush
+/// so it will be possible to access them via `self.data::<Type>()` method. It is mostly used for pendzl
 /// to understand which fields should be accessed by traits.
 ///
 /// # Example
@@ -422,106 +419,105 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
     storage_derive::storage_derive(item.into()).into()
 }
 
-// synstructure::decl_attribute!(
-//     [accessors] =>
-// / Macro that automatically implements accessors like get/set for struct fields, that implements `scale::Encode`
-// / and `scale::Decode` traits. You should specify the getters trait naming in the macro's attribute.
-// / Also, fields that you want getters to be generated, should be marked by `#[get]` attribute.
-// / Fields, that you want setters to be generated, should be marked by `#[set]` attribute.
-// / The name of the accessor message will be concatenation of `get/set` + `_` + field's name.
-// /
-// / # Example:
-// / ```skip
-// /
-// / use openbrush::traits::Storage;
-// /
-// / #[openbrush::accessors(SomeStructGetters)]
-// / #[derive(Default)]
-// / #[ink::storage_item]
-// / pub struct SomeStruct {
-// /     #[get]
-// /     a: u32,
-// /     b: u32,
-// /     #[set]
-// /     c: u32,
-// / }
-// /
-// / #[openbrush::contract]
-// / pub mod contract {
-// /     use crate::*;
-// /     use openbrush::traits::Storage;
-// /
-// /     #[ink(storage)]
-// /     #[derive(Storage, Default)]
-// /     pub struct Contract {
-// /         #[storage_field]
-// /         some_struct: SomeStruct,
-// /     }
-// /
-// /     impl SomeStructGetters for Contract {}
-// /
-// /     impl Contract {
-// /         #[ink(constructor)]
-// /         pub fn new() -> Self {
-// /             Self::default()
-// /         }
-// /     }
-// / }
-// / ```
-//     accessors::accessors
-// );
+synstructure::decl_attribute!(
+    [accessors] =>
+    ////Macro that automatically implements accessors like get/set for struct fields, that implements `scale::Encode`
+    ////and `scale::Decode` traits. You should specify the getters trait naming in the macro's attribute.
+    ////Also, fields that you want getters to be generated, should be marked by `#[get]` attribute.
+    ////Fields, that you want setters to be generated, should be marked by `#[set]` attribute.
+    ////The name of the accessor message will be concatenation of `get/set` + `_` + field's name.
+    ////
+    ////# Example:
+    ////```skip
+    ////
+    ////use pendzl::traits::Storage;
+    ////
+    ////#[pendzl::accessors(SomeStructGetters)]
+    ////#[derive(Default)]
+    ////#[ink::storage_item]
+    ////pub struct SomeStruct {
+    ////    #[get]
+    ////    a: u32,
+    ////    b: u32,
+    ////    #[set]
+    ////    c: u32,
+    ////}
+    ////
+    ////#[pendzl::contract]
+    ////pub mod contract {
+    ////    use crate::*;
+    ////    use pendzl::traits::Storage;
+    ////
+    ////    #[ink(storage)]
+    ////    #[derive(Storage, Default)]
+    ////    pub struct Contract {
+    ////        #[storage_field]
+    ////        some_struct: SomeStruct,
+    ////    }
+    ////
+    ////    impl SomeStructGetters for Contract {}
+    ////
+    ////    impl Contract {
+    ////        #[ink(constructor)]
+    ////        pub fn new() -> Self {
+    ////            Self::default()
+    ////        }
+    ////    }
+    ////}
+    ////```
+    accessors::accessors
+);
 
-// / This macro implements the default traits defined in OpenBrush, while also allowing users
-// / to override them with `#[overrider]` or `#[default_impl]` attributes. `#[overrider]` is used when
-// / you want to change the behavior of the method by your implementation. `#[default_impl]` is used when
-// / you want to keep the default implementation from OpenBrush, but you want to attach some modifiers to
-// / that function.
-// /
-// / # Example
-// /
-// / ```skip
-// / #[openbrush::implementation(PSP22)]
-// / #[openbrush::contract]
-// / pub mod MyInkToken {
-// /     use openbrush::traits::Storage;
-// /
-// /     #[ink(storage)]
-// /     #[derive(Storage)]
-// /     pub struct MyInkToken {
-// /         #[storage_field]
-// /         psp22: psp22::Data
-// /     }
-// /
-// /     // this will override a function from psp22::Internal
-// /     #[overrider(psp22::Internal)]
-// /     fn _before_token_transfer(
-// /         &mut self,
-// /         from: Option<&AccountId>,
-// /         to: Option<&AccountId>,
-// /         amount: &Balance,
-// /     ) -> Result<(), PSP22Error> {
-// /         // here we can change the behavior before token transfer
-// /     }
-// /
-// /     // this will override a function from PSP22
-// /     #[overrider(PSP22)]
-// /     fn balance_of(&self, owner: AccountId) -> Balance {
-// /          // here we can change the behavior of balance_of
-// /     }
-// /
-// /     // this will keep the default implementation of this method,
-// /     // however, it will add the modifier (and possibly other attributes defined by user)
-// /     // to the function. In this case, we don't even have to worry about the attributes and
-// /     // return type of the function
-// /     #[default_impl(PSP22)]
-// /     #[modifiers(...)]
-// /     fn transfer_from() {}
-// /
-// /     impl Contract {
-// /         // we can add constructor and other messages
-// /     }
-// / }
-// / ```
+////This macro implements the default traits defined in pendzl, while also allowing users
+////to override them with `#[overrider]` or `#[default_impl]` attributes. `#[overrider]` is used when
+////you want to change the behavior of the method by your implementation. `#[default_impl]` is used when
+////you want to keep the default implementation from pendzl, but you want to attach some modifiers to
+////that function.
+////# Example
+////
+////```skip
+////#[pendzl::implementation(PSP22)]
+////#[pendzl::contract]
+////pub mod MyInkToken {
+////    use pendzl::traits::Storage;
+////
+////    #[ink(storage)]
+////    #[derive(Storage)]
+////    pub struct MyInkToken {
+////        #[storage_field]
+////        psp22: psp22::Data
+////    }
+////
+////    // this will override a function from psp22::Internal
+////    #[overrider(psp22::Internal)]
+////    fn _before_token_transfer(
+////        &mut self,
+////        from: Option<&AccountId>,
+////        to: Option<&AccountId>,
+////        amount: &Balance,
+////    ) -> Result<(), PSP22Error> {
+////        // here we can change the behavior before token transfer
+////    }
+////
+////    // this will override a function from PSP22
+////    #[overrider(PSP22)]
+////    fn balance_of(&self, owner: AccountId) -> Balance {
+////         // here we can change the behavior of balance_of
+////    }
+////
+////    // this will keep the default implementation of this method,
+////    // however, it will add the modifier (and possibly other attributes defined by user)
+////    // to the function. In this case, we don't even have to worry about the attributes and
+////    // return type of the function
+////    #[default_impl(PSP22)]
+////    #[modifiers(...)]
+////    fn transfer_from() {}
+////
+////    impl Contract {
+////        // we can add constructor and other messages
+////    }
+////}
+////```
 #[proc_macro_attribute]
 pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
     implementation::generate(attrs.into(), ink_module.into()).into()
@@ -537,7 +533,7 @@ synstructure::decl_attribute!(
     ///
     /// # Example
     /// ```skip
-    /// #[openbrush::storage_item]
+    /// #[pendzl::storage_item]
     /// pub struct MyStruct {
     ///    a: u32,
     ///    b: u32,
@@ -547,7 +543,7 @@ synstructure::decl_attribute!(
     /// # Example
     ///
     /// ```skip
-    /// #[openbrush::storage_item]
+    /// #[pendzl::storage_item]
     /// pub struct MyStruct {
     ///     #[lazy]
     ///     a: u32,

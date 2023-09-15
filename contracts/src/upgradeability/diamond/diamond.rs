@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // Delegate calls were marked as a possible attack vector in ink!
-// Therefore the proxy and diamond contracts will be disabled within OpenBrush until this is reimplemented in ink! 4.
+// Therefore the proxy and diamond contracts will be disabled within pendzl until this is reimplemented in ink! 4.
 
 pub use crate::{
     diamond,
@@ -42,7 +42,8 @@ use ink::{
     prelude::vec::Vec,
     primitives::Clear,
 };
-use openbrush::{
+pub use ownable::Internal as _;
+use pendzl::{
     modifiers,
     storage::Mapping,
     traits::{
@@ -50,11 +51,10 @@ use openbrush::{
         Storage,
     },
 };
-pub use ownable::Internal as _;
 
 // TODO: Add support of Erc165
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub selector_to_hash: Mapping<Selector, Hash>,
     // Facet mapped to all functions it supports

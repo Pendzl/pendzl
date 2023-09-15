@@ -1,17 +1,26 @@
 [package]
 name = "my_ownable"
-version= "4.0.0-beta.1"
-authors = ["Brushfam <green@727.ventures>"]
+version = "4.0.0-beta.1"
+authors = [
+    "Green Baneling <unknown>, Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.3.0", default-features = false}
+ink = { version = "4.3.0", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
 
 # These dependencies
-openbrush = { path = "../..", default-features = false, features = ["ownable", "psp37"] }
+pendzl = { path = "../..", default-features = false, features = [
+    "ownable",
+    "psp37",
+] }
 
 [dev-dependencies]
 ink_e2e = "4.3.0"
@@ -29,7 +38,7 @@ std = [
     "scale/std",
     "scale-info/std",
     # These dependencies
-    "openbrush/std",
+    "pendzl/std",
 ]
 ink-as-dependency = []
 e2e-tests = []

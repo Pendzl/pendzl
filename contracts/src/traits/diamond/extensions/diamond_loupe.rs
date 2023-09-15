@@ -21,7 +21,7 @@
 
 pub use crate::traits::diamond::*;
 use ink::prelude::vec::Vec;
-use openbrush::traits::Hash;
+use pendzl::traits::Hash;
 
 use ink::{
     contract_ref,

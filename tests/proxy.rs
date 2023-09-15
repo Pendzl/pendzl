@@ -20,15 +20,15 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "proxy")]
-#[openbrush::implementation(Proxy, Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(Proxy, Ownable)]
+#[pendzl::contract]
 mod proxy {
     use core::convert::TryFrom;
     use ink::codegen::{
         EmitEvent,
         Env,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::change_caller,
         traits::Storage,
     };

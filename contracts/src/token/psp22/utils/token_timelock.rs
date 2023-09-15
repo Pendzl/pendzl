@@ -29,10 +29,17 @@ pub use crate::{
     },
 };
 use ink::{
-    env::CallFlags,
+    env::{
+        call::{
+            build_call,
+            ExecutionInput,
+        },
+        CallFlags,
+        DefaultEnvironment,
+    },
     prelude::vec::Vec,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,
@@ -50,7 +57,7 @@ pub use token_timelock::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     token: Option<AccountId>,
@@ -113,8 +120,16 @@ pub trait InternalImpl: Storage<Data> + Internal {
     fn _withdraw(&mut self, amount: Balance) -> Result<(), PSP22TokenTimelockError> {
         if let Some(beneficiary) = Internal::_beneficiary(self) {
             if let Some(token) = Internal::_token(self) {
-                PSP22Ref::transfer_builder(&token, beneficiary, amount, Vec::<u8>::new())
+                let call_result = build_call::<DefaultEnvironment>()
+                    .call(token)
                     .call_flags(CallFlags::default().set_allow_reentry(true))
+                    .exec_input(
+                        ExecutionInput::new(ink::env::call::Selector::new(ink::selector_bytes!("PSP22::transfer")))
+                            .push_arg(beneficiary)
+                            .push_arg(amount)
+                            .push_arg(Vec::<u8>::new()),
+                    )
+                    .returns::<Result<(), PSP22Error>>()
                     .try_invoke()
                     .unwrap()
                     .unwrap()?;
@@ -129,7 +144,8 @@ pub trait InternalImpl: Storage<Data> + Internal {
 
     fn _contract_balance(&mut self) -> Balance {
         if let Some(token) = Internal::_token(self) {
-            PSP22Ref::balance_of(&token, Self::env().account_id())
+            let psp22: PSP22Ref = token.into();
+            psp22.balance_of(Self::env().account_id())
         } else {
             0
         }

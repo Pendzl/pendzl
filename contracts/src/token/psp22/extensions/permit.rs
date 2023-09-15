@@ -28,7 +28,7 @@ pub use crate::{
         *,
     },
 };
-use openbrush::{
+use pendzl::{
     traits::{
         AccountId,
         Balance,
@@ -37,7 +37,7 @@ use openbrush::{
     utils::crypto::hash_blake2b256,
 };
 
-pub use openbrush::utils::crypto::Signature;
+pub use pendzl::utils::crypto::Signature;
 
 pub use psp22::{
     Internal as _,
@@ -47,7 +47,7 @@ pub use psp22::{
 use scale::Encode;
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub cached_domain_separator: [u8; 32],

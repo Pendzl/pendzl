@@ -35,7 +35,7 @@ pub use crate::{
         types::Signature,
     },
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,

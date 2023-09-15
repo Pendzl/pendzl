@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22, PSP22Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Metadata)]
+#[pendzl::contract]
 pub mod my_psp22 {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -32,7 +32,7 @@ pub mod my_psp22 {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp22::extensions::metadata::psp22metadata_external::PSP22Metadata;
+        use pendzl::contracts::psp22::extensions::metadata::psp22metadata_external::PSP22Metadata;
 
         #[rustfmt::skip]
         use super::*;

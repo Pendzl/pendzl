@@ -1,16 +1,20 @@
 [package]
 name = "accessors_attr"
-version= "4.0.0-beta.1"
+version = "4.0.0-beta.1"
 authors = ["Brushfam <green@727.ventures>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.2.0", default-features = false}
+ink = { version = "4.2.0", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
 
-openbrush = { path = "../..", default-features = false }
+pendzl = { path = "../..", default-features = false }
 
 [dev-dependencies]
 ink_e2e = "4.2"
@@ -23,12 +27,7 @@ path = "lib.rs"
 
 [features]
 default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info/std",
-    "openbrush/std",
-]
+std = ["ink/std", "scale/std", "scale-info/std", "pendzl/std"]
 ink-as-dependency = []
 e2e-tests = []
 

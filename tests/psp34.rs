@@ -20,8 +20,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp34")]
-#[openbrush::implementation(PSP34)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34)]
+#[pendzl::contract]
 mod psp34 {
     use ink::{
         codegen::{
@@ -30,7 +30,7 @@ mod psp34 {
         },
         env::DefaultEnvironment,
     };
-    use openbrush::{
+    use pendzl::{
         contracts::psp34::*,
         test_utils::{
             accounts,

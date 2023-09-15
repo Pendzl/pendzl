@@ -1,17 +1,23 @@
 [package]
 name = "my_governor"
-version= "4.0.0-beta.1"
+version = "4.0.0-beta.1"
 authors = ["Brushfam <varex.silver@727.ventures>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.2.1", default-features = false}
+ink = { version = "4.2.1", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
 
 # These dependencies
-openbrush = { path = "../../..", default-features = false, features = ["governance"] }
+pendzl = { path = "../../..", default-features = false, features = [
+    "governance",
+] }
 
 [dev-dependencies]
 ink_e2e = "4.2.1"
@@ -27,12 +33,12 @@ std = [
     "scale/std",
     "scale-info/std",
     # These dependencies
-    "openbrush/std",
+    "pendzl/std",
 ]
 ink-as-dependency = []
 e2e-tests = []
 
 [profile.dev]
 codegen-units = 16
-overflow-checks = false     # Disable integer overflow checks.
-lto = false                 # Enable full link-time optimization.
+overflow-checks = false # Disable integer overflow checks.
+lto = false             # Enable full link-time optimization.

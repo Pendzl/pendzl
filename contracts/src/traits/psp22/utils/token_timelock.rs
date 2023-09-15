@@ -24,7 +24,7 @@ use ink::{
     contract_ref,
     env::DefaultEnvironment,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Timestamp,
 };

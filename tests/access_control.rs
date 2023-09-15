@@ -20,12 +20,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "access_control")]
-#[openbrush::implementation(AccessControl)]
-#[openbrush::contract]
+#[pendzl::implementation(AccessControl)]
+#[pendzl::contract]
 mod access_control {
     use ::ink::env::DefaultEnvironment;
     use ink::env::test::DefaultAccounts;
-    use openbrush::{
+    use pendzl::{
         contracts::access_control::*,
         test_utils::{
             accounts,

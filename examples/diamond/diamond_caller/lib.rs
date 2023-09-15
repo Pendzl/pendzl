@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::contract]
+#[pendzl::contract]
 pub mod diamond_caller {
     use ink::prelude::vec::Vec;
-    use openbrush::contracts::psp22::*;
+    use pendzl::contracts::psp22::*;
 
     #[ink(storage)]
     #[derive(Default)]

@@ -20,14 +20,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22)]
+#[pendzl::contract]
 mod psp22_test {
     use ink::codegen::{
         EmitEvent,
         Env,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::*,
         traits::{
             Storage,

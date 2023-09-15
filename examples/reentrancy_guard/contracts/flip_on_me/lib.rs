@@ -2,14 +2,14 @@
 
 pub use self::flip_on_me::*;
 
-#[openbrush::contract]
+#[pendzl::contract]
 pub mod flip_on_me {
     use flipper::traits::{
         flip_on_me::*,
         flipper::*,
     };
     use ink::env::CallFlags;
-    use openbrush::traits::DefaultEnv;
+    use pendzl::traits::DefaultEnv;
 
     #[ink(storage)]
     #[derive(Default)]

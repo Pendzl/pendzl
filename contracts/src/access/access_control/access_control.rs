@@ -24,7 +24,7 @@ pub use crate::{
     traits::access_control::*,
 };
 pub use access_control::Internal as _;
-use openbrush::{
+use pendzl::{
     modifier_definition,
     modifiers,
     storage::{
@@ -40,7 +40,7 @@ use openbrush::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub admin_roles: Mapping<RoleType, RoleType, ValueGuard<RoleType>>,
     pub members: Mapping<(RoleType, Option<AccountId>), (), MembersKey>,

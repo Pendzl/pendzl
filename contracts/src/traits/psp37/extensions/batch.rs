@@ -25,13 +25,15 @@ use crate::traits::psp37::{
     PSP37Error,
 };
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };
 
-use ink::contract_ref;
-use ink::env::DefaultEnvironment;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
 pub type PSP37BatchRef = contract_ref!(PSP37Batch, DefaultEnvironment);
 
 #[ink::trait_definition]

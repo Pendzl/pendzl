@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP34, PSP34Mintable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Mintable)]
+#[pendzl::contract]
 pub mod my_psp34_mintable {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[derive(Default, Storage)]
     #[ink(storage)]
@@ -22,7 +22,7 @@ pub mod my_psp34_mintable {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp34::{
+        use pendzl::contracts::psp34::{
             extensions::mintable::psp34mintable_external::PSP34Mintable,
             psp34_external::PSP34,
         };

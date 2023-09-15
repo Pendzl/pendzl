@@ -28,13 +28,13 @@ pub use crate::{
     },
 };
 pub use ink::env::DefaultEnvironment;
-use openbrush::traits::Storage;
-pub use openbrush::traits::String;
 pub use pallet_assets_chain_extension::traits::{
     Error,
     Origin,
     PalletAssets,
 };
+use pendzl::traits::Storage;
+pub use pendzl::traits::String;
 pub use psp22_pallet::{
     Internal as _,
     InternalImpl as _,

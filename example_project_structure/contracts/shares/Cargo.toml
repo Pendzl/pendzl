@@ -1,18 +1,25 @@
 [package]
 name = "shares_contract"
-version= "4.0.0-beta.1"
+version = "4.0.0-beta.1"
 authors = ["Brushfam <dominik.krizo@727.ventures>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.3.0", default-features = false}
+ink = { version = "4.3.0", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
 
 # These dependencies
 lending_project = { path = "../..", default-features = false }
-openbrush = { path = "../../..", default-features = false, features = ["ownable", "psp22"] }
+pendzl = { path = "../../..", default-features = false, features = [
+    "ownable",
+    "psp22",
+] }
 
 [lib]
 name = "shares_contract"
@@ -26,7 +33,7 @@ std = [
     "scale-info/std",
     # These dependencies
     "lending_project/std",
-    "openbrush/std",
+    "pendzl/std",
 ]
 ink-as-dependency = []
 

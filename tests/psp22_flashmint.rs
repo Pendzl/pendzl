@@ -20,11 +20,11 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22, Flashmint)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, Flashmint)]
+#[pendzl::contract]
 mod psp22_flashmint {
     use ink::codegen::Env;
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::Storage,
     };

@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /// Extension of [`PSP22`] that allows to set a limit on the total funding
-use openbrush::traits::Balance;
+use pendzl::traits::Balance;
 
 use ink::{
     contract_ref,

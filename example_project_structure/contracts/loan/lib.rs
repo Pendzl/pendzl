@@ -1,11 +1,11 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 /// This contract will represent the loan of a user
-#[openbrush::implementation(PSP34, Ownable, PSP34Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, Ownable, PSP34Metadata)]
+#[pendzl::contract]
 pub mod loan {
     use lending_project::traits::loan::*;
-    use openbrush::{
+    use pendzl::{
         modifiers,
         storage::Mapping,
         traits::{

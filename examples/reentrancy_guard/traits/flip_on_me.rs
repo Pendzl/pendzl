@@ -1,5 +1,5 @@
-pub use openbrush::contracts::reentrancy_guard::*;
-use openbrush::traits::AccountId;
+pub use pendzl::contracts::reentrancy_guard::*;
+use pendzl::traits::AccountId;
 
 use ink::{
     contract_ref,

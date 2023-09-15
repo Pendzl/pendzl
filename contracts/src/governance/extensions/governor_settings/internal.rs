@@ -27,7 +27,7 @@ use crate::{
     },
     traits::errors::GovernanceError,
 };
-use openbrush::traits::Storage;
+use pendzl::traits::Storage;
 
 pub trait GovernorSettingsInternal: Storage<Data> + GovernorSettingsEvents {
     /// Sets the voting delay

@@ -22,7 +22,7 @@
 /// Extension of [`PSP34`] that exposes the mint function
 pub use crate::traits::errors::PSP34Error;
 pub use crate::traits::psp34::Id;
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 use ink::{
     contract_ref,

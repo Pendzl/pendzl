@@ -12,19 +12,19 @@
 <br/>
 So, in other words,  <a href="https://patron.works/">Patron</a> is an all-in-one contracts platform, which allows you to build and verify ink! smart contracts inside of an isolated environment, explore contract verification details.
 
-![OpenBrush](https://user-images.githubusercontent.com/88630083/218825486-accc2d8c-bc5c-4b92-a278-a5b9009fd6f5.png)
+![pendzl](https://user-images.githubusercontent.com/88630083/218825486-accc2d8c-bc5c-4b92-a278-a5b9009fd6f5.png)
 
-[![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](https://Brushfam.github.io/openbrush-contracts)
-[![telegram chat](https://img.shields.io/badge/Telegram-blue.svg?style=flat-square)](https://t.me/openbrush)
+[![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](https://Brushfam.github.io/pendzl-contracts)
+[![telegram chat](https://img.shields.io/badge/Telegram-blue.svg?style=flat-square)](https://t.me/pendzl)
 [![element chat](https://img.shields.io/badge/Element-green.svg?style=flat-square)](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=matrix.parity.io)
 [![discord chat](https://img.shields.io/badge/Discord-purple.svg?style=flat-square)](https://discord.com/invite/EARg6RCThP)
 
-OpenBrush is maintained by the [Brushfam](https://www.brushfam.io/) team, and was created to make ink! development faster, safer and easier. We plan to integrate most of the features OpenBrush into ink!. OpenBrush provides documentation with FAQ section.
+pendzl is maintained by the [Brushfam](https://www.brushfam.io/) team, and was created to make ink! development faster, safer and easier. We plan to integrate most of the features pendzl into ink!. pendzl provides documentation with FAQ section.
 
-If you have any questions regarding OpenBrush, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers, or ask questions regarding ink! development on Element, Discord, or Telegram OpenBrush channels by the links above.
+If you have any questions regarding pendzl, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers, or ask questions regarding ink! development on Element, Discord, or Telegram pendzl channels by the links above.
 
 ## Summary
-**OpenBrush is a library for smart contract development on ink!.**
+**pendzl is a library for smart contract development on ink!.**
 
 Why use this library?
 - To make contracts **interoperable** to do **safe** cross-contracts calls (by having the same functions signature among every contracts)
@@ -68,7 +68,7 @@ pub trait Governance: AccessControl {
 
 ### Modifiers
 
-Solidity smart contracts provides modifiers to restrain function call to certain pre-defined parameters. OpenBrush provides attribute macros to use standardised modifiers.
+Solidity smart contracts provides modifiers to restrain function call to certain pre-defined parameters. pendzl provides attribute macros to use standardised modifiers.
 You can use our useful contracts to use as modifiers, or define your own modifiers.
 
 ```rust
@@ -100,26 +100,26 @@ pub trait Trait1 {
 
 {
     // It should be `AccountId` of contract in the network that implements `Trait1` trait
-    let callee: openbrush::traits::AccountId = [1; 32].into();
+    let callee: pendzl::traits::AccountId = [1; 32].into();
     // This code will execute a cross contract call to `callee` contract
     let result_of_foo: bool = Trait1Ref::foo(&callee);
 }
 ```
 
-> **Note**: The trait should be defined with `openbrush::trait_definition`.
+> **Note**: The trait should be defined with `pendzl::trait_definition`.
 The callee contract should implement that trait.
 
 ### Additional stuff
 
-- You can use [`test_utils`](https://github.com/Brushfam/openbrush-contracts/blob/main/lang/src/test_utils.rs#L39)
+- You can use [`test_utils`](https://github.com/Brushfam/pendzl-contracts/blob/main/lang/src/test_utils.rs#L39)
 to simplify unit testing of you code.
-- You can use [`traits`](https://github.com/Brushfam/openbrush-contracts/blob/main/lang/src/traits.rs) that provides some additional
+- You can use [`traits`](https://github.com/Brushfam/pendzl-contracts/blob/main/lang/src/traits.rs) that provides some additional
 functionality for your code.
-- Read our **documentation** in [doc](https://learn.brushfam.io/docs/openbrush).
+- Read our **documentation** in [doc](https://learn.brushfam.io/docs/pendzl).
 - Go through our **examples** in [examples](examples) to check hot to use the library and ink!.
-- Check the [**example of project struct**](https://github.com/Brushfam/openbrush-contracts/tree/main/example_project_structure) and [according documentation](https://learn.brushfam.io/docs/OpenBrush/smart-contracts/example/overview).
+- Check the [**example of project struct**](https://github.com/Brushfam/pendzl-contracts/tree/main/example_project_structure) and [according documentation](https://learn.brushfam.io/docs/pendzl/smart-contracts/example/overview).
 
-Not sure where to start? Use [the interactive generator](https://openbrush.io) to bootstrap your contract and learn about the components offered in OpenBrush.
+Not sure where to start? Use [the interactive generator](https://pendzl.io) to bootstrap your contract and learn about the components offered in pendzl.
 
 ### ‼️ Important ‼️
 
@@ -128,11 +128,11 @@ The identifiers of events must be based on the name of the trait. At the moment,
 but it must be fixed with this [issue](https://github.com/paritytech/ink/issues/809).
 
 ### Issues to be resolved before the library becomes production-ready:
-* [Event's identifiers are based on the naming of the storage structure](https://github.com/Brushfam/openbrush-contracts/issues/2)
+* [Event's identifiers are based on the naming of the storage structure](https://github.com/Brushfam/pendzl-contracts/issues/2)
 
 ## Roadmap 🚗
 
-Current OpenBrush Roadmap includes: https://docs.google.com/document/d/1b49juyKJN0W-UBHoJ4iS3P_I0Z5a94YoNLxylIf-As8
+Current pendzl Roadmap includes: https://docs.google.com/document/d/1b49juyKJN0W-UBHoJ4iS3P_I0Z5a94YoNLxylIf-As8
 
 ## Installation & Testing
 To work with project you need to install ink! toolchain and NodeJS's dependencies.
@@ -164,8 +164,8 @@ After you can run tests by `npm run test` command. It will build all contracts r
 ### Was it audited?
 
 Contracts in this repository have not yet been audited and contain several vulnerabilities due to the specific of the ink!. 
-Since ink! is audited now, OpenBrush is going to be audited after major breaking changes regarding switching to stable toolchain and adapting to latest ink! will be released.
+Since ink! is audited now, pendzl is going to be audited after major breaking changes regarding switching to stable toolchain and adapting to latest ink! will be released.
 
 ## License
 
-OpenBrush is released under the [MIT License](LICENSE).
+pendzl is released under the [MIT License](LICENSE).

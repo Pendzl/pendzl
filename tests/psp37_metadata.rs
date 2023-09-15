@@ -20,14 +20,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp37")]
-#[openbrush::implementation(PSP37, PSP37Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37, PSP37Metadata)]
+#[pendzl::contract]
 mod psp37_metadata {
     use ink::codegen::{
         EmitEvent,
         Env,
     };
-    use openbrush::traits::{
+    use pendzl::traits::{
         Storage,
         String,
     };

@@ -42,4 +42,4 @@ impl Default for Id {
     }
 }
 
-pub use openbrush::utils::crypto::Signature;
+pub use pendzl::utils::crypto::Signature;

@@ -20,8 +20,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "payment_splitter")]
-#[openbrush::implementation(PaymentSplitter)]
-#[openbrush::contract]
+#[pendzl::implementation(PaymentSplitter)]
+#[pendzl::contract]
 mod payment_splitter {
     use ink::{
         codegen::{
@@ -30,7 +30,7 @@ mod payment_splitter {
         },
         storage::traits::StorageKey,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::Storage,
     };

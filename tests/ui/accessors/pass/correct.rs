@@ -1,8 +1,8 @@
-use openbrush::traits::Storage;
+use pendzl::traits::Storage;
 
-#[openbrush::accessors(AccessDataAccessors)]
+#[pendzl::accessors(AccessDataAccessors)]
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct AccessData {
     #[get]
     #[set]
@@ -13,6 +13,6 @@ pub struct AccessData {
     write_only: u32,
 }
 
-pub const STORAGE_KEY: u32 = openbrush::storage_unique_key!(AccessData);
+pub const STORAGE_KEY: u32 = pendzl::storage_unique_key!(AccessData);
 
 fn main() {}

@@ -24,7 +24,7 @@ pub use crate::traits::errors::{
     PSP22ReceiverError,
 };
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };

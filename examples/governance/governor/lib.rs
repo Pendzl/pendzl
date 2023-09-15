@@ -1,10 +1,13 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Governor, GovernorSettings, GovernorQuorum, GovernorVotes, GovernorCounting)]
-#[openbrush::contract]
+#[pendzl::implementation(Governor, GovernorSettings, GovernorQuorum, GovernorVotes, GovernorCounting)]
+#[pendzl::contract]
 pub mod my_governor {
     use ink::prelude::vec::Vec;
-    use openbrush::traits::{Storage, String};
+    use pendzl::traits::{
+        Storage,
+        String,
+    };
 
     #[ink(storage)]
     #[derive(Default, Storage)]

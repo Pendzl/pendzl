@@ -29,10 +29,18 @@ pub use crate::{
 };
 pub use flashmint::Internal as _;
 use ink::{
-    env::CallFlags,
+    env::{
+        call::{
+            build_call,
+            ExecutionInput,
+        },
+        CallFlags,
+        DefaultEnvironment,
+    },
     prelude::vec::Vec,
+    storage::traits::ResolverKey,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,
@@ -44,10 +52,10 @@ pub use psp22::{
     PSP22Impl,
 };
 
-pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + PSP22 + Internal {
+pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + Internal {
     fn max_flashloan(&mut self, token: AccountId) -> Balance {
         if token == Self::env().account_id() {
-            Balance::MAX - self.total_supply()
+            Balance::MAX - self._total_supply()
         } else {
             0
         }
@@ -71,7 +79,7 @@ pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + PSP22 + Inte
         self._mint_to(receiver_account, amount)?;
         Internal::_on_flashloan(self, receiver_account, token, fee, amount, data)?;
         let this = Self::env().account_id();
-        let current_allowance = self.allowance(receiver_account, this);
+        let current_allowance = self._allowance(&receiver_account, &this);
         if current_allowance < amount + fee {
             return Err(FlashLenderError::AllowanceDoesNotAllowRefund)
         }
@@ -107,10 +115,22 @@ pub trait InternalImpl: Storage<psp22::Data> + Internal {
         amount: Balance,
         data: Vec<u8>,
     ) -> Result<(), FlashLenderError> {
-        let builder =
-            FlashBorrowerRef::on_flashloan_builder(&receiver_account, Self::env().caller(), token, amount, fee, data)
-                .call_flags(CallFlags::default().set_allow_reentry(true));
-        let result = match builder.try_invoke() {
+        let call_result = build_call::<DefaultEnvironment>()
+            .call(receiver_account)
+            .call_flags(CallFlags::default().set_allow_reentry(true))
+            .exec_input(
+                ExecutionInput::new(ink::env::call::Selector::new(ink::selector_bytes!(
+                    "FlashBorrower::on_flash_loan"
+                )))
+                .push_arg(&Self::env().caller())
+                .push_arg(token)
+                .push_arg(fee)
+                .push_arg(data),
+            )
+            .returns::<Result<(), FlashBorrowerError>>()
+            .try_invoke();
+
+        let result = match call_result {
             Ok(Ok(Ok(_))) => Ok(()),
             Ok(Ok(Err(FlashBorrowerError::FlashloanRejected(message)))) => {
                 Err(FlashLenderError::BorrowerRejected(message))

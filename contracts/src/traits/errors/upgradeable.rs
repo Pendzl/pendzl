@@ -2,7 +2,7 @@ use super::{
     AccessControlError,
     OwnableError,
 };
-use openbrush::traits::String;
+use pendzl::traits::String;
 
 /// The PSP34 error type. Contract will throw one of this errors.
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]

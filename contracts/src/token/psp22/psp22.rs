@@ -23,12 +23,12 @@ pub use crate::{
     psp22,
     traits::psp22::*,
 };
-use ink::prelude::vec::Vec;
-use openbrush::{
-    storage::{
-        Mapping,
-        TypeGuard,
-    },
+use ink::{
+    prelude::vec::Vec,
+    storage::Mapping,
+};
+use pendzl::{
+    storage::TypeGuard,
     traits::{
         AccountId,
         Balance,
@@ -42,19 +42,37 @@ pub use psp22::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub supply: Balance,
     pub balances: Mapping<AccountId, Balance>,
-    pub allowances: Mapping<(AccountId, AccountId), Balance, AllowancesKey>,
+    pub allowances: Mapping<(AccountId, AccountId), Balance>,
 }
 
-pub struct AllowancesKey;
+// pub trait PSP22Impl {
+//     fn total_supply(&self) -> Balance;
 
-impl<'a> TypeGuard<'a> for AllowancesKey {
-    type Type = &'a (&'a AccountId, &'a AccountId);
-}
+//     fn balance_of(&self, owner: AccountId) -> Balance;
+
+//     fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance;
+
+//     fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+
+//     fn transfer_from(
+//         &mut self,
+//         from: AccountId,
+//         to: AccountId,
+//         value: Balance,
+//         data: Vec<u8>,
+//     ) -> Result<(), PSP22Error>;
+
+//     fn approve(&mut self, spender: AccountId, value: Balance) -> Result<(), PSP22Error>;
+
+//     fn increase_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error>;
+
+//     fn decrease_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error>;
+// }
 
 pub trait PSP22Impl: Storage<Data> + Internal {
     fn total_supply(&self) -> Balance {
@@ -172,7 +190,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
     }
 
     fn _allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-        self.data().allowances.get(&(owner, spender)).unwrap_or(0)
+        self.data().allowances.get(&(*owner, *spender)).unwrap_or(0)
     }
 
     fn _transfer_from_to(
@@ -202,7 +220,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
     }
 
     fn _approve_from_to(&mut self, owner: AccountId, spender: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-        self.data().allowances.insert(&(&owner, &spender), &amount);
+        self.data().allowances.insert(&(owner, spender), &amount);
         Internal::_emit_approval_event(self, owner, spender, amount);
         Ok(())
     }

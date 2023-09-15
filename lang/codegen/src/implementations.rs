@@ -47,7 +47,7 @@ impl<'a> ImplArgs<'a> {
 
     fn signature_import(&mut self) {
         let sig_import = syn::parse2::<syn::ItemUse>(quote!(
-            use openbrush::utils::crypto::Signature;
+            use pendzl::utils::crypto::Signature;
         ))
         .expect("Should parse");
         self.imports.insert("Signature", sig_import);
@@ -188,7 +188,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::*;
+        use pendzl::contracts::psp22::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22", import);
@@ -221,7 +221,7 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::mintable::*;
+        use pendzl::contracts::psp22::extensions::mintable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Mintable", import);
@@ -251,7 +251,7 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::burnable::*;
+        use pendzl::contracts::psp22::extensions::burnable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Burnable", import);
@@ -317,7 +317,7 @@ pub(crate) fn impl_psp22_permit(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::permit::*;
+        use pendzl::contracts::psp22::extensions::permit::*;
     ))
     .expect("Should parse");
 
@@ -363,7 +363,7 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::metadata::*;
+        use pendzl::contracts::psp22::extensions::metadata::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Metadata", import);
@@ -415,7 +415,7 @@ pub(crate) fn impl_psp22_capped(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::capped::*;
+        use pendzl::contracts::psp22::extensions::capped::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Capped", import);
@@ -487,7 +487,7 @@ pub(crate) fn impl_psp22_wrapper(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::wrapper::*;
+        use pendzl::contracts::psp22::extensions::wrapper::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Wrapper", import);
@@ -561,7 +561,7 @@ pub(crate) fn impl_flashmint(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::extensions::flashmint::*;
+        use pendzl::contracts::psp22::extensions::flashmint::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Flashmint", import);
@@ -644,7 +644,7 @@ pub(crate) fn impl_token_timelock(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22::utils::token_timelock::*;
+        use pendzl::contracts::psp22::utils::token_timelock::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22TokenTimelock", import);
@@ -747,7 +747,7 @@ pub(crate) fn impl_psp22_votes(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::{
+        use pendzl::contracts::{
             governance::utils::votes::*,
             psp22::extensions::votes::*,
         };
@@ -861,7 +861,7 @@ pub(crate) fn impl_psp22_pallet(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22_pallet::*;
+        use pendzl::contracts::psp22_pallet::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22Pallet", import);
@@ -894,7 +894,7 @@ pub(crate) fn impl_psp22_pallet_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22_pallet::extensions::burnable::*;
+        use pendzl::contracts::psp22_pallet::extensions::burnable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22PalletBurnable", import);
@@ -934,7 +934,7 @@ pub(crate) fn impl_psp22_pallet_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22_pallet::extensions::metadata::*;
+        use pendzl::contracts::psp22_pallet::extensions::metadata::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22PalletMetadata", import);
@@ -964,7 +964,7 @@ pub(crate) fn impl_psp22_pallet_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp22_pallet::extensions::mintable::*;
+        use pendzl::contracts::psp22_pallet::extensions::mintable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP22PalletMintable", import);
@@ -1138,7 +1138,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp34::*;
+        use pendzl::contracts::psp34::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP34", import);
@@ -1183,7 +1183,7 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp34::extensions::burnable::*;
+        use pendzl::contracts::psp34::extensions::burnable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP34Burnable", import);
@@ -1213,7 +1213,7 @@ pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp34::extensions::mintable::*;
+        use pendzl::contracts::psp34::extensions::mintable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP34Mintable", import);
@@ -1261,7 +1261,7 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp34::extensions::metadata::*;
+        use pendzl::contracts::psp34::extensions::metadata::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP34Metadata", import);
@@ -1350,7 +1350,7 @@ pub(crate) fn impl_psp34_enumerable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp34::extensions::enumerable::*;
+        use pendzl::contracts::psp34::extensions::enumerable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP34Enumerable", import);
@@ -1569,7 +1569,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
         .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::*;
+        use pendzl::contracts::psp37::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37", import);
@@ -1650,7 +1650,7 @@ pub(crate) fn impl_psp37_batch(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::extensions::batch::*;
+        use pendzl::contracts::psp37::extensions::batch::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37Batch", import);
@@ -1683,7 +1683,7 @@ pub(crate) fn impl_psp37_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::extensions::burnable::*;
+        use pendzl::contracts::psp37::extensions::burnable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37Burnable", import);
@@ -1735,7 +1735,7 @@ pub(crate) fn impl_psp37_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::extensions::metadata::*;
+        use pendzl::contracts::psp37::extensions::metadata::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37Metadata", import);
@@ -1768,7 +1768,7 @@ pub(crate) fn impl_psp37_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::extensions::mintable::*;
+        use pendzl::contracts::psp37::extensions::mintable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37Mintable", import);
@@ -1859,7 +1859,7 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
         .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp37::extensions::enumerable::*;
+        use pendzl::contracts::psp37::extensions::enumerable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PSP37Enumerable", import);
@@ -1928,7 +1928,7 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::ownable::*;
+        use pendzl::contracts::ownable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Ownable", import);
@@ -2028,7 +2028,7 @@ pub(crate) fn impl_payment_splitter(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::payment_splitter::*;
+        use pendzl::contracts::payment_splitter::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("PaymentSplitter", import);
@@ -2165,7 +2165,7 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::access_control::*;
+        use pendzl::contracts::access_control::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("AccessControl", import);
@@ -2244,7 +2244,7 @@ pub(crate) fn impl_access_control_enumerable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::access_control::extensions::enumerable::*;
+        use pendzl::contracts::access_control::extensions::enumerable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("AccessControlEnumerable", import);
@@ -2315,7 +2315,7 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::pausable::*;
+        use pendzl::contracts::pausable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Pausable", import);
@@ -2554,7 +2554,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
         .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::extensions::timelock_controller::*;
+        use pendzl::contracts::governance::extensions::timelock_controller::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("TimelockController", import);
@@ -2614,7 +2614,7 @@ pub(crate) fn impl_proxy(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::proxy::*;
+        use pendzl::contracts::proxy::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Proxy", import);
@@ -2693,7 +2693,7 @@ pub(crate) fn impl_diamond(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::diamond::*;
+        use pendzl::contracts::diamond::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Diamond", import);
@@ -2766,7 +2766,7 @@ pub(crate) fn impl_diamond_loupe(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::diamond::extensions::diamond_loupe::*;
+        use pendzl::contracts::diamond::extensions::diamond_loupe::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("DiamondLoupe", import);
@@ -2802,7 +2802,7 @@ pub(crate) fn impl_upgradeable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::upgradeable::*;
+        use pendzl::contracts::upgradeable::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Upgradeable", import);
@@ -2867,7 +2867,7 @@ pub(crate) fn impl_psp61(impl_args: &mut ImplArgs, impls: Vec<String>) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::psp61::*;
+        use pendzl::contracts::psp61::*;
     ))
     .expect("Should parse");
 
@@ -2928,7 +2928,7 @@ pub(crate) fn impl_governor_settings(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::extensions::governor_settings::*;
+        use pendzl::contracts::governance::extensions::governor_settings::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("GovernorSettings", import);
@@ -2947,7 +2947,7 @@ pub(crate) fn impl_governor_votes(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::extensions::governor_votes::*;
+        use pendzl::contracts::governance::extensions::governor_votes::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("GovernorVotes", import);
@@ -2998,7 +2998,7 @@ pub(crate) fn impl_governor_quorum(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::extensions::governor_quorum::*;
+        use pendzl::contracts::governance::extensions::governor_quorum::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("GovernorQuorum", import);
@@ -3039,7 +3039,7 @@ pub(crate) fn impl_governor_counting(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::extensions::governor_counting::*;
+        use pendzl::contracts::governance::extensions::governor_counting::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("GovernorCounting", import);
@@ -3176,7 +3176,7 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::governance::governor::*;
+        use pendzl::contracts::governance::governor::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Governor", import);
@@ -3207,7 +3207,7 @@ pub(crate) fn impl_nonces(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-        use openbrush::contracts::nonces::*;
+        use pendzl::contracts::nonces::*;
     ))
     .expect("Should parse");
     impl_args.imports.insert("Nonces", import);

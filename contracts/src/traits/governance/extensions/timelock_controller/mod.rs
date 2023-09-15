@@ -29,7 +29,7 @@ pub use crate::traits::{
     },
 };
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     Hash,
     Timestamp,
 };

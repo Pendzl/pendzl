@@ -28,7 +28,7 @@ pub use crate::{
     },
 };
 pub use capped::Internal as _;
-use openbrush::traits::{
+use pendzl::traits::{
     Balance,
     Storage,
     String,
@@ -40,7 +40,7 @@ pub use psp22::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub cap: Balance,
@@ -61,7 +61,7 @@ pub trait Internal {
     fn _cap(&self) -> Balance;
 }
 
-pub trait InternalImpl: Storage<Data> + Internal + PSP22 {
+pub trait InternalImpl: Storage<Data> + psp22::Internal + Internal {
     fn _init_cap(&mut self, cap: Balance) -> Result<(), PSP22Error> {
         if cap == 0 {
             return Err(PSP22Error::Custom(String::from("Cap must be above 0")))
@@ -71,7 +71,7 @@ pub trait InternalImpl: Storage<Data> + Internal + PSP22 {
     }
 
     fn _is_cap_exceeded(&self, amount: &Balance) -> bool {
-        if self.total_supply() + amount > Internal::_cap(self) {
+        if self._total_supply() + amount > Internal::_cap(self) {
             return true
         }
         false

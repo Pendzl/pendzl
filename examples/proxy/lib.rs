@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Proxy, Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(Proxy, Ownable)]
+#[pendzl::contract]
 pub mod proxy {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]

@@ -1,5 +1,5 @@
-pub use openbrush::contracts::reentrancy_guard::*;
-use openbrush::{
+pub use pendzl::contracts::reentrancy_guard::*;
+use pendzl::{
     modifiers,
     traits::AccountId,
 };
@@ -16,7 +16,7 @@ pub trait Flipper {
     fn get_value(&self) -> bool;
 
     #[ink(message)]
-    #[openbrush::modifiers(non_reentrant)]
+    #[pendzl::modifiers(non_reentrant)]
     fn flip(&mut self) -> Result<(), ReentrancyGuardError>;
 
     #[ink(message)]

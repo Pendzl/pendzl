@@ -1,11 +1,11 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 /// This is a simple `PSP22` which will be used as a stable coin and a collateral token in our lending contract
-#[openbrush::implementation(PSP22, PSP22Metadata, PSP22Mintable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Metadata, PSP22Mintable)]
+#[pendzl::contract]
 pub mod token {
     use lending_project::traits::stable_coin::*;
-    use openbrush::traits::{
+    use pendzl::traits::{
         Storage,
         String,
     };

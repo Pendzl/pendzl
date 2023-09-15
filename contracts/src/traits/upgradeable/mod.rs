@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::errors::UpgradeableError;
-use openbrush::traits::Hash;
+use pendzl::traits::Hash;
 
 use ink::{
     contract_ref,

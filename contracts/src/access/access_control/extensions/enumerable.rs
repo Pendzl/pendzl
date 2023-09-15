@@ -32,7 +32,7 @@ pub use access_control::{
     Internal as _,
     InternalImpl as _,
 };
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         MultiMapping,
@@ -45,7 +45,7 @@ use openbrush::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub admin_roles: Mapping<RoleType, RoleType, ValueGuard<RoleType>>,
     pub role_members: MultiMapping<RoleType, Option<AccountId>, ValueGuard<RoleType>>,

@@ -21,10 +21,12 @@
 
 /// Metadata for PSP37
 pub use crate::traits::psp37::Id;
-use openbrush::traits::String;
+use pendzl::traits::String;
 
-use ink::contract_ref;
-use ink::env::DefaultEnvironment;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
 pub type PSP37MetadataRef = contract_ref!(PSP37Metadata, DefaultEnvironment);
 
 #[ink::trait_definition]

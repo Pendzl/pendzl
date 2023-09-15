@@ -205,7 +205,7 @@ fn generate_wrapper(ink_trait: ItemTrait) -> proc_macro2::TokenStream {
                     }
                 })
                 .enumerate()
-                .map(|(n, _)| format_ident!("__openbrush_binding_{}", n))
+                .map(|(n, _)| format_ident!("__pendzl_binding_{}", n))
                 .collect::<Vec<_>>();
             let input_types = method
                 .sig
@@ -302,7 +302,7 @@ fn generate_wrapper(ink_trait: ItemTrait) -> proc_macro2::TokenStream {
             #( #def_messages )*
         }
 
-        impl #trait_wrapper_ident for ::openbrush::traits::AccountId {
+        impl #trait_wrapper_ident for ::pendzl::traits::AccountId {
             #( #impl_messages )*
         }
 

@@ -1,18 +1,18 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22, PSP22Burnable, Upgradeable, Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Burnable, Upgradeable, Ownable)]
+#[pendzl::contract]
 pub mod contract_v2 {
     use ink::storage::{
         traits::ManualKey,
         Lazy,
     };
-    use openbrush::{
+    use pendzl::{
         modifiers,
         traits::Storage,
     };
 
-    const STORAGE_KEY: u32 = openbrush::storage_unique_key!("contract_v2", "fee_collector");
+    const STORAGE_KEY: u32 = pendzl::storage_unique_key!("contract_v2", "fee_collector");
 
     #[ink(storage)]
     #[derive(Storage, Default)]

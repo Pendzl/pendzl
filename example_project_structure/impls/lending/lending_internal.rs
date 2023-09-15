@@ -1,6 +1,6 @@
 use super::data::Data;
 use crate::traits::lending::*;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,

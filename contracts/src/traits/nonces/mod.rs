@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::errors::NoncesError;
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 /// Provides tracking nonces for addresses. Nonces will only increment.
 #[ink::trait_definition]

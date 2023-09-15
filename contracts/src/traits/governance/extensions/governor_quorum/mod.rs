@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::errors::GovernanceError;
-use openbrush::traits::Timestamp;
+use pendzl::traits::Timestamp;
 
 /// Extension of `Governor` for voting weight extraction from an `PSP22Votes` token and a quorum expressed as a
 /// fraction of the total supply.

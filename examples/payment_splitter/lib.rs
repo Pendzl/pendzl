@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PaymentSplitter)]
-#[openbrush::contract]
+#[pendzl::implementation(PaymentSplitter)]
+#[pendzl::contract]
 pub mod my_payment_splitter {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -31,14 +31,18 @@ pub mod my_payment_splitter {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::payment_splitter::paymentsplitter_external::PaymentSplitter;
+        use pendzl::contracts::payment_splitter::paymentsplitter_external::PaymentSplitter;
 
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
         use ink_e2e::{build_message, PolkadotConfig};
 
-        use test_helpers::{address_of, get_shares, method_call};
+        use test_helpers::{
+            address_of,
+            get_shares,
+            method_call,
+        };
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 

@@ -20,12 +20,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22, PSP22Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Metadata)]
+#[pendzl::contract]
 mod psp22_metadata {
     /// Imports all the definitions from the outer scope so we can use them here.
-    use openbrush::contracts::psp22::extensions::metadata::*;
-    use openbrush::traits::{
+    use pendzl::contracts::psp22::extensions::metadata::*;
+    use pendzl::traits::{
         Storage,
         String,
     };

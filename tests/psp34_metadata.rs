@@ -20,10 +20,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp34")]
-#[openbrush::implementation(PSP34, PSP34Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Metadata)]
+#[pendzl::contract]
 mod psp34_metadata {
-    use openbrush::traits::{
+    use pendzl::traits::{
         Storage,
         String,
     };

@@ -1,39 +1,43 @@
 [package]
-name = "openbrush_lang_macro"
-version= "4.0.0-beta.1"
-authors = ["Brushfam <green@727.ventures>"]
+name = "pendzl_lang_macro"
+version = "4.0.0-beta.1"
+authors = [
+    "Green Baneling <unknown>, Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
 edition = "2021"
 
 license = "MIT"
-repository = "https://github.com/Brushfam/openbrush-contracts"
-documentation = "https://learn.brushfam.io/docs/openbrush"
+repository = "https://github.com/Brushfam/pendzl-contracts"
+documentation = "https://learn.brushfam.io/docs/pendzl"
 homepage = "https://brushfam.io/"
-description = "OpenBrush macros to extend functionality of the ink!."
+description = "pendzl macros to extend functionality of the ink!."
 keywords = ["wasm", "brushfam", "smart-contracts", "blockchain", "ink"]
 categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-openbrush_lang_codegen = { version = "~4.0.0-beta.1", path = "../codegen", default-features = false }
+pendzl_lang_codegen = { version = "~4.0.0-beta.1", path = "../codegen", default-features = false }
 syn = "1"
 proc-macro2 = "1"
 synstructure = "0.12"
 
 [dev-dependencies]
-ink = { version = "4.3.0", default-features = false}
+ink = { version = "4.3.0", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"] }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+] }
 
-openbrush = { package = "openbrush_lang", path = "..", default-features = false }
+pendzl = { package = "pendzl_lang", path = "..", default-features = false }
 
 [lib]
-name = "openbrush_lang_macro"
+name = "pendzl_lang_macro"
 path = "src/lib.rs"
 proc-macro = true
 
 [features]
 default = ["std"]
-std = [
-    "openbrush_lang_codegen/std",
-]
+std = ["pendzl_lang_codegen/std"]

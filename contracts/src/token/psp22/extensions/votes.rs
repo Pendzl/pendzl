@@ -28,8 +28,8 @@ use crate::{
     traits::errors::GovernanceError,
 };
 use ink::prelude::vec;
-use openbrush::traits::AccountId;
-pub use openbrush::utils::checkpoints::Checkpoint;
+use pendzl::traits::AccountId;
+pub use pendzl::utils::checkpoints::Checkpoint;
 
 /// Extension of ERC20 to support Compound-like voting and delegation.
 ///

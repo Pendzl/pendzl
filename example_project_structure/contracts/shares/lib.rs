@@ -3,11 +3,11 @@
 /// This contract will be used to represent the shares of a user
 /// and other instance of this contract will be used to represent
 /// the amount of borrowed tokens
-#[openbrush::implementation(PSP22, PSP22Metadata, PSP22Mintable, PSP22Burnable, Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Metadata, PSP22Mintable, PSP22Burnable, Ownable)]
+#[pendzl::contract]
 pub mod shares {
     use lending_project::traits::shares::*;
-    use openbrush::{
+    use pendzl::{
         contracts::ownable::*,
         modifiers,
         traits::{

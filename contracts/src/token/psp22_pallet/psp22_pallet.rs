@@ -27,15 +27,15 @@ pub use ink::{
     env::DefaultEnvironment,
     prelude::vec::Vec,
 };
-use openbrush::traits::{
+pub use pallet_assets_chain_extension::{
+    ink::*,
+    traits::*,
+};
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,
     String,
-};
-pub use pallet_assets_chain_extension::{
-    ink::*,
-    traits::*,
 };
 pub use psp22_pallet::{
     Internal as _,
@@ -44,7 +44,7 @@ pub use psp22_pallet::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Asset id of the token on the pallet.
     #[lazy]

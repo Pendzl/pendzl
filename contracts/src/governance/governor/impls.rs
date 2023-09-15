@@ -56,7 +56,7 @@ use ink::{
         vec::Vec,
     },
 };
-use openbrush::{
+use pendzl::{
     modifiers,
     traits::{
         AccountId,
@@ -76,7 +76,7 @@ use scale::Encode;
 /// functions during the execution of the governor's `execute` function, and not under any other circumstances. Thus,
 /// for example, additional timelock proposers are not able to change governance parameters without going through the
 /// governance protocol.
-#[openbrush::modifier_definition]
+#[pendzl::modifier_definition]
 pub fn only_governance<T, F, R, E>(instance: &mut T, body: F) -> Result<R, E>
 where
     T: Storage<Data>,

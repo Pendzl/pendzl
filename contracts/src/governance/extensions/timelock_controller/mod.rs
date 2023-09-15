@@ -55,7 +55,7 @@ use ink::{
         vec::Vec,
     },
 };
-use openbrush::{
+use pendzl::{
     modifier_definition,
     modifiers,
     storage::Mapping,
@@ -69,7 +69,7 @@ use openbrush::{
 pub use timelock_controller::Internal as _;
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub min_delay: Timestamp,

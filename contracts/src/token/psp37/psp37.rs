@@ -28,7 +28,7 @@ use ink::prelude::{
     vec,
     vec::Vec,
 };
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         TypeGuard,
@@ -48,7 +48,7 @@ pub use psp37::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub balances: Mapping<(AccountId, Option<Id>), Balance, BalancesKey>,
     pub supply: Mapping<Option<Id>, Balance, SupplyKey>,

@@ -1,15 +1,15 @@
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 #[derive(Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct OwnableData {
-   #[lazy]
-   pub owner: AccountId,
+    #[lazy]
+    pub owner: AccountId,
 }
 
 #[derive(Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct ProxyData {
-   pub forward: AccountId,
+    pub forward: AccountId,
 }
 
 fn main() {}

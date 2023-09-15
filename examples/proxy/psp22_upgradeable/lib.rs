@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Ownable, PSP22)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable, PSP22)]
+#[pendzl::contract]
 pub mod my_psp22_upgradeable {
-    use openbrush::{
+    use pendzl::{
         modifiers,
         traits::{
             Storage,

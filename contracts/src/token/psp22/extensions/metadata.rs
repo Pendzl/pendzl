@@ -27,8 +27,8 @@ pub use crate::{
         *,
     },
 };
-use openbrush::traits::Storage;
-pub use openbrush::traits::String;
+use pendzl::traits::Storage;
+pub use pendzl::traits::String;
 pub use psp22::{
     Internal as _,
     InternalImpl as _,
@@ -36,7 +36,7 @@ pub use psp22::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub name: Option<String>,

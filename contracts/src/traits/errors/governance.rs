@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 use crate::traits::errors::NoncesError;
-use openbrush::utils::{
+use pendzl::utils::{
     checkpoints::CheckpointsError,
     crypto::CryptoError,
 };

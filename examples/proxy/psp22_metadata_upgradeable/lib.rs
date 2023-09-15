@@ -1,9 +1,12 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Ownable, PSP22, PSP22Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable, PSP22, PSP22Metadata)]
+#[pendzl::contract]
 pub mod my_psp22 {
-    use openbrush::{modifiers, traits::Storage};
+    use pendzl::{
+        modifiers,
+        traits::Storage,
+    };
 
     #[ink(storage)]
     #[derive(Default, Storage)]

@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // Delegate calls were marked as a possible attack vector in ink!
-// Therefore the proxy and diamond contracts will be disabled within OpenBrush until this is reimplemented in ink! 4.
+// Therefore the proxy and diamond contracts will be disabled within pendzl until this is reimplemented in ink! 4.
 
 pub use crate::{
     ownable,
@@ -30,16 +30,16 @@ pub use crate::{
         proxy::*,
     },
 };
-use openbrush::{
+pub use ownable::{
+    Internal as _,
+    InternalImpl as _,
+};
+use pendzl::{
     modifiers,
     traits::{
         Hash,
         Storage,
     },
-};
-pub use ownable::{
-    Internal as _,
-    InternalImpl as _,
 };
 pub use proxy::{
     Internal as _,
@@ -47,7 +47,7 @@ pub use proxy::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub forward_to: Hash,

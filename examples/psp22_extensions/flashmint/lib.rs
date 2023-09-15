@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22, Flashmint)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, Flashmint)]
+#[pendzl::contract]
 pub mod my_psp22_flashmint {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]

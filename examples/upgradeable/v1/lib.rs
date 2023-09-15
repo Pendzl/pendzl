@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22, Upgradeable, Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, Upgradeable, Ownable)]
+#[pendzl::contract]
 pub mod contract_v1 {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Storage, Default)]

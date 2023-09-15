@@ -20,14 +20,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-use openbrush::{
+use pendzl::{
     storage::Mapping,
     traits::AccountId,
     utils::checkpoints::Checkpoints,
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Stores the delegations of the governor.
     /// The key is the delegator and the value is the delegatee

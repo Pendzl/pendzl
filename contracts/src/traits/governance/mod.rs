@@ -21,7 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 use ink::prelude::vec::Vec;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Hash,
@@ -43,7 +43,7 @@ pub mod utils {
     pub mod votes;
 }
 
-pub use openbrush::utils::crypto::Signature;
+pub use pendzl::utils::crypto::Signature;
 
 pub type ProposalId = [u8; 32];
 pub type HashType = [u8; 32];

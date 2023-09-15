@@ -1,4 +1,4 @@
-use openbrush::contracts::traits::{
+use pendzl::contracts::traits::{
     ownable::*,
     psp22::{
         extensions::{

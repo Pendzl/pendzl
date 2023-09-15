@@ -1,4 +1,4 @@
-use openbrush::contracts::traits::psp22::{
+use pendzl::contracts::traits::psp22::{
     extensions::{
         metadata::*,
         mintable::*,

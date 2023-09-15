@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Nonces)]
-#[openbrush::contract]
+#[pendzl::implementation(Nonces)]
+#[pendzl::contract]
 pub mod nonces {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]

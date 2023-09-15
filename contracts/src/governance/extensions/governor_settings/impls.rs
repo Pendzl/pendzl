@@ -34,7 +34,7 @@ pub use crate::{
     governance::extensions::governor_settings,
     traits::governance::extensions::governor_settings::*,
 };
-use openbrush::{
+use pendzl::{
     modifiers,
     traits::Storage,
 };

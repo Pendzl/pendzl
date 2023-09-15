@@ -30,7 +30,7 @@ use crate::{
     },
     traits::errors::GovernanceError,
 };
-use openbrush::{
+use pendzl::{
     traits::{
         AccountId,
         Balance,

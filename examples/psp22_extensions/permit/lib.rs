@@ -2,10 +2,10 @@
 
 pub use crate::my_psp22_permit::*;
 
-#[openbrush::implementation(PSP22, PSP22Permit, Nonces)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Permit, Nonces)]
+#[pendzl::contract]
 pub mod my_psp22_permit {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]

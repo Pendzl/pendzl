@@ -22,7 +22,7 @@
 /// Extension of [`PSP34`] that adds enumerability of all the token ids in the contract as well
 /// as all token ids owned by each account.
 pub use crate::traits::psp34::*;
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 use ink::{
     contract_ref,

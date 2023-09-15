@@ -26,7 +26,7 @@ pub use crate::traits::governance::{
     VoteType,
 };
 pub use ink::prelude::vec::Vec;
-pub use openbrush::traits::{
+pub use pendzl::traits::{
     AccountId,
     Balance,
     String,

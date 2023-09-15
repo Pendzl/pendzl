@@ -70,7 +70,7 @@ fn wrap_upgradeable_fields(structure_name: &str, fields: Fields) -> (Vec<Field>,
                     .collect();
 
                 let storage_key = quote! {
-                    pub const #key_name: u32 = ::openbrush::storage_unique_key!(#structure_name, #field_name);
+                    pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
                 };
 
                 (new_field, Some(storage_key))
@@ -113,7 +113,7 @@ fn wrap_upgradeable_fields(structure_name: &str, fields: Fields) -> (Vec<Field>,
 
                 let storage_key = if is_mapping {
                     Some(quote! {
-                        pub const #key_name: u32 = ::openbrush::storage_unique_key!(#structure_name, #field_name);
+                        pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
                     })
                 } else {
                     None

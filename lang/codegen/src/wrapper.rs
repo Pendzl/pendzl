@@ -74,7 +74,7 @@ pub fn generate(_: TokenStream, input: TokenStream) -> TokenStream {
             union_trait = quote! {
                 pub trait #union_ident : #bounds {}
 
-                impl #union_ident for ::openbrush::traits::AccountId {}
+                impl #union_ident for ::pendzl::traits::AccountId {}
             }
         }
 

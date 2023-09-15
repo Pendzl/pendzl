@@ -1,12 +1,12 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::contract]
+#[pendzl::contract]
 pub mod flash_borrower {
     use ink::{
         codegen::Env,
         prelude::vec::Vec,
     };
-    use openbrush::{
+    use pendzl::{
         contracts::psp22::extensions::flashmint::*,
         traits::String,
     };

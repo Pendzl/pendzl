@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP37, PSP37Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37, PSP37Metadata)]
+#[pendzl::contract]
 pub mod my_psp37 {
-    use openbrush::traits::{
+    use pendzl::traits::{
         Storage,
         String,
     };
@@ -32,7 +32,7 @@ pub mod my_psp37 {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp37::extensions::metadata::psp37metadata_external::PSP37Metadata;
+        use pendzl::contracts::psp37::extensions::metadata::psp37metadata_external::PSP37Metadata;
 
         #[rustfmt::skip]
         use super::*;

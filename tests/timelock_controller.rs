@@ -20,8 +20,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "timelock_controller")]
-#[openbrush::implementation(TimelockController, AccessControl, AccessControlEnumerable)]
-#[openbrush::contract]
+#[pendzl::implementation(TimelockController, AccessControl, AccessControlEnumerable)]
+#[pendzl::contract]
 mod timelock_controller {
     use ::ink::env::DefaultEnvironment;
     use ink::{
@@ -31,7 +31,7 @@ mod timelock_controller {
         },
         env::test::DefaultAccounts,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::{
             accounts,
             change_caller,

@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Ownable, PSP37, PSP37Burnable, PSP37Mintable)]
+#[pendzl::implementation(Ownable, PSP37, PSP37Burnable, PSP37Mintable)]
 #[ink::contract]
 pub mod ownable {
-    use openbrush::{
+    use pendzl::{
         contracts::{
             ownable::OwnableImpl,
             psp37::extensions::mintable::PSP37MintableImpl,

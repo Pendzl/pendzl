@@ -31,7 +31,7 @@ pub use crate::{
         *,
     },
 };
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         MultiMapping,
@@ -51,7 +51,7 @@ pub use psp37::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub enumerable: MultiMapping<Option<AccountId>, Id, EnumerableKey>,
     pub balances: Mapping<(AccountId, Id), Balance, BalancesKey>,

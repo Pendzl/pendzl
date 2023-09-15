@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::access_control::*;
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 use ink::{
     contract_ref,

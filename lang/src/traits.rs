@@ -29,7 +29,7 @@ use ink::storage::traits::{
     Storable,
     StorageKey,
 };
-pub use openbrush_lang_macro::Storage;
+pub use pendzl_lang_macro::Storage;
 pub use xxhash_rust::const_xxh32::xxh32;
 
 /// Aliases for types of the default environment
@@ -58,8 +58,8 @@ impl<T> DefaultEnv for T {}
 /// `get_mut` methods. The trait is helpful for generics implementations when you don't know
 /// precisely the final type, but it is enough for you to know that it has some `Data` inside.
 ///
-/// The trait is used as bound in OpenBrush to provide a generic implementation for contracts'
-/// traits. The user of OpenBrush can "inherit" the default implementation by implementing the
+/// The trait is used as bound in pendzl to provide a generic implementation for contracts'
+/// traits. The user of pendzl can "inherit" the default implementation by implementing the
 /// `Storage<Data>` trait.
 ///
 /// In most cases, the trait is implemented automatically by the derive macro.

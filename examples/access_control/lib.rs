@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP34, PSP34Burnable, PSP34Mintable, AccessControl)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Burnable, PSP34Mintable, AccessControl)]
+#[pendzl::contract]
 pub mod my_access_control {
-    use openbrush::{
+    use pendzl::{
         modifiers,
         traits::Storage,
     };
@@ -47,7 +47,7 @@ pub mod my_access_control {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::{
+        use pendzl::contracts::{
             access_control::accesscontrol_external::AccessControl,
             psp34::{
                 extensions::{
@@ -63,7 +63,7 @@ pub mod my_access_control {
         #[rustfmt::skip]
         use ink_e2e::{build_message};
 
-        use openbrush::contracts::access_control::DEFAULT_ADMIN_ROLE;
+        use pendzl::contracts::access_control::DEFAULT_ADMIN_ROLE;
 
         use test_helpers::{
             address_of,

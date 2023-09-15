@@ -8,7 +8,7 @@ use ink::env::hash::{
 };
 #[rustfmt::skip]
 use ink_e2e::build_message;
-use openbrush::contracts::{
+use pendzl::contracts::{
     nonces::nonces_external::Nonces,
     psp22::{
         extensions::permit::psp22permit_external::PSP22Permit,
@@ -17,8 +17,8 @@ use openbrush::contracts::{
 };
 #[rustfmt::skip]
 use crate::my_psp22_permit::*;
-// use openbrush::contracts::psp22::extensions::permit::PERMIT_TYPE_HASH;
-use openbrush::{
+// use pendzl::contracts::psp22::extensions::permit::PERMIT_TYPE_HASH;
+use pendzl::{
     contracts::psp22::extensions::permit::PermitMessage,
     traits::{
         AccountId,

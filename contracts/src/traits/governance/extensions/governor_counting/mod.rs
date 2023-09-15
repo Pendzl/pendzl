@@ -27,7 +27,7 @@ pub use crate::traits::{
         ProposalVote,
     },
 };
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 /// Extension of `Governor` for simple, 3 options, vote counting.
 #[ink::trait_definition]

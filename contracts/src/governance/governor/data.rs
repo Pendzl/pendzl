@@ -29,7 +29,7 @@ pub use crate::traits::{
     },
 };
 pub use ink::prelude::collections::VecDeque;
-pub use openbrush::{
+pub use pendzl::{
     storage::Mapping,
     traits::{
         Storage,
@@ -38,7 +38,7 @@ pub use openbrush::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Stores the proposals
     /// The key is the proposal id and the value is the proposal core

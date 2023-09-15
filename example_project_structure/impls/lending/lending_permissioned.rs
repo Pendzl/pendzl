@@ -3,7 +3,7 @@ use super::{
     lending_internal::*,
 };
 use crate::traits::lending::*;
-use openbrush::{
+use pendzl::{
     contracts::{
         access_control::*,
         traits::psp22::PSP22Ref,

@@ -22,14 +22,16 @@
 /// Extension of [`PSP22`] that allows create `amount` tokens
 /// and assigns them to `account`, increasing the total supply
 pub use crate::traits::errors::PSP22Error;
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };
-pub use openbrush::utils::crypto::Signature;
+pub use pendzl::utils::crypto::Signature;
 
-use ink::contract_ref;
-use ink::env::DefaultEnvironment;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
 pub type PSP22PermitRef = contract_ref!(PSP22Permit, DefaultEnvironment);
 
 #[ink::trait_definition]

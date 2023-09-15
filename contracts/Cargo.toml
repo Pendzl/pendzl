@@ -1,13 +1,15 @@
 [package]
-name = "openbrush_contracts"
-version= "4.0.0-beta.1"
-authors = ["Brushfam <green@727.ventures>"]
+name = "pendzl_contracts"
+version = "4.0.0-beta.1"
+authors = [
+    "Green Baneling <unknown>, Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
 edition = "2021"
 
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/Brushfam/openbrush-contracts"
-documentation = "https://learn.brushfam.io/docs/openbrush"
+repository = "https://github.com/Brushfam/pendzl-contracts"
+documentation = "https://learn.brushfam.io/docs/pendzl"
 homepage = "https://brushfam.io/"
 description = "Reusable implementations of contracts and traits for interaction with them."
 keywords = ["wasm", "brushfam", "smart-contracts", "blockchain", "ink"]
@@ -15,21 +17,28 @@ categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-ink = { version = "4.3.0", default-features = false}
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+ink = { version = "4.3.0", default-features = false }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
 
-openbrush = { version = "~4.0.0-beta.1", package = "openbrush_lang", path = "../lang", default-features = false, features = ["crypto", "checkpoints"] }
+pendzl = { version = "~4.0.0-beta.1", package = "pendzl_lang", path = "../lang", default-features = false, features = [
+    "crypto",
+    "checkpoints",
+] }
 
-pallet-assets-chain-extension = { git = "https://github.com/Brushfam/pallet-assets-chain-extension", branch = "polkadot-v0.9.37", default-features = false, features = ["ink-lang"]  }
+pallet-assets-chain-extension = { git = "https://github.com/Brushfam/pallet-assets-chain-extension", branch = "polkadot-v0.9.37", default-features = false, features = [
+    "ink-lang",
+] }
 
 [lib]
-name = "openbrush_contracts"
+name = "pendzl_contracts"
 path = "src/lib.rs"
-crate-type = [
-    "rlib",
-]
+crate-type = ["rlib"]
 
 [features]
 default = ["std"]
@@ -37,7 +46,7 @@ std = [
     "ink/std",
     "scale/std",
     "scale-info/std",
-    "openbrush/std",
+    "pendzl/std",
     "pallet-assets-chain-extension/ink-std",
 ]
 psp22 = ["nonces", "crypto"]
@@ -50,25 +59,14 @@ payment_splitter = []
 reentrancy_guard = []
 pausable = []
 psp61 = []
-timelock_controller = [
-    "access_control",
-]
-proxy = [
-    "ownable",
-]
-diamond = [
-    "ownable",
-]
-governance = [
-    "timelock_controller",
-    "crypto",
-    "nonces",
-    "checkpoints"
-]
+timelock_controller = ["access_control"]
+proxy = ["ownable"]
+diamond = ["ownable"]
+governance = ["timelock_controller", "crypto", "nonces", "checkpoints"]
 upgradeable = ["ownable"]
-crypto = ["openbrush/crypto"]
+crypto = ["pendzl/crypto"]
 nonces = []
-checkpoints = ["openbrush/checkpoints"]
+checkpoints = ["pendzl/checkpoints"]
 test-all = [
     "psp22",
     "psp34",

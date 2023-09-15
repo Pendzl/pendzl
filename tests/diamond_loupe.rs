@@ -20,14 +20,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "diamond")]
-#[openbrush::implementation(Ownable, Diamond, DiamondLoupe)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable, Diamond, DiamondLoupe)]
+#[pendzl::contract]
 mod diamond {
     use ink::env::{
         test::DefaultAccounts,
         DefaultEnvironment,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::Storage,
     };

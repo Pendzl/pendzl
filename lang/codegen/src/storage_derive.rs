@@ -48,7 +48,7 @@ pub fn storage_derive(item: TokenStream) -> TokenStream {
             let span = field.span();
 
             quote::quote_spanned!(span=>
-                impl #impls ::openbrush::traits::Storage<#ty> for #struct_ident #types #where_clause {
+                impl #impls ::pendzl::traits::Storage<#ty> for #struct_ident #types #where_clause {
                     fn get(&self) -> &#ty {
                         &self.#field_ident
                     }

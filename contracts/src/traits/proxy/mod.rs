@@ -23,7 +23,7 @@ pub use crate::traits::{
     errors::OwnableError,
     ownable::*,
 };
-use openbrush::traits::Hash;
+use pendzl::traits::Hash;
 
 use ink::{
     contract_ref,
@@ -32,7 +32,7 @@ use ink::{
 pub type ProxyRef = contract_ref!(Proxy, DefaultEnvironment);
 
 // Delegate calls were marked as a possible attack vector in ink!
-// Therefore the proxy and diamond contracts will be disabled within OpenBrush until this is reimplemented in ink! 4.
+// Therefore the proxy and diamond contracts will be disabled within pendzl until this is reimplemented in ink! 4.
 
 #[ink::trait_definition]
 pub trait Proxy {

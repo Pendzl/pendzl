@@ -22,7 +22,7 @@
 /// Metadata for PSP34
 pub use crate::traits::errors::PSP34Error;
 pub use crate::traits::psp34::Id;
-use openbrush::traits::String;
+use pendzl::traits::String;
 
 use ink::{
     contract_ref,

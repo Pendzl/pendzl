@@ -28,8 +28,8 @@ pub use crate::{
     },
 };
 pub use metadata::Internal as _;
-pub use openbrush::traits::String;
-use openbrush::{
+pub use pendzl::traits::String;
+use pendzl::{
     storage::{
         Mapping,
         TypeGuard,
@@ -46,7 +46,7 @@ pub use psp34::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub attributes: Mapping<(Id, String), String, AttributesKey>,
 }

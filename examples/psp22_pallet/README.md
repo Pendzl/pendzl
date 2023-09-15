@@ -10,4 +10,4 @@ This implementation standardizes the `pallet-assets` assets into `PSP22` standar
 
 With this we can achieve usage of `pallet-assets` based tokens within ink! smart contracts, which are based on the `PSP22` standard (as the `PSP22Pallet` implements the `PSP22` standard functions), and we can even transfer our smart-contract based token to chains which do not support smart contracts but do support `pallet-assets` (such as Statemint). You can read more about the cross-chain asset transfer and see a guide [here](https://medium.com/@krikolkk/xcm-and-cross-chain-asset-transferring-6922a0ba209).
 
-[See example](https://727-ventures.github.io/openbrush-contracts/smart-contracts/PSP22-Pallet/)
+[See example](https://727-ventures.github.io/pendzl-contracts/smart-contracts/PSP22-Pallet/)

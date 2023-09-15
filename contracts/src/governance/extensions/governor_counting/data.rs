@@ -24,13 +24,13 @@ pub use crate::traits::governance::{
     ProposalId,
     ProposalVote,
 };
-pub use openbrush::{
+pub use pendzl::{
     storage::Mapping,
     traits::AccountId,
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Stores the ammounts of the votes of the proposals
     /// The key is the proposal id and the value is the vote, which contains the ammount of votes

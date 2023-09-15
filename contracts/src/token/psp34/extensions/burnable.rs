@@ -26,7 +26,7 @@ pub use crate::{
         *,
     },
 };
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 pub use psp34::{
     BalancesManager as _,
     Internal as _,

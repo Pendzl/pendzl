@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22)]
+#[pendzl::contract]
 pub mod my_psp22_facet_v1 {
-    use openbrush::{
+    use pendzl::{
         contracts::ownable::*,
         modifiers,
         traits::Storage,

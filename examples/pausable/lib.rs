@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Pausable)]
-#[openbrush::contract]
+#[pendzl::implementation(Pausable)]
+#[pendzl::contract]
 pub mod my_pausable {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -20,7 +20,7 @@ pub mod my_pausable {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(when_not_paused)]
+        #[pendzl::modifiers(when_not_paused)]
         pub fn flip(&mut self) -> Result<(), PausableError> {
             self.flipped = !self.flipped;
             Ok(())

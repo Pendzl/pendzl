@@ -63,7 +63,7 @@ use ink::{
         vec::Vec,
     },
 };
-use openbrush::{
+use pendzl::{
     traits::{
         AccountId,
         Balance,

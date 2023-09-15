@@ -20,7 +20,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 pub use crate::traits::errors::AccessControlError;
-use openbrush::traits::AccountId;
+use pendzl::traits::AccountId;
 
 pub type RoleType = u32;
 

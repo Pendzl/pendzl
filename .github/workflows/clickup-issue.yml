@@ -20,5 +20,5 @@ jobs:
 
           subject: ${{ github.event.issue.title }} <due 1 week>
           to: ${{secrets.CLICKUP_EMAIL}}
-          from: Openbrush CI
+          from: pendzl CI
           body: ${{ github.event.issue.body }}

@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(Ownable, Diamond, DiamondLoupe)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable, Diamond, DiamondLoupe)]
+#[pendzl::contract]
 pub mod diamond {
-    use openbrush::{
+    use pendzl::{
         modifiers,
         traits::Storage,
     };

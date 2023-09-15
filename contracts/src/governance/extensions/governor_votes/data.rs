@@ -20,10 +20,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-pub use openbrush::traits::AccountId;
+pub use pendzl::traits::AccountId;
 
 #[derive(Debug, Default)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     /// Stores the token of the `PSP22Votes` contract
     #[lazy]

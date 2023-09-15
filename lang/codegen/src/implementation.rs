@@ -48,7 +48,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         .map(|arg| {
             match arg {
                 NestedMeta::Path(method) => method.to_token_stream().to_string().replace(' ', ""),
-                _ => panic!("Expected names of OpenBrush traits to implement in the contract!"),
+                _ => panic!("Expected names of pendzl traits to implement in the contract!"),
             }
         })
         .collect::<Vec<String>>();
@@ -59,7 +59,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         None => {
             panic!(
                 "{}",
-                "out-of-line openbrush modules are not supported, use `#[implementation] mod name {{ ... }}`",
+                "out-of-line pendzl modules are not supported, use `#[implementation] mod name {{ ... }}`",
             )
         }
     };
@@ -120,7 +120,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
             "GovernorCounting" => impl_governor_counting(&mut impl_args),
             "Nonces" => impl_nonces(&mut impl_args),
             "PSP61" => impl_psp61(&mut impl_args, args.clone()),
-            _ => panic!("openbrush::implementation({to_implement}) not implemented!"),
+            _ => panic!("pendzl::implementation({to_implement}) not implemented!"),
         }
     }
 

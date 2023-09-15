@@ -20,10 +20,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp37")]
-#[openbrush::implementation(PSP37, PSP37Burnable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37, PSP37Burnable)]
+#[pendzl::contract]
 mod psp37_burnable {
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::{
             Storage,

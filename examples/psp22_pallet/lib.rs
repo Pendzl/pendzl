@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22Pallet)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22Pallet)]
+#[pendzl::contract]
 pub mod my_psp22_pallet {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -38,13 +38,16 @@ pub mod my_psp22_pallet {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp22_pallet::psp22_external::PSP22;
+        use pendzl::contracts::psp22_pallet::psp22_external::PSP22;
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
         use ink_e2e::{build_message, PolkadotConfig};
 
-        use test_helpers::{address_of, balance_of};
+        use test_helpers::{
+            address_of,
+            balance_of,
+        };
 
         fn random_num() -> u32 {
             use rand::Rng;

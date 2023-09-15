@@ -26,7 +26,7 @@ pub use crate::{
         *,
     },
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };

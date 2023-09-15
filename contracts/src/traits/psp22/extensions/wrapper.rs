@@ -23,7 +23,7 @@
 pub use crate::traits::errors::PSP22Error;
 pub use crate::traits::psp22::*;
 
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
 };

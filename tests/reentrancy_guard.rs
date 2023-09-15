@@ -20,9 +20,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "reentrancy_guard")]
-#[openbrush::contract]
+#[pendzl::contract]
 mod reentrancy_guard {
-    use openbrush::{
+    use pendzl::{
         contracts::reentrancy_guard::*,
         traits::Storage,
     };
@@ -42,7 +42,7 @@ mod reentrancy_guard {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(non_reentrant)]
+        #[pendzl::modifiers(non_reentrant)]
         pub fn flip(&mut self) -> Result<bool, ReentrancyGuardError> {
             let previous = self.flipped;
             self.flipped = !previous;
@@ -51,7 +51,7 @@ mod reentrancy_guard {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(non_reentrant)]
+        #[pendzl::modifiers(non_reentrant)]
         pub fn call_flip_after_lock(&mut self) -> Result<bool, ReentrancyGuardError> {
             self.flip()
         }

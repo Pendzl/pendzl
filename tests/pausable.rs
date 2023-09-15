@@ -20,8 +20,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "pausable")]
-#[openbrush::implementation(Pausable)]
-#[openbrush::contract]
+#[pendzl::implementation(Pausable)]
+#[pendzl::contract]
 mod pausable {
     use ::ink::env::DefaultEnvironment;
     use ink::{
@@ -31,7 +31,7 @@ mod pausable {
         },
         env::test::DefaultAccounts,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::Storage,
     };
@@ -63,7 +63,7 @@ mod pausable {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(when_paused)]
+        #[pendzl::modifiers(when_paused)]
         pub fn flip(&mut self) -> Result<bool, PausableError> {
             let previous = self.flipped;
             self.flipped = !previous;

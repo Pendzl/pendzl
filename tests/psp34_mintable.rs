@@ -20,10 +20,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp34")]
-#[openbrush::implementation(PSP34, PSP34Mintable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Mintable)]
+#[pendzl::contract]
 mod psp34_mintable {
-    use openbrush::{
+    use pendzl::{
         contracts::psp34::Id,
         test_utils::accounts,
         traits::{

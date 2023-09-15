@@ -34,7 +34,12 @@ pub use diamond::{
     InternalImpl as _,
 };
 use ink::prelude::vec::Vec;
-use openbrush::{
+pub use ownable::{
+    Internal as _,
+    InternalImpl as _,
+    OwnableImpl,
+};
+use pendzl::{
     storage::{
         Mapping,
         ValueGuard,
@@ -44,14 +49,9 @@ use openbrush::{
         Storage,
     },
 };
-pub use ownable::{
-    Internal as _,
-    InternalImpl as _,
-    OwnableImpl,
-};
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     // number of registered code hashes
     #[lazy]

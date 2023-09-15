@@ -20,10 +20,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22, PSP22Wrapper)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Wrapper)]
+#[pendzl::contract]
 mod psp22_wrapper {
-    use openbrush::{
+    use pendzl::{
         test_utils::accounts,
         traits::Storage,
     };

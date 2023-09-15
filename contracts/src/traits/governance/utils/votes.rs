@@ -24,7 +24,7 @@ pub use crate::traits::{
     errors::GovernanceError,
     types::Signature,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Timestamp,

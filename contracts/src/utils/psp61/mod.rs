@@ -55,13 +55,13 @@ pub trait PSP61Impl: PSP61Internal + PSP61InternalOB {
 #[macro_export]
 macro_rules! supported_interfaces {
     ($contract:ident => $($interface_id:expr),*) => {
-        impl ::openbrush::contracts::psp61::PSP61Internal for $contract {
+        impl ::pendzl::contracts::psp61::PSP61Internal for $contract {
             fn _interfaces(&self) -> ::ink::prelude::vec::Vec<u32> {
                 ::ink::prelude::vec![$($interface_id),*]
             }
         }
     };
     ($contract:ident) => {
-        impl ::openbrush::contracts::psp61::PSP61Internal for $contract {}
+        impl ::pendzl::contracts::psp61::PSP61Internal for $contract {}
     };
 }

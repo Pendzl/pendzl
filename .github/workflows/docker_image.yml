@@ -13,7 +13,7 @@ jobs:
         if: contains(steps.files.outputs.all, 'Dockerfile')
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: openbrush-contracts-ci
+          image: pendzl-contracts-ci
           dockerfile: Dockerfile
           tags: latest
           registry: ghcr.io

@@ -23,7 +23,12 @@ pub use crate::{
     pausable,
     traits::pausable::*,
 };
-use openbrush::{
+pub use pausable::{
+    Internal as _,
+    InternalImpl as _,
+    PausableImpl as _,
+};
+use pendzl::{
     modifier_definition,
     modifiers,
     traits::{
@@ -31,14 +36,9 @@ use openbrush::{
         Storage,
     },
 };
-pub use pausable::{
-    Internal as _,
-    InternalImpl as _,
-    PausableImpl as _,
-};
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub paused: bool,

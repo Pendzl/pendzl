@@ -28,7 +28,7 @@ pub use crate::{
     traits::psp34::*,
 };
 use ink::prelude::vec::Vec;
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         TypeGuard,
@@ -48,7 +48,7 @@ pub use psp34::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub token_owner: Mapping<Id, Owner>,
     pub operator_approvals: Mapping<(Owner, Operator, Option<Id>), (), ApprovalsKey>,

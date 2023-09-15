@@ -1,4 +1,4 @@
-use openbrush::{
+use pendzl::{
     contracts::traits::{
         ownable::*,
         psp34::{

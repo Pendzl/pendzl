@@ -23,14 +23,14 @@ pub use crate::{
     ownable,
     traits::ownable::*,
 };
-use openbrush::traits::{
+pub use ownable::Internal as _;
+use pendzl::traits::{
     AccountId,
     Storage,
 };
-pub use ownable::Internal as _;
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub owner: Option<AccountId>,
@@ -50,7 +50,13 @@ pub struct Data {
 //     body(instance)
 // }
 
-pub trait OwnableImpl: Storage<Data> + Internal {
+pub trait OwnableImpl {
+    fn owner(&self) -> Option<AccountId>;
+    fn renounce_ownership(&mut self) -> Result<(), OwnableError>;
+    fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError>;
+}
+
+impl<T: Storage<Data> + Internal> OwnableImpl for T {
     fn owner(&self) -> Option<AccountId> {
         self.data().owner.get_or_default()
     }

@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(AccessControl, AccessControlEnumerable)]
-#[openbrush::contract]
+#[pendzl::implementation(AccessControl, AccessControlEnumerable)]
+#[pendzl::contract]
 pub mod my_access_control {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -35,7 +35,7 @@ pub mod my_access_control {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::access_control::{
+        use pendzl::contracts::access_control::{
             accesscontrol_external::AccessControl,
             extensions::enumerable::accesscontrolenumerable_external::AccessControlEnumerable,
         };

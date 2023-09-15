@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP22, PSP22Capped, PSP22Mintable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Capped, PSP22Mintable)]
+#[pendzl::contract]
 pub mod my_psp22_capped {
-    use openbrush::traits::{
+    use pendzl::traits::{
         Storage,
         String,
     };
@@ -47,7 +47,7 @@ pub mod my_psp22_capped {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp22::{
+        use pendzl::contracts::psp22::{
             extensions::{
                 capped::psp22capped_external::PSP22Capped,
                 mintable::psp22mintable_external::PSP22Mintable,

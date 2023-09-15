@@ -27,7 +27,7 @@ pub mod test_utils;
 pub mod traits;
 pub mod utils;
 
-pub use openbrush_lang_macro::{
+pub use pendzl_lang_macro::{
     implementation,
     storage_item,
 };

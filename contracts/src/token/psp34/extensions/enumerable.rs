@@ -28,7 +28,7 @@ pub use crate::{
         *,
     },
 };
-use openbrush::{
+use pendzl::{
     storage::{
         Mapping,
         MultiMapping,
@@ -50,7 +50,7 @@ pub use psp34::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub token_owner: Mapping<Id, Owner>,
     pub operator_approvals: Mapping<(Owner, Operator, Option<Id>), (), ApprovalsKey>,

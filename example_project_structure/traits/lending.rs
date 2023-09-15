@@ -1,4 +1,4 @@
-use openbrush::{
+use pendzl::{
     contracts::traits::{
         access_control::*,
         pausable::*,

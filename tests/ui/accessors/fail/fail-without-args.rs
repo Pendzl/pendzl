@@ -1,5 +1,5 @@
-#[openbrush::storage_item]
-#[openbrush::accessors]
+#[pendzl::storage_item]
+#[pendzl::accessors]
 #[derive(Default, Debug)]
 pub struct AccessData {
     #[get]

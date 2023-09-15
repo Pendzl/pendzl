@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP37, PSP37Batch, PSP37Burnable, PSP37Mintable, PSP37Enumerable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37, PSP37Batch, PSP37Burnable, PSP37Mintable, PSP37Enumerable)]
+#[pendzl::contract]
 pub mod my_psp37_enumerable {
-    use openbrush::traits::Storage;
+    use pendzl::traits::Storage;
 
     #[derive(Default, Storage)]
     #[ink(storage)]
@@ -23,7 +23,7 @@ pub mod my_psp37_enumerable {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp37::{
+        use pendzl::contracts::psp37::{
             extensions::{
                 burnable::psp37burnable_external::PSP37Burnable,
                 enumerable::psp37enumerable_external::PSP37Enumerable,

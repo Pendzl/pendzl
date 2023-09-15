@@ -27,14 +27,14 @@ pub use crate::{
     },
 };
 pub use ink::env::DefaultEnvironment;
-use openbrush::traits::{
-    AccountId,
-    Balance,
-    Storage,
-};
 pub use pallet_assets_chain_extension::traits::{
     Error,
     Origin,
+};
+use pendzl::traits::{
+    AccountId,
+    Balance,
+    Storage,
 };
 pub use psp22_pallet::{
     Internal as _,

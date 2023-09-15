@@ -24,7 +24,8 @@ pub use crate::{
     traits::payment_splitter::*,
 };
 use ink::prelude::vec::Vec;
-use openbrush::{
+pub use payment_splitter::Internal as _;
+use pendzl::{
     storage::Mapping,
     traits::{
         AccountId,
@@ -32,10 +33,9 @@ use openbrush::{
         Storage,
     },
 };
-pub use payment_splitter::Internal as _;
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub total_shares: Balance,

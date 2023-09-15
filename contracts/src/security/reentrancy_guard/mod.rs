@@ -24,13 +24,13 @@ pub use crate::{
     traits::errors::ReentrancyGuardError,
 };
 use ink::storage::traits::Storable;
-use openbrush::{
+use pendzl::{
     modifier_definition,
     traits::Storage,
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub status: u8,

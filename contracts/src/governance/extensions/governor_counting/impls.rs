@@ -28,7 +28,7 @@ pub use crate::{
     governance::extensions::governor_counting,
     traits::governance::extensions::governor_counting::*,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Storage,
 };

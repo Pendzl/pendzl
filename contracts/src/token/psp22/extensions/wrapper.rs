@@ -31,7 +31,7 @@ use ink::{
     env::CallFlags,
     prelude::vec::Vec,
 };
-use openbrush::traits::{
+use pendzl::traits::{
     AccountId,
     Balance,
     Storage,
@@ -45,7 +45,7 @@ pub use psp22::{
 pub use wrapper::Internal as _;
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     #[lazy]
     pub underlying: Option<AccountId>,
@@ -86,26 +86,17 @@ pub trait Internal {
     fn _underlying(&mut self) -> Option<AccountId>;
 }
 
-pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal + PSP22 {
+pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal {
     fn _recover(&mut self, account: AccountId) -> Result<Balance, PSP22Error> {
-        let value = Internal::_underlying_balance(self) - self.total_supply();
+        let value = Internal::_underlying_balance(self) - self._total_supply();
         psp22::Internal::_mint_to(self, account, value)?;
         Ok(value)
     }
 
     fn _deposit(&mut self, amount: Balance) -> Result<(), PSP22Error> {
         if let Some(underlying) = Internal::_underlying(self) {
-            PSP22Ref::transfer_from_builder(
-                &underlying,
-                Self::env().caller(),
-                Self::env().account_id(),
-                amount,
-                Vec::<u8>::new(),
-            )
-            .call_flags(CallFlags::default().set_allow_reentry(true))
-            .try_invoke()
-            .unwrap()
-            .unwrap()
+            let mut psp22: PSP22Ref = underlying.into();
+            psp22.transfer_from(Self::env().caller(), Self::env().account_id(), amount, Vec::<u8>::new())
         } else {
             Err(PSP22Error::Custom(String::from("Underlying not initialized")))
         }
@@ -113,11 +104,8 @@ pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal + PSP22 {
 
     fn _withdraw(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         if let Some(underlying) = Internal::_underlying(self) {
-            PSP22Ref::transfer_builder(&underlying, account, amount, Vec::<u8>::new())
-                .call_flags(CallFlags::default().set_allow_reentry(true))
-                .try_invoke()
-                .unwrap()
-                .unwrap()
+            let mut psp22: PSP22Ref = underlying.into();
+            psp22.transfer(account, amount, Vec::<u8>::new())
         } else {
             Err(PSP22Error::Custom(String::from("Underlying not initialized")))
         }
@@ -125,7 +113,8 @@ pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal + PSP22 {
 
     fn _underlying_balance(&mut self) -> Balance {
         if let Some(underlying) = Internal::_underlying(self) {
-            PSP22Ref::balance_of(&underlying, Self::env().account_id())
+            let psp22: PSP22Ref = underlying.into();
+            psp22.balance_of(Self::env().account_id())
         } else {
             0
         }

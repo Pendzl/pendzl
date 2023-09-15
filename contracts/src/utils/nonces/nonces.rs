@@ -24,7 +24,7 @@ pub use crate::{
     nonces,
     traits::nonces::*,
 };
-use openbrush::{
+use pendzl::{
     storage::Mapping,
     traits::{
         AccountId,
@@ -33,7 +33,7 @@ use openbrush::{
 };
 
 #[derive(Default, Debug)]
-#[openbrush::storage_item]
+#[pendzl::storage_item]
 pub struct Data {
     pub nonces: Mapping<AccountId, u64>,
 }

@@ -20,14 +20,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp37")]
-#[openbrush::implementation(PSP37, PSP37Batch)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP37, PSP37Batch)]
+#[pendzl::contract]
 mod psp37_batch {
     use ink::codegen::{
         EmitEvent,
         Env,
     };
-    use openbrush::{
+    use pendzl::{
         test_utils::{
             accounts,
             change_caller,
@@ -71,7 +71,7 @@ mod psp37_batch {
         psp37: psp37::Data,
     }
 
-    #[openbrush::overrider(psp37::Internal)]
+    #[pendzl::overrider(psp37::Internal)]
     fn _emit_approval_event(&self, owner: AccountId, operator: AccountId, id: Option<Id>, value: Balance) {
         self.env().emit_event(Approval {
             owner,
@@ -81,7 +81,7 @@ mod psp37_batch {
         });
     }
 
-    #[openbrush::overrider(psp37::Internal)]
+    #[pendzl::overrider(psp37::Internal)]
     fn _emit_transfer_batch_event(
         &self,
         from: Option<AccountId>,
