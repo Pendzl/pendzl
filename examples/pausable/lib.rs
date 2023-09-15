@@ -20,9 +20,8 @@ pub mod my_pausable {
         }
 
         #[ink(message)]
-        // #[pendzl::modifiers(when_not_paused)]
         pub fn flip(&mut self) -> Result<(), PausableError> {
-            when_not_paused(self)?;
+            ensure_not_paused(self)?;
             self.flipped = !self.flipped;
             Ok(())
         }

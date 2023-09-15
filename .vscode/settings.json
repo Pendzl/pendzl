@@ -3,6 +3,8 @@
         "./Cargo.toml",
         "./examples/ownable/Cargo.toml",
         "./examples/psp22/Cargo.toml",
-        "./examples/access_control/Cargo.toml"
+        "./examples/pausable/Cargo.toml",
+        "./examples/access_control/Cargo.toml",
+        "./contracts/Cargo.toml",
     ]
 }
