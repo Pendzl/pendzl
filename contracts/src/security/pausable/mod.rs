@@ -46,7 +46,7 @@ where
     E: From<PausableError>,
 {
     if !instance.data().paused.get_or_default() {
-        return Err(From::from(PausableError::Paused))
+        return Err(From::from(PausableError::NotPaused))
     }
 
     Ok(())
