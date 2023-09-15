@@ -24,16 +24,17 @@
 // use proc_macro::TokenStream;
 
 use openbrush_lang_codegen::{
+    // trait_definition,
+    // wrapper,
     // accessors,
     // contract,
-    // implementation,
+    implementation,
     // modifier_definition,
     // modifiers,
     storage_derive,
     storage_item,
-    // trait_definition,
-    // wrapper,
 };
+use proc_macro::TokenStream;
 
 /// Entry point for use OpenBrush's macros in ink! smart contracts.
 ///
@@ -521,10 +522,10 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
 // /     }
 // / }
 // / ```
-// #[proc_macro_attribute]
-// pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
-//     implementation::generate(attrs.into(), ink_module.into()).into()
-// }
+#[proc_macro_attribute]
+pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
+    implementation::generate(attrs.into(), ink_module.into()).into()
+}
 
 synstructure::decl_attribute!(
     [storage_item] =>

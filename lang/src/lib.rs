@@ -27,4 +27,7 @@ pub mod test_utils;
 pub mod traits;
 pub mod utils;
 
-pub use openbrush_lang_macro::storage_item;
+pub use openbrush_lang_macro::{
+    implementation,
+    storage_item,
+};

@@ -1895,6 +1895,9 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
             fn _init_with_owner(&mut self, owner: AccountId) {
                 ownable::InternalImpl::_init_with_owner(self, owner)
             }
+            fn _only_owner(&self) -> Result<(), OwnableError> {
+                ownable::InternalImpl::_only_owner(self)
+            }
         }
     ))
     .expect("Should parse");

@@ -1,10 +1,13 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[openbrush::implementation(Ownable, PSP37, PSP37Burnable, PSP37Mintable)]
-#[openbrush::contract]
+#[ink::contract]
 pub mod ownable {
     use openbrush::{
-        modifiers,
+        contracts::{
+            ownable::OwnableImpl,
+            psp37::extensions::mintable::PSP37MintableImpl,
+        },
         traits::Storage,
     };
 
@@ -26,24 +29,20 @@ pub mod ownable {
         }
     }
 
-    #[default_impl(PSP37Mintable)]
-    #[modifiers(only_owner)]
-    fn mint(&mut self) {}
+    #[overrider(PSP37Mintable)]
+    fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+        ownable::InternalImpl::_only_owner(self)?;
+        PSP37MintableImpl::mint(self, to, ids_amounts)
+    }
 
-    #[default_impl(PSP37Burnable)]
-    #[modifiers(only_owner)]
-    fn burn(&mut self) {}
+    #[overrider(PSP37Burnable)]
+    fn burn(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+        ownable::InternalImpl::_only_owner(self)?;
+        PSP37BurnableImpl::burn(self, from, ids_amounts)
+    }
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::{
-            ownable::ownable_external::Ownable,
-            psp37::{
-                extensions::mintable::psp37mintable_external::PSP37Mintable,
-                psp37_external::PSP37,
-            },
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
