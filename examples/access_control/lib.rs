@@ -1,10 +1,16 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP34, PSP34Burnable, PSP34Mintable, AccessControl)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_access_control {
     use pendzl::{
-        modifiers,
+        contracts::{
+            access_control::{self,},
+            psp34::extensions::{
+                burnable::PSP34BurnableImpl,
+                mintable::PSP34MintableImpl,
+            },
+        },
         traits::Storage,
     };
 
@@ -23,13 +29,17 @@ pub mod my_access_control {
     // And will reduce the chance to have overlapping roles.
     const MINTER: RoleType = ink::selector_id!("MINTER");
 
-    #[default_impl(PSP34Burnable)]
-    #[modifiers(only_role(MINTER))]
-    fn burn() {}
+    #[overrider(PSP34Burnable)]
+    fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+        access_control::InternalImpl::_check_role(self, MINTER, Some(self.env().caller()))?;
+        PSP34BurnableImpl::burn(self, account, id)
+    }
 
-    #[default_impl(PSP34Mintable)]
-    #[modifiers(only_role(MINTER))]
-    fn mint() {}
+    #[overrider(PSP34Mintable)]
+    fn mint(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+        access_control::InternalImpl::_check_role(self, MINTER, Some(self.env().caller()))?;
+        PSP34MintableImpl::mint(self, account, id)
+    }
 
     impl Contract {
         #[ink(constructor)]
@@ -47,24 +57,12 @@ pub mod my_access_control {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::{
-            access_control::accesscontrol_external::AccessControl,
-            psp34::{
-                extensions::{
-                    burnable::psp34burnable_external::PSP34Burnable,
-                    mintable::psp34mintable_external::PSP34Mintable,
-                },
-                psp34_external::PSP34,
-            },
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
-        use ink_e2e::{build_message};
+        use ink_e2e::build_message;
 
         use pendzl::contracts::access_control::DEFAULT_ADMIN_ROLE;
-
         use test_helpers::{
             address_of,
             grant_role,

@@ -24,49 +24,34 @@ pub use crate::{
     traits::access_control::*,
 };
 pub use access_control::Internal as _;
-use pendzl::{
-    modifier_definition,
-    modifiers,
-    storage::{
-        Mapping,
-        TypeGuard,
-        ValueGuard,
-    },
-    traits::{
-        AccountId,
-        DefaultEnv,
-        Storage,
-    },
+use ink::storage::Mapping;
+use pendzl::traits::{
+    AccountId,
+    DefaultEnv,
+    Storage,
 };
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
 pub struct Data {
-    pub admin_roles: Mapping<RoleType, RoleType, ValueGuard<RoleType>>,
-    pub members: Mapping<(RoleType, Option<AccountId>), (), MembersKey>,
+    pub admin_roles: Mapping<RoleType, RoleType>,
+    pub members: Mapping<(RoleType, Option<AccountId>), ()>,
 }
-
-pub struct MembersKey;
-
-impl<'a> TypeGuard<'a> for MembersKey {
-    type Type = &'a (RoleType, &'a Option<AccountId>);
-}
-
 pub const DEFAULT_ADMIN_ROLE: RoleType = 0;
 
 /// Modifier that checks that `caller` has a specific role.
-#[modifier_definition]
-pub fn only_role<T, F, R, E>(instance: &mut T, body: F, role: RoleType) -> Result<R, E>
-where
-    T: Internal,
-    F: FnOnce(&mut T) -> Result<R, E>,
-    E: From<AccessControlError>,
-{
-    if let Err(err) = instance._check_role(role, Some(T::env().caller())) {
-        return Err(From::from(err))
-    }
-    body(instance)
-}
+// #[modifier_definition]
+// pub fn only_role<T, F, R, E>(instance: &mut T, body: F, role: RoleType) -> Result<R, E>
+// where
+//     T: Internal,
+//     F: FnOnce(&mut T) -> Result<R, E>,
+//     E: From<AccessControlError>,
+// {
+//     if let Err(err) = instance._check_role(role, Some(T::env().caller())) {
+//         return Err(From::from(err))
+//     }
+//     body(instance)
+// }
 
 pub trait AccessControlImpl: Internal + MembersManager + Sized {
     fn has_role(&self, role: RoleType, address: Option<AccountId>) -> bool {
@@ -77,8 +62,9 @@ pub trait AccessControlImpl: Internal + MembersManager + Sized {
         Internal::_get_role_admin(self, role)
     }
 
-    #[modifiers(only_role(self.get_role_admin(role)))]
     fn grant_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
+        self._check_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
+
         if self._has_role(role, &account) {
             return Err(AccessControlError::RoleRedundant)
         }
@@ -87,8 +73,8 @@ pub trait AccessControlImpl: Internal + MembersManager + Sized {
         Ok(())
     }
 
-    #[modifiers(only_role(self.get_role_admin(role)))]
     fn revoke_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
+        self._check_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
         self._check_role(role, account)?;
         self._do_revoke_role(role, account);
         Ok(())
@@ -118,15 +104,15 @@ pub trait MembersManager {
 
 pub trait MembersManagerImpl: Storage<Data> {
     fn _has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
-        self.data().members.contains(&(role, address))
+        self.data().members.contains(&(role, *address))
     }
 
     fn _add(&mut self, role: RoleType, member: &Option<AccountId>) {
-        self.data().members.insert(&(role, member), &());
+        self.data().members.insert(&(role, *member), &());
     }
 
     fn _remove(&mut self, role: RoleType, member: &Option<AccountId>) {
-        self.data().members.remove(&(role, member));
+        self.data().members.remove(&(role, *member));
     }
 
     fn _get_role_admin(&self, role: RoleType) -> Option<RoleType> {
