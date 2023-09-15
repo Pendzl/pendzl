@@ -28,13 +28,9 @@ pub use pausable::{
     InternalImpl as _,
     PausableImpl as _,
 };
-use pendzl::{
-    modifier_definition,
-    modifiers,
-    traits::{
-        AccountId,
-        Storage,
-    },
+use pendzl::traits::{
+    AccountId,
+    Storage,
 };
 
 #[derive(Default, Debug)]
@@ -42,34 +38,6 @@ use pendzl::{
 pub struct Data {
     #[lazy]
     pub paused: bool,
-}
-
-/// Modifier to make a function callable only when the contract is paused.
-#[modifier_definition]
-pub fn when_paused<T, F, R, E>(instance: &mut T, body: F) -> Result<R, E>
-where
-    T: Storage<Data>,
-    F: FnOnce(&mut T) -> Result<R, E>,
-    E: From<PausableError>,
-{
-    if !instance.data().paused.get_or_default() {
-        return Err(From::from(PausableError::NotPaused))
-    }
-    body(instance)
-}
-
-/// Modifier to make a function callable only when the contract is not paused.
-#[modifier_definition]
-pub fn when_not_paused<T, F, R, E>(instance: &mut T, body: F) -> Result<R, E>
-where
-    T: Storage<Data>,
-    F: FnOnce(&mut T) -> Result<R, E>,
-    E: From<PausableError>,
-{
-    if instance.data().paused.get_or_default() {
-        return Err(From::from(PausableError::Paused))
-    }
-    body(instance)
 }
 
 pub trait PausableImpl: Storage<Data> + Internal {
@@ -98,6 +66,10 @@ pub trait Internal {
 
     /// Function which changes state to unpaused if paused and vice versa
     fn _switch_pause(&mut self) -> Result<(), PausableError>;
+
+    fn _ensure_paused(&self) -> Result<(), PausableError>;
+
+    fn _ensure_not_paused(&self) -> Result<(), PausableError>;
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
@@ -109,15 +81,15 @@ pub trait InternalImpl: Storage<Data> + Internal {
         self.data().paused.get_or_default()
     }
 
-    #[modifiers(when_not_paused)]
     fn _pause(&mut self) -> Result<(), PausableError> {
+        Internal::_ensure_not_paused(self)?;
         self.data().paused.set(&true);
         Internal::_emit_paused_event(self, Self::env().caller());
         Ok(())
     }
 
-    #[modifiers(when_paused)]
     fn _unpause(&mut self) -> Result<(), PausableError> {
+        Internal::_ensure_paused(self)?;
         self.data().paused.set(&false);
         Internal::_emit_unpaused_event(self, Self::env().caller());
         Ok(())
@@ -129,5 +101,21 @@ pub trait InternalImpl: Storage<Data> + Internal {
         } else {
             Internal::_pause(self)
         }
+    }
+
+    fn _ensure_paused(&self) -> Result<(), PausableError> {
+        if !self.data().paused.get_or_default() {
+            return Err(From::from(PausableError::NotPaused))
+        }
+
+        Ok(())
+    }
+
+    fn _ensure_not_paused(&self) -> Result<(), PausableError> {
+        if self.data().paused.get_or_default() {
+            return Err(From::from(PausableError::Paused))
+        }
+
+        Ok(())
     }
 }

@@ -80,8 +80,8 @@ pub trait LendingImpl: Storage<data::Data> + lending_internal::Internal + Storag
             .unwrap_or(false)
     }
 
-    #[modifiers(when_not_paused)]
     fn lend_assets(&mut self, asset_address: AccountId, amount: Balance) -> Result<(), LendingError> {
+        self._ensure_not_paused()?;
         // we will be using these often so we store them in variables
         let lender = Self::env().caller();
         let contract = Self::env().account_id();
@@ -111,13 +111,13 @@ pub trait LendingImpl: Storage<data::Data> + lending_internal::Internal + Storag
         Ok(())
     }
 
-    #[modifiers(when_not_paused)]
     fn borrow_assets(
         &mut self,
         asset_address: AccountId,
         collateral_address: AccountId,
         amount: Balance,
     ) -> Result<(), LendingError> {
+        self._ensure_not_paused()?;
         // we will be using these often so we store them in variables
         let borrower = Self::env().caller();
         let contract = Self::env().account_id();

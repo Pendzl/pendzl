@@ -63,8 +63,8 @@ mod pausable {
         }
 
         #[ink(message)]
-        #[pendzl::modifiers(when_paused)]
         pub fn flip(&mut self) -> Result<bool, PausableError> {
+            self._ensure_paused()?;
             let previous = self.flipped;
             self.flipped = !previous;
 
