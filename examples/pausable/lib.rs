@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(Pausable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_pausable {
     use pendzl::traits::Storage;
 
@@ -20,8 +20,9 @@ pub mod my_pausable {
         }
 
         #[ink(message)]
-        #[pendzl::modifiers(when_not_paused)]
+        // #[pendzl::modifiers(when_not_paused)]
         pub fn flip(&mut self) -> Result<(), PausableError> {
+            when_not_paused(self)?;
             self.flipped = !self.flipped;
             Ok(())
         }
