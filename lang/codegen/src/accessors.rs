@@ -57,7 +57,7 @@ pub fn accessors(attrs: TokenStream, s: synstructure::Structure) -> TokenStream 
     let result = quote! {
         #item
 
-        #[openbrush::trait_definition]
+        #[ink::trait_definition]
         pub trait #trait_ident : Storage<#struct_ident>{
             #(#get_impls)*
             #(#set_impls)*

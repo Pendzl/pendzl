@@ -19,7 +19,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-use crate::internal::is_attr;
 use proc_macro2::TokenStream;
 use quote::{
     format_ident,
@@ -36,6 +35,13 @@ use syn::{
     Field,
     Fields,
 };
+
+#[inline]
+pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
+    attrs
+        .iter()
+        .any(|attr| attr.path.segments.last().expect("No segments in path").ident == ident)
+}
 
 fn wrap_upgradeable_fields(structure_name: &str, fields: Fields) -> (Vec<Field>, Vec<Option<TokenStream>>) {
     fields

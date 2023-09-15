@@ -53,7 +53,7 @@ You can use the ink! trait as a native rust trait with several restrictions rega
 external functions(functions marked `#[ink(message)]`).
 
 ```rust
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Governance: AccessControl {
     #[ink(message)]
     fn execute(&mut self, transaction: Transaction) -> Result<(), GovernanceError> {
@@ -89,7 +89,7 @@ to call methods of that trait from some contract in the network
 
 ```rust
 // Somewhere defined trait
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait Trait1 {
     #[ink(message)]
     fn foo(&mut self) -> bool;
@@ -97,8 +97,6 @@ pub trait Trait1 {
 
 // You can create wrapper in the place where you defined the trait
 // Or if you import **everything** from the file where you define trait
-#[openbrush::wrapper]
-type Trait1Ref = dyn Trait1;
 
 {
     // It should be `AccountId` of contract in the network that implements `Trait1` trait

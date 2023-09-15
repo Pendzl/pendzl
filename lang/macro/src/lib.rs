@@ -21,18 +21,18 @@
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-use proc_macro::TokenStream;
+// use proc_macro::TokenStream;
 
 use openbrush_lang_codegen::{
-    accessors,
-    contract,
-    implementation,
-    modifier_definition,
-    modifiers,
+    // accessors,
+    // contract,
+    // implementation,
+    // modifier_definition,
+    // modifiers,
     storage_derive,
     storage_item,
-    trait_definition,
-    wrapper,
+    // trait_definition,
+    // wrapper,
 };
 
 /// Entry point for use OpenBrush's macros in ink! smart contracts.
@@ -42,11 +42,11 @@ use openbrush_lang_codegen::{
 /// The macro consumes OpenBrush's macros to simplify the usage of the library.
 /// After consumption, it pastes ink! code and then ink!'s macros will be processed.
 ///
-/// This macro consumes impl section for traits defined with [`#[openbrush::trait_definition]`](`macro@crate::trait_definition`).
-#[proc_macro_attribute]
-pub fn contract(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
-    contract::generate(_attrs.into(), ink_module.into()).into()
-}
+/// This macro consumes impl section for traits defined with [`#[ink::trait_definition]`](`macro@crate::trait_definition`).
+// #[proc_macro_attribute]
+// pub fn contract(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
+//     contract::generate(_attrs.into(), ink_module.into()).into()
+// }
 
 /// Defines extensible trait in the scope of `openbrush::contract`.
 /// It is a common rust trait, so you can use any features of rust inside of this trait.
@@ -74,7 +74,7 @@ pub fn contract(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
 ///     pub balances: Mapping<AccountId, Balance>,
 /// }
 ///
-/// #[openbrush::trait_definition]
+/// #[ink::trait_definition]
 /// pub trait PSP22: Storage<Data> {
 ///     /// Returns the account Balance for the specified `owner`.
 ///     #[ink(message)]
@@ -121,7 +121,7 @@ pub fn contract(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
 ///         pub allowances: Mapping<(AccountId, AccountId), Balance, ManualKey<STORAGE_KEY_3>>,
 ///     }
 ///
-///     #[openbrush::trait_definition]
+///     #[ink::trait_definition]
 ///     pub trait PSP22Example: Storage<Data> {
 ///         /// Returns the account Balance for the specified `owner`.
 ///         #[ink(message)]
@@ -165,10 +165,10 @@ pub fn contract(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
 ///     }
 /// }
 /// ```
-#[proc_macro_attribute]
-pub fn trait_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStream {
-    trait_definition::generate(_attrs.into(), _input.into()).into()
-}
+// #[proc_macro_attribute]
+// pub fn trait_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStream {
+//     trait_definition::generate(_attrs.into(), _input.into()).into()
+// }
 
 /// This macro only checks that some free-standing function satisfies a set of rules.
 ///
@@ -196,10 +196,10 @@ pub fn trait_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStream
 ///     instance.initialized = true;
 /// }
 /// ```
-#[proc_macro_attribute]
-pub fn modifier_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStream {
-    modifier_definition::generate(_attrs.into(), _input.into()).into()
-}
+// #[proc_macro_attribute]
+// pub fn modifier_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStream {
+//     modifier_definition::generate(_attrs.into(), _input.into()).into()
+// }
 
 /// Macro calls every modifier function by passing self and the code of function's body.
 /// It means that modifiers must be available in the scope of the marked method.
@@ -337,18 +337,18 @@ pub fn modifier_definition(_attrs: TokenStream, _input: TokenStream) -> TokenStr
 ///     }
 /// }
 /// ```
-#[proc_macro_attribute]
-pub fn modifiers(_attrs: TokenStream, method: TokenStream) -> TokenStream {
-    modifiers::generate(_attrs.into(), method.into()).into()
-}
+// #[proc_macro_attribute]
+// pub fn modifiers(_attrs: TokenStream, method: TokenStream) -> TokenStream {
+//     modifiers::generate(_attrs.into(), method.into()).into()
+// }
 
 /// This macro allows you to define a wrapper type for traits defined via
-/// [`#[openbrush::trait_definition]`](`macro@crate::trait_definition`).
+/// [`#[ink::trait_definition]`](`macro@crate::trait_definition`).
 /// It is a wrapper for `AccountId` that knows how to do cross-contract calls to another contract.
 ///
 /// To define a wrapper you need to use the follow construction:
 /// `type TraitName = dyn Trait_1 + Trait_2 ... + Trait_n`, where `Trait_i` contains ink! messages
-/// and defined via [`#[openbrush::trait_definition]`](`macro@crate::trait_definition`).
+/// and defined via [`#[ink::trait_definition]`](`macro@crate::trait_definition`).
 /// If `Trait_i` doesn't contain ink! messages, then you don't need to create a wrapper for that trait,
 /// because the wrapped methods are created only for ink! messages. Otherwise, you will get an error like
 ///
@@ -366,16 +366,14 @@ pub fn modifiers(_attrs: TokenStream, method: TokenStream) -> TokenStream {
 /// {
 /// use openbrush::traits::AccountId;
 ///
-/// #[openbrush::trait_definition]
+/// #[ink::trait_definition]
 /// pub trait Trait1 {
 ///     #[ink(message)]
 ///     fn foo(&mut self) -> bool;
 /// }
 ///
-/// #[openbrush::wrapper]
-/// type Trait1Ref = dyn Trait1;
-///
-/// #[openbrush::trait_definition]
+/// ///
+/// #[ink::trait_definition]
 /// pub trait Trait2 {
 ///     #[ink(message)]
 ///     fn bar(&mut self, callee: openbrush::traits::AccountId) {
@@ -383,9 +381,7 @@ pub fn modifiers(_attrs: TokenStream, method: TokenStream) -> TokenStream {
 ///     }
 /// }
 ///
-/// #[openbrush::wrapper]
-/// type Trait1and2Ref = dyn Trait1 + Trait2;
-///
+/// ///
 /// // Example of explicit call
 /// let to: AccountId = [0; 32].into();
 /// let callee: AccountId = [0; 32].into();
@@ -401,10 +397,10 @@ pub fn modifiers(_attrs: TokenStream, method: TokenStream) -> TokenStream {
 /// let ink_result: Result<bool, ink::LangError> = builder_for_foo.try_invoke().unwrap();
 /// }
 /// ```
-#[proc_macro_attribute]
-pub fn wrapper(attrs: TokenStream, input: TokenStream) -> TokenStream {
-    wrapper::generate(attrs.into(), input.into()).into()
-}
+// #[proc_macro_attribute]
+// pub fn wrapper(attrs: TokenStream, input: TokenStream) -> TokenStream {
+//     wrapper::generate(attrs.into(), input.into()).into()
+// }
 
 /// The macro implements `openbrush::traits::Storage`
 /// trait for each field marked by `#[storage_field]` attribute,
@@ -425,110 +421,110 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
     storage_derive::storage_derive(item.into()).into()
 }
 
-synstructure::decl_attribute!(
-    [accessors] =>
-    /// Macro that automatically implements accessors like get/set for struct fields, that implements `scale::Encode`
-    /// and `scale::Decode` traits. You should specify the getters trait naming in the macro's attribute.
-    /// Also, fields that you want getters to be generated, should be marked by `#[get]` attribute.
-    /// Fields, that you want setters to be generated, should be marked by `#[set]` attribute.
-    /// The name of the accessor message will be concatenation of `get/set` + `_` + field's name.
-    ///
-    /// # Example:
-    /// ```skip
-    ///
-    /// use openbrush::traits::Storage;
-    ///
-    /// #[openbrush::accessors(SomeStructGetters)]
-    /// #[derive(Default)]
-    /// #[ink::storage_item]
-    /// pub struct SomeStruct {
-    ///     #[get]
-    ///     a: u32,
-    ///     b: u32,
-    ///     #[set]
-    ///     c: u32,
-    /// }
-    ///
-    /// #[openbrush::contract]
-    /// pub mod contract {
-    ///     use crate::*;
-    ///     use openbrush::traits::Storage;
-    ///
-    ///     #[ink(storage)]
-    ///     #[derive(Storage, Default)]
-    ///     pub struct Contract {
-    ///         #[storage_field]
-    ///         some_struct: SomeStruct,
-    ///     }
-    ///
-    ///     impl SomeStructGetters for Contract {}
-    ///
-    ///     impl Contract {
-    ///         #[ink(constructor)]
-    ///         pub fn new() -> Self {
-    ///             Self::default()
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    accessors::accessors
-);
+// synstructure::decl_attribute!(
+//     [accessors] =>
+// / Macro that automatically implements accessors like get/set for struct fields, that implements `scale::Encode`
+// / and `scale::Decode` traits. You should specify the getters trait naming in the macro's attribute.
+// / Also, fields that you want getters to be generated, should be marked by `#[get]` attribute.
+// / Fields, that you want setters to be generated, should be marked by `#[set]` attribute.
+// / The name of the accessor message will be concatenation of `get/set` + `_` + field's name.
+// /
+// / # Example:
+// / ```skip
+// /
+// / use openbrush::traits::Storage;
+// /
+// / #[openbrush::accessors(SomeStructGetters)]
+// / #[derive(Default)]
+// / #[ink::storage_item]
+// / pub struct SomeStruct {
+// /     #[get]
+// /     a: u32,
+// /     b: u32,
+// /     #[set]
+// /     c: u32,
+// / }
+// /
+// / #[openbrush::contract]
+// / pub mod contract {
+// /     use crate::*;
+// /     use openbrush::traits::Storage;
+// /
+// /     #[ink(storage)]
+// /     #[derive(Storage, Default)]
+// /     pub struct Contract {
+// /         #[storage_field]
+// /         some_struct: SomeStruct,
+// /     }
+// /
+// /     impl SomeStructGetters for Contract {}
+// /
+// /     impl Contract {
+// /         #[ink(constructor)]
+// /         pub fn new() -> Self {
+// /             Self::default()
+// /         }
+// /     }
+// / }
+// / ```
+//     accessors::accessors
+// );
 
-/// This macro implements the default traits defined in OpenBrush, while also allowing users
-/// to override them with `#[overrider]` or `#[default_impl]` attributes. `#[overrider]` is used when
-/// you want to change the behavior of the method by your implementation. `#[default_impl]` is used when
-/// you want to keep the default implementation from OpenBrush, but you want to attach some modifiers to
-/// that function.
-///
-/// # Example
-///
-/// ```skip
-/// #[openbrush::implementation(PSP22)]
-/// #[openbrush::contract]
-/// pub mod MyInkToken {
-///     use openbrush::traits::Storage;
-///     
-///     #[ink(storage)]
-///     #[derive(Storage)]
-///     pub struct MyInkToken {
-///         #[storage_field]
-///         psp22: psp22::Data
-///     }
-///
-///     // this will override a function from psp22::Internal
-///     #[overrider(psp22::Internal)]
-///     fn _before_token_transfer(
-///         &mut self,
-///         from: Option<&AccountId>,
-///         to: Option<&AccountId>,
-///         amount: &Balance,
-///     ) -> Result<(), PSP22Error> {
-///         // here we can change the behavior before token transfer
-///     }
-///
-///     // this will override a function from PSP22
-///     #[overrider(PSP22)]
-///     fn balance_of(&self, owner: AccountId) -> Balance {
-///          // here we can change the behavior of balance_of
-///     }
-///
-///     // this will keep the default implementation of this method,
-///     // however, it will add the modifier (and possibly other attributes defined by user)
-///     // to the function. In this case, we don't even have to worry about the attributes and
-///     // return type of the function
-///     #[default_impl(PSP22)]
-///     #[modifiers(...)]
-///     fn transfer_from() {}
-///
-///     impl Contract {
-///         // we can add constructor and other messages
-///     }
-/// }
-/// ```
-#[proc_macro_attribute]
-pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
-    implementation::generate(attrs.into(), ink_module.into()).into()
-}
+// / This macro implements the default traits defined in OpenBrush, while also allowing users
+// / to override them with `#[overrider]` or `#[default_impl]` attributes. `#[overrider]` is used when
+// / you want to change the behavior of the method by your implementation. `#[default_impl]` is used when
+// / you want to keep the default implementation from OpenBrush, but you want to attach some modifiers to
+// / that function.
+// /
+// / # Example
+// /
+// / ```skip
+// / #[openbrush::implementation(PSP22)]
+// / #[openbrush::contract]
+// / pub mod MyInkToken {
+// /     use openbrush::traits::Storage;
+// /
+// /     #[ink(storage)]
+// /     #[derive(Storage)]
+// /     pub struct MyInkToken {
+// /         #[storage_field]
+// /         psp22: psp22::Data
+// /     }
+// /
+// /     // this will override a function from psp22::Internal
+// /     #[overrider(psp22::Internal)]
+// /     fn _before_token_transfer(
+// /         &mut self,
+// /         from: Option<&AccountId>,
+// /         to: Option<&AccountId>,
+// /         amount: &Balance,
+// /     ) -> Result<(), PSP22Error> {
+// /         // here we can change the behavior before token transfer
+// /     }
+// /
+// /     // this will override a function from PSP22
+// /     #[overrider(PSP22)]
+// /     fn balance_of(&self, owner: AccountId) -> Balance {
+// /          // here we can change the behavior of balance_of
+// /     }
+// /
+// /     // this will keep the default implementation of this method,
+// /     // however, it will add the modifier (and possibly other attributes defined by user)
+// /     // to the function. In this case, we don't even have to worry about the attributes and
+// /     // return type of the function
+// /     #[default_impl(PSP22)]
+// /     #[modifiers(...)]
+// /     fn transfer_from() {}
+// /
+// /     impl Contract {
+// /         // we can add constructor and other messages
+// /     }
+// / }
+// / ```
+// #[proc_macro_attribute]
+// pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
+//     implementation::generate(attrs.into(), ink_module.into()).into()
+// }
 
 synstructure::decl_attribute!(
     [storage_item] =>
