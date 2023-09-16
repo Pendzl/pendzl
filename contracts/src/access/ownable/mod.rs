@@ -50,13 +50,7 @@ pub struct Data {
 //     body(instance)
 // }
 
-pub trait OwnableImpl {
-    fn owner(&self) -> Option<AccountId>;
-    fn renounce_ownership(&mut self) -> Result<(), OwnableError>;
-    fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError>;
-}
-
-impl<T: Storage<Data> + Internal> OwnableImpl for T {
+pub trait OwnableImpl: Storage<Data> + Internal {
     fn owner(&self) -> Option<AccountId> {
         self.data().owner.get_or_default()
     }
