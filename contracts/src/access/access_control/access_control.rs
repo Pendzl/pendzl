@@ -63,7 +63,7 @@ pub trait AccessControlImpl: Internal + MembersManager + Sized {
     }
 
     fn grant_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-        self._check_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
+        self._ensure_has_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
 
         if self._has_role(role, &account) {
             return Err(AccessControlError::RoleRedundant)
@@ -74,8 +74,8 @@ pub trait AccessControlImpl: Internal + MembersManager + Sized {
     }
 
     fn revoke_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-        self._check_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
-        self._check_role(role, account)?;
+        self._ensure_has_role(Internal::_get_role_admin(self, role), Some(Self::env().caller()))?;
+        self._ensure_has_role(role, account)?;
         self._do_revoke_role(role, account);
         Ok(())
     }
@@ -84,7 +84,7 @@ pub trait AccessControlImpl: Internal + MembersManager + Sized {
         if account != Some(Self::env().caller()) {
             return Err(AccessControlError::InvalidCaller)
         }
-        self._check_role(role, account)?;
+        self._ensure_has_role(role, account)?;
         self._do_revoke_role(role, account);
         Ok(())
     }
@@ -144,7 +144,7 @@ pub trait Internal {
 
     fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType);
 
-    fn _check_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError>;
+    fn _ensure_has_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError>;
 
     fn _get_role_admin(&self, role: RoleType) -> RoleType;
 }
@@ -187,7 +187,7 @@ pub trait InternalImpl: Internal + MembersManager + Sized {
         Internal::_emit_role_admin_changed(self, role, old_admin, new_admin);
     }
 
-    fn _check_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
+    fn _ensure_has_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
         if !self._has_role(role, &account) {
             return Err(AccessControlError::MissingRole)
         }

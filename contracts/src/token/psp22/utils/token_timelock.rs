@@ -120,7 +120,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
     fn _withdraw(&mut self, amount: Balance) -> Result<(), PSP22TokenTimelockError> {
         if let Some(beneficiary) = Internal::_beneficiary(self) {
             if let Some(token) = Internal::_token(self) {
-                let call_result = build_call::<DefaultEnvironment>()
+                build_call::<DefaultEnvironment>()
                     .call(token)
                     .call_flags(CallFlags::default().set_allow_reentry(true))
                     .exec_input(

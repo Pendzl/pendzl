@@ -2088,8 +2088,8 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
                 access_control::InternalImpl::_set_role_admin(self, role, new_admin);
             }
 
-            fn _check_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-                access_control::InternalImpl::_check_role(self, role, account)
+            fn _ensure_has_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
+                access_control::InternalImpl::_ensure_has_role(self, role, account)
             }
 
             fn _get_role_admin(&self, role: RoleType) -> RoleType {

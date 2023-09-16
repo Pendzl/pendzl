@@ -27,13 +27,10 @@ use ink::{
     prelude::vec::Vec,
     storage::Mapping,
 };
-use pendzl::{
-    storage::TypeGuard,
-    traits::{
-        AccountId,
-        Balance,
-        Storage,
-    },
+use pendzl::traits::{
+    AccountId,
+    Balance,
+    Storage,
 };
 pub use psp22::{
     Internal as _,
