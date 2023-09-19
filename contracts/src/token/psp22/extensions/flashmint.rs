@@ -38,7 +38,6 @@ use ink::{
         DefaultEnvironment,
     },
     prelude::vec::Vec,
-    storage::traits::ResolverKey,
 };
 use pendzl::traits::{
     AccountId,
@@ -120,10 +119,11 @@ pub trait InternalImpl: Storage<psp22::Data> + Internal {
             .call_flags(CallFlags::default().set_allow_reentry(true))
             .exec_input(
                 ExecutionInput::new(ink::env::call::Selector::new(ink::selector_bytes!(
-                    "FlashBorrower::on_flash_loan"
+                    "FlashBorrower::on_flashloan"
                 )))
                 .push_arg(&Self::env().caller())
                 .push_arg(token)
+                .push_arg(amount)
                 .push_arg(fee)
                 .push_arg(data),
             )
