@@ -87,9 +87,6 @@ $ yarn build:release
 
 You can run unit tests by `RUSTFLAGS="-D warnings" cargo test --workspace --features test-all -- --test-threads=10` command from the root of the directory.
 
-To run integration test you need to start the node with contract-pallet.
-- [Setup and start the node with contract-pallet](https://github.com/paritytech/substrate-contracts-node)
-
 After you can run tests by `npm run test` command. It will build all contracts required for integration tests and run them.
 
 ## FAQ
