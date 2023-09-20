@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_contracts"
-version = "4.0.0-beta.1"
+version = "0.1.0"
 authors = [
     "Green Baneling <unknown>, Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
@@ -8,11 +8,9 @@ edition = "2021"
 
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/Brushfam/pendzl-contracts"
-documentation = "https://learn.brushfam.io/docs/pendzl"
-homepage = "https://brushfam.io/"
+repository = "https://github.com/Pendzl/pendzl"
 description = "Reusable implementations of contracts and traits for interaction with them."
-keywords = ["wasm", "brushfam", "smart-contracts", "blockchain", "ink"]
+keywords = ["wasm", "pendzl", "smart-contracts", "blockchain", "ink"]
 categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
