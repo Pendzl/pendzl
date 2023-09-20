@@ -64,23 +64,23 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp22::Internal for #storage_struct_name {
             fn _emit_transfer_event(&self, from: Option<AccountId>, to: Option<AccountId>, amount: Balance) {
-                psp22::InternalImpl::_emit_transfer_event(self, from, to, amount)
+                psp22::InternalImpl::_emit_transfer_event_impl(self, from, to, amount)
             }
 
             fn _emit_approval_event(&self, owner: AccountId, spender: AccountId, amount: Balance) {
-                psp22::InternalImpl::_emit_approval_event(self, owner, spender, amount)
+                psp22::InternalImpl::_emit_approval_event_impl(self, owner, spender, amount)
             }
 
             fn _total_supply(&self) -> Balance {
-                psp22::InternalImpl::_total_supply(self)
+                psp22::InternalImpl::_total_supply_impl(self)
             }
 
             fn _balance_of(&self, owner: &AccountId) -> Balance {
-                psp22::InternalImpl::_balance_of(self, owner)
+                psp22::InternalImpl::_balance_of_impl(self, owner)
             }
 
             fn _allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-                psp22::InternalImpl::_allowance(self, owner, spender)
+                psp22::InternalImpl::_allowance_impl(self, owner, spender)
             }
 
             fn _transfer_from_to(
@@ -90,7 +90,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
                 amount: Balance,
                 data: Vec<u8>,
             ) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_transfer_from_to(self, from, to, amount, data)
+                psp22::InternalImpl::_transfer_from_to_impl(self, from, to, amount, data)
             }
 
             fn _approve_from_to(
@@ -99,15 +99,15 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
                 spender: AccountId,
                 amount: Balance,
             ) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_approve_from_to(self, owner, spender, amount)
+                psp22::InternalImpl::_approve_from_to_impl(self, owner, spender, amount)
             }
 
             fn _mint_to(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_mint_to(self, account, amount)
+                psp22::InternalImpl::_mint_to_impl(self, account, amount)
             }
 
             fn _burn_from(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_burn_from(self, account, amount)
+                psp22::InternalImpl::_burn_from_impl(self, account, amount)
             }
 
             fn _before_token_transfer(
@@ -116,7 +116,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 amount: &Balance,
             ) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_before_token_transfer(self, from, to, amount)
+                psp22::InternalImpl::_before_token_transfer_impl(self, from, to, amount)
             }
 
             fn _after_token_transfer(
@@ -125,7 +125,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 amount: &Balance,
             ) -> Result<(), PSP22Error> {
-                psp22::InternalImpl::_after_token_transfer(self, from, to, amount)
+                psp22::InternalImpl::_after_token_transfer_impl(self, from, to, amount)
             }
         }
     ))
@@ -140,22 +140,22 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
         impl PSP22 for #storage_struct_name {
             #[ink(message)]
             fn total_supply(&self) -> Balance {
-                PSP22Impl::total_supply(self)
+                PSP22Impl::total_supply_impl(self)
             }
 
             #[ink(message)]
             fn balance_of(&self, owner: AccountId) -> Balance {
-                PSP22Impl::balance_of(self, owner)
+                PSP22Impl::balance_of_impl(self, owner)
             }
 
             #[ink(message)]
             fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance {
-                PSP22Impl::allowance(self, owner, spender)
+                PSP22Impl::allowance_impl(self, owner, spender)
             }
 
             #[ink(message)]
             fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
-                PSP22Impl::transfer(self, to, value, data)
+                PSP22Impl::transfer_impl(self, to, value, data)
             }
 
             #[ink(message)]
@@ -166,22 +166,22 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
                 value: Balance,
                 data: Vec<u8>,
             ) -> Result<(), PSP22Error> {
-                PSP22Impl::transfer_from(self, from, to, value, data)
+                PSP22Impl::transfer_from_impl(self, from, to, value, data)
             }
 
             #[ink(message)]
             fn approve(&mut self, spender: AccountId, value: Balance) -> Result<(), PSP22Error> {
-                PSP22Impl::approve(self, spender, value)
+                PSP22Impl::approve_impl(self, spender, value)
             }
 
             #[ink(message)]
             fn increase_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
-                PSP22Impl::increase_allowance(self, spender, delta_value)
+                PSP22Impl::increase_allowance_impl(self, spender, delta_value)
             }
 
             #[ink(message)]
             fn decrease_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
-                PSP22Impl::decrease_allowance(self, spender, delta_value)
+                PSP22Impl::decrease_allowance_impl(self, spender, delta_value)
             }
         }
     ))
@@ -214,7 +214,7 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
         impl PSP22Mintable for #storage_struct_name {
             #[ink(message)]
             fn mint(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                PSP22MintableImpl::mint(self, account, amount)
+                PSP22MintableImpl::mint_impl(self, account, amount)
             }
         }
     ))
@@ -244,7 +244,7 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
         impl PSP22Burnable for #storage_struct_name {
             #[ink(message)]
             fn burn(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                PSP22BurnableImpl::burn(self, account, amount)
+                PSP22BurnableImpl::burn_impl(self, account, amount)
             }
         }
     ))
@@ -280,10 +280,10 @@ pub(crate) fn impl_psp22_permit(impl_args: &mut ImplArgs) {
                 deadline: u64,
                 signature: Signature,
             ) -> Result<(), PSP22Error> {
-                permit::InternalImpl::_permit(self, owner, spender, amount, deadline, signature)
+                permit::InternalImpl::_permit_impl(self, owner, spender, amount, deadline, signature)
             }
             fn _domain_separator(&mut self) -> [u8; 32] {
-                permit::InternalImpl::_domain_separator(self)
+                permit::InternalImpl::_domain_separator_impl(self)
             }
         }
     ))
@@ -305,12 +305,12 @@ pub(crate) fn impl_psp22_permit(impl_args: &mut ImplArgs) {
                 deadline: u64,
                 signature: Signature,
             ) -> Result<(), PSP22Error> {
-                permit::PSP22PermitImpl::permit(self, owner, spender, value, deadline, signature)
+                permit::PSP22PermitImpl::permit_impl(self, owner, spender, value, deadline, signature)
             }
 
             #[ink(message)]
             fn domain_separator(&mut self) -> [u8; 32] {
-                permit::PSP22PermitImpl::domain_separator(self)
+                permit::PSP22PermitImpl::domain_separator_impl(self)
             }
         }
     ))
@@ -346,17 +346,17 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
         impl PSP22Metadata for #storage_struct_name {
             #[ink(message)]
             fn token_name(&self) -> Option<String> {
-                PSP22MetadataImpl::token_name(self)
+                PSP22MetadataImpl::token_name_impl(self)
             }
 
             #[ink(message)]
             fn token_symbol(&self) -> Option<String> {
-                PSP22MetadataImpl::token_symbol(self)
+                PSP22MetadataImpl::token_symbol_impl(self)
             }
 
             #[ink(message)]
             fn token_decimals(&self) -> u8 {
-                PSP22MetadataImpl::token_decimals(self)
+                PSP22MetadataImpl::token_decimals_impl(self)
             }
         }
     ))
@@ -385,15 +385,15 @@ pub(crate) fn impl_psp22_capped(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl capped::Internal for #storage_struct_name {
             fn _init_cap(&mut self, cap: Balance) -> Result<(), PSP22Error> {
-                capped::InternalImpl::_init_cap(self, cap)
+                capped::InternalImpl::_init_cap_impl(self, cap)
             }
 
             fn _is_cap_exceeded(&self, amount: &Balance) -> bool {
-                capped::InternalImpl::_is_cap_exceeded(self, amount)
+                capped::InternalImpl::_is_cap_exceeded_impl(self, amount)
             }
 
             fn _cap(&self) -> Balance {
-                capped::InternalImpl::_cap(self)
+                capped::InternalImpl::_cap_impl(self)
             }
         }
     ))
@@ -408,7 +408,7 @@ pub(crate) fn impl_psp22_capped(impl_args: &mut ImplArgs) {
         impl PSP22Capped for #storage_struct_name {
             #[ink(message)]
             fn cap(&self) -> Balance {
-                PSP22CappedImpl::cap(self)
+                PSP22CappedImpl::cap_impl(self)
             }
         }
     ))
@@ -440,27 +440,27 @@ pub(crate) fn impl_psp22_wrapper(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl wrapper::Internal for #storage_struct_name {
             fn _recover(&mut self, account: AccountId) -> Result<Balance, PSP22Error> {
-                wrapper::InternalImpl::_recover(self, account)
+                wrapper::InternalImpl::_recover_impl(self, account)
             }
 
             fn _deposit(&mut self, amount: Balance) -> Result<(), PSP22Error> {
-                wrapper::InternalImpl::_deposit(self, amount)
+                wrapper::InternalImpl::_deposit_impl(self, amount)
             }
 
             fn _withdraw(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                wrapper::InternalImpl::_withdraw(self, account, amount)
+                wrapper::InternalImpl::_withdraw_impl(self, account, amount)
             }
 
             fn _underlying_balance(&mut self) -> Balance {
-                wrapper::InternalImpl::_underlying_balance(self)
+                wrapper::InternalImpl::_underlying_balance_impl(self)
             }
 
             fn _init(&mut self, underlying: AccountId) {
-                wrapper::InternalImpl::_init(self, underlying)
+                wrapper::InternalImpl::_init_impl(self, underlying)
             }
 
             fn _underlying(&mut self) -> Option<AccountId> {
-                wrapper::InternalImpl::_underlying(self)
+                wrapper::InternalImpl::_underlying_impl(self)
             }
         }
     ))
@@ -475,12 +475,12 @@ pub(crate) fn impl_psp22_wrapper(impl_args: &mut ImplArgs) {
         impl PSP22Wrapper for #storage_struct_name {
             #[ink(message)]
             fn deposit_for(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                PSP22WrapperImpl::deposit_for(self, account, amount)
+                PSP22WrapperImpl::deposit_for_impl(self, account, amount)
             }
 
             #[ink(message)]
             fn withdraw_to(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                PSP22WrapperImpl::withdraw_to(self, account, amount)
+                PSP22WrapperImpl::withdraw_to_impl(self, account, amount)
             }
         }
     ))
@@ -512,7 +512,7 @@ pub(crate) fn impl_flashmint(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl flashmint::Internal for #storage_struct_name {
             fn _get_fee(&self, amount: Balance) -> Balance {
-                flashmint::InternalImpl::_get_fee(self, amount)
+                flashmint::InternalImpl::_get_fee_impl(self, amount)
             }
 
             fn _on_flashloan(
@@ -523,7 +523,7 @@ pub(crate) fn impl_flashmint(impl_args: &mut ImplArgs) {
                 amount: Balance,
                 data: Vec<u8>,
             ) -> Result<(), FlashLenderError> {
-                flashmint::InternalImpl::_on_flashloan(self, receiver_account, token, fee, amount, data)
+                flashmint::InternalImpl::_on_flashloan_impl(self, receiver_account, token, fee, amount, data)
             }
         }
     ))
@@ -538,12 +538,12 @@ pub(crate) fn impl_flashmint(impl_args: &mut ImplArgs) {
         impl FlashLender for #storage_struct_name {
             #[ink(message)]
             fn max_flashloan(&mut self, token: AccountId) -> Balance {
-                FlashLenderImpl::max_flashloan(self, token)
+                FlashLenderImpl::max_flashloan_impl(self, token)
             }
 
             #[ink(message)]
             fn flash_fee(&self, token: AccountId, amount: Balance) -> Result<Balance, FlashLenderError> {
-                FlashLenderImpl::flash_fee(self, token, amount)
+                FlashLenderImpl::flash_fee_impl(self, token, amount)
             }
 
             #[ink(message)]
@@ -554,7 +554,7 @@ pub(crate) fn impl_flashmint(impl_args: &mut ImplArgs) {
                 amount: Balance,
                 data: Vec<u8>,
             ) -> Result<(), FlashLenderError> {
-                FlashLenderImpl::flashloan(self, receiver_account, token, amount, data)
+                FlashLenderImpl::flashloan_impl(self, receiver_account, token, amount, data)
             }
         }
     ))
@@ -586,11 +586,11 @@ pub(crate) fn impl_token_timelock(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl token_timelock::Internal for #storage_struct_name {
             fn _withdraw(&mut self, amount: Balance) -> Result<(), PSP22TokenTimelockError> {
-                token_timelock::InternalImpl::_withdraw(self, amount)
+                token_timelock::InternalImpl::_withdraw_impl(self, amount)
             }
 
             fn _contract_balance(&mut self) -> Balance {
-                token_timelock::InternalImpl::_contract_balance(self)
+                token_timelock::InternalImpl::_contract_balance_impl(self)
             }
 
             fn _init(
@@ -599,15 +599,15 @@ pub(crate) fn impl_token_timelock(impl_args: &mut ImplArgs) {
                 beneficiary: AccountId,
                 release_time: Timestamp,
             ) -> Result<(), PSP22TokenTimelockError> {
-                token_timelock::InternalImpl::_init(self, token, beneficiary, release_time)
+                token_timelock::InternalImpl::_init_impl(self, token, beneficiary, release_time)
             }
 
             fn _token(&self) -> Option<AccountId> {
-                token_timelock::InternalImpl::_token(self)
+                token_timelock::InternalImpl::_token_impl(self)
             }
 
             fn _beneficiary(&self) -> Option<AccountId> {
-                token_timelock::InternalImpl::_beneficiary(self)
+                token_timelock::InternalImpl::_beneficiary_impl(self)
             }
         }
     ))
@@ -622,22 +622,22 @@ pub(crate) fn impl_token_timelock(impl_args: &mut ImplArgs) {
         impl PSP22TokenTimelock for #storage_struct_name {
             #[ink(message)]
             fn token(&self) -> Option<AccountId> {
-                PSP22TokenTimelockImpl::token(self)
+                PSP22TokenTimelockImpl::token_impl(self)
             }
 
             #[ink(message)]
             fn beneficiary(&self) -> Option<AccountId> {
-                PSP22TokenTimelockImpl::beneficiary(self)
+                PSP22TokenTimelockImpl::beneficiary_impl(self)
             }
 
             #[ink(message)]
             fn release_time(&self) -> Timestamp {
-                PSP22TokenTimelockImpl::release_time(self)
+                PSP22TokenTimelockImpl::release_time_impl(self)
             }
 
             #[ink(message)]
             fn release(&mut self) -> Result<(), PSP22TokenTimelockError> {
-                PSP22TokenTimelockImpl::release(self)
+                PSP22TokenTimelockImpl::release_impl(self)
             }
         }
     ))
@@ -683,27 +683,27 @@ pub(crate) fn impl_psp22_votes(impl_args: &mut ImplArgs) {
         impl Votes for Contract {
             #[ink(message)]
             fn get_votes(&self, account: AccountId) -> Balance {
-                VotesImpl::get_votes(self, account)
+                VotesImpl::get_votes_impl(self, account)
             }
 
             #[ink(message)]
             fn get_past_votes(&self, account: AccountId, timestamp: Timestamp) -> Result<Balance, GovernanceError> {
-                VotesImpl::get_past_votes(self, account, timestamp)
+                VotesImpl::get_past_votes_impl(self, account, timestamp)
             }
 
             #[ink(message)]
             fn get_past_total_supply(&self, timestamp: Timestamp) -> Result<Balance, GovernanceError> {
-                VotesImpl::get_past_total_supply(self, timestamp)
+                VotesImpl::get_past_total_supply_impl(self, timestamp)
             }
 
             #[ink(message)]
             fn delegates(&mut self, delegator: AccountId) -> Option<AccountId> {
-                VotesImpl::delegates(self, delegator)
+                VotesImpl::delegates_impl(self, delegator)
             }
 
             #[ink(message)]
             fn delegate(&mut self, delegatee: AccountId) -> Result<(), GovernanceError> {
-                VotesImpl::delegate(self, delegatee)
+                VotesImpl::delegate_impl(self, delegatee)
             }
 
             #[ink(message)]
@@ -715,7 +715,7 @@ pub(crate) fn impl_psp22_votes(impl_args: &mut ImplArgs) {
                 expiry: Timestamp,
                 signature: Signature,
             ) -> Result<(), GovernanceError> {
-                VotesImpl::delegate_by_signature(self, signer, delegatee, nonce, expiry, signature)
+                VotesImpl::delegate_by_signature_impl(self, signer, delegatee, nonce, expiry, signature)
             }
         }
     ))
@@ -735,12 +735,12 @@ pub(crate) fn impl_psp22_votes(impl_args: &mut ImplArgs) {
         impl PSP22Votes for Contract {
             #[ink(message)]
             fn num_checkpoints(&self, account: AccountId) -> u32 {
-                PSP22VotesImpl::num_checkpoints(self, account)
+                PSP22VotesImpl::num_checkpoints_impl(self, account)
             }
 
             #[ink(message)]
             fn checkpoints(&self, account: AccountId, pos: u32) -> Result<Checkpoint, GovernanceError> {
-                PSP22VotesImpl::checkpoints(self, account, pos)
+                PSP22VotesImpl::checkpoints_impl(self, account, pos)
             }
         }
     ))
@@ -773,39 +773,39 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp34::Internal for #storage_struct_name {
             fn _emit_transfer_event(&self, from: Option<AccountId>, to: Option<AccountId>, id: Id) {
-                psp34::InternalImpl::_emit_transfer_event(self, from, to, id)
+                psp34::InternalImpl::_emit_transfer_event_impl(self, from, to, id)
             }
 
             fn _emit_approval_event(&self, from: AccountId, to: AccountId, id: Option<Id>, approved: bool) {
-                psp34::InternalImpl::_emit_approval_event(self, from, to, id, approved)
+                psp34::InternalImpl::_emit_approval_event_impl(self, from, to, id, approved)
             }
 
             fn _approve_for(&mut self, to: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_approve_for(self, to, id, approved)
+                psp34::InternalImpl::_approve_for_impl(self, to, id, approved)
             }
 
             fn _owner_of(&self, id: &Id) -> Option<AccountId> {
-                psp34::InternalImpl::_owner_of(self, id)
+                psp34::InternalImpl::_owner_of_impl(self, id)
             }
 
             fn _transfer_token(&mut self, to: AccountId, id: Id, data: Vec<u8>) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_transfer_token(self, to, id, data)
+                psp34::InternalImpl::_transfer_token_impl(self, to, id, data)
             }
 
             fn _mint_to(&mut self, to: AccountId, id: Id) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_mint_to(self, to, id)
+                psp34::InternalImpl::_mint_to_impl(self, to, id)
             }
 
             fn _burn_from(&mut self, from: AccountId, id: Id) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_burn_from(self, from, id)
+                psp34::InternalImpl::_burn_from_impl(self, from, id)
             }
 
             fn _allowance(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> bool {
-                psp34::InternalImpl::_allowance(self, owner, operator, id)
+                psp34::InternalImpl::_allowance_impl(self, owner, operator, id)
             }
 
             fn _check_token_exists(&self, id: &Id) -> Result<AccountId, PSP34Error> {
-                psp34::InternalImpl::_check_token_exists(self, id)
+                psp34::InternalImpl::_check_token_exists_impl(self, id)
             }
 
             fn _before_token_transfer(
@@ -814,7 +814,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 id: &Id,
             ) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_before_token_transfer(self, from, to, id)
+                psp34::InternalImpl::_before_token_transfer_impl(self, from, to, id)
             }
 
             fn _after_token_transfer(
@@ -823,7 +823,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 id: &Id,
             ) -> Result<(), PSP34Error> {
-                psp34::InternalImpl::_after_token_transfer(self, from, to, id)
+                psp34::InternalImpl::_after_token_transfer_impl(self, from, to, id)
             }
         }
     ))
@@ -838,37 +838,37 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
         impl PSP34 for #storage_struct_name {
             #[ink(message)]
             fn collection_id(&self) -> Id {
-                PSP34Impl::collection_id(self)
+                PSP34Impl::collection_id_impl(self)
             }
 
             #[ink(message)]
             fn balance_of(&self, owner: AccountId) -> u32 {
-                PSP34Impl::balance_of(self, owner)
+                PSP34Impl::balance_of_impl(self, owner)
             }
 
             #[ink(message)]
             fn owner_of(&self, id: Id) -> Option<AccountId> {
-                PSP34Impl::owner_of(self, id)
+                PSP34Impl::owner_of_impl(self, id)
             }
 
             #[ink(message)]
             fn allowance(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> bool {
-                PSP34Impl::allowance(self, owner, operator, id)
+                PSP34Impl::allowance_impl(self, owner, operator, id)
             }
 
             #[ink(message)]
             fn approve(&mut self, operator: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
-                PSP34Impl::approve(self, operator, id, approved)
+                PSP34Impl::approve_impl(self, operator, id, approved)
             }
 
             #[ink(message)]
             fn transfer(&mut self, to: AccountId, id: Id, data: Vec<u8>) -> Result<(), PSP34Error> {
-                PSP34Impl::transfer(self, to, id, data)
+                PSP34Impl::transfer_impl(self, to, id, data)
             }
 
             #[ink(message)]
             fn total_supply(&self) -> Balance {
-                PSP34Impl::total_supply(self)
+                PSP34Impl::total_supply_impl(self)
             }
         }
     ))
@@ -882,43 +882,43 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     let mut psp34_balances = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp34::BalancesManager for #storage_struct_name {
             fn _balance_of(&self, owner: &Owner) -> u32 {
-                psp34::BalancesManagerImpl::_balance_of(self, owner)
+                psp34::BalancesManagerImpl::_balance_of_impl(self, owner)
             }
 
             fn _increase_balance(&mut self, owner: &Owner, id: &Id, increase_supply: bool) {
-                psp34::BalancesManagerImpl::_increase_balance(self, owner, id, increase_supply)
+                psp34::BalancesManagerImpl::_increase_balance_impl(self, owner, id, increase_supply)
             }
 
             fn _decrease_balance(&mut self, owner: &Owner, id: &Id, decrease_supply: bool) {
-                psp34::BalancesManagerImpl::_decrease_balance(self, owner, id, decrease_supply)
+                psp34::BalancesManagerImpl::_decrease_balance_impl(self, owner, id, decrease_supply)
             }
 
             fn _total_supply(&self) -> u128 {
-                psp34::BalancesManagerImpl::_total_supply(self)
+                psp34::BalancesManagerImpl::_total_supply_impl(self)
             }
 
             fn _owner_of(&self, id: &Id) -> Option<AccountId> {
-                psp34::BalancesManagerImpl::_owner_of(self, id)
+                psp34::BalancesManagerImpl::_owner_of_impl(self, id)
             }
 
             fn _operator_approvals(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> Option<()> {
-                psp34::BalancesManagerImpl::_operator_approvals(self, owner, operator, id)
+                psp34::BalancesManagerImpl::_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _insert_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
-                psp34::BalancesManagerImpl::_insert_operator_approvals(self, owner, operator, id)
+                psp34::BalancesManagerImpl::_insert_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _remove_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
-                psp34::BalancesManagerImpl::_remove_operator_approvals(self, owner, operator, id)
+                psp34::BalancesManagerImpl::_remove_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _insert_token_owner(&mut self, id: &Id, to: &AccountId) {
-                psp34::BalancesManagerImpl::_insert_token_owner(self, id, to)
+                psp34::BalancesManagerImpl::_insert_token_owner_impl(self, id, to)
             }
 
             fn _remove_token_owner(&mut self, id: &Id) {
-                psp34::BalancesManagerImpl::_remove_token_owner(self, id)
+                psp34::BalancesManagerImpl::_remove_token_owner_impl(self, id)
             }
         }
     ))
@@ -963,7 +963,7 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
         impl PSP34Burnable for #storage_struct_name {
             #[ink(message)]
             fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
-                PSP34BurnableImpl::burn(self, account, id)
+                PSP34BurnableImpl::burn_impl(self, account, id)
             }
         }
     ))
@@ -993,7 +993,7 @@ pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
         impl PSP34Mintable for #storage_struct_name {
             #[ink(message)]
             fn mint(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
-                PSP34MintableImpl::mint(self, account, id)
+                PSP34MintableImpl::mint_impl(self, account, id)
             }
         }
     ))
@@ -1022,11 +1022,11 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl metadata::Internal for #storage_struct_name {
             fn _emit_attribute_set_event(&self, id: Id, key: String, data: String) {
-                metadata::InternalImpl::_emit_attribute_set_event(self, id, key, data)
+                metadata::InternalImpl::_emit_attribute_set_event_impl(self, id, key, data)
             }
 
             fn _set_attribute(&mut self, id: Id, key: String, value: String) {
-                metadata::InternalImpl::_set_attribute(self, id, key, value)
+                metadata::InternalImpl::_set_attribute_impl(self, id, key, value)
             }
         }
     ))
@@ -1041,7 +1041,7 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
         impl PSP34Metadata for #storage_struct_name {
             #[ink(message)]
             fn get_attribute(&self, id: Id, key: String) -> Option<String> {
-                PSP34MetadataImpl::get_attribute(self, id, key)
+                PSP34MetadataImpl::get_attribute_impl(self, id, key)
             }
         }
     ))
@@ -1074,12 +1074,12 @@ pub(crate) fn impl_psp34_enumerable(impl_args: &mut ImplArgs) {
         impl PSP34Enumerable for #storage_struct_name {
             #[ink(message)]
             fn owners_token_by_index(&self, owner: AccountId, index: u128) -> Result<Id, PSP34Error> {
-                PSP34EnumerableImpl::owners_token_by_index(self, owner, index)
+                PSP34EnumerableImpl::owners_token_by_index_impl(self, owner, index)
             }
 
             #[ink(message)]
             fn token_by_index(&self, index: u128) -> Result<Id, PSP34Error> {
-                PSP34EnumerableImpl::token_by_index(self, index)
+                PSP34EnumerableImpl::token_by_index_impl(self, index)
             }
         }
 
@@ -1094,43 +1094,43 @@ pub(crate) fn impl_psp34_enumerable(impl_args: &mut ImplArgs) {
     let mut psp34_balances = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp34::BalancesManager for #storage_struct_name {
             fn _balance_of(&self, owner: &Owner) -> u32 {
-                enumerable::BalancesManagerImpl::_balance_of(self, owner)
+                enumerable::BalancesManagerImpl::_balance_of_impl(self, owner)
             }
 
             fn _increase_balance(&mut self, owner: &Owner, id: &Id, increase_supply: bool) {
-                enumerable::BalancesManagerImpl::_increase_balance(self, owner, id, increase_supply)
+                enumerable::BalancesManagerImpl::_increase_balance_impl(self, owner, id, increase_supply)
             }
 
             fn _decrease_balance(&mut self, owner: &Owner, id: &Id, decrease_supply: bool) {
-                enumerable::BalancesManagerImpl::_decrease_balance(self, owner, id, decrease_supply)
+                enumerable::BalancesManagerImpl::_decrease_balance_impl(self, owner, id, decrease_supply)
             }
 
             fn _total_supply(&self) -> u128 {
-                enumerable::BalancesManagerImpl::_total_supply(self)
+                enumerable::BalancesManagerImpl::_total_supply_impl(self)
             }
 
             fn _owner_of(&self, id: &Id) -> Option<AccountId> {
-                enumerable::BalancesManagerImpl::_owner_of(self, id)
+                enumerable::BalancesManagerImpl::_owner_of_impl(self, id)
             }
 
             fn _operator_approvals(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> Option<()> {
-                enumerable::BalancesManagerImpl::_operator_approvals(self, owner, operator, id)
+                enumerable::BalancesManagerImpl::_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _insert_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
-                enumerable::BalancesManagerImpl::_insert_operator_approvals(self, owner, operator, id)
+                enumerable::BalancesManagerImpl::_insert_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _remove_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
-                enumerable::BalancesManagerImpl::_remove_operator_approvals(self, owner, operator, id)
+                enumerable::BalancesManagerImpl::_remove_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _insert_token_owner(&mut self, id: &Id, to: &AccountId) {
-                enumerable::BalancesManagerImpl::_insert_token_owner(self, id, to)
+                enumerable::BalancesManagerImpl::_insert_token_owner_impl(self, id, to)
             }
 
             fn _remove_token_owner(&mut self, id: &Id) {
-                enumerable::BalancesManagerImpl::_remove_token_owner(self, id)
+                enumerable::BalancesManagerImpl::_remove_token_owner_impl(self, id)
             }
         }
     ))
@@ -1167,7 +1167,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp37::Internal for #storage_struct_name {
             fn _emit_transfer_event(&self, from: Option<AccountId>, to: Option<AccountId>, id: Id, amount: Balance) {
-                psp37::InternalImpl::_emit_transfer_event(self, from, to, id, amount)
+                psp37::InternalImpl::_emit_transfer_event_impl(self, from, to, id, amount)
             }
 
             fn _emit_transfer_batch_event(
@@ -1176,19 +1176,19 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 to: Option<AccountId>,
                 ids_amounts: Vec<(Id, Balance)>,
             ) {
-                psp37::InternalImpl::_emit_transfer_batch_event(self, from, to, ids_amounts)
+                psp37::InternalImpl::_emit_transfer_batch_event_impl(self, from, to, ids_amounts)
             }
 
             fn _emit_approval_event(&self, owner: AccountId, operator: AccountId, id: Option<Id>, value: Balance) {
-                psp37::InternalImpl::_emit_approval_event(self, owner, operator, id, value)
+                psp37::InternalImpl::_emit_approval_event_impl(self, owner, operator, id, value)
             }
 
             fn _mint_to(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_mint_to(self, to, ids_amounts)
+                psp37::InternalImpl::_mint_to_impl(self, to, ids_amounts)
             }
 
             fn _burn_from(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_burn_from(self, from, ids_amounts)
+                psp37::InternalImpl::_burn_from_impl(self, from, ids_amounts)
             }
 
             fn _transfer_from(
@@ -1199,15 +1199,15 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 amount: Balance,
                 data: Vec<u8>,
             ) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_transfer_from(self, from, to, id, amount, data)
+                psp37::InternalImpl::_transfer_from_impl(self, from, to, id, amount, data)
             }
 
             fn _get_allowance(&self, account: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Balance {
-                psp37::InternalImpl::_get_allowance(self, account, operator, id)
+                psp37::InternalImpl::_get_allowance_impl(self, account, operator, id)
             }
 
             fn _approve_for(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_approve_for(self, operator, id, value)
+                psp37::InternalImpl::_approve_for_impl(self, operator, id, value)
             }
 
             fn _decrease_allowance(
@@ -1217,7 +1217,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 id: &Id,
                 value: Balance,
             ) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_decrease_allowance(self, owner, operator, id, value)
+                psp37::InternalImpl::_decrease_allowance_impl(self, owner, operator, id, value)
             }
 
             fn _transfer_token(
@@ -1228,7 +1228,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 amount: Balance,
                 data: &[u8],
             ) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_transfer_token(self, from, to, id, amount, data)
+                psp37::InternalImpl::_transfer_token_impl(self, from, to, id, amount, data)
             }
 
             fn _before_token_transfer(
@@ -1237,7 +1237,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 ids: &[(Id, Balance)],
             ) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_before_token_transfer(self, from, to, ids)
+                psp37::InternalImpl::_before_token_transfer_impl(self, from, to, ids)
             }
 
             fn _after_token_transfer(
@@ -1246,7 +1246,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 to: Option<&AccountId>,
                 ids: &[(Id, Balance)],
             ) -> Result<(), PSP37Error> {
-                psp37::InternalImpl::_after_token_transfer(self, from, to, ids)
+                psp37::InternalImpl::_after_token_transfer_impl(self, from, to, ids)
             }
         }
 
@@ -1262,27 +1262,27 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
         impl PSP37 for #storage_struct_name {
             #[ink(message)]
             fn balance_of(&self, owner: AccountId, id: Option<Id>) -> Balance {
-                PSP37Impl::balance_of(self, owner, id)
+                PSP37Impl::balance_of_impl(self, owner, id)
             }
 
             #[ink(message)]
             fn total_supply(&self, id: Option<Id>) -> Balance {
-                PSP37Impl::total_supply(self, id)
+                PSP37Impl::total_supply_impl(self, id)
             }
 
             #[ink(message)]
             fn allowance(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> Balance {
-                PSP37Impl::allowance(self, owner, operator, id)
+                PSP37Impl::allowance_impl(self, owner, operator, id)
             }
 
             #[ink(message)]
             fn approve(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
-                PSP37Impl::approve(self, operator, id, value)
+                PSP37Impl::approve_impl(self, operator, id, value)
             }
 
             #[ink(message)]
             fn transfer(&mut self, to: AccountId, id: Id, value: Balance, data: Vec<u8>) -> Result<(), PSP37Error> {
-                PSP37Impl::transfer(self, to, id, value, data)
+                PSP37Impl::transfer_impl(self, to, id, value, data)
             }
 
             #[ink(message)]
@@ -1294,7 +1294,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 value: Balance,
                 data: Vec<u8>,
             ) -> Result<(), PSP37Error> {
-                PSP37Impl::transfer_from(self, from, to, id, value, data)
+                PSP37Impl::transfer_from_impl(self, from, to, id, value, data)
             }
         }
     ))
@@ -1308,11 +1308,11 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
     let mut psp37_balances = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp37::BalancesManager for #storage_struct_name {
             fn _balance_of(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
-                psp37::BalancesManagerImpl::_balance_of(self, owner, id)
+                psp37::BalancesManagerImpl::_balance_of_impl(self, owner, id)
             }
 
             fn _total_supply(&self, id: &Option<&Id>) -> Balance {
-                psp37::BalancesManagerImpl::_total_supply(self, id)
+                psp37::BalancesManagerImpl::_total_supply_impl(self, id)
             }
 
             fn _increase_balance(
@@ -1322,7 +1322,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 amount: &Balance,
                 mint: bool,
             ) -> Result<(), PSP37Error> {
-                psp37::BalancesManagerImpl::_increase_balance(self, owner, id, amount, mint)
+                psp37::BalancesManagerImpl::_increase_balance_impl(self, owner, id, amount, mint)
             }
 
             fn _decrease_balance(
@@ -1332,7 +1332,7 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 amount: &Balance,
                 burn: bool,
             ) -> Result<(), PSP37Error> {
-                psp37::BalancesManagerImpl::_decrease_balance(self, owner, id, amount, burn)
+                psp37::BalancesManagerImpl::_decrease_balance_impl(self, owner, id, amount, burn)
             }
 
             fn _insert_operator_approvals(
@@ -1342,14 +1342,14 @@ pub(crate) fn impl_psp37(impl_args: &mut ImplArgs) {
                 id: &Option<&Id>,
                 amount: &Balance,
             ) {
-                psp37::BalancesManagerImpl::_insert_operator_approvals(self, owner, operator, id, amount)
+                psp37::BalancesManagerImpl::_insert_operator_approvals_impl(self, owner, operator, id, amount)
             }
 
             fn _get_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Option<Balance> {
-                psp37::BalancesManagerImpl::_get_operator_approvals(self, owner, operator, id)
+                psp37::BalancesManagerImpl::_get_operator_approvals_impl(self, owner, operator, id)
             }
             fn _remove_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) {
-                psp37::BalancesManagerImpl::_remove_operator_approvals(self, owner, operator, id)
+                psp37::BalancesManagerImpl::_remove_operator_approvals_impl(self, owner, operator, id)
             }
         }
     ))
@@ -1399,7 +1399,7 @@ pub(crate) fn impl_psp37_batch(impl_args: &mut ImplArgs) {
                 ids_amounts: Vec<(Id, Balance)>,
                 data: Vec<u8>,
             ) -> Result<(), PSP37Error> {
-                batch::InternalImpl::_batch_transfer_from(self, from, to, ids_amounts, data)
+                batch::InternalImpl::_batch_transfer_from_impl(self, from, to, ids_amounts, data)
             }
         }
     ))
@@ -1419,7 +1419,7 @@ pub(crate) fn impl_psp37_batch(impl_args: &mut ImplArgs) {
                 ids_amounts: Vec<(Id, Balance)>,
                 data: Vec<u8>,
             ) -> Result<(), PSP37Error> {
-                PSP37BatchImpl::batch_transfer(self, to, ids_amounts, data)
+                PSP37BatchImpl::batch_transfer_impl(self, to, ids_amounts, data)
             }
 
             #[ink(message)]
@@ -1430,7 +1430,7 @@ pub(crate) fn impl_psp37_batch(impl_args: &mut ImplArgs) {
                 ids_amounts: Vec<(Id, Balance)>,
                 data: Vec<u8>,
             ) -> Result<(), PSP37Error> {
-                PSP37BatchImpl::batch_transfer_from(self, from, to, ids_amounts, data)
+                PSP37BatchImpl::batch_transfer_from_impl(self, from, to, ids_amounts, data)
             }
         }
     ))
@@ -1463,7 +1463,7 @@ pub(crate) fn impl_psp37_burnable(impl_args: &mut ImplArgs) {
         impl PSP37Burnable for #storage_struct_name {
             #[ink(message)]
             fn burn(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-                PSP37BurnableImpl::burn(self, from, ids_amounts)
+                PSP37BurnableImpl::burn_impl(self, from, ids_amounts)
             }
         }
     ))
@@ -1492,15 +1492,15 @@ pub(crate) fn impl_psp37_metadata(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl metadata::Internal for #storage_struct_name {
             fn _emit_attribute_set_event(&self, id: &Id, key: &String, data: &String) {
-                metadata::InternalImpl::_emit_attribute_set_event(self, id, key, data);
+                metadata::InternalImpl::_emit_attribute_set_event_impl(self, id, key, data);
             }
 
             fn _set_attribute(&mut self, id: &Id, key: &String, data: &String) -> Result<(), PSP37Error> {
-                metadata::InternalImpl::_set_attribute(self, id, key, data)
+                metadata::InternalImpl::_set_attribute_impl(self, id, key, data)
             }
 
             fn _get_attribute(&self, id: &Id, key: &String) -> Option<String> {
-                metadata::InternalImpl::_get_attribute(self, id, key)
+                metadata::InternalImpl::_get_attribute_impl(self, id, key)
             }
         }
     ))
@@ -1515,7 +1515,7 @@ pub(crate) fn impl_psp37_metadata(impl_args: &mut ImplArgs) {
         impl PSP37Metadata for #storage_struct_name {
             #[ink(message)]
             fn get_attribute(&self, id: Id, key: String) -> Option<String> {
-                PSP37MetadataImpl::get_attribute(self, id, key)
+                PSP37MetadataImpl::get_attribute_impl(self, id, key)
             }
         }
     ))
@@ -1548,7 +1548,7 @@ pub(crate) fn impl_psp37_mintable(impl_args: &mut ImplArgs) {
         impl PSP37Mintable for #storage_struct_name {
             #[ink(message)]
             fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-                PSP37MintableImpl::mint(self, to, ids_amounts)
+                PSP37MintableImpl::mint_impl(self, to, ids_amounts)
             }
         }
     ))
@@ -1578,12 +1578,12 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
         impl PSP37Enumerable for #storage_struct_name {
             #[ink(message)]
             fn owners_token_by_index(&self, owner: AccountId, index: u128) -> Option<Id> {
-                PSP37EnumerableImpl::owners_token_by_index(self, owner, index)
+                PSP37EnumerableImpl::owners_token_by_index_impl(self, owner, index)
             }
 
             #[ink(message)]
             fn token_by_index(&self, index: u128) -> Option<Id> {
-                PSP37EnumerableImpl::token_by_index(self, index)
+                PSP37EnumerableImpl::token_by_index_impl(self, index)
             }
         }
     ))
@@ -1597,11 +1597,11 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
     let mut psp37_balances = syn::parse2::<syn::ItemImpl>(quote!(
         impl psp37::BalancesManager for #storage_struct_name {
             fn _balance_of(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
-                enumerable::BalancesManagerImpl::_balance_of(self, owner, id)
+                enumerable::BalancesManagerImpl::_balance_of_impl(self, owner, id)
             }
 
             fn _total_supply(&self, id: &Option<&Id>) -> Balance {
-                enumerable::BalancesManagerImpl::_total_supply(self, id)
+                enumerable::BalancesManagerImpl::_total_supply_impl(self, id)
             }
 
             fn _increase_balance(
@@ -1611,7 +1611,7 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
                 amount: &Balance,
                 mint: bool,
             ) -> Result<(), PSP37Error> {
-                enumerable::BalancesManagerImpl::_increase_balance(self, owner, id, amount, mint)
+                enumerable::BalancesManagerImpl::_increase_balance_impl(self, owner, id, amount, mint)
             }
 
             fn _decrease_balance(
@@ -1621,7 +1621,7 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
                 amount: &Balance,
                 burn: bool,
             ) -> Result<(), PSP37Error> {
-                enumerable::BalancesManagerImpl::_decrease_balance(self, owner, id, amount, burn)
+                enumerable::BalancesManagerImpl::_decrease_balance_impl(self, owner, id, amount, burn)
             }
 
             fn _insert_operator_approvals(
@@ -1631,15 +1631,15 @@ pub(crate) fn impl_psp37_enumerable(impl_args: &mut ImplArgs) {
                 id: &Option<&Id>,
                 amount: &Balance,
             ) {
-                enumerable::BalancesManagerImpl::_insert_operator_approvals(self, owner, operator, id, amount)
+                enumerable::BalancesManagerImpl::_insert_operator_approvals_impl(self, owner, operator, id, amount)
             }
 
             fn _get_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Option<Balance> {
-                enumerable::BalancesManagerImpl::_get_operator_approvals(self, owner, operator, id)
+                enumerable::BalancesManagerImpl::_get_operator_approvals_impl(self, owner, operator, id)
             }
 
             fn _remove_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>){
-                enumerable::BalancesManagerImpl::_remove_operator_approvals(self, owner, operator, id)
+                enumerable::BalancesManagerImpl::_remove_operator_approvals_impl(self, owner, operator, id)
             }
         }
     ))
@@ -1676,14 +1676,14 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl ownable::Internal for #storage_struct_name {
             fn _emit_ownership_transferred_event(&self, previous: Option<AccountId>, new: Option<AccountId>) {
-                ownable::InternalImpl::_emit_ownership_transferred_event(self, previous, new)
+                ownable::InternalImpl::_emit_ownership_transferred_event_impl(self, previous, new)
             }
 
             fn _init_with_owner(&mut self, owner: AccountId) {
-                ownable::InternalImpl::_init_with_owner(self, owner)
+                ownable::InternalImpl::_init_with_owner_impl(self, owner)
             }
             fn _only_owner(&self) -> Result<(), OwnableError> {
-                ownable::InternalImpl::_only_owner(self)
+                ownable::InternalImpl::_only_owner_impl(self)
             }
         }
     ))
@@ -1698,17 +1698,17 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
         impl Ownable for #storage_struct_name {
             #[ink(message)]
             fn owner(&self) -> Option<AccountId> {
-                OwnableImpl::owner(self)
+                OwnableImpl::owner_impl(self)
             }
 
             #[ink(message)]
             fn renounce_ownership(&mut self) -> Result<(), OwnableError> {
-                OwnableImpl::renounce_ownership(self)
+                OwnableImpl::renounce_ownership_impl(self)
             }
 
             #[ink(message)]
             fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError> {
-                OwnableImpl::transfer_ownership(self, new_owner)
+                OwnableImpl::transfer_ownership_impl(self, new_owner)
             }
         }
     ))
@@ -1739,31 +1739,31 @@ pub(crate) fn impl_payment_splitter(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl payment_splitter::Internal for #storage_struct_name {
             fn _emit_payee_added_event(&self, account: AccountId, shares: Balance) {
-                payment_splitter::InternalImpl::_emit_payee_added_event(self, account, shares)
+                payment_splitter::InternalImpl::_emit_payee_added_event_impl(self, account, shares)
             }
 
             fn _emit_payment_received_event(&self, from: AccountId, amount: Balance) {
-                payment_splitter::InternalImpl::_emit_payment_received_event(self, from, amount)
+                payment_splitter::InternalImpl::_emit_payment_received_event_impl(self, from, amount)
             }
 
             fn _emit_payment_released_event(&self, to: AccountId, amount: Balance) {
-                payment_splitter::InternalImpl::_emit_payment_released_event(self, to, amount)
+                payment_splitter::InternalImpl::_emit_payment_released_event_impl(self, to, amount)
             }
 
             fn _init(&mut self, payees_and_shares: Vec<(AccountId, Balance)>) -> Result<(), PaymentSplitterError> {
-                payment_splitter::InternalImpl::_init(self, payees_and_shares)
+                payment_splitter::InternalImpl::_init_impl(self, payees_and_shares)
             }
 
             fn _add_payee(&mut self, payee: AccountId, share: Balance) -> Result<(), PaymentSplitterError> {
-                payment_splitter::InternalImpl::_add_payee(self, payee, share)
+                payment_splitter::InternalImpl::_add_payee_impl(self, payee, share)
             }
 
             fn _release_all(&mut self) -> Result<(), PaymentSplitterError> {
-                payment_splitter::InternalImpl::_release_all(self)
+                payment_splitter::InternalImpl::_release_all_impl(self)
             }
 
             fn _release(&mut self, account: AccountId) -> Result<(), PaymentSplitterError> {
-                payment_splitter::InternalImpl::_release(self, account)
+                payment_splitter::InternalImpl::_release_impl(self, account)
             }
         }
     ))
@@ -1778,37 +1778,37 @@ pub(crate) fn impl_payment_splitter(impl_args: &mut ImplArgs) {
         impl PaymentSplitter for #storage_struct_name {
             #[ink(message)]
             fn total_shares(&self) -> Balance {
-                PaymentSplitterImpl::total_shares(self)
+                PaymentSplitterImpl::total_shares_impl(self)
             }
 
             #[ink(message)]
             fn total_released(&self) -> Balance {
-                PaymentSplitterImpl::total_released(self)
+                PaymentSplitterImpl::total_released_impl(self)
             }
 
             #[ink(message)]
             fn shares(&self, account: AccountId) -> Balance {
-                PaymentSplitterImpl::shares(self, account)
+                PaymentSplitterImpl::shares_impl(self, account)
             }
 
             #[ink(message)]
             fn released(&self, account: AccountId) -> Balance {
-                PaymentSplitterImpl::released(self, account)
+                PaymentSplitterImpl::released_impl(self, account)
             }
 
             #[ink(message)]
             fn payee(&self, index: u32) -> Option<AccountId> {
-                PaymentSplitterImpl::payee(self, index)
+                PaymentSplitterImpl::payee_impl(self, index)
             }
 
             #[ink(message)]
             fn receive(&mut self) {
-                PaymentSplitterImpl::receive(self)
+                PaymentSplitterImpl::receive_impl(self)
             }
 
             #[ink(message)]
             fn release(&mut self, account: AccountId) -> Result<(), PaymentSplitterError> {
-                PaymentSplitterImpl::release(self, account)
+                PaymentSplitterImpl::release_impl(self, account)
             }
         }
     ))
@@ -1840,15 +1840,15 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl access_control::Internal for #storage_struct_name {
             fn _emit_role_admin_changed(&mut self, role: RoleType, previous: RoleType, new: RoleType) {
-                access_control::InternalImpl::_emit_role_admin_changed(self, role, previous, new);
+                access_control::InternalImpl::_emit_role_admin_changed_impl(self, role, previous, new);
             }
 
             fn _emit_role_granted(&mut self, role: RoleType, grantee: Option<AccountId>, grantor: Option<AccountId>) {
-                access_control::InternalImpl::_emit_role_granted(self, role, grantee, grantor);
+                access_control::InternalImpl::_emit_role_granted_impl(self, role, grantee, grantor);
             }
 
             fn _emit_role_revoked(&mut self, role: RoleType, account: Option<AccountId>, sender: AccountId) {
-                access_control::InternalImpl::_emit_role_revoked(self, role, account, sender);
+                access_control::InternalImpl::_emit_role_revoked_impl(self, role, account, sender);
             }
 
             fn _default_admin() -> RoleType {
@@ -1856,31 +1856,31 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
             }
 
             fn _init_with_caller(&mut self) {
-                access_control::InternalImpl::_init_with_caller(self);
+                access_control::InternalImpl::_init_with_caller_impl(self);
             }
 
             fn _init_with_admin(&mut self, admin: Option<AccountId>) {
-                access_control::InternalImpl::_init_with_admin(self, admin);
+                access_control::InternalImpl::_init_with_admin_impl(self, admin);
             }
 
             fn _setup_role(&mut self, role: RoleType, member: Option<AccountId>) {
-                access_control::InternalImpl::_setup_role(self, role, member);
+                access_control::InternalImpl::_setup_role_impl(self, role, member);
             }
 
             fn _do_revoke_role(&mut self, role: RoleType, account: Option<AccountId>) {
-                access_control::InternalImpl::_do_revoke_role(self, role, account);
+                access_control::InternalImpl::_do_revoke_role_impl(self, role, account);
             }
 
             fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType) {
-                access_control::InternalImpl::_set_role_admin(self, role, new_admin);
+                access_control::InternalImpl::_set_role_admin_impl(self, role, new_admin);
             }
 
             fn _ensure_has_role(&self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-                access_control::InternalImpl::_ensure_has_role(self, role, account)
+                access_control::InternalImpl::_ensure_has_role_impl(self, role, account)
             }
 
             fn _get_role_admin(&self, role: RoleType) -> RoleType {
-                access_control::InternalImpl::_get_role_admin(self, role)
+                access_control::InternalImpl::_get_role_admin_impl(self, role)
             }
         }
     ))
@@ -1895,27 +1895,27 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
         impl AccessControl for #storage_struct_name {
             #[ink(message)]
             fn has_role(&self, role: RoleType, address: Option<AccountId>) -> bool {
-                AccessControlImpl::has_role(self, role, address)
+                AccessControlImpl::has_role_impl(self, role, address)
             }
 
             #[ink(message)]
             fn get_role_admin(&self, role: RoleType) -> RoleType {
-                AccessControlImpl::get_role_admin(self, role)
+                AccessControlImpl::get_role_admin_impl(self, role)
             }
 
             #[ink(message)]
             fn grant_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-                AccessControlImpl::grant_role(self, role, account)
+                AccessControlImpl::grant_role_impl(self, role, account)
             }
 
             #[ink(message)]
             fn revoke_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-                AccessControlImpl::revoke_role(self, role, account)
+                AccessControlImpl::revoke_role_impl(self, role, account)
             }
 
             #[ink(message)]
             fn renounce_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
-                AccessControlImpl::renounce_role(self, role, account)
+                AccessControlImpl::renounce_role_impl(self, role, account)
             }
         }
     ))
@@ -1929,23 +1929,23 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     let mut members = syn::parse2::<syn::ItemImpl>(quote!(
         impl access_control::MembersManager for #storage_struct_name {
             fn _has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
-                access_control::MembersManagerImpl::_has_role(self, role, address)
+                access_control::MembersManagerImpl::_has_role_impl(self, role, address)
             }
 
             fn _add(&mut self, role: RoleType, member: &Option<AccountId>) {
-                access_control::MembersManagerImpl::_add(self, role, member)
+                access_control::MembersManagerImpl::_add_impl(self, role, member)
             }
 
             fn _remove(&mut self, role: RoleType, member: &Option<AccountId>) {
-                access_control::MembersManagerImpl::_remove(self, role, member)
+                access_control::MembersManagerImpl::_remove_impl(self, role, member)
             }
 
             fn _get_role_admin(&self, role: RoleType) -> Option<RoleType> {
-                access_control::MembersManagerImpl::_get_role_admin(self, role)
+                access_control::MembersManagerImpl::_get_role_admin_impl(self, role)
             }
 
             fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType) {
-                access_control::MembersManagerImpl::_set_role_admin(self, role, new_admin)
+                access_control::MembersManagerImpl::_set_role_admin_impl(self, role, new_admin)
             }
         }
     ))
@@ -1989,12 +1989,12 @@ pub(crate) fn impl_access_control_enumerable(impl_args: &mut ImplArgs) {
         impl AccessControlEnumerable for #storage_struct_name {
             #[ink(message)]
             fn get_role_member(&self, role: RoleType, index: u32) -> Option<AccountId> {
-                AccessControlEnumerableImpl::get_role_member(self, role, index)
+                AccessControlEnumerableImpl::get_role_member_impl(self, role, index)
             }
 
             #[ink(message)]
             fn get_role_member_count(&self, role: RoleType) -> u32 {
-                AccessControlEnumerableImpl::get_role_member_count(self, role)
+                AccessControlEnumerableImpl::get_role_member_count_impl(self, role)
             }
         }
     ))
@@ -2008,23 +2008,23 @@ pub(crate) fn impl_access_control_enumerable(impl_args: &mut ImplArgs) {
     let mut members = syn::parse2::<syn::ItemImpl>(quote!(
         impl access_control::MembersManager for #storage_struct_name {
             fn _has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
-                enumerable::MembersManagerImpl::_has_role(self, role, address)
+                enumerable::MembersManagerImpl::_has_role_impl(self, role, address)
             }
 
             fn _add(&mut self, role: RoleType, member: &Option<AccountId>) {
-                enumerable::MembersManagerImpl::_add(self, role, member)
+                enumerable::MembersManagerImpl::_add_impl(self, role, member)
             }
 
             fn _remove(&mut self, role: RoleType, member: &Option<AccountId>) {
-                enumerable::MembersManagerImpl::_remove(self, role, member)
+                enumerable::MembersManagerImpl::_remove_impl(self, role, member)
             }
 
             fn _get_role_admin(&self, role: RoleType) -> Option<RoleType> {
-                enumerable::MembersManagerImpl::_get_role_admin(self, role)
+                enumerable::MembersManagerImpl::_get_role_admin_impl(self, role)
             }
 
             fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType) {
-                enumerable::MembersManagerImpl::_set_role_admin(self, role, new_admin)
+                enumerable::MembersManagerImpl::_set_role_admin_impl(self, role, new_admin)
             }
         }
     ))
@@ -2060,35 +2060,35 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pausable::Internal for #storage_struct_name {
             fn _emit_paused_event(&self, account: AccountId) {
-                pausable::InternalImpl::_emit_paused_event(self, account)
+                pausable::InternalImpl::_emit_paused_event_impl(self, account)
             }
 
             fn _emit_unpaused_event(&self, account: AccountId) {
-                pausable::InternalImpl::_emit_unpaused_event(self, account)
+                pausable::InternalImpl::_emit_unpaused_event_impl(self, account)
             }
 
             fn _paused(&self) -> bool {
-                pausable::InternalImpl::_paused(self)
+                pausable::InternalImpl::_paused_impl(self)
             }
 
             fn _pause(&mut self) -> Result<(), PausableError> {
-                pausable::InternalImpl::_pause(self)
+                pausable::InternalImpl::_pause_impl(self)
             }
 
             fn _unpause(&mut self) -> Result<(), PausableError> {
-                pausable::InternalImpl::_unpause(self)
+                pausable::InternalImpl::_unpause_impl(self)
             }
 
             fn _switch_pause(&mut self) -> Result<(), PausableError> {
-                pausable::InternalImpl::_switch_pause(self)
+                pausable::InternalImpl::_switch_pause_impl(self)
             }
 
             fn _ensure_paused(&self) -> Result<(), PausableError> {
-                pausable::InternalImpl::_ensure_paused(self)
+                pausable::InternalImpl::_ensure_paused_impl(self)
             }
 
             fn _ensure_not_paused(&self) -> Result<(), PausableError> {
-                pausable::InternalImpl::_ensure_not_paused(self)
+                pausable::InternalImpl::_ensure_not_paused_impl(self)
             }
         }
     ))
@@ -2103,7 +2103,7 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
         impl Pausable for #storage_struct_name {
             #[ink(message)]
             fn paused(&self) -> bool {
-                PausableImpl::paused(self)
+                PausableImpl::paused_impl(self)
             }
         }
     ))
@@ -2135,7 +2135,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
         let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl timelock_controller::Internal for #storage_struct_name {
             fn _emit_min_delay_change_event(&self, old_delay: Timestamp, new_delay: Timestamp) {
-                timelock_controller::InternalImpl::_emit_min_delay_change_event(self, old_delay, new_delay)
+                timelock_controller::InternalImpl::_emit_min_delay_change_event_impl(self, old_delay, new_delay)
             }
     
             fn _emit_call_scheduled_event(
@@ -2146,19 +2146,19 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: Option<OperationId>,
                 delay: Timestamp,
             ) {
-                timelock_controller::InternalImpl::_emit_call_scheduled_event(self, id, index, transaction, predecessor, delay)
+                timelock_controller::InternalImpl::_emit_call_scheduled_event_impl(self, id, index, transaction, predecessor, delay)
             }
     
             fn _emit_cancelled_event(&self, id: OperationId) {
-                timelock_controller::InternalImpl::_emit_cancelled_event(self, id)
+                timelock_controller::InternalImpl::_emit_cancelled_event_impl(self, id)
             }
     
             fn _emit_call_executed_event(&self, id: OperationId, index: u8, transaction: Transaction) {
-                timelock_controller::InternalImpl::_emit_call_executed_event(self, id, index, transaction)
+                timelock_controller::InternalImpl::_emit_call_executed_event_impl(self, id, index, transaction)
             }
     
             fn _init_with_caller(&mut self, min_delay: Timestamp, proposers: Vec<AccountId>, executors: Vec<AccountId>) {
-                timelock_controller::InternalImpl::_init_with_caller(self, min_delay, proposers, executors)
+                timelock_controller::InternalImpl::_init_with_caller_impl(self, min_delay, proposers, executors)
             }
     
             fn _init_with_admin(
@@ -2168,7 +2168,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 proposers: Vec<AccountId>,
                 executors: Vec<AccountId>,
             ) {
-                timelock_controller::InternalImpl::_init_with_admin(self, admin, min_delay, proposers, executors)
+                timelock_controller::InternalImpl::_init_with_admin_impl(self, admin, min_delay, proposers, executors)
             }
     
             fn _hash_operation(
@@ -2177,7 +2177,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: &Option<OperationId>,
                 salt: &[u8; 32],
             ) -> OperationId {
-                timelock_controller::InternalImpl::_hash_operation(self, transaction, predecessor, salt)
+                timelock_controller::InternalImpl::_hash_operation_impl(self, transaction, predecessor, salt)
             }
     
             fn _hash_operation_batch(
@@ -2186,23 +2186,23 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: &Option<OperationId>,
                 salt: &[u8; 32],
             ) -> OperationId {
-                timelock_controller::InternalImpl::_hash_operation_batch(self, transactions, predecessor, salt)
+                timelock_controller::InternalImpl::_hash_operation_batch_impl(self, transactions, predecessor, salt)
             }
     
             fn _schedule(&mut self, id: OperationId, delay: &Timestamp) -> Result<(), TimelockControllerError> {
-                timelock_controller::InternalImpl::_schedule(self, id, delay)
+                timelock_controller::InternalImpl::_schedule_impl(self, id, delay)
             }
     
             fn _before_call(&self, predecessor: Option<OperationId>) -> Result<(), TimelockControllerError> {
-                timelock_controller::InternalImpl::_before_call(self, predecessor)
+                timelock_controller::InternalImpl::_before_call_impl(self, predecessor)
             }
     
             fn _after_call(&mut self, id: OperationId) -> Result<(), TimelockControllerError> {
-                timelock_controller::InternalImpl::_after_call(self, id)
+                timelock_controller::InternalImpl::_after_call_impl(self, id)
             }
     
             fn _call(&mut self, id: OperationId, i: u8, transaction: Transaction) -> Result<(), TimelockControllerError> {
-                timelock_controller::InternalImpl::_call(self, id, i, transaction)
+                timelock_controller::InternalImpl::_call_impl(self, id, i, transaction)
             }
     
             fn _timelock_admin_role() -> RoleType {
@@ -2222,19 +2222,19 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
             }
     
             fn _is_operation(&self, id: OperationId) -> bool {
-                timelock_controller::InternalImpl::_is_operation(self, id)
+                timelock_controller::InternalImpl::_is_operation_impl(self, id)
             }
     
             fn _is_operation_ready(&self, id: OperationId) -> bool {
-                timelock_controller::InternalImpl::_is_operation_ready(self, id)
+                timelock_controller::InternalImpl::_is_operation_ready_impl(self, id)
             }
     
             fn _is_operation_done(&self, id: OperationId) -> bool {
-                timelock_controller::InternalImpl::_is_operation_done(self, id)
+                timelock_controller::InternalImpl::_is_operation_done_impl(self, id)
             }
     
             fn _get_timestamp(&self, id: OperationId) -> Timestamp {
-                timelock_controller::InternalImpl::_get_timestamp(self, id)
+                timelock_controller::InternalImpl::_get_timestamp_impl(self, id)
             }
         }
     ))
@@ -2250,37 +2250,37 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
         impl TimelockController for #storage_struct_name {
             #[ink(message)]
             fn is_operation(&self, id: OperationId) -> bool {
-                TimelockControllerImpl::is_operation(self, id)
+                TimelockControllerImpl::is_operation_impl(self, id)
             }
     
             #[ink(message)]
             fn is_operation_pending(&self, id: OperationId) -> bool {
-                TimelockControllerImpl::is_operation_pending(self, id)
+                TimelockControllerImpl::is_operation_pending_impl(self, id)
             }
     
             #[ink(message)]
             fn is_operation_ready(&self, id: OperationId) -> bool {
-                TimelockControllerImpl::is_operation_ready(self, id)
+                TimelockControllerImpl::is_operation_ready_impl(self, id)
             }
     
             #[ink(message)]
             fn is_operation_done(&self, id: OperationId) -> bool {
-                TimelockControllerImpl::is_operation_done(self, id)
+                TimelockControllerImpl::is_operation_done_impl(self, id)
             }
     
             #[ink(message)]
             fn get_timestamp(&self, id: OperationId) -> Timestamp {
-                TimelockControllerImpl::get_timestamp(self, id)
+                TimelockControllerImpl::get_timestamp_impl(self, id)
             }
     
             #[ink(message)]
             fn get_min_delay(&self) -> Timestamp {
-                TimelockControllerImpl::get_min_delay(self)
+                TimelockControllerImpl::get_min_delay_impl(self)
             }
     
             #[ink(message)]
             fn hash_operation(&self, transaction: Transaction, predecessor: Option<OperationId>, salt: [u8; 32]) -> Hash {
-                TimelockControllerImpl::hash_operation(self, transaction, predecessor, salt)
+                TimelockControllerImpl::hash_operation_impl(self, transaction, predecessor, salt)
             }
     
             #[ink(message)]
@@ -2290,7 +2290,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: Option<OperationId>,
                 salt: [u8; 32],
             ) -> Hash {
-                TimelockControllerImpl::hash_operation_batch(self, transactions, predecessor, salt)
+                TimelockControllerImpl::hash_operation_batch_impl(self, transactions, predecessor, salt)
             }
     
             #[ink(message)]
@@ -2301,7 +2301,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 salt: [u8; 32],
                 delay: Timestamp,
             ) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::schedule(self, transaction, predecessor, salt, delay)
+                TimelockControllerImpl::schedule_impl(self, transaction, predecessor, salt, delay)
             }
     
             #[ink(message)]
@@ -2312,12 +2312,12 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 salt: [u8; 32],
                 delay: Timestamp,
             ) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::schedule_batch(self, transactions, predecessor, salt, delay)
+                TimelockControllerImpl::schedule_batch_impl(self, transactions, predecessor, salt, delay)
             }
     
             #[ink(message)]
             fn cancel(&mut self, id: OperationId) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::cancel(self, id)
+                TimelockControllerImpl::cancel_impl(self, id)
             }
     
             #[ink(message)]
@@ -2327,7 +2327,7 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: Option<OperationId>,
                 salt: [u8; 32],
             ) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::execute(self, transaction, predecessor, salt)
+                TimelockControllerImpl::execute_impl(self, transaction, predecessor, salt)
             }
     
             #[ink(message)]
@@ -2337,12 +2337,12 @@ pub(crate) fn impl_timelock_controller(impl_args: &mut ImplArgs) {
                 predecessor: Option<OperationId>,
                 salt: [u8; 32],
             ) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::execute_batch(self, transactions, predecessor, salt)
+                TimelockControllerImpl::execute_batch_impl(self, transactions, predecessor, salt)
             }
     
             #[ink(message)]
             fn update_delay(&mut self, new_delay: Timestamp) -> Result<(), TimelockControllerError> {
-                TimelockControllerImpl::update_delay(self, new_delay)
+                TimelockControllerImpl::update_delay_impl(self, new_delay)
             }
         }
     ))
@@ -2374,15 +2374,15 @@ pub(crate) fn impl_proxy(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl proxy::Internal for #storage_struct_name {
             fn _emit_delegate_code_changed_event(&self, previous: Option<Hash>, new: Option<Hash>) {
-                proxy::InternalImpl::_emit_delegate_code_changed_event(self, previous, new)
+                proxy::InternalImpl::_emit_delegate_code_changed_event_impl(self, previous, new)
             }
 
             fn _init_with_forward_to(&mut self, forward_to: Hash) {
-                proxy::InternalImpl::_init_with_forward_to(self, forward_to)
+                proxy::InternalImpl::_init_with_forward_to_impl(self, forward_to)
             }
 
             fn _fallback(&self) -> ! {
-                proxy::InternalImpl::_fallback(self)
+                proxy::InternalImpl::_fallback_impl(self)
             }
         }
     ))
@@ -2397,12 +2397,12 @@ pub(crate) fn impl_proxy(impl_args: &mut ImplArgs) {
         impl Proxy for #storage_struct_name {
             #[ink(message)]
             fn get_delegate_code(&self) -> Hash {
-                ProxyImpl::get_delegate_code(self)
+                ProxyImpl::get_delegate_code_impl(self)
             }
 
             #[ink(message)]
             fn change_delegate_code(&mut self, new_code_hash: Hash) -> Result<(), OwnableError> {
-                ProxyImpl::change_delegate_code(self, new_code_hash)
+                ProxyImpl::change_delegate_code_impl(self, new_code_hash)
             }
         }
     ))
@@ -2433,31 +2433,31 @@ pub(crate) fn impl_diamond(impl_args: &mut ImplArgs) {
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl diamond::Internal for #storage_struct_name {
             fn _emit_diamond_cut_event(&self, diamond_cut: &[FacetCut], init: &Option<InitCall>) {
-                diamond::InternalImpl::_emit_diamond_cut_event(self, diamond_cut, init)
+                diamond::InternalImpl::_emit_diamond_cut_event_impl(self, diamond_cut, init)
             }
 
             fn _diamond_cut(&mut self, diamond_cut: Vec<FacetCut>, init: Option<InitCall>) -> Result<(), DiamondError> {
-                diamond::InternalImpl::_diamond_cut(self, diamond_cut, init)
+                diamond::InternalImpl::_diamond_cut_impl(self, diamond_cut, init)
             }
 
             fn _diamond_cut_facet(&mut self, facet_cut: &FacetCut) -> Result<(), DiamondError> {
-                diamond::InternalImpl::_diamond_cut_facet(self, facet_cut)
+                diamond::InternalImpl::_diamond_cut_facet_impl(self, facet_cut)
             }
 
             fn _fallback(&self) -> ! {
-                diamond::InternalImpl::_fallback(self)
+                diamond::InternalImpl::_fallback_impl(self)
             }
 
             fn _init_call(&self, call: InitCall) -> ! {
-                diamond::InternalImpl::_init_call(self, call)
+                diamond::InternalImpl::_init_call_impl(self, call)
             }
 
             fn _remove_facet(&mut self, code_hash: Hash) {
-                diamond::InternalImpl::_remove_facet(self, code_hash)
+                diamond::InternalImpl::_remove_facet_impl(self, code_hash)
             }
 
             fn _remove_selectors(&mut self, facet_cut: &FacetCut) {
-                diamond::InternalImpl::_remove_selectors(self, facet_cut)
+                diamond::InternalImpl::_remove_selectors_impl(self, facet_cut)
             }
         }
     ))
@@ -2472,7 +2472,7 @@ pub(crate) fn impl_diamond(impl_args: &mut ImplArgs) {
         impl Diamond for #storage_struct_name {
             #[ink(message)]
             fn diamond_cut(&mut self, diamond_cut: Vec<FacetCut>, init: Option<InitCall>) -> Result<(), DiamondError> {
-                DiamondImpl::diamond_cut(self, diamond_cut, init)
+                DiamondImpl::diamond_cut_impl(self, diamond_cut, init)
             }
         }
     ))
@@ -2521,22 +2521,22 @@ pub(crate) fn impl_diamond_loupe(impl_args: &mut ImplArgs) {
         impl DiamondLoupe for #storage_struct_name {
             #[ink(message)]
             fn facets(&self) -> Vec<FacetCut> {
-                diamond_loupe::DiamondLoupeImpl::facets(self)
+                diamond_loupe::DiamondLoupeImpl::facets_impl(self)
             }
 
             #[ink(message)]
             fn facet_function_selectors(&self, facet: Hash) -> Vec<Selector> {
-                diamond_loupe::DiamondLoupeImpl::facet_function_selectors(self, facet)
+                diamond_loupe::DiamondLoupeImpl::facet_function_selectors_impl(self, facet)
             }
 
             #[ink(message)]
             fn facet_code_hashes(&self) -> Vec<Hash> {
-                diamond_loupe::DiamondLoupeImpl::facet_code_hashes(self)
+                diamond_loupe::DiamondLoupeImpl::facet_code_hashes_impl(self)
             }
 
             #[ink(message)]
             fn facet_code_hash(&self, selector: Selector) -> Option<Hash> {
-                diamond_loupe::DiamondLoupeImpl::facet_code_hash(self, selector)
+                diamond_loupe::DiamondLoupeImpl::facet_code_hash_impl(self, selector)
             }
         }
     ))
@@ -2550,11 +2550,11 @@ pub(crate) fn impl_diamond_loupe(impl_args: &mut ImplArgs) {
     let mut cut = syn::parse2::<syn::ItemImpl>(quote!(
         impl diamond::DiamondCut for #storage_struct_name {
             fn _on_add_facet(&mut self, code_hash: Hash) {
-                diamond_loupe::DiamondCutLoupeImpl::_on_add_facet(self, code_hash)
+                diamond_loupe::DiamondCutLoupeImpl::_on_add_facet_impl(self, code_hash)
             }
 
             fn _on_remove_facet(&mut self, code_hash: Hash) {
-                diamond_loupe::DiamondCutLoupeImpl::_on_remove_facet(self, code_hash)
+                diamond_loupe::DiamondCutLoupeImpl::_on_remove_facet_impl(self, code_hash)
             }
         }
     ))
@@ -2590,7 +2590,7 @@ pub(crate) fn impl_upgradeable(impl_args: &mut ImplArgs) {
         impl Upgradeable for #storage_struct_name {
             #[ink(message)]
             fn set_code_hash(&mut self, new_code_hash: Hash)  -> Result<(),UpgradeableError>  {
-                upgradeable::UpgradeableImpl::set_code_hash(self,new_code_hash)
+                upgradeable::UpgradeableImpl::set_code_hash_impl(self,new_code_hash)
             }
         }
     ))
@@ -2619,12 +2619,12 @@ pub(crate) fn impl_psp61(impl_args: &mut ImplArgs, impls: Vec<String>) {
         impl PSP61 for #storage_struct_name {
             #[ink(message)]
             fn supports_interface(&self, interface_id: u32) -> bool {
-                PSP61Impl::supports_interface(self, interface_id)
+                PSP61Impl::supports_interface_impl(self, interface_id)
             }
 
             #[ink(message)]
             fn supported_interfaces(&self) -> ::ink::prelude::vec::Vec<u32> {
-                PSP61Impl::supported_interfaces(self)
+                PSP61Impl::supported_interfaces_impl(self)
             }
         }
     ))
@@ -2691,32 +2691,32 @@ pub(crate) fn impl_governor_settings(impl_args: &mut ImplArgs) {
         impl GovernorSettings for #storage_struct_name {
             #[ink(message)]
             fn set_voting_delay(&mut self, new_voting_delay: u64) -> Result<(), GovernanceError> {
-                GovernorSettingsImpl::set_voting_delay(self, new_voting_delay)
+                GovernorSettingsImpl::set_voting_delay_impl(self, new_voting_delay)
             }
 
             #[ink(message)]
             fn set_voting_period(&mut self, new_voting_period: u64) -> Result<(), GovernanceError> {
-                GovernorSettingsImpl::set_voting_period(self, new_voting_period)
+                GovernorSettingsImpl::set_voting_period_impl(self, new_voting_period)
             }
 
             #[ink(message)]
             fn set_proposal_threshold(&mut self, new_proposal_threshold: u128) -> Result<(), GovernanceError> {
-                GovernorSettingsImpl::set_proposal_threshold(self, new_proposal_threshold)
+                GovernorSettingsImpl::set_proposal_threshold_impl(self, new_proposal_threshold)
             }
 
             #[ink(message)]
             fn voting_delay(&self) -> u64 {
-                GovernorSettingsImpl::voting_delay(self)
+                GovernorSettingsImpl::voting_delay_impl(self)
             }
 
             #[ink(message)]
             fn voting_period(&self) -> u64 {
-                GovernorSettingsImpl::voting_period(self)
+                GovernorSettingsImpl::voting_period_impl(self)
             }
 
             #[ink(message)]
             fn proposal_threshold(&self) -> u128 {
-                GovernorSettingsImpl::proposal_threshold(self)
+                GovernorSettingsImpl::proposal_threshold_impl(self)
             }
         }
     ))
@@ -2766,27 +2766,27 @@ pub(crate) fn impl_governor_quorum(impl_args: &mut ImplArgs) {
         impl Quorum for #storage_struct_name {
             #[ink(message)]
             fn quorum_numerator(&self) -> u128 {
-                QuorumImpl::quorum_numerator(self)
+                QuorumImpl::quorum_numerator_impl(self)
             }
 
             #[ink(message)]
             fn quorum_numerator_at(&self, time_point: Timestamp) -> u128 {
-                QuorumImpl::quorum_numerator_at(self, time_point)
+                QuorumImpl::quorum_numerator_at_impl(self, time_point)
             }
 
             #[ink(message)]
             fn quorum_denominator(&self) -> u128 {
-                QuorumImpl::quorum_denominator(self)
+                QuorumImpl::quorum_denominator_impl(self)
             }
 
             #[ink(message)]
             fn quorum(&self, time_point: Timestamp) -> Result<u128, GovernanceError> {
-                QuorumImpl::quorum(self, time_point)
+                QuorumImpl::quorum_impl(self, time_point)
             }
 
             #[ink(message)]
             fn update_quorum_numerator(&mut self, numerator: u128) -> Result<(), GovernanceError> {
-                QuorumImpl::update_quorum_numerator(self, numerator)
+                QuorumImpl::update_quorum_numerator_impl(self, numerator)
             }
         }
     ))
@@ -2822,12 +2822,12 @@ pub(crate) fn impl_governor_counting(impl_args: &mut ImplArgs) {
         impl GovernorCounting for #storage_struct_name {
             #[ink(message)]
             fn has_voted(&self, proposal_id: ProposalId, account: AccountId) -> bool {
-                GovernorCountingImpl::has_voted(self, proposal_id, account)
+                GovernorCountingImpl::has_voted_impl(self, proposal_id, account)
             }
 
             #[ink(message)]
             fn proposal_votes(&self, proposal_id: ProposalId) -> Result<ProposalVote, GovernanceError> {
-                GovernorCountingImpl::proposal_votes(self, proposal_id)
+                GovernorCountingImpl::proposal_votes_impl(self, proposal_id)
             }
         }
     ))
@@ -2874,27 +2874,27 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 transactions: Vec<Transaction>,
                 description_hash: HashType,
             ) -> Result<HashType, GovernanceError> {
-                GovernorImpl::hash_proposal(self, transactions, description_hash)
+                GovernorImpl::hash_proposal_impl(self, transactions, description_hash)
             }
 
             #[ink(message)]
             fn state(&self, proposal_id: ProposalId) -> Result<ProposalState, GovernanceError> {
-                GovernorImpl::state(self, proposal_id)
+                GovernorImpl::state_impl(self, proposal_id)
             }
 
             #[ink(message)]
             fn proposal_snapshot(&self, proposal_id: ProposalId) -> Result<Timestamp, GovernanceError> {
-                GovernorImpl::proposal_snapshot(self, proposal_id)
+                GovernorImpl::proposal_snapshot_impl(self, proposal_id)
             }
 
             #[ink(message)]
             fn proposal_deadline(&self, proposal_id: ProposalId) -> Result<Timestamp, GovernanceError> {
-                GovernorImpl::proposal_deadline(self, proposal_id)
+                GovernorImpl::proposal_deadline_impl(self, proposal_id)
             }
 
             #[ink(message)]
             fn proposal_proposer(&self, proposal_id: ProposalId) -> Result<AccountId, GovernanceError> {
-                GovernorImpl::proposal_proposer(self, proposal_id)
+                GovernorImpl::proposal_proposer_impl(self, proposal_id)
             }
 
             #[ink(message)]
@@ -2904,7 +2904,7 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 time_point: Timestamp,
                 params: Vec<u8>,
             ) -> Result<u128, GovernanceError> {
-                GovernorImpl::get_votes_with_params(self, account, time_point, params)
+                GovernorImpl::get_votes_with_params_impl(self, account, time_point, params)
             }
 
             #[ink(message)]
@@ -2913,7 +2913,7 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 transactions: Vec<Transaction>,
                 description: String,
             ) -> Result<ProposalId, GovernanceError> {
-                GovernorImpl::propose(self, transactions, description)
+                GovernorImpl::propose_impl(self, transactions, description)
             }
 
             #[ink(message)]
@@ -2922,7 +2922,7 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 transactions: Vec<Transaction>,
                 description_hash: HashType,
             ) -> Result<ProposalId, GovernanceError> {
-                GovernorImpl::execute(self, transactions, description_hash)
+                GovernorImpl::execute_impl(self, transactions, description_hash)
             }
 
             #[ink(message)]
@@ -2931,12 +2931,12 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 transactions: Vec<Transaction>,
                 description_hash: HashType,
             ) -> Result<ProposalId, GovernanceError> {
-                GovernorImpl::cancel(self, transactions, description_hash)
+                GovernorImpl::cancel_impl(self, transactions, description_hash)
             }
 
             #[ink(message)]
             fn cast_vote(&mut self, proposal_id: ProposalId, support: VoteType, reason: Option<String>, params: Option<Vec<u8>>) -> Result<Balance, GovernanceError> {
-                GovernorImpl::cast_vote(self, proposal_id, support, reason, params)
+                GovernorImpl::cast_vote_impl(self, proposal_id, support, reason, params)
             }
 
             #[ink(message)]
@@ -2947,7 +2947,7 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 reason: String,
                 signature: Signature,
             ) -> Result<Balance, GovernanceError> {
-                GovernorImpl::cast_vote_with_signature(self, proposal_id, support, reason, signature)
+                GovernorImpl::cast_vote_with_signature_impl(self, proposal_id, support, reason, signature)
             }
 
             #[ink(message)]
@@ -2959,12 +2959,12 @@ pub(crate) fn impl_governor(impl_args: &mut ImplArgs) {
                 signature: Signature,
                 params: Vec<u8>,
             ) -> Result<Balance, GovernanceError> {
-                GovernorImpl::cast_vote_with_signature_and_params(self, proposal_id, support, reason, signature, params)
+                GovernorImpl::cast_vote_with_signature_and_params_impl(self, proposal_id, support, reason, signature, params)
             }
 
             #[ink(message)]
             fn relay(&mut self, target: AccountId, transaction: Transaction) -> Result<(), GovernanceError> {
-                GovernorImpl::relay(self, target, transaction)
+                GovernorImpl::relay_impl(self, target, transaction)
             }
         }
     ))
@@ -2995,7 +2995,7 @@ pub(crate) fn impl_nonces(impl_args: &mut ImplArgs) {
         impl Nonces for #storage_struct_name {
             #[ink(message)]
             fn nonces(&self, account: AccountId) -> u64 {
-                NoncesImpl::nonces(self, &account)
+                NoncesImpl::nonces_impl(self, &account)
             }
         }
     ))

@@ -72,7 +72,7 @@ impl<'a> TypeGuard<'a> for BalancesKey {
 }
 
 pub trait BalancesManagerImpl: Storage<Data> + psp37::BalancesManager {
-    fn _balance_of(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
+    fn _balance_of_impl(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
         match id {
             None => self.data().enumerable.count(&Some(owner)),
             Some(id) => self.data().balances.get(&(owner, id)).unwrap_or(0),
@@ -80,14 +80,14 @@ pub trait BalancesManagerImpl: Storage<Data> + psp37::BalancesManager {
     }
 
     #[inline(always)]
-    fn _total_supply(&self, id: &Option<&Id>) -> Balance {
+    fn _total_supply_impl(&self, id: &Option<&Id>) -> Balance {
         match id {
             None => self.data().enumerable.count(&None),
             Some(id) => self.data().supply.get(id).unwrap_or(0),
         }
     }
 
-    fn _increase_balance(
+    fn _increase_balance_impl(
         &mut self,
         owner: &AccountId,
         id: &Id,
@@ -123,7 +123,7 @@ pub trait BalancesManagerImpl: Storage<Data> + psp37::BalancesManager {
         Ok(())
     }
 
-    fn _decrease_balance(
+    fn _decrease_balance_impl(
         &mut self,
         owner: &AccountId,
         id: &Id,
@@ -158,7 +158,7 @@ pub trait BalancesManagerImpl: Storage<Data> + psp37::BalancesManager {
         Ok(())
     }
 
-    fn _insert_operator_approvals(
+    fn _insert_operator_approvals_impl(
         &mut self,
         owner: &AccountId,
         operator: &AccountId,
@@ -168,21 +168,26 @@ pub trait BalancesManagerImpl: Storage<Data> + psp37::BalancesManager {
         self.data().operator_approvals.insert(&(owner, operator, id), amount);
     }
 
-    fn _get_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Option<Balance> {
+    fn _get_operator_approvals_impl(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<&Id>,
+    ) -> Option<Balance> {
         self.data().operator_approvals.get(&(owner, operator, id))
     }
 
-    fn _remove_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) {
+    fn _remove_operator_approvals_impl(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) {
         self.data().operator_approvals.remove(&(owner, operator, id));
     }
 }
 
 pub trait PSP37EnumerableImpl: Storage<Data> {
-    fn owners_token_by_index(&self, owner: AccountId, index: u128) -> Option<Id> {
+    fn owners_token_by_index_impl(&self, owner: AccountId, index: u128) -> Option<Id> {
         self.data().enumerable.get_value(&Some(&owner), &index)
     }
 
-    fn token_by_index(&self, index: u128) -> Option<Id> {
+    fn token_by_index_impl(&self, index: u128) -> Option<Id> {
         self.data().enumerable.get_value(&None, &index)
     }
 }

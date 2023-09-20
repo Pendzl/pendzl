@@ -64,7 +64,7 @@ pub struct PermitMessage {
 }
 
 pub trait PSP22PermitImpl: Internal {
-    fn permit(
+    fn permit_impl(
         &mut self,
         owner: AccountId,
         spender: AccountId,
@@ -75,7 +75,7 @@ pub trait PSP22PermitImpl: Internal {
         self._permit(owner, spender, amount, deadline, signature)
     }
 
-    fn domain_separator(&mut self) -> [u8; 32] {
+    fn domain_separator_impl(&mut self) -> [u8; 32] {
         self._domain_separator()
     }
 }
@@ -94,7 +94,7 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + psp22::Internal + NoncesImpl {
-    fn _permit(
+    fn _permit_impl(
         &mut self,
         owner: AccountId,
         spender: AccountId,
@@ -127,7 +127,7 @@ pub trait InternalImpl: Storage<Data> + psp22::Internal + NoncesImpl {
         }
     }
 
-    fn _domain_separator(&mut self) -> [u8; 32] {
+    fn _domain_separator_impl(&mut self) -> [u8; 32] {
         let cached = self.data::<Data>().cached_domain_separator.get_or_default();
 
         if self.data::<Data>().cached_domain_separator.get().is_none() {

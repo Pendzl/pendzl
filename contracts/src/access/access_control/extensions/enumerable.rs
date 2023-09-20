@@ -52,36 +52,36 @@ pub struct Data {
 }
 
 pub trait MembersManagerImpl: Storage<Data> {
-    fn _has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
+    fn _has_role_impl(&self, role: RoleType, address: &Option<AccountId>) -> bool {
         self.data().role_members.contains_value(role, address)
     }
 
-    fn _add(&mut self, role: RoleType, member: &Option<AccountId>) {
+    fn _add_impl(&mut self, role: RoleType, member: &Option<AccountId>) {
         self.data().role_members.insert(role, member);
     }
 
-    fn _remove(&mut self, role: RoleType, member: &Option<AccountId>) {
+    fn _remove_impl(&mut self, role: RoleType, member: &Option<AccountId>) {
         self.data().role_members.remove_value(role, member);
     }
 
-    fn _get_role_admin(&self, role: RoleType) -> Option<RoleType> {
+    fn _get_role_admin_impl(&self, role: RoleType) -> Option<RoleType> {
         self.data().admin_roles.get(role)
     }
 
-    fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType) {
+    fn _set_role_admin_impl(&mut self, role: RoleType, new_admin: RoleType) {
         self.data().admin_roles.insert(role, &new_admin);
     }
 }
 
 pub trait AccessControlEnumerableImpl: Storage<Data> {
-    fn get_role_member(&self, role: RoleType, index: u32) -> Option<AccountId> {
+    fn get_role_member_impl(&self, role: RoleType, index: u32) -> Option<AccountId> {
         self.data()
             .role_members
             .get_value(role, &(index as u128))
             .unwrap_or(None)
     }
 
-    fn get_role_member_count(&self, role: RoleType) -> u32 {
+    fn get_role_member_count_impl(&self, role: RoleType) -> u32 {
         self.data().role_members.count(role) as u32
     }
 }

@@ -41,31 +41,31 @@ pub use pendzl::utils::checkpoints::Checkpoint;
 /// requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
 pub trait PSP22VotesImpl: VotesInternal {
     /// Get number of checkpoints for `account`.
-    fn num_checkpoints(&self, account: AccountId) -> u32 {
+    fn num_checkpoints_impl(&self, account: AccountId) -> u32 {
         VotesInternal::_num_checkpoints(self, &account)
     }
 
     /// Get the `pos`-th checkpoint for `account`.
-    fn checkpoints(&self, account: AccountId, pos: u32) -> Result<Checkpoint, GovernanceError> {
+    fn checkpoints_impl(&self, account: AccountId, pos: u32) -> Result<Checkpoint, GovernanceError> {
         VotesInternal::_checkpoints(self, &account, pos)
     }
 }
 
 pub trait PSP22VotesInternal: VotesInternal + psp22::Internal {
     /// Get number of maximum supply.
-    fn _max_supply(&self) -> u128 {
+    fn _max_supply_impl(&self) -> u128 {
         u128::MAX
     }
 
     /// Transfer `amount` tokens from `from` to `to`.
-    fn _update(&mut self, from: AccountId, to: AccountId, amount: u128) -> Result<(), PSP22Error> {
+    fn _update_impl(&mut self, from: AccountId, to: AccountId, amount: u128) -> Result<(), PSP22Error> {
         psp22::Internal::_transfer_from_to(self, from, to, amount, vec![])?;
 
         Ok(())
     }
 
     /// Get number of voting units.
-    fn _get_voting_units(&self, account: &AccountId) -> u128 {
+    fn _get_voting_units_impl(&self, account: &AccountId) -> u128 {
         psp22::Internal::_balance_of(self, account)
     }
 }

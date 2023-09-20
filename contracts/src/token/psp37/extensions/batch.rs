@@ -43,7 +43,7 @@ pub use psp37::{
 };
 
 pub trait PSP37BatchImpl: Internal + Storage<psp37::Data> {
-    fn batch_transfer(
+    fn batch_transfer_impl(
         &mut self,
         to: AccountId,
         ids_amounts: Vec<(Id, Balance)>,
@@ -52,7 +52,7 @@ pub trait PSP37BatchImpl: Internal + Storage<psp37::Data> {
         self._batch_transfer_from(Self::env().caller(), to, ids_amounts, data)
     }
 
-    fn batch_transfer_from(
+    fn batch_transfer_from_impl(
         &mut self,
         from: AccountId,
         to: AccountId,
@@ -74,7 +74,7 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Internal + psp37::Internal + Storage<psp37::Data> + psp37::BalancesManager {
-    fn _batch_transfer_from(
+    fn _batch_transfer_from_impl(
         &mut self,
         from: AccountId,
         to: AccountId,

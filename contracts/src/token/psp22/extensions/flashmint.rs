@@ -52,7 +52,7 @@ pub use psp22::{
 };
 
 pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + Internal {
-    fn max_flashloan(&mut self, token: AccountId) -> Balance {
+    fn max_flashloan_impl(&mut self, token: AccountId) -> Balance {
         if token == Self::env().account_id() {
             Balance::MAX - self._total_supply()
         } else {
@@ -60,14 +60,14 @@ pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + Internal {
         }
     }
 
-    fn flash_fee(&self, token: AccountId, amount: Balance) -> Result<Balance, FlashLenderError> {
+    fn flash_fee_impl(&self, token: AccountId, amount: Balance) -> Result<Balance, FlashLenderError> {
         if token != Self::env().account_id() {
             return Err(FlashLenderError::WrongTokenAddress)
         }
         Ok(self._get_fee(amount))
     }
 
-    fn flashloan(
+    fn flashloan_impl(
         &mut self,
         receiver_account: AccountId,
         token: AccountId,
@@ -102,11 +102,11 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<psp22::Data> + Internal {
-    fn _get_fee(&self, _amount: Balance) -> Balance {
+    fn _get_fee_impl(&self, _amount: Balance) -> Balance {
         0
     }
 
-    fn _on_flashloan(
+    fn _on_flashloan_impl(
         &mut self,
         receiver_account: AccountId,
         token: AccountId,

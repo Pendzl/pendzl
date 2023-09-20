@@ -75,29 +75,29 @@ impl<'a> TypeGuard<'a> for ApprovalsKey {
 
 pub trait PSP37Impl: Internal + BalancesManager + Sized {
     fn balance_of(&self, owner: AccountId, id: Option<Id>) -> Balance {
-        self._balance_of(&owner, &id.as_ref())
+        self._balance_of_impl(&owner, &id.as_ref())
     }
 
     fn total_supply(&self, id: Option<Id>) -> Balance {
-        self._total_supply(&id.as_ref())
+        self._total_supply_impl(&id.as_ref())
     }
 
-    fn allowance(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> Balance {
+    fn allowance_impl(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> Balance {
         match id {
             None => self._get_allowance(&owner, &operator, &None),
             Some(id) => self._get_allowance(&owner, &operator, &Some(&id)),
         }
     }
 
-    fn approve(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
+    fn approve_impl(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
         self._approve_for(operator, id, value)
     }
 
-    fn transfer(&mut self, to: AccountId, id: Id, value: Balance, data: Vec<u8>) -> Result<(), PSP37Error> {
+    fn transfer_impl(&mut self, to: AccountId, id: Id, value: Balance, data: Vec<u8>) -> Result<(), PSP37Error> {
         self._transfer_from(Self::env().caller(), to, id, value, data)
     }
 
-    fn transfer_from(
+    fn transfer_from_impl(
         &mut self,
         from: AccountId,
         to: AccountId,
@@ -188,9 +188,9 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Internal + BalancesManager + Sized {
-    fn _emit_transfer_event(&self, _from: Option<AccountId>, _to: Option<AccountId>, _id: Id, _amount: Balance) {}
+    fn _emit_transfer_event_impl(&self, _from: Option<AccountId>, _to: Option<AccountId>, _id: Id, _amount: Balance) {}
 
-    fn _emit_transfer_batch_event(
+    fn _emit_transfer_batch_event_impl(
         &self,
         _from: Option<AccountId>,
         _to: Option<AccountId>,
@@ -198,9 +198,9 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
     ) {
     }
 
-    fn _emit_approval_event(&self, _owner: AccountId, _operator: AccountId, _id: Option<Id>, _value: Balance) {}
+    fn _emit_approval_event_impl(&self, _owner: AccountId, _operator: AccountId, _id: Option<Id>, _value: Balance) {}
 
-    fn _mint_to(&mut self, to: AccountId, mut ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+    fn _mint_to_impl(&mut self, to: AccountId, mut ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
         if ids_amounts.is_empty() {
             return Ok(())
         }
@@ -223,7 +223,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _burn_from(&mut self, from: AccountId, mut ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+    fn _burn_from_impl(&mut self, from: AccountId, mut ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
         Internal::_before_token_transfer(self, Some(&from), None, &ids_amounts)?;
 
         if ids_amounts.is_empty() {
@@ -246,7 +246,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _transfer_from(
+    fn _transfer_from_impl(
         &mut self,
         from: AccountId,
         to: AccountId,
@@ -269,14 +269,14 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _get_allowance(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Balance {
+    fn _get_allowance_impl(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Balance {
         match self._get_operator_approvals(owner, operator, &None) {
             None => self._get_operator_approvals(owner, operator, id).unwrap_or(0),
             _ => Balance::MAX,
         }
     }
 
-    fn _approve_for(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
+    fn _approve_for_impl(&mut self, operator: AccountId, id: Option<Id>, value: Balance) -> Result<(), PSP37Error> {
         let caller = Self::env().caller();
 
         if caller == operator {
@@ -300,7 +300,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _decrease_allowance(
+    fn _decrease_allowance_impl(
         &mut self,
         owner: &AccountId,
         operator: &AccountId,
@@ -326,7 +326,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _transfer_token(
+    fn _transfer_token_impl(
         &mut self,
         from: &AccountId,
         to: &AccountId,
@@ -339,7 +339,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _before_token_transfer(
+    fn _before_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,
@@ -348,7 +348,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _after_token_transfer(
+    fn _after_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,
@@ -383,15 +383,15 @@ pub trait BalancesManager {
 }
 
 pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
-    fn _balance_of(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
+    fn _balance_of_impl(&self, owner: &AccountId, id: &Option<&Id>) -> Balance {
         self.data().balances.get(&(owner, id)).unwrap_or(0)
     }
 
-    fn _total_supply(&self, id: &Option<&Id>) -> Balance {
+    fn _total_supply_impl(&self, id: &Option<&Id>) -> Balance {
         self.data().supply.get(id).unwrap_or(0)
     }
 
-    fn _increase_balance(
+    fn _increase_balance_impl(
         &mut self,
         owner: &AccountId,
         id: &Id,
@@ -431,7 +431,7 @@ pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
         Ok(())
     }
 
-    fn _decrease_balance(
+    fn _decrease_balance_impl(
         &mut self,
         owner: &AccountId,
         id: &Id,
@@ -473,7 +473,7 @@ pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
         Ok(())
     }
 
-    fn _insert_operator_approvals(
+    fn _insert_operator_approvals_impl(
         &mut self,
         owner: &AccountId,
         operator: &AccountId,
@@ -483,11 +483,16 @@ pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
         self.data().operator_approvals.insert(&(owner, operator, id), amount);
     }
 
-    fn _get_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) -> Option<Balance> {
+    fn _get_operator_approvals_impl(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<&Id>,
+    ) -> Option<Balance> {
         self.data().operator_approvals.get(&(owner, operator, id))
     }
 
-    fn _remove_operator_approvals(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) {
+    fn _remove_operator_approvals_impl(&self, owner: &AccountId, operator: &AccountId, id: &Option<&Id>) {
         self.data().operator_approvals.remove(&(owner, operator, id));
     }
 }

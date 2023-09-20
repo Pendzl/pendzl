@@ -49,12 +49,12 @@ pub struct Data {
 }
 
 pub trait PSP22WrapperImpl: Storage<Data> + Internal + psp22::Internal {
-    fn deposit_for(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn deposit_for_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         self._deposit(amount)?;
         psp22::Internal::_mint_to(self, account, amount)
     }
 
-    fn withdraw_to(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn withdraw_to_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         psp22::Internal::_burn_from(self, Self::env().caller(), amount)?;
         self._withdraw(account, amount)
     }
@@ -84,13 +84,13 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal {
-    fn _recover(&mut self, account: AccountId) -> Result<Balance, PSP22Error> {
+    fn _recover_impl(&mut self, account: AccountId) -> Result<Balance, PSP22Error> {
         let value = Internal::_underlying_balance(self) - self._total_supply();
         psp22::Internal::_mint_to(self, account, value)?;
         Ok(value)
     }
 
-    fn _deposit(&mut self, amount: Balance) -> Result<(), PSP22Error> {
+    fn _deposit_impl(&mut self, amount: Balance) -> Result<(), PSP22Error> {
         if let Some(underlying) = Internal::_underlying(self) {
             let mut psp22: PSP22Ref = underlying.into();
             psp22.transfer_from(Self::env().caller(), Self::env().account_id(), amount, Vec::<u8>::new())
@@ -99,7 +99,7 @@ pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal {
         }
     }
 
-    fn _withdraw(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn _withdraw_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         if let Some(underlying) = Internal::_underlying(self) {
             let mut psp22: PSP22Ref = underlying.into();
             psp22.transfer(account, amount, Vec::<u8>::new())
@@ -108,7 +108,7 @@ pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal {
         }
     }
 
-    fn _underlying_balance(&mut self) -> Balance {
+    fn _underlying_balance_impl(&mut self) -> Balance {
         if let Some(underlying) = Internal::_underlying(self) {
             let psp22: PSP22Ref = underlying.into();
             psp22.balance_of(Self::env().account_id())
@@ -117,11 +117,11 @@ pub trait InternalImpl: Storage<Data> + Internal + psp22::Internal {
         }
     }
 
-    fn _init(&mut self, underlying: AccountId) {
+    fn _init_impl(&mut self, underlying: AccountId) {
         self.data().underlying.set(&Some(underlying));
     }
 
-    fn _underlying(&mut self) -> Option<AccountId> {
+    fn _underlying_impl(&mut self) -> Option<AccountId> {
         self.data().underlying.get_or_default()
     }
 }

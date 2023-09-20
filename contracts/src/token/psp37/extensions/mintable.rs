@@ -40,7 +40,7 @@ pub use psp37::{
 };
 
 pub trait PSP37MintableImpl: psp37::Internal {
-    fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+    fn mint_impl(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
         self._mint_to(to, ids_amounts)
     }
 }

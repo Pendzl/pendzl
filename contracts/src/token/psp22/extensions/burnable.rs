@@ -37,7 +37,7 @@ pub use psp22::{
 };
 
 pub trait PSP22BurnableImpl: psp22::Internal {
-    fn burn(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn burn_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         self._burn_from(account, amount)
     }
 }

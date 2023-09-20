@@ -64,32 +64,32 @@ impl<'a> TypeGuard<'a> for ApprovalsKey {
 }
 
 pub trait PSP34Impl: Internal + PSP34 + BalancesManager + Sized {
-    fn collection_id(&self) -> Id {
+    fn collection_id_impl(&self) -> Id {
         let account_id = Self::env().account_id();
         Id::Bytes(<_ as AsRef<[u8; 32]>>::as_ref(&account_id).to_vec())
     }
 
-    fn balance_of(&self, owner: AccountId) -> u32 {
+    fn balance_of_impl(&self, owner: AccountId) -> u32 {
         self._balance_of(&owner)
     }
 
-    fn owner_of(&self, id: Id) -> Option<AccountId> {
+    fn owner_of_impl(&self, id: Id) -> Option<AccountId> {
         Internal::_owner_of(self, &id)
     }
 
-    fn allowance(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> bool {
+    fn allowance_impl(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> bool {
         self._allowance(&owner, &operator, &id.as_ref())
     }
 
-    fn approve(&mut self, operator: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
+    fn approve_impl(&mut self, operator: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
         self._approve_for(operator, id, approved)
     }
 
-    fn transfer(&mut self, to: AccountId, id: Id, data: Vec<u8>) -> Result<(), PSP34Error> {
+    fn transfer_impl(&mut self, to: AccountId, id: Id, data: Vec<u8>) -> Result<(), PSP34Error> {
         self._transfer_token(to, id, data)
     }
 
-    fn total_supply(&self) -> Balance {
+    fn total_supply_impl(&self) -> Balance {
         self._total_supply()
     }
 }
@@ -133,11 +133,11 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Internal + BalancesManager + Sized {
-    fn _emit_transfer_event(&self, _from: Option<AccountId>, _to: Option<AccountId>, _id: Id) {}
+    fn _emit_transfer_event_impl(&self, _from: Option<AccountId>, _to: Option<AccountId>, _id: Id) {}
 
-    fn _emit_approval_event(&self, _from: AccountId, _to: AccountId, _id: Option<Id>, _approved: bool) {}
+    fn _emit_approval_event_impl(&self, _from: AccountId, _to: AccountId, _id: Option<Id>, _approved: bool) {}
 
-    fn _approve_for(&mut self, to: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
+    fn _approve_for_impl(&mut self, to: AccountId, id: Option<Id>, approved: bool) -> Result<(), PSP34Error> {
         let mut caller = Self::env().caller();
 
         if let Some(id) = &id {
@@ -163,11 +163,11 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _owner_of(&self, id: &Id) -> Option<AccountId> {
+    fn _owner_of_impl(&self, id: &Id) -> Option<AccountId> {
         BalancesManager::_owner_of(self, id)
     }
 
-    fn _transfer_token(&mut self, to: AccountId, id: Id, _data: Vec<u8>) -> Result<(), PSP34Error> {
+    fn _transfer_token_impl(&mut self, to: AccountId, id: Id, _data: Vec<u8>) -> Result<(), PSP34Error> {
         let owner = Internal::_check_token_exists(self, &id)?;
         let caller = Self::env().caller();
 
@@ -189,7 +189,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _mint_to(&mut self, to: AccountId, id: Id) -> Result<(), PSP34Error> {
+    fn _mint_to_impl(&mut self, to: AccountId, id: Id) -> Result<(), PSP34Error> {
         if Internal::_owner_of(self, &id).is_some() {
             return Err(PSP34Error::TokenExists)
         }
@@ -203,7 +203,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _burn_from(&mut self, from: AccountId, id: Id) -> Result<(), PSP34Error> {
+    fn _burn_from_impl(&mut self, from: AccountId, id: Id) -> Result<(), PSP34Error> {
         Internal::_check_token_exists(self, &id)?;
 
         Internal::_before_token_transfer(self, Some(&from), None, &id)?;
@@ -215,16 +215,16 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _allowance(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> bool {
+    fn _allowance_impl(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> bool {
         self._operator_approvals(owner, operator, &None).is_some()
             || id.is_some() && self._operator_approvals(owner, operator, id).is_some()
     }
 
-    fn _check_token_exists(&self, id: &Id) -> Result<AccountId, PSP34Error> {
+    fn _check_token_exists_impl(&self, id: &Id) -> Result<AccountId, PSP34Error> {
         Internal::_owner_of(self, id).ok_or(PSP34Error::TokenNotExists)
     }
 
-    fn _before_token_transfer(
+    fn _before_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,
@@ -233,7 +233,7 @@ pub trait InternalImpl: Internal + BalancesManager + Sized {
         Ok(())
     }
 
-    fn _after_token_transfer(
+    fn _after_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,
@@ -266,11 +266,11 @@ pub trait BalancesManager {
 }
 
 pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
-    fn _balance_of(&self, owner: &Owner) -> u32 {
+    fn _balance_of_impl(&self, owner: &Owner) -> u32 {
         self.data().owned_tokens_count.get(owner).unwrap_or(0)
     }
 
-    fn _increase_balance(&mut self, owner: &Owner, _id: &Id, increase_supply: bool) {
+    fn _increase_balance_impl(&mut self, owner: &Owner, _id: &Id, increase_supply: bool) {
         let to_balance = self.data().owned_tokens_count.get(owner).unwrap_or(0);
         self.data().owned_tokens_count.insert(owner, &(to_balance + 1));
         if increase_supply {
@@ -279,7 +279,7 @@ pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
         }
     }
 
-    fn _decrease_balance(&mut self, owner: &Owner, _id: &Id, decrease_supply: bool) {
+    fn _decrease_balance_impl(&mut self, owner: &Owner, _id: &Id, decrease_supply: bool) {
         let from_balance = self.data().owned_tokens_count.get(owner).unwrap_or(0);
         self.data()
             .owned_tokens_count
@@ -291,31 +291,31 @@ pub trait BalancesManagerImpl: BalancesManager + Storage<Data> {
         }
     }
 
-    fn _total_supply(&self) -> u128 {
+    fn _total_supply_impl(&self) -> u128 {
         self.data().total_supply.get_or_default()
     }
 
-    fn _owner_of(&self, id: &Id) -> Option<AccountId> {
+    fn _owner_of_impl(&self, id: &Id) -> Option<AccountId> {
         self.data().token_owner.get(id)
     }
 
-    fn _operator_approvals(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> Option<()> {
+    fn _operator_approvals_impl(&self, owner: &Owner, operator: &Operator, id: &Option<&Id>) -> Option<()> {
         self.data().operator_approvals.get(&(owner, operator, id))
     }
 
-    fn _insert_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
+    fn _insert_operator_approvals_impl(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
         self.data().operator_approvals.insert(&(owner, operator, id), &());
     }
 
-    fn _remove_operator_approvals(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
+    fn _remove_operator_approvals_impl(&mut self, owner: &Owner, operator: &Operator, id: &Option<&Id>) {
         self.data().operator_approvals.remove(&(owner, operator, id));
     }
 
-    fn _insert_token_owner(&mut self, id: &Id, to: &AccountId) {
+    fn _insert_token_owner_impl(&mut self, id: &Id, to: &AccountId) {
         self.data().token_owner.insert(id, to);
     }
 
-    fn _remove_token_owner(&mut self, id: &Id) {
+    fn _remove_token_owner_impl(&mut self, id: &Id) {
         self.data().token_owner.remove(id);
     }
 }

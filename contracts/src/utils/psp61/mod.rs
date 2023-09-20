@@ -41,11 +41,11 @@ pub trait PSP61InternalOB {
 }
 
 pub trait PSP61Impl: PSP61Internal + PSP61InternalOB {
-    fn supports_interface(&self, interface_id: u32) -> bool {
+    fn supports_interface_impl(&self, interface_id: u32) -> bool {
         self._interfaces().contains(&interface_id) || self._interfaces_ob().contains(&interface_id)
     }
 
-    fn supported_interfaces(&self) -> Vec<u32> {
+    fn supported_interfaces_impl(&self) -> Vec<u32> {
         let mut interfaces = self._interfaces();
         interfaces.append(&mut self._interfaces_ob());
         interfaces

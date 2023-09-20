@@ -174,23 +174,23 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
-    fn _emit_transfer_event(&self, _from: Option<AccountId>, _to: Option<AccountId>, _amount: Balance) {}
+    fn _emit_transfer_event_impl(&self, _from: Option<AccountId>, _to: Option<AccountId>, _amount: Balance) {}
 
-    fn _emit_approval_event(&self, _owner: AccountId, _spender: AccountId, _amount: Balance) {}
+    fn _emit_approval_event_impl(&self, _owner: AccountId, _spender: AccountId, _amount: Balance) {}
 
-    fn _total_supply(&self) -> Balance {
+    fn _total_supply_impl(&self) -> Balance {
         self.data().supply.get_or_default()
     }
 
-    fn _balance_of(&self, owner: &AccountId) -> Balance {
+    fn _balance_of_impl(&self, owner: &AccountId) -> Balance {
         self.data().balances.get(owner).unwrap_or(0)
     }
 
-    fn _allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance {
+    fn _allowance_impl(&self, owner: &AccountId, spender: &AccountId) -> Balance {
         self.data().allowances.get(&(*owner, *spender)).unwrap_or(0)
     }
 
-    fn _transfer_from_to(
+    fn _transfer_from_to_impl(
         &mut self,
         from: AccountId,
         to: AccountId,
@@ -216,13 +216,18 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _approve_from_to(&mut self, owner: AccountId, spender: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn _approve_from_to_impl(
+        &mut self,
+        owner: AccountId,
+        spender: AccountId,
+        amount: Balance,
+    ) -> Result<(), PSP22Error> {
         self.data().allowances.insert(&(owner, spender), &amount);
         Internal::_emit_approval_event(self, owner, spender, amount);
         Ok(())
     }
 
-    fn _mint_to(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn _mint_to_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         Internal::_before_token_transfer(self, None, Some(&account), &amount)?;
         let mut new_balance = Internal::_balance_of(self, &account);
         new_balance += amount;
@@ -237,7 +242,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _burn_from(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn _burn_from_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         let mut from_balance = Internal::_balance_of(self, &account);
 
         if from_balance < amount {
@@ -258,7 +263,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _before_token_transfer(
+    fn _before_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,
@@ -267,7 +272,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _after_token_transfer(
+    fn _after_token_transfer_impl(
         &mut self,
         _from: Option<&AccountId>,
         _to: Option<&AccountId>,

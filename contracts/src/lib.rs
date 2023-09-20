@@ -23,7 +23,6 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 mod access;
-pub mod governance;
 mod security;
 mod token;
 pub mod utils;
@@ -35,10 +34,6 @@ pub mod traits;
 pub use access::access_control;
 #[cfg(feature = "ownable")]
 pub use access::ownable;
-#[cfg(feature = "timelock_controller")]
-pub use governance::timelock_controller;
-#[cfg(feature = "governance")]
-pub use governance::*;
 #[cfg(feature = "pausable")]
 pub use security::pausable;
 #[cfg(feature = "psp22")]

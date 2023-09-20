@@ -37,7 +37,7 @@ pub use psp34::{
 };
 
 pub trait PSP34MintableImpl: psp34::Internal {
-    fn mint(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+    fn mint_impl(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
         self._mint_to(account, id)
     }
 }

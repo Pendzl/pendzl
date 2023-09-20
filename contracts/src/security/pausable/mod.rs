@@ -41,7 +41,7 @@ pub struct Data {
 }
 
 pub trait PausableImpl: Storage<Data> + Internal {
-    fn paused(&self) -> bool {
+    fn paused_impl(&self) -> bool {
         self._paused()
     }
 }
@@ -73,29 +73,29 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
-    fn _emit_paused_event(&self, _account: AccountId) {}
+    fn _emit_paused_event_impl(&self, _account: AccountId) {}
 
-    fn _emit_unpaused_event(&self, _account: AccountId) {}
+    fn _emit_unpaused_event_impl(&self, _account: AccountId) {}
 
-    fn _paused(&self) -> bool {
+    fn _paused_impl(&self) -> bool {
         self.data().paused.get_or_default()
     }
 
-    fn _pause(&mut self) -> Result<(), PausableError> {
+    fn _pause_impl(&mut self) -> Result<(), PausableError> {
         Internal::_ensure_not_paused(self)?;
         self.data().paused.set(&true);
         Internal::_emit_paused_event(self, Self::env().caller());
         Ok(())
     }
 
-    fn _unpause(&mut self) -> Result<(), PausableError> {
+    fn _unpause_impl(&mut self) -> Result<(), PausableError> {
         Internal::_ensure_paused(self)?;
         self.data().paused.set(&false);
         Internal::_emit_unpaused_event(self, Self::env().caller());
         Ok(())
     }
 
-    fn _switch_pause(&mut self) -> Result<(), PausableError> {
+    fn _switch_pause_impl(&mut self) -> Result<(), PausableError> {
         if Internal::_paused(self) {
             Internal::_unpause(self)
         } else {
@@ -103,7 +103,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         }
     }
 
-    fn _ensure_paused(&self) -> Result<(), PausableError> {
+    fn _ensure_paused_impl(&self) -> Result<(), PausableError> {
         if !self.data().paused.get_or_default() {
             return Err(From::from(PausableError::NotPaused))
         }
@@ -111,7 +111,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _ensure_not_paused(&self) -> Result<(), PausableError> {
+    fn _ensure_not_paused_impl(&self) -> Result<(), PausableError> {
         if self.data().paused.get_or_default() {
             return Err(From::from(PausableError::Paused))
         }

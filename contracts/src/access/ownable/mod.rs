@@ -51,11 +51,11 @@ pub struct Data {
 // }
 
 pub trait OwnableImpl: Storage<Data> + Internal {
-    fn owner(&self) -> Option<AccountId> {
+    fn owner_impl(&self) -> Option<AccountId> {
         self.data().owner.get_or_default()
     }
 
-    fn renounce_ownership(&mut self) -> Result<(), OwnableError> {
+    fn renounce_ownership_impl(&mut self) -> Result<(), OwnableError> {
         self._only_owner()?;
         let old_owner = self.data().owner.get_or_default();
         self.data().owner.set(&None);
@@ -63,7 +63,7 @@ pub trait OwnableImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError> {
+    fn transfer_ownership_impl(&mut self, new_owner: AccountId) -> Result<(), OwnableError> {
         self._only_owner()?;
         let old_owner = self.data().owner.get_or_default();
         self.data().owner.set(&Some(new_owner));
@@ -82,14 +82,14 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
-    fn _emit_ownership_transferred_event(&self, _previous: Option<AccountId>, _new: Option<AccountId>) {}
+    fn _emit_ownership_transferred_event_impl(&self, _previous: Option<AccountId>, _new: Option<AccountId>) {}
 
-    fn _init_with_owner(&mut self, owner: AccountId) {
+    fn _init_with_owner_impl(&mut self, owner: AccountId) {
         self.data().owner.set(&Some(owner));
         Internal::_emit_ownership_transferred_event(self, None, Some(owner));
     }
 
-    fn _only_owner(&self) -> Result<(), OwnableError> {
+    fn _only_owner_impl(&self) -> Result<(), OwnableError> {
         if Some(Self::env().caller()) != self.data().owner.get_or_default() {
             return Err(OwnableError::CallerIsNotOwner)
         }

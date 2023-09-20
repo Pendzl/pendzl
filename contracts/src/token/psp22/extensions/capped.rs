@@ -47,7 +47,7 @@ pub struct Data {
 }
 
 pub trait PSP22CappedImpl: Internal {
-    fn cap(&self) -> Balance {
+    fn cap_impl(&self) -> Balance {
         self._cap()
     }
 }
@@ -62,7 +62,7 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + psp22::Internal + Internal {
-    fn _init_cap(&mut self, cap: Balance) -> Result<(), PSP22Error> {
+    fn _init_cap_impl(&mut self, cap: Balance) -> Result<(), PSP22Error> {
         if cap == 0 {
             return Err(PSP22Error::Custom(String::from("Cap must be above 0")))
         }
@@ -70,14 +70,14 @@ pub trait InternalImpl: Storage<Data> + psp22::Internal + Internal {
         Ok(())
     }
 
-    fn _is_cap_exceeded(&self, amount: &Balance) -> bool {
+    fn _is_cap_exceeded_impl(&self, amount: &Balance) -> bool {
         if self._total_supply() + amount > Internal::_cap(self) {
             return true
         }
         false
     }
 
-    fn _cap(&self) -> Balance {
+    fn _cap_impl(&self) -> Balance {
         self.data().cap.get_or_default()
     }
 }

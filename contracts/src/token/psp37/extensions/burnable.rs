@@ -40,7 +40,7 @@ pub use psp37::{
 };
 
 pub trait PSP37BurnableImpl: psp37::Internal {
-    fn burn(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
+    fn burn_impl(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
         self._burn_from(from, ids_amounts)
     }
 }

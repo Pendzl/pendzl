@@ -37,7 +37,7 @@ pub use psp22::{
 };
 
 pub trait PSP22MintableImpl: psp22::Internal {
-    fn mint(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+    fn mint_impl(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
         self._mint_to(account, amount)
     }
 }

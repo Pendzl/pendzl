@@ -69,22 +69,22 @@ pub struct Data {
 
 pub trait PSP22TokenTimelockImpl: Storage<Data> + Internal {
     /// Returns the token address
-    fn token(&self) -> Option<AccountId> {
+    fn token_impl(&self) -> Option<AccountId> {
         self._token()
     }
 
     /// Returns the beneficiary of the tokens
-    fn beneficiary(&self) -> Option<AccountId> {
+    fn beneficiary_impl(&self) -> Option<AccountId> {
         self._beneficiary()
     }
 
     /// Returns the timestamp when the tokens are released
-    fn release_time(&self) -> Timestamp {
+    fn release_time_impl(&self) -> Timestamp {
         self.data().release_time.get_or_default()
     }
 
     /// Transfers the tokens held by timelock to the beneficairy
-    fn release(&mut self) -> Result<(), PSP22TokenTimelockError> {
+    fn release_impl(&mut self) -> Result<(), PSP22TokenTimelockError> {
         if Self::env().block_timestamp() < self.data().release_time.get_or_default() {
             return Err(PSP22TokenTimelockError::CurrentTimeIsBeforeReleaseTime)
         }
@@ -117,7 +117,7 @@ pub trait Internal {
 }
 
 pub trait InternalImpl: Storage<Data> + Internal {
-    fn _withdraw(&mut self, amount: Balance) -> Result<(), PSP22TokenTimelockError> {
+    fn _withdraw_impl(&mut self, amount: Balance) -> Result<(), PSP22TokenTimelockError> {
         if let Some(beneficiary) = Internal::_beneficiary(self) {
             if let Some(token) = Internal::_token(self) {
                 build_call::<DefaultEnvironment>()
@@ -142,7 +142,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         }
     }
 
-    fn _contract_balance(&mut self) -> Balance {
+    fn _contract_balance_impl(&mut self) -> Balance {
         if let Some(token) = Internal::_token(self) {
             let psp22: PSP22Ref = token.into();
             psp22.balance_of(Self::env().account_id())
@@ -151,7 +151,7 @@ pub trait InternalImpl: Storage<Data> + Internal {
         }
     }
 
-    fn _init(
+    fn _init_impl(
         &mut self,
         token: AccountId,
         beneficiary: AccountId,
@@ -166,11 +166,11 @@ pub trait InternalImpl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn _token(&self) -> Option<AccountId> {
+    fn _token_impl(&self) -> Option<AccountId> {
         self.data().token.get_or_default()
     }
 
-    fn _beneficiary(&self) -> Option<AccountId> {
+    fn _beneficiary_impl(&self) -> Option<AccountId> {
         self.data().beneficiary.get_or_default()
     }
 }

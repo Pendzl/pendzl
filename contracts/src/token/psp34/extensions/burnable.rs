@@ -37,7 +37,7 @@ pub use psp34::{
 };
 
 pub trait PSP34BurnableImpl: psp34::Internal {
-    fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+    fn burn_impl(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
         self._burn_from(account, id)
     }
 }
