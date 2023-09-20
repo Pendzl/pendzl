@@ -47,7 +47,7 @@ pub trait NoncesImpl: Storage<Data> {
 
     /// Returns the next nonce of `account`, and increments the nonce.
     fn _use_nonce_impl(&mut self, account: &AccountId) -> Result<u64, NoncesError> {
-        let nonce = self.nonces(account);
+        let nonce = self.nonces_impl(account);
         self.data()
             .nonces
             .insert(account, &(nonce.checked_add(1).ok_or(NoncesError::NonceOverflow)?));
@@ -56,7 +56,7 @@ pub trait NoncesImpl: Storage<Data> {
 
     /// Returns the next nonce of `account`, and increments the nonce if `nonce` matches the current nonce.
     fn _use_checked_nonce_impl(&mut self, account: &AccountId, nonce: u64) -> Result<u64, NoncesError> {
-        let current_nonce = self.nonces(&account);
+        let current_nonce = self.nonces_impl(&account);
         if nonce != current_nonce {
             return Err(NoncesError::InvalidAccountNonce(account.clone(), current_nonce))
         }

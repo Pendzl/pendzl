@@ -31,14 +31,14 @@ pub mod my_access_control {
 
     #[overrider(PSP34Burnable)]
     fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
-        Internal::_ensure_has_role(self, MINTER, Some(self.env().caller()))?;
-        PSP34BurnableImpl::burn(self, account, id)
+        access_control::Internal::_ensure_has_role(self, MINTER, Some(self.env().caller()))?;
+        psp34::Internal::_burn_from(self, account, id)
     }
 
     #[overrider(PSP34Mintable)]
     fn mint(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
         access_control::Internal::_ensure_has_role(self, MINTER, Some(self.env().caller()))?;
-        PSP34MintableImpl::mint(self, account, id)
+        psp34::Internal::_mint_to(self, account, id)
     }
 
     impl Contract {

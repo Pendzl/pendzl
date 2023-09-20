@@ -31,11 +31,6 @@ pub mod my_psp34_burnable {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp34::{
-            extensions::burnable::psp34burnable_external::PSP34Burnable,
-            psp34_external::PSP34,
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

@@ -31,8 +31,6 @@ pub mod my_psp34_metadata {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp34::extensions::metadata::psp34metadata_external::PSP34Metadata;
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

@@ -31,9 +31,9 @@ use syn::{
 };
 
 pub(crate) struct MetaList {
-    pub path: syn::Path,
+    pub _path: syn::Path,
     pub _paren_token: syn::token::Paren,
-    pub nested: syn::punctuated::Punctuated<syn::Expr, syn::Token![,]>,
+    pub _nested: syn::punctuated::Punctuated<syn::Expr, syn::Token![,]>,
 }
 
 // Like Path::parse_mod_style but accepts keywords in the path.
@@ -64,9 +64,9 @@ fn parse_meta_path(input: ParseStream) -> syn::Result<syn::Path> {
 fn parse_meta_list_after_path(path: syn::Path, input: ParseStream) -> syn::Result<MetaList> {
     let content;
     Ok(MetaList {
-        path,
+        _path: path,
         _paren_token: parenthesized!(content in input),
-        nested: content.parse_terminated(syn::Expr::parse)?,
+        _nested: content.parse_terminated(syn::Expr::parse)?,
     })
 }
 
@@ -134,12 +134,11 @@ impl Parse for Attributes {
         Ok(Self(syn::Attribute::parse_outer(input)?))
     }
 }
-
-impl Attributes {
-    pub(crate) fn attr(&self) -> &Vec<syn::Attribute> {
-        &self.0
-    }
-}
+// impl Attributes {
+//     pub(crate) fn attr(&self) -> &Vec<syn::Attribute> {
+//         &self.0
+//     }
+// }
 
 #[inline]
 pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {

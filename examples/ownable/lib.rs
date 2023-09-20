@@ -31,14 +31,14 @@ pub mod ownable {
 
     #[overrider(PSP37Mintable)]
     fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-        ownable::InternalImpl::_only_owner(self)?;
-        PSP37MintableImpl::mint(self, to, ids_amounts)
+        ownable::Internal::_only_owner(self)?;
+        psp37::Internal::_mint_to(self, to, ids_amounts)
     }
 
     #[overrider(PSP37Burnable)]
     fn burn(&mut self, from: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
-        ownable::InternalImpl::_only_owner(self)?;
-        PSP37BurnableImpl::burn(self, from, ids_amounts)
+        ownable::Internal::_only_owner(self)?;
+        psp37::Internal::_burn_from(self, from, ids_amounts)
     }
 
     #[cfg(all(test, feature = "e2e-tests"))]

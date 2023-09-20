@@ -72,25 +72,25 @@ pub struct Data {
 // }
 
 pub trait PSP22Impl: Storage<Data> + Internal {
-    fn total_supply(&self) -> Balance {
+    fn total_supply_impl(&self) -> Balance {
         self._total_supply()
     }
 
-    fn balance_of(&self, owner: AccountId) -> Balance {
+    fn balance_of_impl(&self, owner: AccountId) -> Balance {
         self._balance_of(&owner)
     }
 
-    fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance {
+    fn allowance_impl(&self, owner: AccountId, spender: AccountId) -> Balance {
         self._allowance(&owner, &spender)
     }
 
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
+    fn transfer_impl(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
         let from = Self::env().caller();
         self._transfer_from_to(from, to, value, data)?;
         Ok(())
     }
 
-    fn transfer_from(
+    fn transfer_from_impl(
         &mut self,
         from: AccountId,
         to: AccountId,
@@ -109,18 +109,18 @@ pub trait PSP22Impl: Storage<Data> + Internal {
         Ok(())
     }
 
-    fn approve(&mut self, spender: AccountId, value: Balance) -> Result<(), PSP22Error> {
+    fn approve_impl(&mut self, spender: AccountId, value: Balance) -> Result<(), PSP22Error> {
         let owner = Self::env().caller();
         self._approve_from_to(owner, spender, value)?;
         Ok(())
     }
 
-    fn increase_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
+    fn increase_allowance_impl(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
         let owner = Self::env().caller();
         self._approve_from_to(owner, spender, self._allowance(&owner, &spender) + delta_value)
     }
 
-    fn decrease_allowance(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
+    fn decrease_allowance_impl(&mut self, spender: AccountId, delta_value: Balance) -> Result<(), PSP22Error> {
         let owner = Self::env().caller();
         let allowance = self._allowance(&owner, &spender);
 

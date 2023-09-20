@@ -22,11 +22,6 @@ pub mod my_psp37 {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp37::{
-            extensions::mintable::psp37mintable_external::PSP37Mintable,
-            psp37_external::PSP37,
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

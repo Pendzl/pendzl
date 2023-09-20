@@ -34,7 +34,6 @@ pub mod my_psp34 {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp34::psp34_external::PSP34;
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

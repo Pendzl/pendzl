@@ -93,7 +93,7 @@ pub trait Internal {
     fn _domain_separator(&mut self) -> [u8; 32];
 }
 
-pub trait InternalImpl: Storage<Data> + psp22::Internal + NoncesImpl {
+pub trait InternalImpl: Storage<Data> + psp22::Internal + NoncesImpl + Internal {
     fn _permit_impl(
         &mut self,
         owner: AccountId,
@@ -107,7 +107,7 @@ pub trait InternalImpl: Storage<Data> + psp22::Internal + NoncesImpl {
             return Err(PSP22Error::PermitExpired)
         }
 
-        let nonce = self._use_nonce(&owner)?;
+        let nonce = self._use_nonce_impl(&owner)?;
         let domain_separator = self._domain_separator();
 
         let message = &scale::Encode::encode(&PermitMessage {

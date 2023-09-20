@@ -74,7 +74,7 @@ pub trait FlashLenderImpl: Storage<psp22::Data> + psp22::Internal + Internal {
         amount: Balance,
         data: Vec<u8>,
     ) -> Result<(), FlashLenderError> {
-        let fee = self.flash_fee(token, amount)?;
+        let fee = self.flash_fee_impl(token, amount)?;
         self._mint_to(receiver_account, amount)?;
         Internal::_on_flashloan(self, receiver_account, token, fee, amount, data)?;
         let this = Self::env().account_id();

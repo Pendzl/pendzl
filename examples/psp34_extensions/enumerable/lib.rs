@@ -21,12 +21,6 @@ pub mod my_psp34_enumerable {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp34::extensions::{
-            burnable::psp34burnable_external::PSP34Burnable,
-            enumerable::psp34enumerable_external::PSP34Enumerable,
-            mintable::psp34mintable_external::PSP34Mintable,
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

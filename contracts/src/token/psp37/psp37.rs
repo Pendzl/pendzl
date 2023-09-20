@@ -74,12 +74,12 @@ impl<'a> TypeGuard<'a> for ApprovalsKey {
 }
 
 pub trait PSP37Impl: Internal + BalancesManager + Sized {
-    fn balance_of(&self, owner: AccountId, id: Option<Id>) -> Balance {
-        self._balance_of_impl(&owner, &id.as_ref())
+    fn balance_of_impl(&self, owner: AccountId, id: Option<Id>) -> Balance {
+        self._balance_of(&owner, &id.as_ref())
     }
 
-    fn total_supply(&self, id: Option<Id>) -> Balance {
-        self._total_supply_impl(&id.as_ref())
+    fn total_supply_impl(&self, id: Option<Id>) -> Balance {
+        self._total_supply(&id.as_ref())
     }
 
     fn allowance_impl(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> Balance {
