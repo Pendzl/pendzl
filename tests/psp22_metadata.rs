@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22, PSP22Metadata)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_metadata {
     /// Imports all the definitions from the outer scope so we can use them here.
     use pendzl::contracts::psp22::extensions::metadata::*;

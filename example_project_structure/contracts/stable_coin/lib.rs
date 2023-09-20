@@ -2,7 +2,7 @@
 
 /// This is a simple `PSP22` which will be used as a stable coin and a collateral token in our lending contract
 #[pendzl::implementation(PSP22, PSP22Metadata, PSP22Mintable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod token {
     use lending_project::traits::stable_coin::*;
     use pendzl::traits::{

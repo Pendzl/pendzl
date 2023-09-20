@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp34")]
 #[pendzl::implementation(PSP34, PSP34Burnable)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp34_burnable {
     use pendzl::{
         test_utils::accounts,

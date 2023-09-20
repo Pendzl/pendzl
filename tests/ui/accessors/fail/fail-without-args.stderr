@@ -1,7 +1,0 @@
-error: expected identifier, found `:`
- --> tests/ui/accessors/fail/fail-without-args.rs:2:1
-  |
-2 | #[pendzl::accessors]
-  | ^^^^^^^^^^^^^^^^^^^^^^^ expected identifier
-  |
-  = note: this error originates in the attribute macro `pendzl::accessors` (in Nightly builds, run with -Z macro-backtrace for more info)

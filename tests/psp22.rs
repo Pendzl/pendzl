@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_test {
     use ink::codegen::{
         EmitEvent,

@@ -21,7 +21,7 @@
 
 #[cfg(feature = "access_control")]
 #[pendzl::implementation(AccessControl)]
-#[pendzl::contract]
+#[ink::contract]
 mod access_control {
     use ::ink::env::DefaultEnvironment;
     use ink::env::test::DefaultAccounts;

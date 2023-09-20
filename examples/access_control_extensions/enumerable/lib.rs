@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(AccessControl, AccessControlEnumerable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_access_control {
     use pendzl::traits::Storage;
 
@@ -35,11 +35,6 @@ pub mod my_access_control {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::access_control::{
-            accesscontrol_external::AccessControl,
-            extensions::enumerable::accesscontrolenumerable_external::AccessControlEnumerable,
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

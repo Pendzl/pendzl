@@ -21,7 +21,7 @@
 
 #[cfg(feature = "ownable")]
 #[pendzl::implementation(Ownable)]
-#[pendzl::contract]
+#[ink::contract]
 mod ownable {
     use ink::codegen::{
         EmitEvent,

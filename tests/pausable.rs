@@ -21,7 +21,7 @@
 
 #[cfg(feature = "pausable")]
 #[pendzl::implementation(Pausable)]
-#[pendzl::contract]
+#[ink::contract]
 mod pausable {
     use ::ink::env::DefaultEnvironment;
     use ink::{

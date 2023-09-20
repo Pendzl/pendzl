@@ -21,7 +21,7 @@
 
 #[cfg(feature = "access_control")]
 #[pendzl::implementation(AccessControl, AccessControlEnumerable)]
-#[pendzl::contract]
+#[ink::contract]
 mod access_control_enumerable {
     use ::ink::env::DefaultEnvironment;
     use ink::env::test::DefaultAccounts;

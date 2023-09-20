@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP22, PSP22Burnable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp22_burnable {
     use pendzl::traits::Storage;
 
@@ -33,10 +33,6 @@ pub mod my_psp22_burnable {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp22::{
-            extensions::burnable::psp22burnable_external::PSP22Burnable,
-            psp22_external::PSP22,
-        };
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

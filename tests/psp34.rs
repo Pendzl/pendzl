@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp34")]
 #[pendzl::implementation(PSP34)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp34 {
     use ink::{
         codegen::{

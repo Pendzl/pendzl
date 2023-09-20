@@ -51,19 +51,13 @@ std = [
     "pendzl_lang/std",
 ]
 psp22 = ["pendzl_contracts/psp22"]
-psp22_pallet = ["pendzl_contracts/psp22_pallet"]
 psp34 = ["pendzl_contracts/psp34"]
 psp37 = ["pendzl_contracts/psp37"]
 access_control = ["pendzl_contracts/access_control"]
 ownable = ["pendzl_contracts/ownable"]
-payment_splitter = ["pendzl_contracts/payment_splitter"]
-reentrancy_guard = ["pendzl_contracts/reentrancy_guard"]
 pausable = ["pendzl_contracts/pausable"]
 timelock_controller = ["pendzl_contracts/timelock_controller"]
-proxy = ["pendzl_contracts/proxy"]
-diamond = ["pendzl_contracts/diamond"]
-upgradeable = ["pendzl_contracts/upgradeable"]
-governance = ["pendzl_contracts/governance", "pendzl_contracts/checkpoints"]
+# governance = ["pendzl_contracts/governance", "pendzl_contracts/checkpoints"]
 crypto = ["pendzl_contracts/crypto"]
 nonces = ["pendzl_contracts/nonces"]
 checkpoints = ["pendzl_contracts/checkpoints"]
@@ -71,18 +65,13 @@ psp61 = ["pendzl_contracts/psp61"]
 
 test-all = [
     "psp22",
-    # "psp22_pallet", we ignore it during testing. It requries it own run of tests
     "psp34",
     "psp37",
     "access_control",
     "ownable",
-    "payment_splitter",
-    "reentrancy_guard",
     "pausable",
-    "timelock_controller",
-    "proxy",
-    "diamond",
-    "governance",
+    # "timelock_controller",
+    # "governance",
     "crypto",
     "nonces",
     "checkpoints",

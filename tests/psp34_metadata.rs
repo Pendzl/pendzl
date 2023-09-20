@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp34")]
 #[pendzl::implementation(PSP34, PSP34Metadata)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp34_metadata {
     use pendzl::traits::{
         Storage,

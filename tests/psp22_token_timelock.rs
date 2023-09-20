@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22TokenTimelock)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_timelock {
     use pendzl::{
         test_utils::accounts,

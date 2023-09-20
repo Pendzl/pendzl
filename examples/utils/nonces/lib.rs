@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(Nonces)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod nonces {
     use pendzl::traits::Storage;
 

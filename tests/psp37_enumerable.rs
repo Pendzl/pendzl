@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp37")]
 #[pendzl::implementation(PSP37, PSP37Enumerable, PSP37Batch, PSP37Burnable)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp37_enumerable {
     use pendzl::{
         contracts::psp37::Id,

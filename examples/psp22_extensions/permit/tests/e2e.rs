@@ -9,10 +9,10 @@ use ink::env::hash::{
 #[rustfmt::skip]
 use ink_e2e::build_message;
 use pendzl::contracts::{
-    nonces::nonces_external::Nonces,
+    nonces::Nonces,
     psp22::{
-        extensions::permit::psp22permit_external::PSP22Permit,
-        psp22_external::PSP22,
+        extensions::permit::PSP22Permit,
+        PSP22,
     },
 };
 #[rustfmt::skip]

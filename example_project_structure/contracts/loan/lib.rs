@@ -2,7 +2,7 @@
 
 /// This contract will represent the loan of a user
 #[pendzl::implementation(PSP34, Ownable, PSP34Metadata)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod loan {
     use lending_project::traits::loan::*;
     use pendzl::{

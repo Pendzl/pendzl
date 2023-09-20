@@ -31,10 +31,6 @@ pendzl = { version = "~4.0.0-beta.1", package = "pendzl_lang", path = "../lang",
     "checkpoints",
 ] }
 
-pallet-assets-chain-extension = { git = "https://github.com/Brushfam/pallet-assets-chain-extension", branch = "polkadot-v0.9.37", default-features = false, features = [
-    "ink-lang",
-] }
-
 [lib]
 name = "pendzl_contracts"
 path = "src/lib.rs"
@@ -42,15 +38,8 @@ crate-type = ["rlib"]
 
 [features]
 default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info/std",
-    "pendzl/std",
-    "pallet-assets-chain-extension/ink-std",
-]
+std = ["ink/std", "scale/std", "scale-info/std", "pendzl/std"]
 psp22 = ["nonces", "crypto"]
-psp22_pallet = []
 psp34 = []
 psp37 = []
 access_control = []

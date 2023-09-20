@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22, PSP22Burnable)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_burnable {
     use ink::codegen::{
         EmitEvent,

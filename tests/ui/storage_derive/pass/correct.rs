@@ -1,4 +1,4 @@
-#[pendzl::contract]
+#[ink::contract]
 mod base_psp22 {
     use pendzl::traits::Storage;
 

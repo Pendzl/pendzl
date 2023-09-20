@@ -56,15 +56,12 @@ use ink::{
         vec::Vec,
     },
 };
-use pendzl::{
-    modifiers,
-    traits::{
-        AccountId,
-        Balance,
-        Storage,
-        String,
-        Timestamp,
-    },
+use pendzl::traits::{
+    AccountId,
+    Balance,
+    Storage,
+    String,
+    Timestamp,
 };
 use scale::Encode;
 

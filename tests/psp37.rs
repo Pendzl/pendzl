@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp37")]
 #[pendzl::implementation(PSP37)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp37 {
     use ink::codegen::{
         EmitEvent,

@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP34, PSP34Burnable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp34_burnable {
     use pendzl::traits::Storage;
 

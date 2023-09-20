@@ -56,7 +56,7 @@ use proc_macro::TokenStream;
 /// (the separate trait only is used to call methods from the original trait), but the macro will not touch methods.
 ///
 /// This macro stores definition of the trait in a temporary file during build process.
-/// Based on this definition [`#[pendzl::contract]`](`macro@crate::contract`)
+/// Based on this definition [`#[ink::contract]`](`macro@crate::contract`)
 /// will generate implementation of additional traits.
 ///
 ///  ** Note ** The name of the trait defined via this macro must be unique for the whole project.
@@ -103,7 +103,7 @@ use proc_macro::TokenStream;
 /// # Example: Implementation
 ///
 /// ```
-/// #[pendzl::contract]
+/// #[ink::contract]
 /// mod base_psp22 {
 ///     use ink::storage::traits::ManualKey;
 ///     use ink::storage::Mapping;
@@ -300,7 +300,7 @@ use proc_macro::TokenStream;
 /// # Example: Usage
 ///
 /// ```
-/// #[pendzl::contract]
+/// #[ink::contract]
 /// mod example {
 ///     #[ink(storage)]
 ///     pub struct Contract {
@@ -381,7 +381,6 @@ use proc_macro::TokenStream;
 ///         let foo_bool = Trait1Ref::foo(&callee);
 ///     }
 /// }
-///
 // Example of explicit call
 /// let to: AccountId = [0; 32].into();
 /// let callee: AccountId = [0; 32].into();
@@ -443,7 +442,7 @@ synstructure::decl_attribute!(
     ////    c: u32,
     ////}
     ////
-    ////#[pendzl::contract]
+    ////#[ink::contract]
     ////pub mod contract {
     ////    use crate::*;
     ////    use pendzl::traits::Storage;
@@ -474,10 +473,9 @@ synstructure::decl_attribute!(
 ////you want to keep the default implementation from pendzl, but you want to attach some modifiers to
 ////that function.
 ////# Example
-////
 ////```skip
 ////#[pendzl::implementation(PSP22)]
-////#[pendzl::contract]
+////#[ink::contract]
 ////pub mod MyInkToken {
 ////    use pendzl::traits::Storage;
 ////

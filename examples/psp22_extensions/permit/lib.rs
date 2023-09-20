@@ -3,7 +3,7 @@
 pub use crate::my_psp22_permit::*;
 
 #[pendzl::implementation(PSP22, PSP22Permit, Nonces)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp22_permit {
     use pendzl::traits::Storage;
 

@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp37")]
 #[pendzl::implementation(PSP37, PSP37Mintable)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp37_mintable {
     use pendzl::{
         test_utils::accounts,

@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP37, PSP37Metadata)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp37 {
     use pendzl::traits::{
         Storage,

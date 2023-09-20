@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22, PSP22Mintable)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_mintable {
     use ink::codegen::{
         EmitEvent,

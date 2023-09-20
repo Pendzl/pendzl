@@ -4,7 +4,7 @@
 /// and other instance of this contract will be used to represent
 /// the amount of borrowed tokens
 #[pendzl::implementation(PSP22, PSP22Metadata, PSP22Mintable, PSP22Burnable, Ownable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod shares {
     use lending_project::traits::shares::*;
     use pendzl::{

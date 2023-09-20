@@ -21,7 +21,7 @@
 
 #[cfg(feature = "timelock_controller")]
 #[pendzl::implementation(TimelockController, AccessControl, AccessControlEnumerable)]
-#[pendzl::contract]
+#[ink::contract]
 mod timelock_controller {
     use ::ink::env::DefaultEnvironment;
     use ink::{

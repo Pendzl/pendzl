@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP22, PSP22Mintable, PSP22Votes, Nonces)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp22_votes {
     use pendzl::traits::Storage;
 

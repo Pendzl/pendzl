@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22, PSP22Wrapper)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_wrapper {
     use pendzl::{
         test_utils::accounts,

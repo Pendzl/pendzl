@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP22, PSP22Capped, PSP22Mintable)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp22_capped {
     use pendzl::traits::{
         Storage,
@@ -47,14 +47,6 @@ pub mod my_psp22_capped {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use pendzl::contracts::psp22::{
-            extensions::{
-                capped::psp22capped_external::PSP22Capped,
-                mintable::psp22mintable_external::PSP22Mintable,
-            },
-            psp22_external::PSP22,
-        };
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]

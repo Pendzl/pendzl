@@ -21,14 +21,6 @@
 
 extern crate proc_macro;
 
-use crate::metadata::TraitDefinition;
-use heck::CamelCase as _;
-use proc_macro2::TokenStream;
-use quote::{
-    format_ident,
-    quote,
-};
-use std::collections::HashMap;
 use syn::{
     ext::IdentExt,
     parenthesized,
@@ -36,10 +28,7 @@ use syn::{
         Parse,
         ParseStream,
     },
-    ItemImpl,
 };
-
-pub(crate) const BRUSH_PREFIX: &str = "__pendzl";
 
 pub(crate) struct MetaList {
     pub path: syn::Path,
@@ -152,111 +141,6 @@ impl Attributes {
     }
 }
 
-pub(crate) fn impl_external_trait(
-    mut impl_item: syn::ItemImpl,
-    trait_path: &syn::Path,
-    trait_def: &TraitDefinition,
-) -> Vec<syn::Item> {
-    let trait_ident = trait_path.segments.last().expect("Trait path is empty").ident.clone();
-    let namespace_ident = format_ident!("{}_external", trait_ident.to_string().to_lowercase());
-    let original_trait_path = trait_path.segments.clone();
-    let mut trait_path = trait_path.clone();
-    trait_path
-        .segments
-        .insert(trait_path.segments.len() - 1, syn::PathSegment::from(namespace_ident));
-    let impl_ink_attrs = extract_attr(&mut impl_item.attrs, "ink");
-    let mut ink_methods: HashMap<String, syn::TraitItemMethod> = HashMap::new();
-    trait_def.methods().iter().for_each(|method| {
-        if is_attr(&method.attrs, "ink") {
-            let mut method = method.clone();
-
-            for (i, fn_arg) in method.sig.inputs.iter_mut().enumerate() {
-                if let syn::FnArg::Typed(pat) = fn_arg {
-                    let type_ident = format_ident!("{}Input{}", method.sig.ident.to_string().to_camel_case(), i);
-                    let mut type_path = trait_path.clone();
-                    type_path.segments.pop();
-                    type_path.segments.push(syn::PathSegment::from(type_ident));
-                    *pat.ty.as_mut() = syn::parse2(quote! {
-                        #type_path
-                    })
-                    .unwrap();
-                }
-            }
-
-            if let syn::ReturnType::Type(_, t) = &mut method.sig.output {
-                let type_ident = format_ident!("{}Output", method.sig.ident.to_string().to_camel_case());
-                let mut type_path = trait_path.clone();
-                type_path.segments.pop();
-                type_path.segments.push(syn::PathSegment::from(type_ident));
-                *t = syn::parse2(quote! {
-                    #type_path
-                })
-                .unwrap();
-            }
-
-            let original_name = method.sig.ident.clone();
-            let inputs_params = method.sig.inputs.iter().filter_map(|fn_arg| {
-                if let syn::FnArg::Typed(pat_type) = fn_arg {
-                    Some(pat_type.pat.clone())
-                } else {
-                    None
-                }
-            });
-
-            method.default = Some(
-                syn::parse2(quote! {
-                    {
-                        #original_trait_path::#original_name(self #(, #inputs_params )* )
-                    }
-                })
-                .unwrap(),
-            );
-            let mut attrs = method.attrs.clone();
-            method.attrs = [extract_attr(&mut attrs, "doc"), extract_attr(&mut attrs, "ink")]
-                .into_iter()
-                .flatten()
-                .collect();
-            ink_methods.insert(method.sig.ident.to_string(), method);
-        }
-    });
-
-    if ink_methods.is_empty() {
-        return vec![syn::Item::from(impl_item)]
-    }
-
-    // Move ink! attrs from internal trait to external
-    impl_item.items.iter_mut().for_each(|mut item| {
-        if let syn::ImplItem::Method(method) = &mut item {
-            let method_key = method.sig.ident.to_string();
-
-            if ink_methods.contains_key(&method_key) {
-                // Internal attrs will override external, so user must include full declaration with ink(message) and etc.
-                ink_methods.get_mut(&method_key).unwrap().attrs = extract_attr(&mut method.attrs, "doc");
-                ink_methods
-                    .get_mut(&method_key)
-                    .unwrap()
-                    .attrs
-                    .append(&mut extract_attr(&mut method.attrs, "ink"));
-            }
-        }
-    });
-
-    let ink_methods_iter = ink_methods.values();
-
-    let self_ty = impl_item.self_ty.as_ref().clone();
-    let external_impl: ItemImpl = syn::parse2(quote! {
-        #(#impl_ink_attrs)*
-        impl #trait_path for #self_ty {
-            #(#ink_methods_iter)*
-        }
-    })
-    .unwrap();
-
-    let internal_impl = impl_item;
-
-    vec![syn::Item::from(internal_impl), syn::Item::from(external_impl)]
-}
-
 #[inline]
 pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
     attrs
@@ -264,47 +148,47 @@ pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
         .any(|attr| attr.path.segments.last().expect("No segments in path").ident == ident)
 }
 
-#[inline]
-#[allow(dead_code)]
-pub(crate) fn get_attr(attrs: &[syn::Attribute], ident: &str) -> Option<syn::Attribute> {
-    for attr in attrs.iter() {
-        if is_attr(&[attr.clone()], ident) {
-            return Some(attr.clone())
-        }
-    }
-    None
-}
+// #[inline]
+// #[allow(dead_code)]
+// pub(crate) fn get_attr(attrs: &[syn::Attribute], ident: &str) -> Option<syn::Attribute> {
+//     for attr in attrs.iter() {
+//         if is_attr(&[attr.clone()], ident) {
+//             return Some(attr.clone())
+//         }
+//     }
+//     None
+// }
 
-#[inline]
-pub(crate) fn remove_attr(attrs: &[syn::Attribute], ident: &str) -> Vec<syn::Attribute> {
-    attrs
-        .iter()
-        .cloned()
-        .filter_map(|attr| {
-            if is_attr(&[attr.clone()], ident) {
-                None
-            } else {
-                Some(attr)
-            }
-        })
-        .collect()
-}
+// #[inline]
+// pub(crate) fn remove_attr(attrs: &[syn::Attribute], ident: &str) -> Vec<syn::Attribute> {
+//     attrs
+//         .iter()
+//         .cloned()
+//         .filter_map(|attr| {
+//             if is_attr(&[attr.clone()], ident) {
+//                 None
+//             } else {
+//                 Some(attr)
+//             }
+//         })
+//         .collect()
+// }
 
-#[inline]
-pub(crate) fn extract_attr(attrs: &mut Vec<syn::Attribute>, ident: &str) -> Vec<syn::Attribute> {
-    let extracted = attrs
-        .clone()
-        .into_iter()
-        .filter(|attr| is_attr(&[attr.clone()], ident))
-        .collect();
-    attrs.retain(|attr| !is_attr(&[attr.clone()], ident));
-    extracted
-}
+// #[inline]
+// pub(crate) fn extract_attr(attrs: &mut Vec<syn::Attribute>, ident: &str) -> Vec<syn::Attribute> {
+//     let extracted = attrs
+//         .clone()
+//         .into_iter()
+//         .filter(|attr| is_attr(&[attr.clone()], ident))
+//         .collect();
+//     attrs.retain(|attr| !is_attr(&[attr.clone()], ident));
+//     extracted
+// }
 
-#[inline]
-pub(crate) fn new_attribute(attr_stream: TokenStream) -> syn::Attribute {
-    syn::parse2::<Attributes>(attr_stream).unwrap().attr()[0].clone()
-}
+// #[inline]
+// pub(crate) fn new_attribute(attr_stream: TokenStream) -> syn::Attribute {
+//     syn::parse2::<Attributes>(attr_stream).unwrap().attr()[0].clone()
+// }
 
 pub(crate) const INK_PREFIX: &str = "ink=";
 

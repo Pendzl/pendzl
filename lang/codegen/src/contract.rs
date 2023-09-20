@@ -44,7 +44,7 @@ pub fn generate(_attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         None => {
             panic!(
                 "{}",
-                "out-of-line pendzl modules are not supported, use `#[pendzl::contract] mod name {{ ... }}`",
+                "out-of-line pendzl modules are not supported, use `#[ink::contract] mod name {{ ... }}`",
             )
         }
     };

@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[pendzl::implementation(PSP22, Flashmint)]
-#[pendzl::contract]
+#[ink::contract]
 pub mod my_psp22_flashmint {
     use pendzl::traits::Storage;
 

@@ -20,12 +20,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-use crate::traits::{
-    errors::GovernanceError,
-    governance::utils::votes::*,
-};
-use openbrush::traits::AccountId;
-pub use openbrush::utils::checkpoints::Checkpoint;
+use crate::traits::errors::GovernanceError;
+use pendzl::traits::AccountId;
+pub use pendzl::utils::checkpoints::Checkpoint;
 
 /// Extension of ERC20 to support Compound-like voting and delegation.
 ///
@@ -35,7 +32,7 @@ pub use openbrush::utils::checkpoints::Checkpoint;
 ///
 /// By default, token balance does not account for voting power. This makes transfers cheaper. The downside is that it
 /// requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
-#[openbrush::trait_definition]
+#[ink::trait_definition]
 pub trait PSP22Votes {
     /// Get number of checkpoints for `account`.
     #[ink(message)]
@@ -45,6 +42,8 @@ pub trait PSP22Votes {
     #[ink(message)]
     fn checkpoints(&self, account: AccountId, pos: u32) -> Result<Checkpoint, GovernanceError>;
 }
-
-#[openbrush::wrapper]
-pub type PSP22VotesWrapper = dyn PSP22Votes + Votes;
+use ink::{
+    contract_ref,
+    env::DefaultEnvironment,
+};
+pub type PSP22VotesRef = contract_ref!(PSP22Votes, DefaultEnvironment);

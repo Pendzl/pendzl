@@ -1,9 +1,9 @@
-#[pendzl::contract]
+#[ink::contract]
 mod base_psp22 {
     use pendzl::traits::Storage;
 
-    #[ink(storage)]
     #[derive(Storage)]
+    #[ink(storage)]
     struct PSP22Struct {
         pub value: bool,
     }

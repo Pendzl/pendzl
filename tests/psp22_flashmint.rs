@@ -21,7 +21,7 @@
 
 #[cfg(feature = "psp22")]
 #[pendzl::implementation(PSP22, Flashmint)]
-#[pendzl::contract]
+#[ink::contract]
 mod psp22_flashmint {
     use ink::codegen::Env;
     use pendzl::{
