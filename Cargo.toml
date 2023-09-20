@@ -27,8 +27,8 @@ scale-info = { version = "2.6", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "~4.0.0-beta.1", path = "contracts", default-features = false }
-pendzl_lang = { version = "~4.0.0-beta.1", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.1.0", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.1.0", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"
