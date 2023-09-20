@@ -16,31 +16,10 @@ Which Standard tokens & useful contracts does it provide?
 - **PSP37** - *ERC1155 equivalent* with extensions
 - **Ownable** Restrict access to action for non-owners
 - **Access Control** Define set of roles and restrict access to action by roles
-- **Reentrancy guard** Prevent reentrant calls to a function
+- **Reentrancy guard** Prevent reentrant calls to a function (not supported yet)
 - **Pausable** Pause/Unpause the contract to disable/enable some operations
-- **Timelock Controller** Execute transactions with some delay
-- **Payment Splitter** Split amount of native tokens between participants
-
-### Default implementation in ink! traits
-
-You can provide a default implementation in the traits method and have internal functions. 
-You can use the ink! trait as a native rust trait with several restrictions regarding 
-external functions(functions marked `#[ink(message)]`).
-
-```rust
-#[ink::trait_definition]
-pub trait Governance: AccessControl {
-    #[ink(message)]
-    fn execute(&mut self, transaction: Transaction) -> Result<(), GovernanceError> {
-        self.internal_execute(transaction)
-    }
-
-    fn internal_execute(&mut self, transaction: Transaction) -> Result<(), GovernanceError> {
-        ...
-    }
-}
-```
-
+- **Timelock Controller** Execute transactions with some delay (not supported yet)
+- **Payment Splitter** Split amount of native tokens between participants (not supported yet)
 
 ### Additional stuff
 
@@ -56,7 +35,7 @@ functionality for your code. -->
 
 ### ‼️ Important ‼️
 
-Events are not supported currently due to how ink! currently handles them.  
+Events are not supported currently due to how ink! currently handles them.  This will be changeded with ink!-5.0
 The identifiers of events must be based on the name of the trait. At the moment, ink! doesn't support it,
 but it must be fixed with this [issue](https://github.com/paritytech/ink/issues/809).
 
