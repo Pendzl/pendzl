@@ -1646,7 +1646,7 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
             }
 
             fn _default_admin() -> RoleType {
-                <Self as access_control::InternalImpl>::_default_admin()
+                <Self as access_control::InternalImpl>::_default_admin_impl()
             }
 
             fn _init_with_caller(&mut self) {
