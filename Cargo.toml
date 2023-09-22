@@ -9,7 +9,7 @@ version = "0.1.0"
 authors = [
     "Brushfam <green@727.ventures>, Konrad Wierzbik <konrad.wierzbik@gmail.com> Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
-edition = "2021"
+edition = "2018"
 
 license = "MIT"
 readme = "README.md"
