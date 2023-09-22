@@ -220,7 +220,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
         with:
-          token: ${{ secrets.ISSUES_WRITE_PR_WRITE }}
+          token: ISSUES_WRITE_PR_WRITE
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           issue-number: ${{ steps.find-current-pr.outputs.pr }}
           edit-mode: replace
