@@ -72,8 +72,7 @@ After you can run tests by `npm run test` command. It will build all contracts r
 
 ### Was it audited?
 
-Contracts in this repository have not yet been audited and contain several vulnerabilities due to the specific of the ink!. 
-Since ink! is audited now, pendzl is going to be audited after major breaking changes regarding switching to stable toolchain and adapting to latest ink! will be released.
+Contracts in this repository have not yet been audited and contain several vulnerabilities due to the specific of the ink!. The goal is to have it done after ink! 5 release.
 
 ## License
 
