@@ -1,5 +1,5 @@
 ## Summary
-**pendzl is a library for smart contract development on ink!.**
+**pendzl ( Openbrush fork ) is a library for smart contract development on ink!.**
 
 Why use this library?
 - To make contracts **interoperable** to do **safe** cross-contracts calls (by having the same functions signature among every contracts)
