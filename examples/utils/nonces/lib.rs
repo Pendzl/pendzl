@@ -20,12 +20,12 @@ pub mod nonces {
 
         #[ink(message)]
         pub fn use_nonce(&mut self, account: AccountId) -> Result<u64, NoncesError> {
-            NoncesImpl::_use_nonce(self, &account)
+            NoncesImpl::_use_nonce_impl(self, &account)
         }
 
         #[ink(message)]
         pub fn use_checked_nonce(&mut self, account: AccountId, nonce: u64) -> Result<u64, NoncesError> {
-            NoncesImpl::_use_checked_nonce(self, &account, nonce)
+            NoncesImpl::_use_checked_nonce_impl(self, &account, nonce)
         }
     }
 }

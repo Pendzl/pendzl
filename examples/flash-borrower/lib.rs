@@ -31,7 +31,8 @@ pub mod flash_borrower {
             fee: Balance,
             _data: Vec<u8>,
         ) -> Result<(), FlashBorrowerError> {
-            if PSP22Ref::approve(&token, self.env().caller(), amount + fee).is_err() {
+            let mut psp22: PSP22Ref = token.into();
+            if psp22.approve(self.env().caller(), amount + fee).is_err() {
                 return Err(FlashBorrowerError::FlashloanRejected(String::from("Can't approve")))
             }
             Ok(())
