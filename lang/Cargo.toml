@@ -1,0 +1,39 @@
+[package]
+name = "pendzl_lang"
+version = "0.1.0-alpha"
+previous-authors = ["Brushfam <green@727.ventures>"]
+authors = [
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
+edition = "2021"
+
+license = "MIT"
+description = "Aggregator of all pendzl functionality and utils."
+keywords = ["wasm", "smart-contracts", "blockchain", "ink"]
+categories = ["no-std", "embedded"]
+include = ["Cargo.toml", "src/**/*.rs"]
+
+[dependencies]
+pendzl_lang_macro = { version = "0.1.0-alpha", path = "macro", default-features = false }
+
+ink = { version = "5.0.0-rc", default-features = false }
+scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.10", default-features = false, features = [
+    "derive",
+] }
+
+xxhash-rust = { version = "0.8", features = ["const_xxh32"] }
+const_format = "0.2.21"
+
+[lib]
+name = "pendzl_lang"
+path = "src/lib.rs"
+crate-type = ["rlib"]
+
+[features]
+default = ["std"]
+std = ["pendzl_lang_macro/std", "ink/std", "scale/std", "scale-info/std"]
+checkpoints = []
+crypto = []

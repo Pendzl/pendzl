@@ -1,0 +1,74 @@
+[package]
+name = "pendzl_contracts"
+version = "0.1.0-alpha"
+authors = [
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
+edition = "2021"
+
+license = "MIT"
+readme = "README.md"
+description = "Reusable implementations of contracts and traits for interaction with them."
+keywords = ["wasm", "smart-contracts", "blockchain", "ink"]
+categories = ["no-std", "embedded"]
+include = ["Cargo.toml", "src/**/*.rs"]
+
+[dependencies]
+ink = { version = "5.0.0-rc", default-features = false }
+scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.10", default-features = false, features = [
+    "derive",
+], optional = true }
+hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
+
+pendzl = { version = "0.1.0-alpha", package = "pendzl_lang", path = "../lang", default-features = false, features = [
+    "crypto",
+    "checkpoints",
+] }
+
+[lib]
+name = "pendzl_contracts"
+path = "src/lib.rs"
+crate-type = ["rlib"]
+features = ['access_control']
+
+[features]
+default = ["std"]
+std = ["ink/std", "scale/std", "scale-info/std", "pendzl/std"]
+psp22 = ["nonces", "crypto"]
+psp34 = []
+psp37 = []
+access_control = []
+ownable = []
+payment_splitter = []
+reentrancy_guard = []
+pausable = []
+psp61 = []
+timelock_controller = ["access_control"]
+proxy = ["ownable"]
+diamond = ["ownable"]
+governance = ["timelock_controller", "crypto", "nonces", "checkpoints"]
+upgradeable = ["ownable"]
+crypto = ["pendzl/crypto"]
+nonces = []
+checkpoints = ["pendzl/checkpoints"]
+test-all = [
+    "psp22",
+    "access_control",
+    "ownable",
+    "payment_splitter",
+    "reentrancy_guard",
+    "pausable",
+    "timelock_controller",
+    "proxy",
+    "diamond",
+    "governance",
+]
+
+# [doc]
+# # Specify the target specifically for documentation
+# [doc.target.'cfg(feature = "access_control")']
+# # Specify additional features for documentation
+# features = ["access_control"]
