@@ -35,5 +35,6 @@
     // "./examples/psp37_extensions/enumerable/Cargo.toml",
     // "./examples/psp37_extensions/metadata/Cargo.toml",
     // "./examples/psp37_extensions/mintable/Cargo.toml",
-  ]
+  ],
+  "rust-analyzer.showUnlinkedFileNotification": false
 }

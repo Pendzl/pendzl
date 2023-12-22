@@ -42,15 +42,29 @@ pub trait Ownable {
     fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError>;
 }
 
+/// A trait that should be implemented by the storage contract item to use default Internal implementation.
 pub trait OwnableStorage {
+    /// Returns the current owner.
     fn owner(&self) -> Option<AccountId>;
 
-    fn set_owner(&mut self, new_onwer: &Option<AccountId>);
+    /// Sets a new owner.
+    fn set_owner(&mut self, new_owner: &Option<AccountId>);
 }
 
+/// Internal functions to support ownership operations.
 pub trait OwnableInternal {
+    /// Retrieves the current owner.
     fn _owner(&self) -> Option<AccountId>;
+
+    /// Updates the owner to the `owner`.
+    ///
+    /// On success emits `OwnershipTransferred` event.
     fn _update_owner(&mut self, owner: &Option<AccountId>);
 
+    /// Verifies that the caller is the current owner.
+    ///
+    /// #Errors
+    ///
+    /// Returns `CallerIsNotOwner` error if caller is not owner.
     fn _only_owner(&self) -> Result<(), OwnableError>;
 }

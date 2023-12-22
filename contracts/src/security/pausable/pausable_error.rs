@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-/// The Pausable error type. Contract will throw one of this errors.
+/// Represents errors that occur in Pausable operations.
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub enum PausableError {
+    /// Error indicating the contract is already paused.
     Paused,
+    /// Error indicating the contract is not currently paused.
     NotPaused,
 }

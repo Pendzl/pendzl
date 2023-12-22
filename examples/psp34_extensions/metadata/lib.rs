@@ -1,17 +1,18 @@
+// SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[openbrush::implementation(PSP34, PSP34Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Metadata)]
+#[ink::contract]
 pub mod my_psp34_metadata {
-    use openbrush::traits::Storage;
-
+    use ink::prelude::string::*;
+    use pendzl::contracts::token::psp34::*;
     #[derive(Default, Storage)]
     #[ink(storage)]
     pub struct Contract {
         #[storage_field]
-        psp34: psp34::Data,
+        psp34: PSP34Data,
         #[storage_field]
-        metadata: metadata::Data,
+        metadata: PSP34MetadataData,
     }
 
     impl Contract {
@@ -22,8 +23,8 @@ pub mod my_psp34_metadata {
 
             let name_key = String::from("name");
             let symbol_key = String::from("symbol");
-            metadata::Internal::_set_attribute(&mut instance, id.clone(), name_key, name);
-            metadata::Internal::_set_attribute(&mut instance, id, symbol_key, symbol);
+            instance._set_attribute(&id.clone(), &name_key, &name);
+            instance._set_attribute(&id, &symbol_key, &symbol);
 
             instance
         }
@@ -31,14 +32,11 @@ pub mod my_psp34_metadata {
 
     #[cfg(all(test, feature = "e2e-tests"))]
     pub mod tests {
-        use openbrush::contracts::psp34::extensions::metadata::psp34metadata_external::PSP34Metadata;
-
         #[rustfmt::skip]
         use super::*;
         #[rustfmt::skip]
-        use ink_e2e::build_message;
-
-        use openbrush::traits::String;
+        use ink_e2e::ContractsBackend;
+        use pendzl::contracts::token::psp34::Id;
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -48,26 +46,31 @@ pub mod my_psp34_metadata {
             let name = String::from("My PSP34");
             let symbol = String::from("MPS34");
 
-            let constructor = ContractRef::new(id.clone(), name.clone(), symbol.clone());
-            let address = client
-                .instantiate("my_psp34_metadata", &ink_e2e::alice(), constructor, 0, None)
+            let mut constructor = ContractRef::new(id.clone(), name.clone(), symbol.clone());
+            let contract = client
+                .instantiate("my_psp34_metadata", &ink_e2e::alice(), &mut constructor)
+                .submit()
                 .await
                 .expect("instantiate failed")
-                .account_id;
+                .call::<Contract>();
 
-            let result_name = {
-                let _msg = build_message::<ContractRef>(address.clone())
-                    .call(|contract| contract.get_attribute(id.clone(), String::from("name")));
-                client.call_dry_run(&ink_e2e::alice(), &_msg, 0, None).await
-            }
-            .return_value();
+            let result_name = client
+                .call(
+                    &ink_e2e::alice(),
+                    &contract.get_attribute(id.clone(), String::from("name")),
+                )
+                .dry_run()
+                .await?
+                .return_value();
 
-            let result_symbol = {
-                let _msg = build_message::<ContractRef>(address.clone())
-                    .call(|contract| contract.get_attribute(id.clone(), String::from("symbol")));
-                client.call_dry_run(&ink_e2e::alice(), &_msg, 0, None).await
-            }
-            .return_value();
+            let result_symbol = client
+                .call(
+                    &ink_e2e::alice(),
+                    &contract.get_attribute(id.clone(), String::from("symbol")),
+                )
+                .dry_run()
+                .await?
+                .return_value();
 
             assert_eq!(result_name, Some(name));
             assert_eq!(result_symbol, Some(symbol));

@@ -1,0 +1,15 @@
+# https://rust-lang.github.io/rustup/overrides.html
+
+[toolchain]
+
+channel = "stable" # "nightly-2023-03-21"
+targets = [
+    "wasm32-unknown-unknown",
+]
+
+profile = "default"
+components = [
+    # Rust source code, useful for dev tooling
+    "rust-src",
+    "rustfmt"
+]

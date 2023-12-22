@@ -15,25 +15,43 @@ pub trait Pausable {
 }
 
 pub trait PausableInternal {
+    /// Internal function to check the paused state.
     fn _paused(&self) -> bool;
 
-    /// Triggers stopped state.
+    /// Pauses the contract. Emits a `Paused` event on success.
     ///
-    /// On success a `Paused` event is emitted.
+    /// On success emits Paused event
+    ///
+    /// # Errors
+    /// Returns `Paused` error if the contract is already paused.
     fn _pause(&mut self) -> Result<(), PausableError>;
 
-    /// Returns to normal state.
+    /// Unpauses the contract. Emits an `Unpaused` event on success.
     ///
-    /// On success a `Unpaused` event is emitted.
+    /// On success emits Unpaused event.
+    ///
+    /// # Errors
+    /// Returns `Unpaused` error if the contract is not currently paused.
     fn _unpause(&mut self) -> Result<(), PausableError>;
 
+    /// Ensures the contract is currently paused.
+    ///
+    /// # Errors
+    /// Returns `Unpaused` error if the contract is not paused.
     fn _ensure_paused(&self) -> Result<(), PausableError>;
 
+    /// Ensures the contract is not currently paused.
+    ///
+    /// # Errors
+    /// Returns `Paused` error if the contract is paused.
     fn _ensure_not_paused(&self) -> Result<(), PausableError>;
 }
 
+/// A trait that should be implemented by the storage contract item to use default Internal implementation.
 pub trait PausableStorage {
+    /// Retrieves the paused state.
     fn paused(&self) -> bool;
 
+    /// Sets the paused state.
     fn set_paused(&mut self, pause: bool);
 }

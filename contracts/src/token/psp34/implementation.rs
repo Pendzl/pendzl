@@ -115,18 +115,6 @@ pub trait PSP34DefaultImpl: PSP34Internal + DefaultEnv {
         approved: bool,
     ) -> Result<(), PSP34Error> {
         let caller = Self::env().caller();
-
-        if let Some(id) = id.clone() {
-            let owner = self._owner_of(&id).ok_or(PSP34Error::TokenNotExists)?;
-
-            if owner == operator {
-                return Err(PSP34Error::SelfApprove);
-            }
-
-            if owner != caller {
-                return Err(PSP34Error::NotApproved);
-            }
-        }
         self._approve(&caller, &operator, &id, &approved)
     }
 
@@ -171,6 +159,20 @@ where
         id: &Option<Id>,
         approved: &bool,
     ) -> Result<(), PSP34Error> {
+        let caller = Self::env().caller();
+        if let Some(id) = id.clone() {
+            let owner = self
+                ._owner_of_default_impl(&id)
+                .ok_or(PSP34Error::TokenNotExists)?;
+
+            if owner == *operator {
+                return Err(PSP34Error::SelfApprove);
+            }
+
+            if owner != caller {
+                return Err(PSP34Error::NotApproved);
+            }
+        }
         self.data()
             .set_operator_approval(owner, operator, id, approved);
 

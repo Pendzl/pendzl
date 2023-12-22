@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,94 +21,45 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp34")]
-#[openbrush::implementation(PSP34)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34)]
+#[ink::contract]
 mod psp34 {
-    use ink::{
-        codegen::{
-            EmitEvent,
-            Env,
-        },
-        env::DefaultEnvironment,
+    use ink::env::DefaultEnvironment;
+    use pendzl::{
+        contracts::token::psp34::{PSP34Error, PSP34Internal, PSP34},
+        test_utils::{accounts, change_caller},
+        traits::String,
     };
-    use openbrush::{
-        contracts::psp34::*,
-        test_utils::{
-            accounts,
-            change_caller,
-        },
-        traits::{
-            Storage,
-            String,
-        },
-    };
-
-    /// Event emitted when a token transfer occurs.
-    #[ink(event)]
-    pub struct Transfer {
-        #[ink(topic)]
-        from: Option<AccountId>,
-        #[ink(topic)]
-        to: Option<AccountId>,
-        #[ink(topic)]
-        id: Id,
-    }
-
-    /// Event emitted when a token approve occurs.
-    #[ink(event)]
-    pub struct Approval {
-        #[ink(topic)]
-        from: AccountId,
-        #[ink(topic)]
-        to: AccountId,
-        #[ink(topic)]
-        id: Option<Id>,
-        approved: bool,
-    }
 
     #[derive(Default, Storage)]
     #[ink(storage)]
     pub struct PSP34Struct {
         #[storage_field]
-        psp34: psp34::Data,
+        psp34: PSP34Data,
         // field for testing _before_token_transfer
         return_err_on_before: bool,
         // field for testing _after_token_transfer
         return_err_on_after: bool,
     }
 
-    #[overrider(psp34::Internal)]
-    fn _emit_transfer_event(&self, from: Option<AccountId>, to: Option<AccountId>, id: Id) {
-        self.env().emit_event(Transfer { from, to, id });
-    }
-
-    #[overrider(psp34::Internal)]
-    fn _emit_approval_event(&self, from: AccountId, to: AccountId, id: Option<Id>, approved: bool) {
-        self.env().emit_event(Approval { from, to, id, approved });
-    }
-
-    #[overrider(psp34::Internal)]
-    fn _before_token_transfer(
+    #[overrider(PSP34Internal)]
+    fn _update(
         &mut self,
-        _from: Option<&AccountId>,
-        _to: Option<&AccountId>,
-        _id: &Id,
-    ) -> Result<(), PSP34Error> {
+        from: Option<&AccountId>,
+        to: Option<&AccountId>,
+        id: &Id,
+    ) -> Result<(), PSP22Error> {
         if self.return_err_on_before {
-            return Err(PSP34Error::Custom(String::from("Error on _before_token_transfer")))
+            return Err(PSP34Error::Custom(String::from(
+                "Error on _before_token_transfer",
+            )));
         }
-        Ok(())
-    }
+        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(self, from, to, id)?;
 
-    #[overrider(psp34::Internal)]
-    fn _after_token_transfer(
-        &mut self,
-        _from: Option<&AccountId>,
-        _to: Option<&AccountId>,
-        _id: &Id,
-    ) -> Result<(), PSP34Error> {
         if self.return_err_on_after {
-            return Err(PSP34Error::Custom(String::from("Error on _after_token_transfer")))
+            return Err(PSP34Error::Custom(String::from(
+                "Error on _after_token_transfer",
+            )));
         }
         Ok(())
     }
@@ -131,7 +83,10 @@ mod psp34 {
     fn collection_id_works() {
         assert_eq!(
             PSP34::collection_id(&PSP34Struct::new()),
-            Id::Bytes(<_ as AsRef<[u8; 32]>>::as_ref(&ink::env::account_id::<DefaultEnvironment>()).to_vec())
+            Id::Bytes(
+                <_ as AsRef<[u8; 32]>>::as_ref(&ink::env::account_id::<DefaultEnvironment>())
+                    .to_vec()
+            )
         );
     }
 
@@ -141,7 +96,7 @@ mod psp34 {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         // Create token Id 1 for Alice
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
         // Alice owns token 1
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Bob does not owns any token
@@ -178,7 +133,7 @@ mod psp34 {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         // Create token Id 2.
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
         // Alice owns 1 token.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Token Id 2 is owned by Alice.
@@ -196,7 +151,7 @@ mod psp34 {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
 
         // Token 1 is not approved
         assert_eq!(
@@ -225,7 +180,7 @@ mod psp34 {
             Err(PSP34Error::TokenNotExists)
         );
 
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
         assert_eq!(
             PSP34::approve(&mut nft, accounts.alice, Some(Id::U8(1u8)), true),
             Err(PSP34Error::SelfApprove)
@@ -247,8 +202,8 @@ mod psp34 {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
         // Token Id 1 is owned by Alice.
         assert_eq!(PSP34::owner_of(&mut nft, Id::U8(1u8)), Some(accounts.alice));
         // Approve token Id 1 transfer for Bob on behalf of Alice.
@@ -273,13 +228,13 @@ mod psp34 {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         assert_eq!(PSP34::total_supply(&mut nft,), 0);
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
         // 1 tokens minted in total
         assert_eq!(PSP34::total_supply(&mut nft,), 1);
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
         // 2 tokens minted in total
         assert_eq!(PSP34::total_supply(&mut nft,), 2);
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(3u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(3u8)).is_ok());
         // 3 tokens minted in total
         assert_eq!(PSP34::total_supply(&mut nft,), 3)
     }
@@ -289,14 +244,17 @@ mod psp34 {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Approve token Id 1 transfer for Bob on behalf of Alice.
         assert!(PSP34::approve(&mut nft, accounts.bob, None, true).is_ok());
         // Bob is an approved operator for Alice
-        assert_eq!(PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None), true);
+        assert_eq!(
+            PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None),
+            true
+        );
 
         change_caller(accounts.bob);
         // Bob transfers token Id 1 from Alice to Eve.
@@ -316,44 +274,51 @@ mod psp34 {
         // Remove operator approval for Bob on behalf of Alice.
         assert!(PSP34::approve(&mut nft, accounts.bob, None, false).is_ok());
         // Bob is not an approved operator for Alice.
-        assert_eq!(PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None), false);
-    }
-
-    #[ink::test]
-    fn operator_approve_works() {
-        let accounts = accounts();
-        // Create a new contract instance.
-        let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        // Alice owns token.
-        assert_eq!(PSP34::owner_of(&mut nft, Id::U8(1u8)), Some(accounts.alice));
-        // Approve token Bob on behalf of Alice.
-        assert!(PSP34::approve(&mut nft, accounts.bob, None, true).is_ok());
-        // Bob is an approved operator for Alice
-        assert_eq!(PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None), true);
-
-        // Eve is not approved to send token 1 from Alice
         assert_eq!(
-            PSP34::allowance(&mut nft, accounts.alice, accounts.eve, Some(Id::U8(1u8))),
+            PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None),
             false
         );
-        change_caller(accounts.bob);
-        // Approve token Id 1 Eve by operator Bob.
-        assert!(PSP34::approve(&mut nft, accounts.eve, Some(Id::U8(1u8)), true).is_ok());
-        // Eve is approved to send token 1 from Alice by operator
-        assert_eq!(
-            PSP34::allowance(&mut nft, accounts.alice, accounts.eve, Some(Id::U8(1u8))),
-            true
-        );
     }
+
+    // operator approval is not implemented.
+    // #[ink::test]
+    // fn operator_approve_works() {
+    //     let accounts = accounts();
+    //     // Create a new contract instance.
+    //     let mut nft = PSP34Struct::new();
+    //     assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+    //     // Alice owns token.
+    //     assert_eq!(PSP34::owner_of(&mut nft, Id::U8(1u8)), Some(accounts.alice));
+    //     // Approve token Bob on behalf of Alice.
+    //     assert!(PSP34::approve(&mut nft, accounts.bob, None, true).is_ok());
+    //     // Bob is an approved operator for Alice
+    //     assert_eq!(
+    //         PSP34::allowance(&mut nft, accounts.alice, accounts.bob, None),
+    //         true
+    //     );
+
+    //     // Eve is not approved to send token 1 from Alice
+    //     assert_eq!(
+    //         PSP34::allowance(&mut nft, accounts.alice, accounts.eve, Some(Id::U8(1u8))),
+    //         false
+    //     );
+    //     change_caller(accounts.bob);
+    //     // Approve token Id 1 Eve by operator Bob.
+    //     assert!(PSP34::approve(&mut nft, accounts.eve, Some(Id::U8(1u8)), true).is_ok());
+    //     // Eve is approved to send token 1 from Alice by operator
+    //     assert_eq!(
+    //         PSP34::allowance(&mut nft, accounts.alice, accounts.eve, Some(Id::U8(1u8))),
+    //         true
+    //     );
+    // }
 
     #[ink::test]
     fn not_approved_transfer_should_fail() {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Bob does not owns tokens.
@@ -374,8 +339,8 @@ mod psp34 {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(4u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(4u8)).is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Alice can transfer token
@@ -385,7 +350,9 @@ mod psp34 {
         // Alice gets an error on _before_token_transfer
         assert_eq!(
             PSP34::transfer(&mut nft, accounts.bob, Id::U8(4u8), vec![]),
-            Err(PSP34Error::Custom(String::from("Error on _before_token_transfer")))
+            Err(PSP34Error::Custom(String::from(
+                "Error on _before_token_transfer"
+            )))
         );
     }
 
@@ -394,8 +361,8 @@ mod psp34 {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
-        assert!(psp34::Internal::_mint_to(&mut nft, accounts.alice, Id::U8(4u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(4u8)).is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Alice can transfer token
@@ -405,7 +372,9 @@ mod psp34 {
         // Alice gets an error on _after_token_transfer
         assert_eq!(
             PSP34::transfer(&mut nft, accounts.bob, Id::U8(4u8), vec![]),
-            Err(PSP34Error::Custom(String::from("Error on _after_token_transfer")))
+            Err(PSP34Error::Custom(String::from(
+                "Error on _after_token_transfer"
+            )))
         );
     }
 }

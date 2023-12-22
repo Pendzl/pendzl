@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,39 +21,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "pausable")]
-#[openbrush::implementation(Pausable)]
-#[openbrush::contract]
+#[pendzl::implementation(Pausable)]
+#[ink::contract]
 mod pausable {
     use ::ink::env::DefaultEnvironment;
-    use ink::{
-        codegen::{
-            EmitEvent,
-            Env,
-        },
-        env::test::DefaultAccounts,
-    };
-    use openbrush::{
-        test_utils::accounts,
-        traits::Storage,
-    };
-
-    /// Emitted when the pause is triggered by `account`.
-    #[ink(event)]
-    pub struct Paused {
-        pub account: AccountId,
-    }
-
-    /// Emitted when the pause is lifted by `account`.
-    #[ink(event)]
-    pub struct Unpaused {
-        pub account: AccountId,
-    }
+    use ink::env::test::DefaultAccounts;
+    use pendzl::test_utils::accounts;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
     pub struct MyFlipper {
         #[storage_field]
-        pause: Data,
+        pause: PausableData,
         flipped: bool,
     }
 
@@ -63,8 +43,8 @@ mod pausable {
         }
 
         #[ink(message)]
-        #[openbrush::modifiers(when_paused)]
         pub fn flip(&mut self) -> Result<bool, PausableError> {
+            self._ensure_paused()?;
             let previous = self.flipped;
             self.flipped = !previous;
 
@@ -72,40 +52,37 @@ mod pausable {
         }
     }
 
-    #[overrider(pausable::Internal)]
+    #[overrider(PausableInternal)]
     fn _emit_paused_event(&self, account: AccountId) {
         self.env().emit_event(Paused { account })
     }
 
-    #[overrider(pausable::Internal)]
+    #[overrider(PausableInternal)]
     fn _emit_unpaused_event(&self, account: AccountId) {
         self.env().emit_event(Unpaused { account })
     }
 
-    type Event = <MyFlipper as ::ink::reflect::ContractEventBase>::Type;
-
+    use ink::scale::Decode as _;
     fn assert_paused_event(event: &ink::env::test::EmittedEvent, expected_account: AccountId) {
-        if let Event::Paused(Paused { account }) = <Event as scale::Decode>::decode(&mut &event.data[..])
-            .expect("encountered invalid contract event data buffer")
-        {
-            assert_eq!(
-                account, expected_account,
-                "Accounts were not equal: encountered {:?}, expected {:?}",
-                account, expected_account
-            );
-        }
+        let Paused { account } = <Paused>::decode(&mut &event.data[..])
+            .expect("encountered invalid contract event data buffer");
+
+        assert_eq!(
+            account, expected_account,
+            "Accounts were not equal: encountered {:?}, expected {:?}",
+            account, expected_account
+        );
     }
 
     fn assert_unpaused_event(event: &ink::env::test::EmittedEvent, expected_account: AccountId) {
-        if let Event::Unpaused(Unpaused { account }) = <Event as scale::Decode>::decode(&mut &event.data[..])
-            .expect("encountered invalid contract event data buffer")
-        {
-            assert_eq!(
-                account, expected_account,
-                "Accounts were not equal: encountered {:?}, expected {:?}",
-                account, expected_account
-            );
-        }
+        let Unpaused { account } = <Unpaused>::decode(&mut &event.data[..])
+            .expect("encountered invalid contract event data buffer");
+
+        assert_eq!(
+            account, expected_account,
+            "Accounts were not equal: encountered {:?}, expected {:?}",
+            account, expected_account
+        );
     }
 
     fn setup() -> DefaultAccounts<DefaultEnvironment> {
@@ -118,7 +95,7 @@ mod pausable {
     fn pause_works() {
         let accounts = setup();
         let mut inst = MyFlipper::new();
-        assert!(pausable::Internal::_pause(&mut inst).is_ok());
+        assert!(PausableInternal::_pause(&mut inst).is_ok());
         assert!(inst.pause.paused.get_or_default());
 
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
@@ -128,14 +105,17 @@ mod pausable {
     #[ink::test]
     fn double_pause_fails() {
         let mut inst = MyFlipper::new();
-        assert!(pausable::Internal::_pause(&mut inst).is_ok());
-        assert_eq!(Err(PausableError::Paused), pausable::Internal::_pause(&mut inst));
+        assert!(PausableInternal::_pause(&mut inst).is_ok());
+        assert_eq!(
+            Err(PausableError::Paused),
+            PausableInternal::_pause(&mut inst)
+        );
     }
 
     #[ink::test]
     fn flip_works() {
         let mut inst = MyFlipper::new();
-        assert!(pausable::Internal::_pause(&mut inst).is_ok());
+        assert!(PausableInternal::_pause(&mut inst).is_ok());
 
         assert_eq!(Ok(false), inst.flip());
         assert_eq!(Ok(true), inst.flip());
@@ -153,7 +133,10 @@ mod pausable {
     fn unpause_fails() {
         let mut inst = MyFlipper::new();
 
-        assert_eq!(Err(PausableError::NotPaused), pausable::Internal::_unpause(&mut inst));
+        assert_eq!(
+            Err(PausableError::NotPaused),
+            PausableInternal::_unpause(&mut inst)
+        );
     }
 
     #[ink::test]
@@ -161,21 +144,8 @@ mod pausable {
         let accounts = setup();
         let mut inst = MyFlipper::new();
 
-        assert!(pausable::Internal::_pause(&mut inst).is_ok());
-        assert!(pausable::Internal::_unpause(&mut inst).is_ok());
-        assert!(!inst.pause.paused.get_or_default());
-
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
-        assert_unpaused_event(&emitted_events[0], accounts.alice);
-    }
-
-    #[ink::test]
-    fn switch_pause_works() {
-        let accounts = setup();
-        let mut inst = MyFlipper::new();
-
-        assert!(pausable::Internal::_pause(&mut inst).is_ok());
-        assert!(pausable::Internal::_switch_pause(&mut inst).is_ok());
+        assert!(PausableInternal::_pause(&mut inst).is_ok());
+        assert!(PausableInternal::_unpause(&mut inst).is_ok());
         assert!(!inst.pause.paused.get_or_default());
 
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();

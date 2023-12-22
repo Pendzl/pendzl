@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,40 +21,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "ownable")]
-#[openbrush::implementation(Ownable)]
-#[openbrush::contract]
+#[pendzl::implementation(Ownable)]
+#[ink::contract]
 mod ownable {
-    use ink::codegen::{
-        EmitEvent,
-        Env,
-    };
-    use openbrush::{
-        test_utils::change_caller,
-        traits::Storage,
-    };
-
-    #[ink(event)]
-    pub struct OwnershipTransferred {
-        #[ink(topic)]
-        previous: Option<AccountId>,
-        #[ink(topic)]
-        new: Option<AccountId>,
-    }
+    use ink::codegen::Env;
+    use pendzl::test_utils::change_caller;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
     pub struct MyOwnable {
         #[storage_field]
-        ownable: Data,
+        ownable: OwnableData,
     }
-
-    type Event = <MyOwnable as ::ink::reflect::ContractEventBase>::Type;
 
     impl MyOwnable {
         #[ink(constructor)]
         pub fn new() -> Self {
             let mut inst = Self::default();
-            ownable::Internal::_init_with_owner(&mut inst, Self::env().caller());
+            inst._update_owner(&Some(Self::env().caller()));
             inst
         }
 
@@ -62,23 +47,23 @@ mod ownable {
     }
 
     #[overrider(ownable::Internal)]
-    fn _emit_ownership_transferred_event(&self, previous: Option<AccountId>, new: Option<AccountId>) {
-        self.env().emit_event(OwnershipTransferred { previous, new })
+    fn _emit_ownership_transferred_event(
+        &self,
+        previous: Option<AccountId>,
+        new: Option<AccountId>,
+    ) {
+        self.env()
+            .emit_event(OwnershipTransferred { previous, new })
     }
+
+    use ink::scale::Decode as _;
 
     fn assert_ownership_transferred_event(
         event: &ink::env::test::EmittedEvent,
-        expected_previous_owner: Option<AccountId>,
         expected_new_owner: Option<AccountId>,
     ) {
-        let Event::OwnershipTransferred(OwnershipTransferred { previous, new }) =
-            <Event as scale::Decode>::decode(&mut &event.data[..])
-                .expect("encountered invalid contract event data buffer");
-
-        assert_eq!(
-            previous, expected_previous_owner,
-            "Previous owner was not equal to expected previous owner."
-        );
+        let OwnershipTransferred { new } = <OwnershipTransferred>::decode(&mut &event.data[..])
+            .expect("encountered invalid contract event data buffer");
         assert_eq!(
             new, expected_new_owner,
             "New owner was not equal to expected new owner."
@@ -92,7 +77,7 @@ mod ownable {
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(1, emitted_events.len());
 
-        assert_ownership_transferred_event(&emitted_events[0], None, Ownable::owner(&instance))
+        assert_ownership_transferred_event(&emitted_events[0], Ownable::owner(&instance))
     }
 
     #[ink::test]
@@ -112,8 +97,8 @@ mod ownable {
         assert_eq!(Ownable::owner(&mut my_ownable), None);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(2, emitted_events.len());
-        assert_ownership_transferred_event(&emitted_events[0], None, creator);
-        assert_ownership_transferred_event(&emitted_events[1], creator, None);
+        assert_ownership_transferred_event(&emitted_events[0], creator);
+        assert_ownership_transferred_event(&emitted_events[1], None);
     }
 
     #[ink::test]
@@ -133,12 +118,12 @@ mod ownable {
         let creator = Ownable::owner(&mut my_ownable);
         assert_eq!(creator, Some(caller));
         let new_owner = AccountId::from([5u8; 32]);
-        assert!(Ownable::transfer_ownership(&mut my_ownable, Some(new_owner)).is_ok());
+        assert!(Ownable::transfer_ownership(&mut my_ownable, new_owner).is_ok());
         assert_eq!(Ownable::owner(&mut my_ownable), Some(new_owner));
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(2, emitted_events.len());
-        assert_ownership_transferred_event(&emitted_events[0], None, creator);
-        assert_ownership_transferred_event(&emitted_events[1], creator, Some(new_owner));
+        assert_ownership_transferred_event(&emitted_events[0], creator);
+        assert_ownership_transferred_event(&emitted_events[1], Some(new_owner));
     }
 
     #[ink::test]
@@ -148,7 +133,7 @@ mod ownable {
         change_caller(AccountId::from([0x13; 32]));
         let new_owner = AccountId::from([5u8; 32]);
         assert_eq!(
-            Ownable::transfer_ownership(&mut my_ownable, Some(new_owner)),
+            Ownable::transfer_ownership(&mut my_ownable, new_owner),
             Err(OwnableError::CallerIsNotOwner)
         );
     }

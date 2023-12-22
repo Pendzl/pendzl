@@ -1,5 +1,5 @@
 error: missing ink! storage struct
- --> tests/ui/storage_derive/fail/without-ink-storage.rs:2:1
+ --> tests/ui/storage_derive/fail/without-ink-storage.rs:3:1
   |
-2 | mod base_psp22 {
+3 | mod base_psp22 {
   | ^^^

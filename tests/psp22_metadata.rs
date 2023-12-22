@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,24 +21,21 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22, PSP22Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Metadata)]
+#[ink::contract]
 mod psp22_metadata {
     /// Imports all the definitions from the outer scope so we can use them here.
-    use openbrush::contracts::psp22::extensions::metadata::*;
-    use openbrush::traits::{
-        Storage,
-        String,
-    };
+    use pendzl::contracts::token::psp22::PSP22Error;
+    use pendzl::traits::String;
 
     /// A simple PSP-22 contract.
     #[ink(storage)]
     #[derive(Default, Storage)]
     pub struct PSP22Struct {
         #[storage_field]
-        psp22: psp22::Data,
+        psp22: PSP22Data,
         #[storage_field]
-        metadata: metadata::Data,
+        metadata: PSP22MetadataData,
     }
 
     impl PSP22Struct {
@@ -55,8 +53,14 @@ mod psp22_metadata {
     fn init_with_name_and_symbol_works() {
         let token = PSP22Struct::new(Some(String::from("TOKEN")), Some(String::from("TKN")), 18);
 
-        assert_eq!(PSP22Metadata::token_name(&token), Some(String::from("TOKEN")));
-        assert_eq!(PSP22Metadata::token_symbol(&token), Some(String::from("TKN")));
+        assert_eq!(
+            PSP22Metadata::token_name(&token),
+            Some(String::from("TOKEN"))
+        );
+        assert_eq!(
+            PSP22Metadata::token_symbol(&token),
+            Some(String::from("TKN"))
+        );
         assert_eq!(PSP22Metadata::token_decimals(&token), 18);
     }
 }

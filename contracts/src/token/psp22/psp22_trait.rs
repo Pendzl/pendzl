@@ -153,12 +153,22 @@ pub trait PSP22Storage {
 }
 
 pub trait PSP22Internal {
+    /// Retrieves the total supply of tokens.
     fn _total_supply(&self) -> Balance;
 
+    /// Retrieves the token balance for a specified owner.
     fn _balance_of(&self, owner: &AccountId) -> Balance;
 
+    /// Retrieves the remaining allowance that a spender has from an owner.
     fn _allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance;
 
+    /// Internal function to update balances of 'from' and 'to' by 'amount' and total supply.
+    /// It can be used to transfer, mint and burn depending if from and to are Some or None.
+    ///
+    /// On success emits a `Transfer` event.
+    ///
+    /// # Errors
+    /// Returns `InsufficientBalance` if 'from' doesn't have enought balance.
     fn _update(
         &mut self,
         from: Option<&AccountId>,
@@ -166,6 +176,12 @@ pub trait PSP22Internal {
         amount: &Balance,
     ) -> Result<(), PSP22Error>;
 
+    /// Transfer 'amount' 'from' 'to'.
+    ///
+    /// On success emits a `Transfer` event.
+    ///
+    /// # Errors
+    /// Returns `InsufficientBalance` if 'from' doesn't have enought balance.
     fn _transfer(
         &mut self,
         from: &AccountId,
@@ -173,22 +189,45 @@ pub trait PSP22Internal {
         amount: &Balance,
     ) -> Result<(), PSP22Error>;
 
+    /// Mints 'amount' 'to'.
+    ///
+    /// On success emits a `Transfer` event.
     fn _mint_to(&mut self, to: &AccountId, amount: &Balance) -> Result<(), PSP22Error>;
 
+    /// Burns 'amount' 'from'.
+    ///
+    /// On success emits a `Transfer` event.
+    ///
+    /// # Errors
+    /// Returns `InsufficientBalance` if 'from' doesn't have enought balance.
     fn _burn_from(&mut self, from: &AccountId, amount: &Balance) -> Result<(), PSP22Error>;
 
+    /// Sets allowance of `spender` to spend `amount` of tokens of `owner`.
+    ///
+    /// On success emits `Approval` event.
     fn _approve(
         &mut self,
         owner: &AccountId,
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error>;
+
+    /// Decrease an allowance of `spender` to spend tokens of `owner` by `amount`.
+    ///
+    /// On success emits `Approval` event.
+    ///
+    /// # Errors
+    /// - Returns `InsufficientAllowance` if the current allowance is smaller than `amount`.
     fn _decrease_allowance_from_to(
         &mut self,
         owner: &AccountId,
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error>;
+
+    /// Increases an allowance of `spender` to spend tokens of `owner` by `amount`.
+    ///
+    /// On success emits `Approval` event.
     fn _increase_allowance_from_to(
         &mut self,
         owner: &AccountId,

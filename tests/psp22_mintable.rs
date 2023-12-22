@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,76 +21,42 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp22")]
-#[openbrush::implementation(PSP22, PSP22Mintable)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP22, PSP22Mintable)]
+#[ink::contract]
 mod psp22_mintable {
-    use ink::codegen::{
-        EmitEvent,
-        Env,
-    };
-    use openbrush::{
-        test_utils::*,
-        traits::{
-            Storage,
-            String,
-        },
-    };
-
-    /// Event emitted when a token transfer occurs.
-    #[ink(event)]
-    pub struct Transfer {
-        #[ink(topic)]
-        from: Option<AccountId>,
-        #[ink(topic)]
-        to: Option<AccountId>,
-        value: Balance,
-    }
+    use pendzl::contracts::token::psp22::{PSP22Error, PSP22Internal, Transfer, PSP22};
+    use pendzl::{test_utils::*, traits::String};
 
     /// A simple PSP22 contract.
     #[ink(storage)]
     #[derive(Default, Storage)]
     pub struct PSP22Struct {
         #[storage_field]
-        psp22: psp22::Data,
+        psp22: PSP22Data,
         // field for testing _before_token_transfer
         return_err_on_before: bool,
         // field for testing _after_token_transfer
         return_err_on_after: bool,
     }
 
-    type Event = <PSP22Struct as ::ink::reflect::ContractEventBase>::Type;
-
-    #[overrider(psp22::Internal)]
-    fn _emit_transfer_event(&self, from: Option<AccountId>, to: Option<AccountId>, amount: Balance) {
-        self.env().emit_event(Transfer {
-            from,
-            to,
-            value: amount,
-        });
-    }
-
-    #[overrider(psp22::PSP22Transfer)]
-    fn _before_token_transfer(
+    #[overrider(PSP22Internal)]
+    fn _update(
         &mut self,
-        _from: Option<&AccountId>,
-        _to: Option<&AccountId>,
-        _amount: &Balance,
+        from: Option<&AccountId>,
+        to: Option<&AccountId>,
+        amount: &Balance,
     ) -> Result<(), PSP22Error> {
         if self.return_err_on_before {
-            return Err(PSP22Error::Custom(String::from("Error on _before_token_transfer")))
+            return Err(PSP22Error::Custom(String::from(
+                "Error on _before_token_transfer",
+            )));
         }
-        Ok(())
-    }
+        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)?;
 
-    #[overrider(psp22::PSP22Transfer)]
-    fn _after_token_transfer(
-        &mut self,
-        _from: Option<&AccountId>,
-        _to: Option<&AccountId>,
-        _amount: &Balance,
-    ) -> Result<(), PSP22Error> {
         if self.return_err_on_after {
-            return Err(PSP22Error::Custom(String::from("Error on _after_token_transfer")))
+            return Err(PSP22Error::Custom(String::from(
+                "Error on _after_token_transfer",
+            )));
         }
         Ok(())
     }
@@ -99,7 +66,7 @@ mod psp22_mintable {
         pub fn new(total_supply: Balance) -> Self {
             let mut instance = Self::default();
             let caller = instance.env().caller();
-            assert!(psp22::Internal::_mint_to(&mut instance, caller, total_supply).is_ok());
+            assert!(PSP22Internal::_mint_to(&mut instance, &caller, &total_supply).is_ok());
             instance
         }
 
@@ -112,41 +79,30 @@ mod psp22_mintable {
         }
     }
 
+    use ink::scale::Decode as _;
     fn assert_transfer_event(
         event: &ink::env::test::EmittedEvent,
         expected_from: Option<AccountId>,
         expected_to: Option<AccountId>,
         expected_value: Balance,
     ) {
-        let decoded_event = <Event as scale::Decode>::decode(&mut &event.data[..])
+        let decoded_event = <Transfer>::decode(&mut &event.data[..])
             .expect("encountered invalid contract event data buffer");
-        let Event::Transfer(Transfer { from, to, value }) = decoded_event;
+
+        let Transfer { from, to, value } = decoded_event;
         assert_eq!(from, expected_from, "encountered invalid Transfer.from");
         assert_eq!(to, expected_to, "encountered invalid Transfer.to");
         assert_eq!(value, expected_value, "encountered invalid Trasfer.value");
 
-        let expected_topics = vec![
-            encoded_into_hash(&PrefixedValue {
-                value: b"PSP22Struct::Transfer",
-                prefix: b"",
-            }),
-            encoded_into_hash(&PrefixedValue {
-                prefix: b"PSP22Struct::Transfer::from",
-                value: &expected_from,
-            }),
-            encoded_into_hash(&PrefixedValue {
-                prefix: b"PSP22Struct::Transfer::to",
-                value: &expected_to,
-            }),
-            encoded_into_hash(&PrefixedValue {
-                prefix: b"PSP22Struct::Transfer::value",
-                value: &expected_value,
-            }),
-        ];
-        for (n, (actual_topic, expected_topic)) in event.topics.iter().zip(expected_topics).enumerate() {
+        let signature_topic =
+            <Transfer as ink::env::Event>::SIGNATURE_TOPIC.map(|topic| topic.to_vec());
+
+        for (n, (actual_topic, expected_topic)) in
+            event.topics.iter().zip(signature_topic).enumerate()
+        {
             assert_eq!(
                 &actual_topic[..],
-                expected_topic.as_ref(),
+                &expected_topic[..],
                 "encountered invalid topic at {}",
                 n
             );
@@ -229,7 +185,9 @@ mod psp22_mintable {
         // Alice gets an error on _before_token_transfer
         assert_eq!(
             PSP22Mintable::mint(&mut psp22, accounts.alice, 10),
-            Err(PSP22Error::Custom(String::from("Error on _before_token_transfer")))
+            Err(PSP22Error::Custom(String::from(
+                "Error on _before_token_transfer"
+            )))
         );
     }
 
@@ -246,7 +204,9 @@ mod psp22_mintable {
         // Alice gets an error on _after_token_transfer
         assert_eq!(
             PSP22Mintable::mint(&mut psp22, accounts.alice, 10),
-            Err(PSP22Error::Custom(String::from("Error on _after_token_transfer")))
+            Err(PSP22Error::Custom(String::from(
+                "Error on _after_token_transfer"
+            )))
         );
     }
 }

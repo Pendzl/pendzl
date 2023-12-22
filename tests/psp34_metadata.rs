@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2012-2022 Supercolony
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,28 +21,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #[cfg(feature = "psp34")]
-#[openbrush::implementation(PSP34, PSP34Metadata)]
-#[openbrush::contract]
+#[pendzl::implementation(PSP34, PSP34Metadata)]
+#[ink::contract]
 mod psp34_metadata {
-    use openbrush::traits::{
-        Storage,
-        String,
+    use pendzl::traits::String;
+    use pendzl_contracts::token::psp34::{
+        extensions::metadata::PSP34MetadataInternal, Id, PSP34Error,
     };
 
     #[derive(Default, Storage)]
     #[ink(storage)]
     pub struct PSP34Struct {
         #[storage_field]
-        psp34: psp34::Data,
+        psp34: PSP34Data,
         #[storage_field]
-        metadata: Data,
+        metadata: PSP34MetadataData,
     }
 
     impl PSP34Struct {
         #[ink(constructor)]
         pub fn new(id: Id, key: String, val: String) -> Self {
             let mut instance = Self::default();
-            metadata::Internal::_set_attribute(&mut instance, id, key, val);
+            PSP34MetadataInternal::_set_attribute(&mut instance, &id, &key, &val);
             instance
         }
     }
