@@ -50,6 +50,8 @@ std = [
     "pendzl_lang/std",
 ]
 psp22 = ["pendzl_contracts/psp22"]
+vault = ["pendzl_contracts/vault"]
+metadata = ["pendzl_contracts/metadata"]
 psp34 = ["pendzl_contracts/psp34"]
 # # psp37 = ["pendzl_contracts/psp37"]
 access_control = ["pendzl_contracts/access_control"]
@@ -77,10 +79,19 @@ test-all = [
 ]
 
 [profile.release]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+    "pendzl_contracts/std",
+    "pendzl_lang/std",
+]
+psp22 = ["pendzl_contracts/psp22"]
+vault = ["pendzl_contracts/vault"]
 panic = "abort"
 lto = false
 
 [profile.dev]
 panic = "abort"
 lto = false
-overflow-checks = false

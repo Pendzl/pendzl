@@ -331,6 +331,212 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(metadata));
 }
 
+pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
+    let storage_struct_name = impl_args.contract_name();
+    let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::token::psp22::extensions::vault::PSP22VaultInternal for #storage_struct_name {
+            fn _decimals_offset(&self) -> u8 {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_decimals_offset_default_impl(self)
+            }
+        
+            fn _try_get_asset_decimals(&self) -> (bool, u8) {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_try_get_asset_decimals_default_impl(self)
+            }
+        
+            fn _asset(&self) -> PSP22Ref {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_asset_default_impl(self)
+            }
+        
+            fn _total_assets(&self) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_total_assets_default_impl(self)
+            }
+        
+            fn _convert_to_shares(&self, assets: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_shares_default_impl(self, assets)
+            }
+        
+            fn _convert_to_assets(&self, shares: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_assets_default_impl(self, shares)
+            }
+        
+            fn _max_deposit(&self, to: &AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_deposit_default_impl(self, to)
+            }
+        
+            fn _max_mint(&self, to: &AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_mint_default_impl(self, to)
+            }
+        
+            fn _max_withdraw(&self, owner: &AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_withdraw_default_impl(self, owner)
+            }
+        
+            fn _max_redeem(&self, owner: &AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_redeem_default_impl(self, owner)
+            }
+        
+            fn _preview_deposit(&self, assets: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_deposit_default_impl(self, assets)
+            }
+        
+            fn _preview_mint(&self, shares: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_mint_default_impl(self, shares)
+            }
+        
+            fn _preview_withdraw(&self, assets: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_withdraw_default_impl(self, assets)
+            }
+        
+            fn _preview_redeem(&self, shares: &Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_redeem_default_impl(self, shares)
+            }
+        
+            fn _deposit(
+                &mut self,
+                caller: &AccountId,
+                receiver: &AccountId,
+                assets: &Balance,
+                shares: &Balance,
+            ) -> Result<(), PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_deposit_default_impl(self, caller, receiver, assets, shares)
+            }
+        
+            fn _withdraw(
+                &mut self,
+                caller: &AccountId,
+                receiver: &AccountId,
+                owner: &AccountId,
+                assets: &Balance,
+                shares: &Balance,
+            ) -> Result<(), PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_withdraw_default_impl(self, caller, receiver, owner, assets, shares)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let psp22_vault_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut psp22_vault = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::token::psp22::extensions::vault::PSP22Vault for #storage_struct_name {
+            #[ink(message)]
+            fn asset(&self) -> AccountId {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::asset_default_impl(self)
+            }
+        
+            #[ink(message)]
+            fn total_assets(&self) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::total_assets_default_impl(self)
+            }
+        
+            #[ink(message)]
+            fn convert_to_shares(&self, assets: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_shares_default_impl(self, assets)
+            }
+        
+            #[ink(message)]
+            fn convert_to_assets(&self, shares: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_assets_default_impl(self, shares)
+            }
+        
+            #[ink(message)]
+            fn max_deposit(&self, to: AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_deposit_default_impl(self, to)
+            }
+        
+            #[ink(message)]
+            fn max_mint(&self, to: AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_mint_default_impl(self, to)
+            }
+        
+            #[ink(message)]
+            fn max_withdraw(&self, owner: AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_withdraw_default_impl(self, owner)
+            }
+        
+            #[ink(message)]
+            fn max_redeem(&self, owner: AccountId) -> Balance {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_redeem_default_impl(self, owner)
+            }
+        
+            #[ink(message)]
+            fn preview_deposit(&self, assets: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_deposit_default_impl(self, assets)
+            }
+        
+            #[ink(message)]
+            fn preview_mint(&self, shares: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_mint_default_impl(self, shares)
+            }
+        
+            #[ink(message)]
+            fn preview_withdraw(&self, assets: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_withdraw_default_impl(self, assets)
+            }
+        
+            #[ink(message)]
+            fn preview_redeem(&self, shares: Balance) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_redeem_default_impl(self, shares)
+            }
+        
+            #[ink(message)]
+            fn deposit(&mut self, assets: Balance, receiver: AccountId) -> Result<Balance, PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::deposit_default_impl(self, assets, receiver)
+            }
+        
+            #[ink(message)]
+            fn mint(&mut self, shares: Balance, receiver: AccountId) -> Result<Balance, PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::mint_default_impl(self, shares, receiver)
+            }
+        
+            #[ink(message)]
+            fn withdraw(&mut self, assets: Balance, receiver: AccountId, owner: AccountId) -> Result<Balance, PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::withdraw_default_impl(self, assets, receiver, owner)
+            }
+        
+            #[ink(message)]
+            fn redeem(&mut self, shares: Balance, receiver: AccountId, owner: AccountId) -> Result<Balance, PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::redeem_default_impl(self, shares, receiver, owner)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let import = syn::parse2::<syn::ItemUse>(quote!(
+      pub use pendzl::contracts::token::psp22::extensions::vault::*;
+    ))
+    .expect("Should parse");
+
+    let import_data = syn::parse2::<syn::ItemUse>(quote!(
+      pub use pendzl::contracts::token::psp22::extensions::vault::implementation::Data as PSP22VaultData;
+    ))
+    .expect("Should parse import");
+
+    impl_args.imports.insert("PSP22Vault", import);
+    impl_args.imports.insert("PSP22VaultData", import_data);
+    impl_args.vec_import();
+
+    override_functions(
+        "PSP22VaultInternal",
+        &mut internal,
+        impl_args.map,
+    );
+    override_functions("PSP22Vault", &mut psp22_vault, impl_args.map);
+
+    impl_args.items.push(syn::Item::Impl(internal_default_impl));
+    impl_args.items.push(syn::Item::Impl(internal));
+    impl_args.items.push(syn::Item::Impl(psp22_vault_default_impl));
+    impl_args.items.push(syn::Item::Impl(psp22_vault));
+}
+
 
 pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();

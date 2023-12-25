@@ -3,7 +3,7 @@
 
 #[pendzl::implementation(PSP22, PSP22Metadata)]
 #[ink::contract]
-pub mod my_psp22 {
+pub mod my_psp22_metadata {
     use ink::prelude::string::String;
 
     use pendzl::contracts::token::psp22::PSP22Error;

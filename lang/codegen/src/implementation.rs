@@ -69,8 +69,9 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         match to_default_implement.as_str() {
             "PSP22" => impl_psp22(&mut impl_args),
             "PSP22Burnable" => impl_psp22_burnable(&mut impl_args),
-            "PSP22Metadata" => impl_psp22_metadata(&mut impl_args),
             "PSP22Mintable" => impl_psp22_mintable(&mut impl_args),
+            "PSP22Vault" => impl_psp22_vault(&mut impl_args),
+            "PSP22Metadata" => impl_psp22_metadata(&mut impl_args),
             "PSP34" => impl_psp34(&mut impl_args),
             "PSP34Burnable" => impl_psp34_burnable(&mut impl_args),
             "PSP34Metadata" => impl_psp34_metadata(&mut impl_args),

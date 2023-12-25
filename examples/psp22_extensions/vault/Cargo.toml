@@ -1,5 +1,5 @@
 [package]
-name = "my_psp22_metadata"
+name = "my_psp22_vault"
 version = "0.1.0-alpha"
 authors = [
     " Brushfam <m.konstantinovna@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
@@ -15,19 +15,22 @@ scale = { package = "parity-scale-codec", version = "3.6", default-features = fa
 scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ], optional = true }
+ethnum = { version = "1.5", default-features = false }
 
 # These dependencies
 pendzl = { path = "../../..", default-features = false, features = [
     "psp22",
-    "metadata",
+    "vault",
 ] }
 
 [dev-dependencies]
 ink_e2e = "5.0.0-rc"
 test_helpers = { path = "../../test_helpers", default-features = false }
+my_psp22_metadata = { path = "../metadata", default-features = false }
+my_psp22_mintable = { path = "../mintable", default-features = false }
 
 [lib]
-name = "my_psp22_metadata"
+name = "my_psp22_vault"
 path = "lib.rs"
 
 
@@ -43,5 +46,11 @@ std = [
 ink-as-dependency = []
 e2e-tests = []
 
+
 [profile.dev]
 codegen-units = 16
+panic = "abort"
+lto = false
+[profile.release]
+panic = "abort"
+lto = false

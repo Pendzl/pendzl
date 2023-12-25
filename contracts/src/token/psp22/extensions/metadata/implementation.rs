@@ -29,7 +29,7 @@ impl PSP22MetadataStorage for Data {
     }
 }
 
-#[cfg(not(feature = "vault"))]
+#[cfg(all(feature = "metadata"))]
 pub trait PSP22MetadataDefaultImpl: Storage<Data>
 where
     Data: PSP22MetadataStorage,
@@ -47,12 +47,12 @@ where
     }
 }
 
-#[cfg(feature = "vault")]
+#[cfg(all(feature = "vault", not(feature = "metadata")))]
 use crate::token::psp22::extensions::vault::{
     implementation::Data as PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
 };
 
-#[cfg(feature = "vault")]
+#[cfg(all(feature = "vault", not(feature = "metadata")))]
 pub trait PSP22MetadataDefaultImpl:
     Storage<PSP22VaultData> + Storage<Data> + PSP22VaultInternal
 where
@@ -68,6 +68,9 @@ where
     }
 
     fn token_decimals_default_impl(&self) -> u8 {
-        self.data::<PSP22VaultData>().underlying_decimals() + self._decimals_offset()
+        self.data::<PSP22VaultData>()
+            .underlying_decimals()
+            .checked_add(self._decimals_offset())
+            .expect("overflow")
     }
 }

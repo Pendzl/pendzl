@@ -4,6 +4,7 @@ use crate::{
     access::access_control::AccessControlError, access::ownable::OwnableError,
     security::pausable::PausableError,
 };
+use pendzl::math::errors::MathError;
 use pendzl::traits::String;
 
 /// The PSP22 error type. Contract will throw one of this errors.
@@ -12,6 +13,8 @@ use pendzl::traits::String;
 pub enum PSP22Error {
     /// Custom error type for cases if writer of traits added own restrictions
     Custom(String),
+    /// pendzl::errors::MathError
+    MathError(MathError),
     /// Returned if not enough balance to fulfill a request is available.
     InsufficientBalance,
     /// Returned if not enough allowance to fulfill a request is available.
@@ -35,6 +38,16 @@ impl From<OwnableError> for PSP22Error {
                 PSP22Error::Custom(String::from("O::CallerIsNotOwner"))
             }
             OwnableError::ActionRedundant => PSP22Error::Custom(String::from("O::ActionRedundant")),
+        }
+    }
+}
+
+impl From<MathError> for PSP22Error {
+    fn from(err: MathError) -> Self {
+        match err {
+            MathError::Overflow => PSP22Error::Custom(String::from("M::Overflow")),
+            MathError::Underflow => PSP22Error::Custom(String::from("M::Underflow")),
+            MathError::DivByZero => PSP22Error::Custom(String::from("M::DivByZero")),
         }
     }
 }
