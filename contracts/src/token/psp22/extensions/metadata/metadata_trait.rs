@@ -18,3 +18,11 @@ pub trait PSP22Metadata {
     #[ink(message)]
     fn token_decimals(&self) -> u8;
 }
+
+pub trait PSP22MetadataStorage {
+    fn token_name(&self) -> Option<String>;
+
+    fn token_symbol(&self) -> Option<String>;
+
+    fn token_decimals(&self) -> u8;
+}
