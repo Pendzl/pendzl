@@ -1,40 +1,5 @@
 {
-  "rust-analyzer.linkedProjects": [
-    "./Cargo.toml"
-    // "./contracts/Cargo.toml",
-    // "./examples/just_ownable/Cargo.toml"
-
-    // "./examples/access_control/Cargo.toml",
-    // "./examples/access_control_extensions/enumerable/Cargo.toml",
-
-    // "./examples/ownable/Cargo.toml",
-
-    // "./examples/pausable/Cargo.toml",
-
-    // "./examples/psp22/Cargo.toml",
-    // "./examples/psp22_extensions/burnable/Cargo.toml",
-    // "./examples/psp22_extensions/capped/Cargo.toml",
-    // "./examples/psp22_extensions/flashmint/Cargo.toml",
-    // "./examples/psp22_extensions/burnable/Cargo.toml",
-    // "./examples/psp22_extensions/metadata/Cargo.toml",
-    // "./examples/psp22_extensions/mintable/Cargo.toml",
-    // "./examples/psp22_extensions/permit/Cargo.toml",
-    // "./examples/psp22_extensions/votes/Cargo.toml",
-    // "./examples/psp22_extensions/wrapper/Cargo.toml",
-    // "./examples/psp22_utils/token_timelock/Cargo.toml",
-
-    // "./examples/psp34/Cargo.toml",
-    // "./examples/psp34_extensions/burnable/Cargo.toml",
-    // "./examples/psp34_extensions/enumerable/Cargo.toml",
-    // "./examples/psp34_extensions/metadata/Cargo.toml",
-    // "./examples/psp34_extensions/mintable/Cargo.toml",
-
-    // "./examples/psp37/Cargo.toml",
-    // "./examples/psp37_extensions/batch/Cargo.toml",
-    // "./examples/psp37_extensions/burnable/Cargo.toml",
-    // "./examples/psp37_extensions/enumerable/Cargo.toml",
-    // "./examples/psp37_extensions/metadata/Cargo.toml",
-    // "./examples/psp37_extensions/mintable/Cargo.toml",
-  ],
-  "rust-analyzer.showUnlinkedFileNotification": false
+  "rust-analyzer.linkedProjects": ["./Cargo.toml", "./contracts/Cargo.toml"],
+  "rust-analyzer.showUnlinkedFileNotification": true,
+  "rust-analyzer.cargo.features": ["psp22", "vesting"]
 }

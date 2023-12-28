@@ -6,6 +6,9 @@ authors = [
 ]
 edition = "2021"
 
+[dependencies]
+subxt-signer = { version = "0.32.1" }
+
 [lib]
 name = "test_helpers"
 path = "lib.rs"

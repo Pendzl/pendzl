@@ -1,0 +1,49 @@
+[package]
+name = "vester"
+version = "0.1.0-alpha"
+authors = [""]
+edition = "2021"
+
+[dependencies]
+ink = { version = "5.0.0-rc", default-features = false }
+
+scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.10", default-features = false, features = [
+    "derive",
+], optional = true }
+
+# These dependencies
+pendzl = { path = "../..", default-features = false, features = ["vesting"] }
+my_psp22_mintable = { path = "../psp22_extensions/mintable", default-features = false }
+
+[dev-dependencies]
+ink_e2e = "5.0.0-rc"
+test_helpers = { path = "../test_helpers", default-features = false }
+subxt = { version = "0.33.0"}
+
+[lib]
+name = "vester"
+path = "lib.rs"
+
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+    # These dependencies
+    "pendzl/std",
+]
+ink-as-dependency = []
+e2e-tests = []
+
+[profile.dev]
+codegen-units = 16
+panic = "abort"
+lto = false
+[profile.release]
+panic = "abort"
+lto = false

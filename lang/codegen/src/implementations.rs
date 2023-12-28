@@ -1017,6 +1017,127 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(pausable_default_impl));
     impl_args.items.push(syn::Item::Impl(pausable));
 }
+pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
+    let storage_struct_name = impl_args.contract_name();
+    let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::finance::vesting::VestingInternal for #storage_struct_name {
+            fn _create_vest(&mut self,
+                receiver: AccountId,
+                asset: Option<AccountId>,
+                amount: Balance,
+                vesting_start: Timestamp,
+                vesting_end: Timestamp,
+                data: &Vec<u8>)-> Result<(), VestingError>  {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_create_vest_default_impl(
+                    self,
+                    receiver,
+                    asset,
+                    amount,
+                    vesting_start,
+                    vesting_end,
+                    data
+                )
+            }
+
+            fn _release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: &Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_release_default_impl(self, receiver, asset, data)
+            }
+
+            fn _release_by_vest_id(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_release_by_vest_id_default_impl(self, receiver, asset, id, data)
+            }
+            
+            fn _handle_transfer_in(&mut self, asset: Option<AccountId>, from: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_handle_transfer_in_default_impl(self, asset, from, amount, data)
+            }
+            
+            fn _handle_transfer_out(&mut self, asset: Option<AccountId>, to: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_handle_transfer_out_default_impl(self, asset, to, amount, data)
+            }
+
+            fn _next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: &Vec<u8>) -> u32 {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_next_id_vest_of_default_impl(self, of, asset, data)
+            }
+
+            fn _vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Option<VestingSchedule> {
+                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_vesting_schedule_of_default_impl(self, of, asset, id, data)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let vesting_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl  pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut vesting = syn::parse2::<syn::ItemImpl>(quote!(
+        impl  pendzl::contracts::finance::vesting::Vesting for #storage_struct_name {
+            #[ink(message, payable)]
+            fn create_vest(
+                &mut self,
+                receiver: AccountId,
+                asset: Option<AccountId>,
+                amount: Balance,
+                vesting_start: Timestamp,
+                vesting_end: Timestamp,
+                data: Vec<u8>,
+            ) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::create_vest_default_impl(
+                    self,
+                    receiver,
+                    asset,
+                    amount,
+                    vesting_start,
+                    vesting_end,
+                    data
+                )
+            }
+            #[ink(message)]
+            fn release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::release_default_impl(self, receiver, asset, data)
+            }
+            #[ink(message)]
+            fn release_by_vest_id(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, id: u32, data: Vec<u8>) -> Result<(), VestingError> {
+                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::release_by_vest_id_default_impl(self, receiver, asset, id, data)
+            }
+            #[ink(message)]
+            fn next_id_vest_of(&self,  of: AccountId, asset: Option<AccountId>, data: Vec<u8>) -> u32 {
+                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::next_id_vest_of_default_impl(self, of, asset, data)
+            }
+            #[ink(message)]
+            fn vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: Vec<u8>) -> Option<VestingSchedule> {
+                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::vesting_schedule_of_default_impl(self, of, asset, id, data)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let import = syn::parse2::<syn::ItemUse>(quote!(
+      pub use pendzl::contracts::finance::vesting::*;
+    ))
+    .expect("Should parse import");
+
+    let import_data = syn::parse2::<syn::ItemUse>(quote!(
+      pub use pendzl::contracts::finance::vesting::implementation::Data as VestingData;
+    ))
+    .expect("Should parse import");
+    impl_args.imports.insert("Vesting", import);
+    impl_args.imports.insert("VestingData", import_data);
+
+    override_functions("VestingInternal", &mut internal, impl_args.map);
+    override_functions("Vesting", &mut vesting, impl_args.map);
+
+    impl_args.items.push(syn::Item::Impl(internal_default_impl));
+    impl_args.items.push(syn::Item::Impl(internal));
+    impl_args.items.push(syn::Item::Impl(vesting_default_impl));
+    impl_args.items.push(syn::Item::Impl(vesting));
+}
 
 fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map: &OverridenFnMap) {
     if let Some(overrides) = map.get(trait_name) {

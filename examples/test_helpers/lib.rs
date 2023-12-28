@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+
+pub use subxt_signer::sr25519::Keypair;
+
 #[macro_export]
 macro_rules! balance_of {
     ($client:ident, $contract:ident, $account:ident) => {{
@@ -220,4 +223,35 @@ macro_rules! method_call_dry_run {
             .await
             .return_value()
     }};
+}
+
+#[macro_export]
+macro_rules! assert_eq_msg {
+    ($msg:expr, $encountered:expr, $expected:expr) => {
+        assert_eq!(
+            $encountered, $expected,
+            "{} were not equal: encountered {:?}, expected {:?}",
+            $msg, $encountered, $expected
+        );
+    };
+}
+
+pub fn keypair_to_account<AccountId: From<[u8; 32]>>(keypair: &Keypair) -> AccountId {
+    AccountId::from(keypair.public_key().0)
+}
+
+pub fn assert_gt<T: PartialOrd>(a: T, b: T) {
+    assert!(a > b);
+}
+
+pub fn assert_gte<T: PartialOrd>(a: T, b: T) {
+    assert!(a >= b);
+}
+
+pub fn assert_lt<T: PartialOrd>(a: T, b: T) {
+    assert!(a < b);
+}
+
+pub fn assert_lte<T: PartialOrd>(a: T, b: T) {
+    assert!(a <= b);
 }

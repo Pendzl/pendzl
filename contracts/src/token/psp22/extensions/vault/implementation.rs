@@ -88,7 +88,7 @@ where
     }
 
     fn _convert_to_shares_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
-        mul_div(
+        let ret_val = mul_div(
             *assets,
             (self
                 ._total_supply()
@@ -99,7 +99,15 @@ where
             self._total_assets()
                 .checked_add(1)
                 .ok_or(MathError::Overflow)?,
-        )
+        )?;
+        ink::env::debug_println!(
+            "convert_to_shares_default_impl: assets: {}, decimals_offset: {}, ret_val: {}",
+            assets,
+            self._decimals_offset(),
+            ret_val
+        );
+
+        Ok(ret_val)
     }
 
     fn _convert_to_assets_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {

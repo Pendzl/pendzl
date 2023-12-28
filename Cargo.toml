@@ -57,6 +57,7 @@ psp34 = ["pendzl_contracts/psp34"]
 access_control = ["pendzl_contracts/access_control"]
 ownable = ["pendzl_contracts/ownable"]
 pausable = ["pendzl_contracts/pausable"]
+vesting = ["pendzl_contracts/vesting"]
 # timelock_controller = ["pendzl_contracts/timelock_controller"]
 # governance = ["pendzl_contracts/governance", "pendzl_contracts/checkpoints"]
 # crypto = ["pendzl_contracts/crypto"]
@@ -71,6 +72,7 @@ test-all = [
     "access_control",
     "ownable",
     "pausable",
+    "vesting",
     # "timelock_controller",
     # "governance",
     # "crypto",
