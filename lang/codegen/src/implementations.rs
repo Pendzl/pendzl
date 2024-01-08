@@ -356,12 +356,13 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_total_assets_default_impl(self)
             }
         
-            fn _convert_to_shares(&self, assets: &Balance) -> Result<Balance, MathError> {
-                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_shares_default_impl(self, assets)
+            fn _convert_to_shares(&self, assets: &Balance, rounding: Rounding) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_shares_default_impl(self, assets, rounding)
             }
         
-            fn _convert_to_assets(&self, shares: &Balance) -> Result<Balance, MathError> {
-                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_assets_default_impl(self, shares)
+            fn _convert_to_assets(&self, shares: &Balance, rounding: Rounding) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_assets_default_impl(self, shares, rounding)
+
             }
         
             fn _max_deposit(&self, to: &AccountId) -> Balance {
@@ -438,13 +439,13 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             }
         
             #[ink(message)]
-            fn convert_to_shares(&self, assets: Balance) -> Result<Balance, MathError> {
-                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_shares_default_impl(self, assets)
+            fn convert_to_shares(&self, assets: Balance, round: Rounding) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_shares_default_impl(self, assets, round)
             }
         
             #[ink(message)]
-            fn convert_to_assets(&self, shares: Balance) -> Result<Balance, MathError> {
-                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_assets_default_impl(self, shares)
+            fn convert_to_assets(&self, shares: Balance, round: Rounding) -> Result<Balance, MathError> {
+                pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_assets_default_impl(self, shares, round)
             }
         
             #[ink(message)]
@@ -520,8 +521,14 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
     ))
     .expect("Should parse import");
 
+    let import_rounding = syn::parse2::<syn::ItemUse>(quote!(
+      pub use pendzl::contracts::token::psp22::extensions::vault::Rounding;
+    ))
+    .expect("Should parse import");
+
     impl_args.imports.insert("PSP22Vault", import);
     impl_args.imports.insert("PSP22VaultData", import_data);
+    impl_args.imports.insert("PSP22VaultRounding", import_rounding);
     impl_args.vec_import();
 
     override_functions(

@@ -5,12 +5,14 @@ use ink::ToAccountId;
 use pendzl::math::errors::MathError;
 use pendzl::traits::{Balance, DefaultEnv, Storage};
 
-use super::{Deposit, PSP22VaultInternal, PSP22VaultStorage};
+use super::{Deposit, PSP22VaultInternal, PSP22VaultStorage, Withdraw};
 use crate::token::psp22::implementation::Data as PSP22Data;
 use crate::token::psp22::{PSP22Error, PSP22};
 use crate::token::psp22::{PSP22Internal, PSP22Ref, PSP22Storage};
 
 use ink::prelude::{string::ToString, vec::*};
+
+use super::Rounding;
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -30,7 +32,7 @@ impl PSP22VaultStorage for Data {
     }
 }
 use ethnum::U256;
-fn mul_div(x: u128, y: u128, denominator: u128) -> Result<u128, MathError> {
+fn mul_div(x: u128, y: u128, denominator: u128, round: Rounding) -> Result<u128, MathError> {
     if denominator == 0 {
         return Err(MathError::DivByZero);
     }
@@ -43,12 +45,19 @@ fn mul_div(x: u128, y: u128, denominator: u128) -> Result<u128, MathError> {
     let y_u256 = U256::try_from(y).unwrap();
     let denominator_u256 = U256::try_from(denominator).unwrap();
 
-    // these can not fail overflow and denom is not 0
-    let res: U256 = x_u256.checked_mul(y_u256).unwrap();
-    let res = res.checked_div(denominator_u256).unwrap();
-    match u128::try_from(res) {
+    // this can not overflow
+    let mul_u256 = x_u256.checked_mul(y_u256).unwrap();
+    // denom is not 0
+    let res_u256: U256 = mul_u256.checked_div(denominator_u256).unwrap();
+    let res = match u128::try_from(res_u256) {
         Ok(v) => Ok(v),
         _ => Err(MathError::Overflow),
+    }?;
+
+    if round == Rounding::Up && mul_u256 % denominator_u256 != 0 {
+        Ok(res.checked_add(1).ok_or(MathError::Overflow)?)
+    } else {
+        Ok(res)
     }
 }
 
@@ -87,41 +96,39 @@ where
         self._asset().balance_of(Self::env().account_id())
     }
 
-    fn _convert_to_shares_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
-        let ret_val = mul_div(
+    fn _convert_to_shares_default_impl(
+        &self,
+        assets: &Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError> {
+        let total_shares = self._total_supply();
+        let total_assets = self._total_assets();
+        let decimals_offset = 10_u128.pow(self._decimals_offset() as u32);
+        mul_div(
             *assets,
-            (self
-                ._total_supply()
-                .checked_add(1)
-                .ok_or(MathError::Overflow)?)
-            .checked_mul(10_u128.pow(self._decimals_offset() as u32))
-            .ok_or(MathError::Overflow)?,
-            self._total_assets()
-                .checked_add(1)
+            total_shares
+                .checked_add(decimals_offset)
                 .ok_or(MathError::Overflow)?,
-        )?;
-        ink::env::debug_println!(
-            "convert_to_shares_default_impl: assets: {}, decimals_offset: {}, ret_val: {}",
-            assets,
-            self._decimals_offset(),
-            ret_val
-        );
-
-        Ok(ret_val)
+            total_assets.checked_add(1).ok_or(MathError::Overflow)?,
+            round,
+        )
     }
 
-    fn _convert_to_assets_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {
+    fn _convert_to_assets_default_impl(
+        &self,
+        shares: &Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError> {
+        let total_shares = self._total_supply();
+        let total_assets = self._total_assets();
+        let decimals_offset = 10_u128.pow(self._decimals_offset() as u32);
         mul_div(
             *shares,
-            self._total_assets()
-                .checked_add(1)
+            total_assets.checked_add(1).ok_or(MathError::Overflow)?,
+            total_shares
+                .checked_add(decimals_offset)
                 .ok_or(MathError::Overflow)?,
-            (self
-                ._total_supply()
-                .checked_add(1)
-                .ok_or(MathError::Overflow)?)
-            .checked_mul(10_u128.pow(self._decimals_offset() as u32))
-            .ok_or(MathError::Overflow)?,
+            round,
         )
     }
 
@@ -135,29 +142,26 @@ where
 
     fn _max_withdraw_default_impl(&self, owner: &AccountId) -> Balance {
         let owner_balance = self._balance_of(&owner);
-        self._convert_to_assets(&owner_balance).unwrap()
+        self._convert_to_assets(&owner_balance, Rounding::Down)
+            .unwrap()
     }
     fn _max_redeem_default_impl(&self, owner: &AccountId) -> Balance {
         self._balance_of(&owner)
     }
     fn _preview_deposit_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
-        self._convert_to_shares(&assets)
+        self._convert_to_shares(&assets, Rounding::Down)
     }
 
     fn _preview_mint_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {
-        self._convert_to_assets(&shares)?
-            .checked_add(1)
-            .ok_or(MathError::Overflow)
+        self._convert_to_assets(&shares, Rounding::Up)
     }
 
     fn _preview_withdraw_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
-        self._convert_to_shares(&assets)
+        self._convert_to_shares(&assets, Rounding::Up)
     }
 
     fn _preview_redeem_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {
-        self._convert_to_assets(&shares)?
-            .checked_add(1)
-            .ok_or(MathError::Overflow)
+        self._convert_to_assets(&shares, Rounding::Down)
     }
 
     fn _deposit_default_impl(
@@ -167,6 +171,11 @@ where
         assets: &Balance,
         shares: &Balance,
     ) -> Result<(), PSP22Error> {
+        ink::env::debug_println!(
+            "deposit_default_impl: assets: {}, shares: {}",
+            assets,
+            shares
+        );
         self._asset().transfer_from(
             *caller,
             Self::env().account_id(),
@@ -200,6 +209,14 @@ where
         self._burn_from(owner, shares)?;
         self._asset()
             .transfer(*receiver, *assets, Vec::<u8>::new())?;
+
+        Self::env().emit_event(Withdraw {
+            sender: *caller,
+            receiver: *receiver,
+            owner: *owner,
+            assets: *assets,
+            shares: *shares,
+        });
         Ok(())
     }
 }
@@ -213,12 +230,20 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
         self._total_assets()
     }
 
-    fn convert_to_shares_default_impl(&self, assets: Balance) -> Result<Balance, MathError> {
-        self._convert_to_shares(&assets)
+    fn convert_to_shares_default_impl(
+        &self,
+        assets: Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError> {
+        self._convert_to_shares(&assets, round)
     }
 
-    fn convert_to_assets_default_impl(&self, shares: Balance) -> Result<Balance, MathError> {
-        self._convert_to_shares(&shares)
+    fn convert_to_assets_default_impl(
+        &self,
+        shares: Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError> {
+        self._convert_to_assets(&shares, round)
     }
 
     fn max_deposit_default_impl(&self, receiver: AccountId) -> Balance {
@@ -262,6 +287,11 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
             return Err(PSP22Error::Custom("Vault: Max".to_string()));
         }
         let shares = self._preview_deposit(&assets)?;
+        ink::env::debug_println!(
+            "deposit_default_impl: assets: {}, shares: {}",
+            assets,
+            shares
+        );
         self._deposit(&Self::env().caller(), &receiver, &assets, &shares)?;
         Ok(shares)
     }
@@ -305,5 +335,27 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
         let assets = self._preview_redeem(&shares)?;
         self._withdraw(&Self::env().caller(), &receiver, &owner, &assets, &shares)?;
         Ok(assets)
+    }
+}
+
+#[cfg(test)]
+pub mod test {
+    use super::*;
+    #[test]
+    fn test_mul_div() {
+        let x = 1_000_000_000_000_u128;
+        assert_eq!(mul_div(x, x, 2 * x, Rounding::Down), Ok(x / 2));
+    }
+
+    #[test]
+    fn round_up() {
+        assert_eq!(mul_div(100, 100, 1000, Rounding::Up), Ok(10));
+        assert_eq!(mul_div(101, 100, 1000, Rounding::Up), Ok(11));
+        assert_eq!(mul_div(3643, 6393, 11645, Rounding::Up), Ok(2000));
+    }
+
+    #[test]
+    fn round_down() {
+        assert_eq!(mul_div(4000, 2001, 2001, Rounding::Down), Ok(4000));
     }
 }

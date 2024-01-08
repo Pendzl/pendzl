@@ -81,16 +81,6 @@ test-all = [
 ]
 
 [profile.release]
-default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info/std",
-    "pendzl_contracts/std",
-    "pendzl_lang/std",
-]
-psp22 = ["pendzl_contracts/psp22"]
-vault = ["pendzl_contracts/vault"]
 panic = "abort"
 lto = false
 

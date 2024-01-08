@@ -3,6 +3,8 @@
 pub use super::*;
 
 use ink::prelude::string::String;
+
+#[allow(unused_imports)]
 use pendzl::traits::Storage;
 #[derive(Default, Debug)]
 #[pendzl::storage_item]

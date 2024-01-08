@@ -32,7 +32,7 @@ pub trait PSP22Vault {
     /// “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
     /// from.
     #[ink(message)]
-    fn convert_to_shares(&self, assets: Balance) -> Result<Balance, MathError>;
+    fn convert_to_shares(&self, assets: Balance, round: Rounding) -> Result<Balance, MathError>;
 
     /// Returns the amount of assets that the Vault would exchange for the amount of shares provided,
     /// in an ideal scenario where all the conditions are met.
@@ -46,7 +46,7 @@ pub trait PSP22Vault {
     /// “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
     /// from.
     #[ink(message)]
-    fn convert_to_assets(&self, shares: Balance) -> Result<Balance, MathError>;
+    fn convert_to_assets(&self, shares: Balance, round: Rounding) -> Result<Balance, MathError>;
 
     /// Returns the maximum amount of the underlying asset that can be deposited into the Vault for the receiver,
     /// through a deposit call.
@@ -222,12 +222,12 @@ pub trait PSP22VaultInternal {
     /// Internal conversion function from assets to shares with support for rounding direction.
     ///
     /// - Performs multiplication and division for asset to share conversion with specified rounding.
-    fn _convert_to_shares(&self, assets: &Balance) -> Result<Balance, MathError>;
+    fn _convert_to_shares(&self, assets: &Balance, round: Rounding) -> Result<Balance, MathError>;
 
     /// Internal conversion function from shares to assets with support for rounding direction.
     ///
     /// - Performs multiplication and division for share to asset conversion with specified rounding.
-    fn _convert_to_assets(&self, shares: &Balance) -> Result<Balance, MathError>;
+    fn _convert_to_assets(&self, shares: &Balance, round: Rounding) -> Result<Balance, MathError>;
 
     /// doc @ PSP22Vault::max_deposit
     fn _max_deposit(&self, to: &AccountId) -> Balance;

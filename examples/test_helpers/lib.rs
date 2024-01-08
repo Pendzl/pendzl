@@ -17,6 +17,17 @@ macro_rules! balance_of {
 }
 
 #[macro_export]
+macro_rules! balance_of2 {
+    ($client:ident, $contract:ident, $account:expr) => {{
+        $client
+            .call(&ink_e2e::alice(), &$contract.balance_of($account))
+            .dry_run()
+            .await?
+            .return_value()
+    }};
+}
+
+#[macro_export]
 macro_rules! owner_of {
     ($client:ident, $contract:ident, $id:expr) => {{
         $client
@@ -105,15 +116,60 @@ macro_rules! mint_dry_run {
 
 #[macro_export]
 macro_rules! mint {
-    ($client:ident, $contract:ident, $signer:ident, $account:ident, $amount:ident) => {{
+    ($client:ident, $contract:ident, $signer:ident, $account:ident, $amount:expr) => {{
         $client
             .call(
                 &ink_e2e::$signer(),
-                contract.mint(ink_e2e::account_id($account), $amount),
+                &$contract.mint(ink_e2e::account_id($account), $amount),
             )
             .submit()
             .await
             .expect("mint failed")
+            .return_value()
+    }};
+
+    ($client:ident, $contract:ident, $account:ident, $amount:expr) => {{
+        $client
+            .call(
+                &ink_e2e::alice(),
+                &$contract.mint(ink_e2e::account_id($account), $amount),
+            )
+            .submit()
+            .await
+            .expect("mint failed")
+            .return_value()
+    }};
+}
+
+#[macro_export]
+macro_rules! mint2 {
+    ($client:ident, $contract:ident, $signer:ident, $account:ident, $amount:ident) => {{
+        $client
+            .call(&ink_e2e::$signer(), &$contract.mint($account, $amount))
+            .submit()
+            .await
+            .expect("mint failed")
+            .return_value()
+    }};
+
+    ($client:ident, $contract:ident, $account:ident, $amount:ident) => {{
+        $client
+            .call(&ink_e2e::alice(), &$contract.mint($account, $amount))
+            .submit()
+            .await
+            .expect("mint failed")
+            .return_value()
+    }};
+}
+
+#[macro_export]
+macro_rules! approve {
+    ($client:ident, $contract:ident, $signer:ident, $account:ident, $amount:expr) => {{
+        $client
+            .call(&ink_e2e::$signer(), &$contract.approve($account, $amount))
+            .submit()
+            .await
+            .expect("approve failed")
             .return_value()
     }};
 }
@@ -254,4 +310,11 @@ pub fn assert_lt<T: PartialOrd>(a: T, b: T) {
 
 pub fn assert_lte<T: PartialOrd>(a: T, b: T) {
     assert!(a <= b);
+}
+
+pub fn run_if_test_debug<F: FnOnce()>(func: F) {
+    match std::env::var("TEST_DEBUG").is_ok() {
+        true => func(),
+        false => (),
+    }
 }
