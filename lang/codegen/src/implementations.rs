@@ -1150,6 +1150,7 @@ fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map:
     if let Some(overrides) = map.get(trait_name) {
         // we will find which fns we wanna override
         for (fn_name, (fn_code, attributes, is_default)) in overrides {
+            let mut original_fn_found = false;
             for item in implementation.items.iter_mut() {
                 if let syn::ImplItem::Method(method) = item {
                     if &method.sig.ident.to_string() == fn_name {
@@ -1157,8 +1158,12 @@ fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map:
                             method.block = *fn_code.clone();
                         }
                         method.attrs.append(&mut attributes.to_vec());
+                        original_fn_found = true;
                     }
                 }
+            }
+            if !original_fn_found {
+                panic!("Could not find fn {} in trait {}", fn_name, trait_name)
             }
         }
     }
