@@ -1,5 +1,9 @@
 {
-  "rust-analyzer.linkedProjects": ["./Cargo.toml", "./contracts/Cargo.toml"],
+  "rust-analyzer.linkedProjects": [
+    "./Cargo.toml",
+    "./contracts/Cargo.toml",
+    "./contracts/Cargo.toml"
+  ],
   "rust-analyzer.showUnlinkedFileNotification": true,
   "rust-analyzer.cargo.features": ["psp22", "vesting"]
 }

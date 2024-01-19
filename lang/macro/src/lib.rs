@@ -45,10 +45,8 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
 }
 
 ////This macro implements the default traits defined in pendzl, while also allowing users
-////to override them with `#[overrider]` or `#[default_default_impl]` attributes. `#[overrider]` is used when
-////you want to change the behavior of the method by your implementation. `#[default_default_impl]` is used when
-////you want to keep the default implementation from pendzl, but you want to attach some modifiers to
-////that function.
+////to override them with `#[overrider]` attribute. `#[overrider]` is used when
+////you want to change the behavior of the method by your implementation.
 ////# Example
 ////```skip
 ////#[pendzl::implementation(PSP22)]
@@ -65,13 +63,13 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
 ////
 ////    // this will override a function from PSP22Internal
 ////    #[overrider(PSP22Internal)]
-////    fn _before_token_transfer(
+////    fn _update(
 ////        &mut self,
 ////        from: Option<&AccountId>,
 ////        to: Option<&AccountId>,
 ////        amount: &Balance,
 ////    ) -> Result<(), PSP22Error> {
-////        // here we can change the behavior before token transfer
+////        // here we can change the update fn behavior
 ////    }
 ////
 ////    // this will override a function from PSP22
@@ -79,19 +77,6 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
 ////    fn balance_of(&self, owner: AccountId) -> Balance {
 ////         // here we can change the behavior of balance_of
 ////    }
-////
-////    // this will keep the default implementation of this method,
-////    // however, it will add the modifier (and possibly other attributes defined by user)
-////    // to the function. In this case, we don't even have to worry about the attributes and
-////    // return type of the function
-////    #[default_default_impl(PSP22)]
-////    #[modifiers(...)]
-////    fn transfer_from() {}
-////
-////    impl Contract {
-////        // we can add constructor and other messages
-////    }
-//// }
 //// ```
 #[proc_macro_attribute]
 pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {

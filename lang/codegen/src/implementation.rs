@@ -167,19 +167,13 @@ fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>)
     let mut result: Vec<syn::Item> = vec![];
     items.into_iter().for_each(|mut item| {
         if let Item::Fn(item_fn) = &mut item {
-            if is_attr(&item_fn.attrs, "overrider")
-                || is_attr(&item_fn.attrs, "default_default_impl")
-            {
-                let attr_name = if is_attr(&item_fn.attrs, "overrider") {
-                    "overrider"
-                } else {
-                    "default_default_impl"
-                };
+            if is_attr(&item_fn.attrs, "overrider") {
+                let attr_name = "overrider";
                 let fn_name = item_fn.sig.ident.to_string();
                 let code = item_fn.block.clone();
                 let mut attributes = item_fn.attrs.clone();
 
-                // we will remove the overrider attribute since some other attributes might be interesting to us
+                // remove the overrider attribute
                 let to_remove_idx = attributes
                     .iter()
                     .position(|attr| is_attr(&[attr.clone()], attr_name))
@@ -190,14 +184,10 @@ fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>)
                     .parse_args::<Path>()
                     .expect("Expected overriden trait identifier")
                     .to_token_stream()
-                    .to_string()
-                    .replace(' ', "");
+                    .to_string();
 
                 let mut vec = map.get(&trait_name).unwrap_or(&vec![]).clone();
-                vec.push((
-                    fn_name,
-                    (code, attributes, attr_name == "default_default_impl"),
-                ));
+                vec.push((fn_name, (code, attributes)));
                 map.insert(trait_name, vec.to_vec());
             } else {
                 result.push(item);

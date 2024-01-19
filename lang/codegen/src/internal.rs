@@ -25,10 +25,7 @@ extern crate proc_macro;
 use syn::{
     ext::IdentExt,
     parenthesized,
-    parse::{
-        Parse,
-        ParseStream,
-    },
+    parse::{Parse, ParseStream},
 };
 
 pub(crate) struct MetaList {
@@ -47,15 +44,15 @@ fn parse_meta_path(input: ParseStream) -> syn::Result<syn::Path> {
                 let ident = syn::Ident::parse_any(input)?;
                 segments.push_value(syn::PathSegment::from(ident));
                 if !input.peek(syn::Token![::]) {
-                    break
+                    break;
                 }
                 let punct = input.parse()?;
                 segments.push_punct(punct);
             }
             if segments.is_empty() {
-                return Err(input.error("expected path"))
+                return Err(input.error("expected path"));
             } else if segments.trailing_punct() {
-                return Err(input.error("expected path segment"))
+                return Err(input.error("expected path segment"));
             }
             segments
         },
@@ -106,7 +103,7 @@ impl Parse for AttributeArgs {
         while input.peek(syn::Ident::peek_any) {
             attrs.push(input.parse()?);
             if input.is_empty() {
-                break
+                break;
             }
             let _: syn::token::Comma = input.parse()?;
         }
@@ -135,60 +132,18 @@ impl Parse for Attributes {
         Ok(Self(syn::Attribute::parse_outer(input)?))
     }
 }
-// impl Attributes {
-//     pub(crate) fn attr(&self) -> &Vec<syn::Attribute> {
-//         &self.0
-//     }
-// }
 
 #[inline]
 pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
-    attrs
-        .iter()
-        .any(|attr| attr.path.segments.last().expect("No segments in path").ident == ident)
+    attrs.iter().any(|attr| {
+        attr.path
+            .segments
+            .last()
+            .expect("No segments in path")
+            .ident
+            == ident
+    })
 }
-
-// #[inline]
-// #[allow(dead_code)]
-// pub(crate) fn get_attr(attrs: &[syn::Attribute], ident: &str) -> Option<syn::Attribute> {
-//     for attr in attrs.iter() {
-//         if is_attr(&[attr.clone()], ident) {
-//             return Some(attr.clone())
-//         }
-//     }
-//     None
-// }
-
-// #[inline]
-// pub(crate) fn remove_attr(attrs: &[syn::Attribute], ident: &str) -> Vec<syn::Attribute> {
-//     attrs
-//         .iter()
-//         .cloned()
-//         .filter_map(|attr| {
-//             if is_attr(&[attr.clone()], ident) {
-//                 None
-//             } else {
-//                 Some(attr)
-//             }
-//         })
-//         .collect()
-// }
-
-// #[inline]
-// pub(crate) fn extract_attr(attrs: &mut Vec<syn::Attribute>, ident: &str) -> Vec<syn::Attribute> {
-//     let extracted = attrs
-//         .clone()
-//         .into_iter()
-//         .filter(|attr| is_attr(&[attr.clone()], ident))
-//         .collect();
-//     attrs.retain(|attr| !is_attr(&[attr.clone()], ident));
-//     extracted
-// }
-
-// #[inline]
-// pub(crate) fn new_attribute(attr_stream: TokenStream) -> syn::Attribute {
-//     syn::parse2::<Attributes>(attr_stream).unwrap().attr()[0].clone()
-// }
 
 pub(crate) const INK_PREFIX: &str = "ink=";
 

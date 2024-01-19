@@ -22,7 +22,7 @@
 
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote, quote_spanned, ToTokens};
-use syn::{spanned::Spanned, Data, DataEnum, DataStruct, DataUnion, Field, Fields};
+use syn::{spanned::Spanned, Data, DataEnum, DataStruct, Field, Fields};
 
 #[inline]
 pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
@@ -36,7 +36,7 @@ pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
     })
 }
 
-fn wrap_upgradeable_fields(
+fn wrap_fields_to_be_upgradeable_safely(
     structure_name: &str,
     fields: Fields,
 ) -> (Vec<Field>, Vec<Option<TokenStream>>) {
@@ -55,19 +55,23 @@ fn wrap_upgradeable_fields(
                     field_name.to_uppercase()
                 );
 
+                // generate code for storage key to be unique and not default to AutoKey
+                let storage_key = quote! {
+                    pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
+                };
+
+                // use generated store key in the field
                 new_field.ty = syn::Type::Verbatim(quote_spanned!(span =>
                     ::ink::storage::Lazy<#ty, ::ink::storage::traits::ManualKey<#key_name>>
                 ));
+        
+                // consume lazy attribute
                 new_field.attrs = field
                     .attrs
                     .iter()
                     .filter(|attr| !attr.path.is_ident("lazy"))
                     .cloned()
                     .collect();
-
-                let storage_key = quote! {
-                    pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
-                };
 
                 (new_field, Some(storage_key))
             } else {
@@ -80,20 +84,36 @@ fn wrap_upgradeable_fields(
                     structure_name.to_uppercase(),
                     field_name.to_uppercase()
                 );
+                
 
                 let is_mapping = if let syn::Type::Path(path) = &field.ty {
                     if let Some(segment) = path.path.segments.last() {
-                        segment.ident == "Mapping" || segment.ident == "MultiMapping"
+                        segment.ident == "Mapping"
                     } else {
                         false
                     }
                 } else {
                     false
                 };
+                
+                // generate code for storage key to be unique and not default to AutoKey
+                let storage_key = if is_mapping {
+                    Some(quote! {
+                        pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
+                    })
+                } else {
+                    None
+                };
 
+
+                // Mapping<AccountId, u128>
+                // -> Mapping<AccountId, u128, ::ink::storage::traits::ManualKey<STORAGE_KEY_...>)>
+
+                // Mapping<(AccountId, Option<AccountId>, u32), SomeStruct>
+                // -> Mapping<(AccountId, Option<AccountId>, u32), SomeStruct, ::ink::storage::traits::ManualKey<STORAGE_KEY_...>)>
                 if let syn::Type::Path(path) = &mut new_field.ty {
                     if let Some(segment) = path.path.segments.last_mut() {
-                        if segment.ident == "Mapping" || segment.ident == "MultiMapping" {
+                        if segment.ident == "Mapping" {
                             let mut args = segment.arguments.clone();
                             if let syn::PathArguments::AngleBracketed(args) = &mut args {
                                 if let Some(syn::GenericArgument::Type(ty)) = args.args.iter_mut().nth(1) {
@@ -106,14 +126,6 @@ fn wrap_upgradeable_fields(
                         }
                     }
                 }
-
-                let storage_key = if is_mapping {
-                    Some(quote! {
-                        pub const #key_name: u32 = ::pendzl::storage_unique_key!(#structure_name, #field_name);
-                    })
-                } else {
-                    None
-                };
 
                 (new_field, storage_key)
             }
@@ -128,7 +140,7 @@ fn generate_struct(s: &synstructure::Structure, struct_item: DataStruct) -> Toke
     let attrs = s.ast().attrs.clone();
     let (_, _, where_closure) = s.ast().generics.split_for_impl();
 
-    let (fields, storage_keys) = wrap_upgradeable_fields(
+    let (fields, storage_keys) = wrap_fields_to_be_upgradeable_safely(
         struct_ident.to_string().as_str(),
         struct_item.fields.clone(),
     );
@@ -165,16 +177,26 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
     let (_, _, where_closure) = s.ast().generics.split_for_impl();
     let mut all_storage_keys: Vec<Option<TokenStream>> = vec![];
 
+    //
+    // enum ExampleEnum {
+    //     Unit,
+    //     ExUnNamed(bool) = 123,
+    //     ExNamed{a: bool},
+    // }
+
     let variants = enum_item.variants.into_iter().map(|variant| {
         let attrs = variant.attrs;
         let variant_ident = &variant.ident;
+        
+        // handle explicit discriminants, ex. `ExUnNamed(bool) = 123,`
         let discriminant = if let Some((eq, expr)) = variant.discriminant {
             quote! { #eq #expr}
         } else {
             quote! {}
         };
 
-        let (fields, storage_keys) = wrap_upgradeable_fields(
+        // get wrapped variant fields & keys - handles both unit, named (ExNamed{a: bool}) or unnamed (ExNamed(bool))
+        let (fields, storage_keys) = wrap_fields_to_be_upgradeable_safely(
             format!("{}_{}", enum_ident, variant_ident).as_str(),
             variant.fields.clone(),
         );
@@ -185,14 +207,17 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
             Fields::Unit => quote! {},
         };
 
+        // push keys to array - defer generating to the outside of enum
         all_storage_keys.extend(storage_keys);
 
+        // generate code
         quote! {
             #(#attrs)*
             #variant_ident #fields #discriminant,
         }
     });
 
+    // output atrributes, types and possible where of the enum, generated variant keys & all of the storage keys
     quote! {
         #(#attrs)*
         #vis enum #enum_ident #types #where_closure {
@@ -203,33 +228,11 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
     }
 }
 
-fn generate_union(s: &synstructure::Structure, union_item: DataUnion) -> TokenStream {
-    let union_ident = s.ast().ident.clone();
-    let vis = s.ast().vis.clone();
-    let attrs = s.ast().attrs.clone();
-    let types = s.ast().generics.clone();
-    let (_, _, where_closure) = s.ast().generics.split_for_impl();
-
-    let fields = union_item
-        .fields
-        .named
-        .iter()
-        .enumerate()
-        .map(|(_i, field)| field);
-
-    quote! {
-        #(#attrs)*
-        #vis union #union_ident #types #where_closure {
-            #(#fields),*
-        }
-    }
-}
-
 pub fn storage_item(_attrs: TokenStream, s: synstructure::Structure) -> TokenStream {
     let item = match s.ast().data.clone() {
         Data::Struct(struct_item) => generate_struct(&s, struct_item),
         Data::Enum(enum_item) => generate_enum(&s, enum_item),
-        Data::Union(union_item) => generate_union(&s, union_item),
+        Data::Union(_) => panic!("{} - pendzl storage_item cannot wrap Union", s.ast().ident.clone())
     };
 
     quote! {

@@ -3,9 +3,8 @@ use quote::{format_ident, quote};
 use std::collections::HashMap;
 use syn::Block;
 
-pub type IsDefault = bool;
 pub type OverridenFnMap =
-    HashMap<String, Vec<(String, (Box<Block>, Vec<syn::Attribute>, IsDefault))>>;
+    HashMap<String, Vec<(String, (Box<Block>, Vec<syn::Attribute>))>>;
 
 pub struct ImplArgs<'a> {
     pub map: &'a OverridenFnMap,
@@ -1149,15 +1148,14 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
 fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map: &OverridenFnMap) {
     if let Some(overrides) = map.get(trait_name) {
         // we will find which fns we wanna override
-        for (fn_name, (fn_code, attributes, is_default)) in overrides {
+        for (fn_name, (fn_code, attributes)) in overrides {
             let mut original_fn_found = false;
             for item in implementation.items.iter_mut() {
                 if let syn::ImplItem::Method(method) = item {
                     if &method.sig.ident.to_string() == fn_name {
-                        if !is_default {
-                            method.block = *fn_code.clone();
-                        }
+                        method.block = *fn_code.clone();
                         method.attrs.append(&mut attributes.to_vec());
+
                         original_fn_found = true;
                     }
                 }

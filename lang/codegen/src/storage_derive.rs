@@ -38,9 +38,11 @@ pub fn storage_derive(item: TokenStream) -> TokenStream {
 
     let impls = fields
         .iter()
+        // filter out fields that don't have `#[storage_field]` attribute
         .filter(|field| field.attrs.iter().any(|a| a.path.is_ident("storage_field")))
         .map(|field| {
             let field_ident = field.ident.clone();
+            // field type
             let ty = field.ty.clone();
             let span = field.span();
 
