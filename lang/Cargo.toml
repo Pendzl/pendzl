@@ -3,7 +3,8 @@ name = "pendzl_lang"
 version = "0.1.0-alpha1"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
-    "Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
 edition = "2021"
 
