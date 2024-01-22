@@ -51,8 +51,6 @@ pausable = []
 vesting = ["psp22"]
 psp61 = []
 timelock_controller = ["access_control"]
-proxy = ["ownable"]
-diamond = ["ownable"]
 governance = ["timelock_controller", "crypto", "nonces", "checkpoints"]
 upgradeable = ["ownable"]
 crypto = ["pendzl/crypto"]
@@ -67,8 +65,6 @@ test-all = [
     "pausable",
     "vesting",
     "timelock_controller",
-    "proxy",
-    "diamond",
     "governance",
 ]
 

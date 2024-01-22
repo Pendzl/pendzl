@@ -7,10 +7,4 @@ pub struct OwnableData {
     pub owner: AccountId,
 }
 
-#[derive(Debug)]
-#[pendzl::storage_item]
-pub struct ProxyData {
-    pub forward: AccountId,
-}
-
 fn main() {}

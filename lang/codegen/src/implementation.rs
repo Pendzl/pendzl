@@ -146,8 +146,6 @@ fn cleanup_imports(imports: &mut HashMap<&str, syn::ItemUse>) {
 
     let access_default_impls = vec!["AccessControlEnumerable", "TimelockController"];
     check_and_remove_import("AccessControl", access_default_impls, imports);
-
-    check_and_remove_import("Diamond", vec!["DiamondLoupe"], imports);
 }
 
 fn check_and_remove_import(

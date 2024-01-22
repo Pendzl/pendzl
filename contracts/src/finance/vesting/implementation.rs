@@ -1,12 +1,16 @@
+use ink::prelude::vec::*;
 use ink::{prelude::vec, storage::Mapping};
-use pendzl::traits::{AccountId, Balance, Storage, Timestamp};
+use pendzl::traits::{AccountId, Balance, Storage};
 
 use crate::{
     finance::vesting::VestingSchedule,
     token::psp22::{PSP22Ref, PSP22},
 };
 
-use super::{TokenReleased, VestingError, VestingInternal, VestingScheduled, VestingStorage};
+use super::{
+    TokenReleased, VestingError, VestingInternal, VestingScheduled, VestingStorage,
+    VestingTimeConstraint,
+};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -21,8 +25,8 @@ impl VestingStorage for Data {
         to: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: Timestamp,
-        vesting_end: Timestamp,
+        vesting_start: VestingTimeConstraint,
+        vesting_end: VestingTimeConstraint,
         _data: &Vec<u8>,
     ) -> Result<(), VestingError> {
         let id = self.next_id.get((to, asset)).unwrap_or(0);
@@ -73,8 +77,8 @@ impl VestingStorage for Data {
             Some(data) => data,
             None => return Ok((false, 0)),
         };
-        let amount_released = data.collect_releasable_rdown();
-        if data.is_overdue() {
+        let amount_released = data.collect_releasable_rdown()?;
+        if data.is_overdue()? {
             let leftover = data.amount - data.released;
             let next_id = self.next_id.get((to, asset)).unwrap(); // data is some => next_id must exist and be > 0
             let tail_id = next_id - 1;
@@ -110,8 +114,8 @@ pub trait VestingDefaultImpl: VestingInternal + Sized {
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: Timestamp,
-        vesting_end: Timestamp,
+        vesting_start: VestingTimeConstraint,
+        vesting_end: VestingTimeConstraint,
         data: Vec<u8>,
     ) -> Result<(), VestingError> {
         self._create_vest(receiver, asset, amount, vesting_start, vesting_end, &data)
@@ -163,21 +167,27 @@ where
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: Timestamp,
-        vesting_end: Timestamp,
+        vesting_start: VestingTimeConstraint,
+        vesting_end: VestingTimeConstraint,
         data: &Vec<u8>,
     ) -> Result<(), VestingError> {
         let creator = Self::env().caller();
         self._handle_transfer_in(asset, creator, amount, data)?;
-        self.data()
-            .create(receiver, asset, amount, vesting_start, vesting_end, data)?;
+        self.data().create(
+            receiver,
+            asset,
+            amount,
+            vesting_start.clone(),
+            vesting_end.clone(),
+            data,
+        )?;
         Self::env().emit_event(VestingScheduled {
             creator,
             receiver,
             asset,
             amount,
-            vesting_start,
-            vesting_end,
+            vesting_start: vesting_start.clone(),
+            vesting_end: vesting_end.clone(),
         });
         Ok(())
     }

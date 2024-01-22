@@ -42,14 +42,6 @@ impl<'a> ImplArgs<'a> {
         .expect("Should parse");
         self.imports.insert("vec", vec_import);
     }
-
-    // fn signature_import(&mut self) {
-    //     let sig_import = syn::parse2::<syn::ItemUse>(quote!(
-    //       pub use pendzl::utils::crypto::Signature;
-    //     ))
-    //     .expect("Should parse");
-    //     self.imports.insert("Signature", sig_import);
-    // }
 }
 
 pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
@@ -1036,8 +1028,8 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
                 receiver: AccountId,
                 asset: Option<AccountId>,
                 amount: Balance,
-                vesting_start: Timestamp,
-                vesting_end: Timestamp,
+                vesting_start: VestingTimeConstraint,
+                vesting_end: VestingTimeConstraint,
                 data: &Vec<u8>)-> Result<(), VestingError>  {
                 pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_create_vest_default_impl(
                     self,
@@ -1090,8 +1082,8 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
                 receiver: AccountId,
                 asset: Option<AccountId>,
                 amount: Balance,
-                vesting_start: Timestamp,
-                vesting_end: Timestamp,
+                vesting_start: VestingTimeConstraint,
+                vesting_end: VestingTimeConstraint,
                 data: Vec<u8>,
             ) -> Result<(), VestingError> {
                 pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::create_vest_default_impl(
@@ -1135,6 +1127,8 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     .expect("Should parse import");
     impl_args.imports.insert("Vesting", import);
     impl_args.imports.insert("VestingData", import_data);
+
+    impl_args.vec_import();
 
     override_functions("VestingInternal", &mut internal, impl_args.map);
     override_functions("Vesting", &mut vesting, impl_args.map);

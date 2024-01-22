@@ -9,6 +9,7 @@ pub enum VestingError {
     InvalidScheduleKey,
     NativeTransferFailed,
     InvalidAmountPaid,
+    CouldNotResolveTimeConstraint,
 }
 
 impl From<PSP22Error> for VestingError {

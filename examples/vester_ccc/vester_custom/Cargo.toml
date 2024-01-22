@@ -1,5 +1,5 @@
 [package]
-name = "vester"
+name = "vester_custom"
 version = "0.1.0-alpha"
 authors = [""]
 edition = "2021"
@@ -15,15 +15,16 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-pendzl = { path = "../..", default-features = false, features = ["vesting"] }
-my_psp22_mintable = { path = "../psp22_extensions/mintable", default-features = false }
+pendzl = { path = "../../..", default-features = false, features = ["vesting"] }
+my_psp22_mintable = { path = "../../psp22_extensions/mintable", default-features = false }
+ts_provider = { path = "../ts_provider", default-features = false }
 
 [dev-dependencies]
 ink_e2e = "5.0.0-rc"
-test_helpers = { path = "../test_helpers", default-features = false }
+test_helpers = { path = "../../test_helpers", default-features = false }
 
 [lib]
-name = "vester"
+name = "vester_custom"
 path = "lib.rs"
 
 

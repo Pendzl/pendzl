@@ -7,9 +7,7 @@ fi
 
 IGNORED_DIRS=("./examples/reentrancy_guard"
   "./examples/test_helpers" 
-  "./examples/diamond" 
   "./examples/alternatives" 
-  "./examples/proxy" 
   "./examples" 
   "./examples/flash-borrower" 
   "./examples/psp22_extensions/flashmint/" 
