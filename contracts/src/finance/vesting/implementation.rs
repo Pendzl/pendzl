@@ -15,12 +15,12 @@ use super::{
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct VestingData {
     schedules: Mapping<(AccountId, Option<AccountId>, u32), VestingSchedule>,
     next_id: Mapping<(AccountId, Option<AccountId>), u32>,
 }
 
-impl VestingStorage for Data {
+impl VestingStorage for VestingData {
     fn create(
         &mut self,
         to: AccountId,
@@ -159,9 +159,9 @@ pub trait VestingDefaultImpl: VestingInternal + Sized {
     }
 }
 
-pub trait VestingInternalDefaultImpl: Storage<Data> + VestingInternal
+pub trait VestingInternalDefaultImpl: Storage<VestingData> + VestingInternal
 where
-    Data: VestingStorage,
+    VestingData: VestingStorage,
 {
     fn _create_vest_default_impl(
         &mut self,

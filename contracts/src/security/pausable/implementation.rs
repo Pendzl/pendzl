@@ -5,12 +5,12 @@ use pendzl::traits::Storage;
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct PausableData {
     #[lazy]
     pub paused: bool,
 }
 
-impl PausableStorage for Data {
+impl PausableStorage for PausableData {
     fn paused(&self) -> bool {
         self.paused.get().unwrap_or(true)
     }
@@ -26,9 +26,9 @@ pub trait PausableDefaultImpl: PausableInternal {
     }
 }
 
-pub trait PausableInternalDefaultImpl: Storage<Data>
+pub trait PausableInternalDefaultImpl: Storage<PausableData>
 where
-    Data: PausableStorage,
+    PausableData: PausableStorage,
 {
     fn _paused_default_impl(&self) -> bool {
         self.data().paused()

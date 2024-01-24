@@ -6,14 +6,14 @@ use pendzl::traits::{DefaultEnv, Storage};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct PSP22Data {
     #[lazy]
     pub total_supply: Balance,
     pub balances: Mapping<AccountId, Balance>,
     pub allowances: Mapping<(AccountId, AccountId), Balance>,
 }
 
-impl PSP22Storage for Data {
+impl PSP22Storage for PSP22Data {
     fn total_supply(&self) -> Balance {
         self.total_supply.get_or_default()
     }
@@ -163,9 +163,9 @@ pub trait PSP22DefaultImpl: DefaultEnv + PSP22Internal {
     }
 }
 
-pub trait PSP22InternalDefaultImpl: Storage<Data>
+pub trait PSP22InternalDefaultImpl: Storage<PSP22Data>
 where
-    Data: PSP22Storage,
+    PSP22Data: PSP22Storage,
 {
     fn _total_supply_default_impl(&self) -> Balance {
         self.data().total_supply()

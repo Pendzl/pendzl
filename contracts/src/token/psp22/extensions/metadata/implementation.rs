@@ -8,7 +8,7 @@ use ink::prelude::string::String;
 use pendzl::traits::Storage;
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct PSP22MetadataData {
     #[lazy]
     pub name: Option<String>,
     #[lazy]
@@ -17,7 +17,7 @@ pub struct Data {
     pub decimals: u8,
 }
 
-impl PSP22MetadataStorage for Data {
+impl PSP22MetadataStorage for PSP22MetadataData {
     fn token_name(&self) -> Option<String> {
         self.name.get_or_default()
     }
@@ -32,9 +32,9 @@ impl PSP22MetadataStorage for Data {
 }
 
 #[cfg(all(feature = "metadata"))]
-pub trait PSP22MetadataDefaultImpl: Storage<Data>
+pub trait PSP22MetadataDefaultImpl: Storage<PSP22MetadataData>
 where
-    Data: PSP22MetadataStorage,
+    PSP22MetadataData: PSP22MetadataStorage,
 {
     fn token_name_default_impl(&self) -> Option<String> {
         self.data().name.get_or_default()
@@ -51,22 +51,22 @@ where
 
 #[cfg(all(feature = "vault", not(feature = "metadata")))]
 use crate::token::psp22::extensions::vault::{
-    implementation::Data as PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
+    implementation::PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
 };
 
 #[cfg(all(feature = "vault", not(feature = "metadata")))]
 pub trait PSP22MetadataDefaultImpl:
-    Storage<PSP22VaultData> + Storage<Data> + PSP22VaultInternal
+    Storage<PSP22VaultData> + Storage<PSP22MetadataData> + PSP22VaultInternal
 where
     PSP22VaultData: PSP22VaultStorage,
-    Data: PSP22MetadataStorage,
+    PSP22Metadata: PSP22MetadataStorage,
 {
     fn token_name_default_impl(&self) -> Option<String> {
-        self.data::<Data>().name.get_or_default()
+        self.data::<PSP22Metadata>().name.get_or_default()
     }
 
     fn token_symbol_default_impl(&self) -> Option<String> {
-        self.data::<Data>().symbol.get_or_default()
+        self.data::<PSP22Metadata>().symbol.get_or_default()
     }
 
     fn token_decimals_default_impl(&self) -> u8 {

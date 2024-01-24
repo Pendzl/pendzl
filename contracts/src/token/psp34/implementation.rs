@@ -6,7 +6,7 @@ use pendzl::traits::{DefaultEnv, Storage};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct PSP34Data {
     owner_of: Mapping<Id, AccountId>,
     allowances: Mapping<(AccountId, AccountId, Option<Id>), ()>,
     owned_tokens_count: Mapping<AccountId, u32>,
@@ -14,7 +14,7 @@ pub struct Data {
     total_supply: u64,
 }
 
-impl PSP34Storage for Data {
+impl PSP34Storage for PSP34Data {
     fn balance_of(&self, owner: &AccountId) -> u32 {
         self.owned_tokens_count.get(owner).unwrap_or(0)
     }
@@ -137,9 +137,9 @@ pub trait PSP34DefaultImpl: PSP34Internal + DefaultEnv {
     }
 }
 
-pub trait PSP34InternalDefaultImpl: Storage<Data>
+pub trait PSP34InternalDefaultImpl: Storage<PSP34Data>
 where
-    Data: PSP34Storage,
+    PSP34Data: PSP34Storage,
 {
     fn _balance_of_default_impl(&self, owner: &AccountId) -> u32 {
         self.data().owned_tokens_count.get(owner).unwrap_or(0)

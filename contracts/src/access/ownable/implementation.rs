@@ -5,12 +5,12 @@ use pendzl::traits::{AccountId, Storage};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct OwnableData {
     #[lazy]
     pub owner: Option<AccountId>,
 }
 
-impl OwnableStorage for Data {
+impl OwnableStorage for OwnableData {
     fn owner(&self) -> Option<AccountId> {
         self.owner.get().unwrap_or(None)
     }
@@ -31,16 +31,19 @@ pub trait OwnableDefaultImpl: OwnableInternal {
         Ok(())
     }
 
-    fn transfer_ownership_default_impl(&mut self, new_owner: AccountId) -> Result<(), OwnableError> {
+    fn transfer_ownership_default_impl(
+        &mut self,
+        new_owner: AccountId,
+    ) -> Result<(), OwnableError> {
         self._only_owner()?;
         self._update_owner(&Some(new_owner));
         Ok(())
     }
 }
 
-pub trait OwnableInternalDefaultImpl: Storage<Data>
+pub trait OwnableInternalDefaultImpl: Storage<OwnableData>
 where
-    Data: OwnableStorage,
+    OwnableData: OwnableStorage,
 {
     fn _owner_default_impl(&self) -> Option<AccountId> {
         self.data().owner()

@@ -7,7 +7,7 @@ use pendzl::math::errors::MathError;
 use pendzl::traits::{Balance, DefaultEnv, Storage};
 
 use super::{Deposit, PSP22VaultInternal, PSP22VaultStorage, Withdraw};
-use crate::token::psp22::implementation::Data as PSP22Data;
+use crate::token::psp22::implementation::PSP22Data;
 use crate::token::psp22::{PSP22Error, PSP22};
 use crate::token::psp22::{PSP22Internal, PSP22Ref, PSP22Storage};
 
@@ -17,14 +17,14 @@ use super::Rounding;
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct PSP22VaultData {
     #[lazy]
     pub asset: PSP22Ref,
     #[lazy]
     pub underlying_decimals: u8,
 }
 
-impl PSP22VaultStorage for Data {
+impl PSP22VaultStorage for PSP22VaultData {
     fn asset(&self) -> PSP22Ref {
         self.asset.get().unwrap()
     }
@@ -63,10 +63,10 @@ fn mul_div(x: u128, y: u128, denominator: u128, round: Rounding) -> Result<u128,
 }
 
 pub trait PSP22VaultInternalDefaultImpl:
-    Storage<PSP22Data> + Storage<Data> + PSP22Internal + PSP22VaultInternal
+    Storage<PSP22Data> + Storage<PSP22VaultData> + PSP22Internal + PSP22VaultInternal
 where
     PSP22Data: PSP22Storage,
-    Data: PSP22VaultStorage,
+    PSP22VaultData: PSP22VaultStorage,
 {
     fn _decimals_offset_default_impl(&self) -> u8 {
         0
@@ -74,7 +74,7 @@ where
 
     fn _try_get_asset_decimals_default_impl(&self) -> (bool, u8) {
         let call = build_call::<DefaultEnvironment>()
-            .call(self.data::<Data>().asset().to_account_id())
+            .call(self.data::<PSP22VaultData>().asset().to_account_id())
             .exec_input(ExecutionInput::new(ink::env::call::Selector::new(
                 ink::selector_bytes!("PSP22Metadata::token_decimals"),
             )))
@@ -90,7 +90,7 @@ where
     }
 
     fn _asset_default_impl(&self) -> PSP22Ref {
-        self.data::<Data>().asset()
+        self.data::<PSP22VaultData>().asset()
     }
 
     fn _total_assets_default_impl(&self) -> Balance {

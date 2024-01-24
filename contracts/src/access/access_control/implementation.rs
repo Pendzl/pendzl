@@ -9,12 +9,12 @@ use pendzl::traits::{AccountId, DefaultEnv, Storage};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct Data {
+pub struct AccessControlData {
     pub admin_roles: Mapping<RoleType, RoleType>,
     pub members: Mapping<(RoleType, Option<AccountId>), ()>,
 }
 
-impl AccessControlStorage for Data {
+impl AccessControlStorage for AccessControlData {
     fn has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
         self.members.contains(&(role, *address)) || self.members.contains(&(role, None))
     }
@@ -80,9 +80,9 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
     }
 }
 
-pub trait AccessControlInternalDefaultImpl: Storage<Data>
+pub trait AccessControlInternalDefaultImpl: Storage<AccessControlData>
 where
-    Data: AccessControlStorage,
+    AccessControlData: AccessControlStorage,
 {
     fn _default_admin_default_impl() -> RoleType {
         DEFAULT_ADMIN_ROLE

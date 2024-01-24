@@ -193,7 +193,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::implementation::Data as PSP22Data;
+      pub use pendzl::contracts::token::psp22::implementation::PSP22Data;
     ))
     .expect("Should parse import");
 
@@ -309,7 +309,7 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
     ))
     .expect("Should parse");
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::metadata::implementation::Data as PSP22MetadataData;
+      pub use pendzl::contracts::token::psp22::extensions::metadata::implementation::PSP22MetadataData;
     ))
     .expect("Should parse");
 
@@ -509,7 +509,7 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::vault::implementation::Data as PSP22VaultData;
+      pub use pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultData;
     ))
     .expect("Should parse import");
 
@@ -643,7 +643,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::implementation::Data as PSP34Data;
+      pub use pendzl::contracts::token::psp34::implementation::PSP34Data;
     ))
     .expect("Should parse import");
 
@@ -763,7 +763,7 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::extensions::metadata::implementation::Data as PSP34MetadataData;
+      pub use pendzl::contracts::token::psp34::extensions::metadata::implementation::PSP34MetadataData;
     ))
     .expect("Should parse import");
 
@@ -835,7 +835,7 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
     
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::ownable::implementation::Data as OwnableData;
+      pub use pendzl::contracts::access::ownable::implementation::OwnableData;
     ))
     .expect("Should parse import");
 
@@ -933,7 +933,7 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::access_control::implementation::Data as AccessControlData;
+      pub use pendzl::contracts::access::access_control::implementation::AccessControlData;
     ))
     .expect("Should parse import");
         
@@ -1002,7 +1002,7 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     .expect("Should parse import");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::security::pausable::implementation::Data as PausableData;
+      pub use pendzl::contracts::security::pausable::implementation::PausableData;
     ))
     .expect("Should parse import");
     impl_args.imports.insert("Pausable", import);
@@ -1123,7 +1123,7 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     .expect("Should parse import");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::finance::vesting::implementation::Data as VestingData;
+      pub use pendzl::contracts::finance::vesting::implementation::VestingData;
     ))
     .expect("Should parse import");
     impl_args.imports.insert("Vesting", import);
