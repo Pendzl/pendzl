@@ -5,7 +5,7 @@ exclude = ["examples", "example_project_structure", "mocks"]
 
 [package]
 name = "pendzl"
-version = "0.1.0-alpha"
+version = "0.1.0-alpha1"
 authors = [
     " Brushfam <green@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
 ]
@@ -27,8 +27,8 @@ scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "0.1.0-alpha", path = "contracts", default-features = false }
-pendzl_lang = { version = "0.1.0-alpha", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.1.0-alpha1", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.1.0-alpha1", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"

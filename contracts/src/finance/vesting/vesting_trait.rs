@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pub use pendzl::traits::Balance;
 
 use ink::contract_ref;

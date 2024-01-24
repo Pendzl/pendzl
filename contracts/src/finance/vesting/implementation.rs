@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 use ink::prelude::vec::*;
 use ink::{prelude::vec, storage::Mapping};
 use pendzl::traits::{AccountId, Balance, Storage};

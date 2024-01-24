@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pub mod errors {
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]

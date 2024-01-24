@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 use ink::env::call::{build_call, ExecutionInput};
 use ink::env::DefaultEnvironment;
 use pendzl::traits::{DefaultEnv, Timestamp};
