@@ -22,16 +22,89 @@
 
 extern crate proc_macro;
 
+use quote::ToTokens;
+use std::collections::HashSet;
 use syn::{
     ext::IdentExt,
     parenthesized,
     parse::{Parse, ParseStream},
+    punctuated::Punctuated,
+    token::Comma,
+    FnArg,
 };
 
 pub(crate) struct MetaList {
     pub _path: syn::Path,
     pub _paren_token: syn::token::Paren,
     pub _nested: syn::punctuated::Punctuated<syn::Expr, syn::Token![,]>,
+}
+#[derive(Debug)]
+pub struct InputsDiff {
+    pub added: HashSet<String>,
+    pub removed: HashSet<String>,
+}
+
+pub fn inputs_diff(
+    inputs_a: Punctuated<FnArg, Comma>,
+    inputs_b: Punctuated<FnArg, Comma>,
+) -> InputsDiff {
+    let set_a: HashSet<_> = inputs_a
+        .into_iter()
+        .map(|arg| arg.into_token_stream().to_string())
+        .collect();
+    let set_b: HashSet<_> = inputs_b
+        .into_iter()
+        .map(|arg| arg.into_token_stream().to_string())
+        .collect();
+
+    let added = &set_b - &set_a;
+    let removed = &set_a - &set_b;
+
+    InputsDiff {
+        added: added.into_iter().collect(),
+        removed: removed.into_iter().collect(),
+    }
+}
+
+pub fn format_arg_string(arg: &str) -> String {
+    let mut formatted = String::new();
+    let mut chars = arg.chars().peekable();
+
+    while let Some(ch) = chars.next() {
+
+        match ch {
+            '&' => {
+                if chars.peek() == Some(&' ') {
+                    formatted.push('&');
+                    chars.next(); // Remove space after '&'
+                }
+            }
+            _ => {
+                if chars.peek() == Some(&':') {
+                    formatted.push(':');
+                    chars.next();
+                }
+                else if chars.peek() == Some(&'>') {
+                    formatted.push('>');
+                    chars.next();
+                    chars.next();
+                }
+                else if chars.peek() == Some(&'<') {
+                    formatted.push('<');
+                    chars.next();
+                    chars.next();
+                }
+                else if chars.peek() == Some(&',') {
+                    formatted.push(',');
+                    chars.next();
+                }else {
+                    formatted.push(ch);
+                }
+            }
+        }
+    }
+
+    formatted
 }
 
 // Like Path::parse_mod_style but accepts keywords in the path.

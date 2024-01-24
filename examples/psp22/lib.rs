@@ -27,9 +27,9 @@ pub mod my_psp22 {
     #[overrider(PSP22Internal)]
     fn _update(
         &mut self,
-        from: Option<AccountId>,
-        to: Option<AccountId>,
-        amount: Balance,
+        from: Option<&AccountId>,
+        to: Option<&AccountId>,
+        amount: &Balance,
     ) -> Result<(), PSP22Error> {
         if to == Some(&self.hated_storage.hated_account) {
             return Err(PSP22Error::Custom(String::from("I hate this account!")));

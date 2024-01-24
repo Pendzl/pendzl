@@ -170,7 +170,7 @@ fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>)
                 let fn_name = item_fn.sig.ident.to_string();
                 let code = item_fn.block.clone();
                 let mut attributes = item_fn.attrs.clone();
-
+                let inputs = item_fn.sig.inputs.clone();
                 // remove the overrider attribute
                 let to_remove_idx = attributes
                     .iter()
@@ -185,7 +185,7 @@ fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>)
                     .to_string();
 
                 let mut vec = map.get(&trait_name).unwrap_or(&vec![]).clone();
-                vec.push((fn_name, (code, attributes)));
+                vec.push((fn_name, (code, attributes, inputs)));
                 map.insert(trait_name, vec.to_vec());
             } else {
                 result.push(item);

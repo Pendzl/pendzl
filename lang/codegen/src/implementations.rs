@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 use quote::{format_ident, quote};
 use std::collections::HashMap;
-use syn::Block;
+use quote::ToTokens;
+use syn::{punctuated::Punctuated, token::Comma, Block, FnArg};
 
 pub type OverridenFnMap =
-    HashMap<String, Vec<(String, (Box<Block>, Vec<syn::Attribute>))>>;
+    HashMap<String, Vec<(String, (Box<Block>, Vec<syn::Attribute>, Punctuated<FnArg, Comma>))>>;
 
 pub struct ImplArgs<'a> {
     pub map: &'a OverridenFnMap,
@@ -1142,11 +1143,31 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
 fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map: &OverridenFnMap) {
     if let Some(overrides) = map.get(trait_name) {
         // we will find which fns we wanna override
-        for (fn_name, (fn_code, attributes)) in overrides {
+        for (fn_name, (fn_code, attributes, inputs)) in overrides {
             let mut original_fn_found = false;
             for item in implementation.items.iter_mut() {
                 if let syn::ImplItem::Method(method) = item {
                     if &method.sig.ident.to_string() == fn_name {
+                        let args_diff = crate::internal::inputs_diff(method.sig.inputs.clone(), inputs.clone());
+                        if args_diff.added.len() > 0 || args_diff.removed.len() > 0 {
+                            
+                            let original_args = method.sig.inputs.clone()
+                                .into_iter()
+                                .map(|arg| crate::internal::format_arg_string(&arg.into_token_stream().to_string()))
+                                .collect::<Vec<_>>()
+                                .join(", ");
+                            let current_args = inputs.clone()
+                                .into_iter()
+                                .map(|arg| crate::internal::format_arg_string(&arg.into_token_stream().to_string()))
+                                .collect::<Vec<_>>()
+                                .join(", ");
+                            
+                            panic!("Function arguments do not match for fn {} in trait {} \n
+                            original args: {:?} \n
+                            current args: {:?} \n
+                            diff: {:?}", fn_name, trait_name, original_args, current_args, args_diff)
+                        }
+                        
                         method.block = *fn_code.clone();
                         method.attrs.append(&mut attributes.to_vec());
 
