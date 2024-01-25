@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
 include!("metadata_trait.rs");
 
-#[cfg(feature = "psp22")]
+#[cfg(any(feature = "psp22_metadata_impl", feature = "psp22_vault_metadata_impl"))]
 pub mod implementation;

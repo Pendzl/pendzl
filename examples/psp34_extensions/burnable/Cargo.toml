@@ -1,9 +1,12 @@
 [package]
 name = "my_psp34_burnable"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
+previous-authors = ["Brushfam <m.konstantinovna@727.ventures>"]
 authors = [
-    " Brushfam <m.konstantinovna@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
+
 edition = "2021"
 
 [dependencies]
@@ -17,7 +20,9 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-pendzl = { path = "../../..", default-features = false, features = ["psp34"] }
+pendzl = { path = "../../..", default-features = false, features = [
+    "psp34_burnable_impl",
+] }
 
 [dev-dependencies]
 ink_e2e = "5.0.0-rc"

@@ -1,10 +1,13 @@
 [package]
 name = "my_psp22_metadata"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
+previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
-    " Brushfam <m.konstantinovna@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
 edition = "2021"
+
 
 [dependencies]
 ink = { version = "5.0.0-rc", default-features = false }
@@ -18,8 +21,7 @@ scale-info = { version = "2.10", default-features = false, features = [
 
 # These dependencies
 pendzl = { path = "../../..", default-features = false, features = [
-    "psp22",
-    "metadata",
+    "psp22_metadata_impl",
 ] }
 
 [dev-dependencies]

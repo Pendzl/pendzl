@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
-
 include!("psp22_error.rs");
 include!("psp22_events.rs");
 include!("psp22_trait.rs");
 
-#[cfg(feature = "psp22")]
+#[cfg(feature = "psp22_impl")]
 pub mod implementation;
 
 pub mod extensions;

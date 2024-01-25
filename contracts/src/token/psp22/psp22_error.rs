@@ -1,9 +1,5 @@
 // SPDX-License-Identifier: MIT
 
-use crate::{
-    access::access_control::AccessControlError, access::ownable::OwnableError,
-    security::pausable::PausableError,
-};
 use pendzl::math::errors::MathError;
 use pendzl::traits::String;
 
@@ -31,6 +27,19 @@ pub enum PSP22Error {
     PermitExpired,
 }
 
+impl From<MathError> for PSP22Error {
+    fn from(err: MathError) -> Self {
+        match err {
+            MathError::Overflow => PSP22Error::Custom(String::from("M::Overflow")),
+            MathError::Underflow => PSP22Error::Custom(String::from("M::Underflow")),
+            MathError::DivByZero => PSP22Error::Custom(String::from("M::DivByZero")),
+        }
+    }
+}
+
+#[cfg(feature = "ownable")]
+use crate::access::ownable::OwnableError;
+#[cfg(feature = "ownable")]
 impl From<OwnableError> for PSP22Error {
     fn from(ownable: OwnableError) -> Self {
         match ownable {
@@ -42,16 +51,9 @@ impl From<OwnableError> for PSP22Error {
     }
 }
 
-impl From<MathError> for PSP22Error {
-    fn from(err: MathError) -> Self {
-        match err {
-            MathError::Overflow => PSP22Error::Custom(String::from("M::Overflow")),
-            MathError::Underflow => PSP22Error::Custom(String::from("M::Underflow")),
-            MathError::DivByZero => PSP22Error::Custom(String::from("M::DivByZero")),
-        }
-    }
-}
-
+#[cfg(feature = "access_control")]
+use crate::access::access_control::AccessControlError;
+#[cfg(feature = "access_control")]
 impl From<AccessControlError> for PSP22Error {
     fn from(access: AccessControlError) -> Self {
         match access {
@@ -66,6 +68,9 @@ impl From<AccessControlError> for PSP22Error {
     }
 }
 
+#[cfg(feature = "pausable")]
+use crate::security::pausable::PausableError;
+#[cfg(feature = "pausable")]
 impl From<PausableError> for PSP22Error {
     fn from(pausable: PausableError) -> Self {
         match pausable {

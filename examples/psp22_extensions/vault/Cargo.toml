@@ -1,8 +1,9 @@
 [package]
 name = "my_psp22_vault"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
 authors = [
-    " Brushfam <m.konstantinovna@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
 edition = "2021"
 
@@ -19,8 +20,8 @@ ethnum = { version = "1.5", default-features = false }
 
 # These dependencies
 pendzl = { path = "../../..", default-features = false, features = [
-    "psp22",
-    "vault",
+    "psp22_vault_impl",
+    "psp22_vault_metadata_impl",
 ] }
 
 [dev-dependencies]

@@ -114,38 +114,14 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
     }
 }
 
+//TODO verify
 fn cleanup_imports(imports: &mut HashMap<&str, syn::ItemUse>) {
     // we will remove unnecessary imports
-    let psp22_default_impls = vec![
-        "PSP22Mintable",
-        "PSP22Burnable",
-        "PSP22Capped",
-        "PSP22Metadata",
-        "PSP22Wrapper",
-        "PSP22Permit",
-        "Flashmint",
-    ];
+    let psp22_default_impls = vec!["PSP22Mintable", "PSP22Burnable", "PSP22Metadata"];
     check_and_remove_import("PSP22", psp22_default_impls, imports);
 
-    let psp34_default_impls = vec![
-        "PSP34Mintable",
-        "PSP34Burnable",
-        "PSP34Metadata",
-        "PSP34Enumerable",
-    ];
+    let psp34_default_impls = vec!["PSP34Mintable", "PSP34Burnable", "PSP34Metadata"];
     check_and_remove_import("PSP34", psp34_default_impls, imports);
-
-    let psp37_default_impls = vec![
-        "PSP37Batch",
-        "PSP37Burnable",
-        "PSP37Metadata",
-        "PSP37Mintable",
-        "PSP37Enumerable",
-    ];
-    check_and_remove_import("PSP37", psp37_default_impls, imports);
-
-    let access_default_impls = vec!["AccessControlEnumerable", "TimelockController"];
-    check_and_remove_import("AccessControl", access_default_impls, imports);
 }
 
 fn check_and_remove_import(
@@ -158,7 +134,7 @@ fn check_and_remove_import(
     }
 }
 
-// this method consumes override annotated methods and returns them mapped to code and the mod without them
+// this method consumes override annotated methods and returns then mapped to code and the mod without them
 // we will later override the methods
 fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>) {
     let mut map = HashMap::new();

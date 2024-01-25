@@ -251,11 +251,11 @@ where
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error> {
-        let allowance = self.data().decrease_allowance(owner, spender, amount)?;
+        let new_allowance = self.data().decrease_allowance(owner, spender, amount)?;
         Self::env().emit_event(Approval {
             owner: *owner,
             spender: *spender,
-            value: allowance,
+            value: new_allowance,
         });
         Ok(())
     }
@@ -265,11 +265,11 @@ where
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error> {
-        let allowance = self.data().increase_allowance(owner, spender, amount)?;
+        let new_allowance = self.data().increase_allowance(owner, spender, amount)?;
         Self::env().emit_event(Approval {
             owner: *owner,
             spender: *spender,
-            value: allowance,
+            value: new_allowance,
         });
         Ok(())
     }

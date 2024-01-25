@@ -52,16 +52,6 @@ mod pausable {
         }
     }
 
-    #[overrider(PausableInternal)]
-    fn _emit_paused_event(&self, account: AccountId) {
-        self.env().emit_event(Paused { account })
-    }
-
-    #[overrider(PausableInternal)]
-    fn _emit_unpaused_event(&self, account: AccountId) {
-        self.env().emit_event(Unpaused { account })
-    }
-
     use ink::scale::Decode as _;
     fn assert_paused_event(event: &ink::env::test::EmittedEvent, expected_account: AccountId) {
         let Paused { account } = <Paused>::decode(&mut &event.data[..])

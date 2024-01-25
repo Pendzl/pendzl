@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_contracts"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -24,7 +24,7 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
 
-pendzl = { version = "0.1.0-alpha2", package = "pendzl_lang", path = "../lang", default-features = false, features = [
+pendzl = { version = "0.1.0-beta", package = "pendzl_lang", path = "../lang", default-features = false, features = [
     "crypto",
 ] }
 
@@ -40,33 +40,47 @@ features = ['access_control']
 default = ["std"]
 std = ["ink/std", "scale/std", "scale-info/std", "pendzl/std"]
 psp22 = []
-vault = []
-metadata = []
+psp22_mintable = ["psp22"]
+psp22_burnable = ["psp22"]
+psp22_metadata = []
+psp22_vault = ["psp22"]
 psp34 = []
-psp37 = []
+psp34_mintable = ["psp34"]
+psp34_burnable = ["psp34"]
+psp34_metadata = []
 access_control = []
 ownable = []
-payment_splitter = []
-reentrancy_guard = []
 pausable = []
 vesting = ["psp22"]
-psp61 = []
-timelock_controller = ["access_control"]
-governance = ["timelock_controller", "crypto", "nonces", "checkpoints"]
-upgradeable = ["ownable"]
-crypto = ["pendzl/crypto"]
-nonces = []
-checkpoints = ["pendzl/checkpoints"]
+psp22_impl = ["psp22"]
+psp22_mintable_impl = ["psp22_impl", "psp22_mintable"]
+psp22_burnable_impl = ["psp22_impl", "psp22_burnable"]
+psp22_metadata_impl = ["psp22_impl", "psp22_metadata"]
+psp22_vault_impl = ["psp22_impl", "psp22_vault"]
+psp22_vault_metadata_impl = ["psp22_impl", "psp22_vault", "psp22_metadata"]
+psp34_impl = ["psp34"]
+psp34_mintable_impl = ["psp34_impl", "psp34_mintable"]
+psp34_burnable_impl = ["psp34_impl", "psp34_burnable"]
+psp34_metadata_impl = ["psp34_impl", "psp34_metadata"]
+access_control_impl = ["access_control"]
+ownable_impl = ["ownable"]
+pausable_impl = ["pausable"]
+vesting_impl = ["psp22", "vesting"]
+
 test-all = [
-    "psp22",
-    "access_control",
-    "ownable",
-    "payment_splitter",
-    "reentrancy_guard",
-    "pausable",
-    "vesting",
-    "timelock_controller",
-    "governance",
+    "psp22_impl",
+    "psp22_mintable_impl",
+    "psp22_burnable_impl",
+    "psp22_metadata_impl",
+    "psp22_vault_impl",
+    "psp34_impl",
+    "psp34_mintable_impl",
+    "psp34_burnable_impl",
+    "psp34_metadata_impl",
+    "access_control_impl",
+    "ownable_impl",
+    "pausable_impl",
+    "vesting_impl",
 ]
 
 # [doc]

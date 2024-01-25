@@ -43,7 +43,7 @@ mod access_control {
         access: AccessControlData,
     }
 
-    #[overrider(access_control::Internal)]
+    #[overrider(Internal)]
     fn _emit_role_admin_changed(&mut self, role: u32, previous: u32, new: u32) {
         self.env().emit_event(RoleAdminChanged {
             role,

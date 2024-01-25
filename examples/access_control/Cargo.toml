@@ -1,8 +1,10 @@
 [package]
 name = "my_access_control"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
+previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
-    " Brushfam <green@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com ",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
 edition = "2021"
 
@@ -18,8 +20,10 @@ scale-info = { version = "2.10", default-features = false, features = [
 
 # These dependencies
 pendzl = { path = "../..", default-features = false, features = [
-    "access_control",
-    "psp34",
+    "access_control_impl",
+    "psp34_impl",
+    "psp34_burnable",
+    "psp34_mintable",
 ] }
 
 [dev-dependencies]

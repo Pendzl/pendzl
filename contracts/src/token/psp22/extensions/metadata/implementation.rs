@@ -31,7 +31,7 @@ impl PSP22MetadataStorage for PSP22MetadataData {
     }
 }
 
-#[cfg(all(feature = "metadata"))]
+#[cfg(all(feature = "psp22_metadata_impl"))]
 pub trait PSP22MetadataDefaultImpl: Storage<PSP22MetadataData>
 where
     PSP22MetadataData: PSP22MetadataStorage,
@@ -49,24 +49,30 @@ where
     }
 }
 
-#[cfg(all(feature = "vault", not(feature = "metadata")))]
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
 use crate::token::psp22::extensions::vault::{
     implementation::PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
 };
 
-#[cfg(all(feature = "vault", not(feature = "metadata")))]
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
 pub trait PSP22MetadataDefaultImpl:
     Storage<PSP22VaultData> + Storage<PSP22MetadataData> + PSP22VaultInternal
 where
     PSP22VaultData: PSP22VaultStorage,
-    PSP22Metadata: PSP22MetadataStorage,
+    PSP22MetadataData: PSP22MetadataStorage,
 {
     fn token_name_default_impl(&self) -> Option<String> {
-        self.data::<PSP22Metadata>().name.get_or_default()
+        self.data::<PSP22MetadataData>().name.get_or_default()
     }
 
     fn token_symbol_default_impl(&self) -> Option<String> {
-        self.data::<PSP22Metadata>().symbol.get_or_default()
+        self.data::<PSP22MetadataData>().symbol.get_or_default()
     }
 
     fn token_decimals_default_impl(&self) -> u8 {

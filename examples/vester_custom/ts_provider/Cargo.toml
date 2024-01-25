@@ -1,7 +1,10 @@
 [package]
 name = "ts_provider"
-version = "0.1.0-alpha2"
-authors = [""]
+version = "0.1.0-beta"
+authors = [
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
 edition = "2021"
 
 [dependencies]
@@ -15,8 +18,6 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-pendzl = { path = "../../..", default-features = false, features = ["vesting"] }
-my_psp22_mintable = { path = "../../psp22_extensions/mintable", default-features = false }
 
 [dev-dependencies]
 ink_e2e = "5.0.0-rc"
@@ -34,7 +35,6 @@ std = [
     "scale/std",
     "scale-info/std",
     # These dependencies
-    "pendzl/std",
 ]
 ink-as-dependency = []
 e2e-tests = []

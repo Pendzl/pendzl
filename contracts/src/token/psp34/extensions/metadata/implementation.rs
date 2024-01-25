@@ -15,7 +15,7 @@ pub struct PSP34MetadataData {
 impl PSP34MetadataStorage for PSP34MetadataData {
     fn set_attribute(&mut self, id: &Id, key: &String, value: &String) {
         self.attributes
-            .insert(&(id.to_id(), key.to_string()), value);
+            .insert(&(id.clone(), key.to_string()), value);
     }
 }
 
@@ -30,7 +30,7 @@ pub trait PSP34MetadataInternalDefaultImpl: Storage<PSP34MetadataData> {
         self.data().set_attribute(id, key, value);
 
         Self::env().emit_event(AttribiuteSet {
-            id: id.to_id(),
+            id: id.clone(),
             key: key.to_string(),
             data: value.to_string(),
         })

@@ -1,19 +1,14 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
-
-use ink::{prelude::string::String, primitives::AccountId};
-// we need to expand this struct before the contract macro is expanded
-// that is why we declare it here for this example
-#[ink::storage_item]
-#[derive(Debug)]
-pub struct HatedStorage {
-    pub hated_account: AccountId,
-}
-
 #[pendzl::implementation(PSP22)]
 #[ink::contract]
 pub mod my_psp22 {
-    use crate::*;
+    use ink::prelude::string::String;
+    #[ink::storage_item]
+    #[derive(Debug)]
+    pub struct HatedStorage {
+        pub hated_account: AccountId,
+    }
 
     #[ink(storage)]
     #[derive(Storage)]
@@ -34,8 +29,7 @@ pub mod my_psp22 {
         if to == Some(&self.hated_storage.hated_account) {
             return Err(PSP22Error::Custom(String::from("I hate this account!")));
         }
-        use pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl;
-        self._update_default_impl(from, to, amount)
+        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
     }
 
     impl Contract {

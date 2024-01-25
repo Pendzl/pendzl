@@ -13,19 +13,6 @@ pub enum Id {
     Bytes(Vec<u8>),
 }
 
-impl Id {
-    fn to_id(&self) -> Self {
-        match self {
-            Id::Bytes(v) => Id::Bytes(v.clone()),
-            Id::U8(v) => Id::U8(*v),
-            Id::U16(v) => Id::U16(*v),
-            Id::U32(v) => Id::U32(*v),
-            Id::U64(v) => Id::U64(*v),
-            Id::U128(v) => Id::U128(*v),
-        }
-    }
-}
-
 impl Default for Id {
     fn default() -> Self {
         Self::U8(0)

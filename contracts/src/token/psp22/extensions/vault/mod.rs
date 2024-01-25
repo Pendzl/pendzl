@@ -7,5 +7,5 @@ include!("vault_types.rs");
 include!("vault_events.rs");
 include!("vault_trait.rs");
 
-#[cfg(all(feature = "vault"))]
+#[cfg(all(feature = "psp22_vault_impl"))]
 pub mod implementation;

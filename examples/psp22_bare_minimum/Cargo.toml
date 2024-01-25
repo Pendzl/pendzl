@@ -1,7 +1,10 @@
 [package]
-name = "vester_custom"
-version = "0.1.0-alpha2"
-authors = [""]
+name = "my_psp22_bare_minimum"
+version = "0.1.0-alpha1"
+authors = [
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
+]
 edition = "2021"
 
 [dependencies]
@@ -15,16 +18,14 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-pendzl = { path = "../../..", default-features = false, features = ["vesting"] }
-my_psp22_mintable = { path = "../../psp22_extensions/mintable", default-features = false }
-ts_provider = { path = "../ts_provider", default-features = false }
+pendzl = { path = "../..", default-features = false, features = ["psp22_impl"] }
 
 [dev-dependencies]
 ink_e2e = "5.0.0-rc"
-test_helpers = { path = "../../test_helpers", default-features = false }
+test_helpers = { path = "../test_helpers", default-features = false }
 
 [lib]
-name = "vester_custom"
+name = "my_psp22_bare_minimum"
 path = "lib.rs"
 
 
@@ -42,8 +43,3 @@ e2e-tests = []
 
 [profile.dev]
 codegen-units = 16
-panic = "abort"
-lto = false
-[profile.release]
-panic = "abort"
-lto = false

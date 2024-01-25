@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_lang_codegen"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",

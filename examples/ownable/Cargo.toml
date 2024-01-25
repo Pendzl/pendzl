@@ -1,9 +1,10 @@
 [package]
 name = "my_ownable"
-version = "0.1.0-alpha2"
-previous-authors = ["Green Baneling <unknown>"]
+version = "0.1.0-beta"
+previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
-    "Konrad Wierzbik <konrad.wierzbik@gmail.com>, Łukasz Łakomy <wookie.xp.07@gmail.com>",
+    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
+    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
 ]
 edition = "2021"
 
@@ -19,8 +20,10 @@ scale-info = { version = "2.10", default-features = false, features = [
 
 # These dependencies
 pendzl = { path = "../..", default-features = false, features = [
-    "ownable",
-    "psp22",
+    "ownable_impl",
+    "psp22_impl",
+    "psp22_burnable",
+    "psp22_mintable",
 ] }
 
 [dev-dependencies]

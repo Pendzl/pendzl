@@ -45,8 +45,8 @@ mod psp34 {
     #[overrider(PSP34Internal)]
     fn _update(
         &mut self,
-        from: Option<&AccountId>,
-        to: Option<&AccountId>,
+        from: &Option<&AccountId>,
+        to: &Option<&AccountId>,
         id: &Id,
     ) -> Result<(), PSP22Error> {
         if self.return_err_on_before {

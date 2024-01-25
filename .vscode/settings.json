@@ -5,5 +5,5 @@
     "./examples/**"
   ],
   "rust-analyzer.showUnlinkedFileNotification": true,
-  "rust-analyzer.cargo.features": ["psp22", "vesting"]
+  "rust-analyzer.cargo.features": "all"
 }

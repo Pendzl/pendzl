@@ -5,14 +5,9 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-IGNORED_DIRS=("./examples/reentrancy_guard"
-  "./examples/test_helpers" 
-  "./examples/alternatives" 
-  "./examples" 
-  "./examples/flash-borrower" 
-  "./examples/psp22_extensions/flashmint/" 
-  "./examples/psp22_extensions/wrapper/"
-  "./examples/psp22_utils/token_timelock/")
+IGNORED_DIRS=(
+  "./examples/test_helpers"
+)
 
 ignore_dir() {
   local element
@@ -26,6 +21,7 @@ process_directory() {
   local dir=$1
 
   if ignore_dir "$dir" "${IGNORED_DIRS[@]}"; then
+    echo "Ignoring $dir" 
     return
   fi
 

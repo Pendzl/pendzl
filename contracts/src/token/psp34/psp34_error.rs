@@ -1,9 +1,5 @@
 // SPDX-License-Identifier: MIT
 
-use crate::{
-    access::{access_control::AccessControlError, ownable::OwnableError},
-    security::pausable::PausableError,
-};
 use pendzl::traits::String;
 
 /// The PSP34 error type. Contract will throw one of this errors.
@@ -24,6 +20,9 @@ pub enum PSP34Error {
     SafeTransferCheckFailed(String),
 }
 
+#[cfg(feature = "ownable")]
+use crate::access::ownable::OwnableError;
+#[cfg(feature = "ownable")]
 impl From<OwnableError> for PSP34Error {
     fn from(ownable: OwnableError) -> Self {
         match ownable {
@@ -35,6 +34,9 @@ impl From<OwnableError> for PSP34Error {
     }
 }
 
+#[cfg(feature = "access_control")]
+use crate::access::access_control::AccessControlError;
+#[cfg(feature = "access_control")]
 impl From<AccessControlError> for PSP34Error {
     fn from(access: AccessControlError) -> Self {
         match access {
@@ -49,6 +51,9 @@ impl From<AccessControlError> for PSP34Error {
     }
 }
 
+#[cfg(feature = "pausable")]
+use crate::security::pausable::PausableError;
+#[cfg(feature = "pausable")]
 impl From<PausableError> for PSP34Error {
     fn from(pausable: PausableError) -> Self {
         match pausable {

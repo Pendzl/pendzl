@@ -5,7 +5,7 @@ exclude = ["examples", "example_project_structure", "mocks"]
 
 [package]
 name = "pendzl"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
@@ -29,8 +29,8 @@ scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "0.1.0-alpha2", path = "contracts", default-features = false }
-pendzl_lang = { version = "0.1.0-alpha2", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.1.0-beta", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.1.0-beta", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"
@@ -52,34 +52,60 @@ std = [
     "pendzl_lang/std",
 ]
 psp22 = ["pendzl_contracts/psp22"]
-vault = ["pendzl_contracts/vault"]
-metadata = ["pendzl_contracts/metadata"]
+psp22_mintable = ["pendzl_contracts/psp22_mintable"]
+psp22_burnable = ["pendzl_contracts/psp22_burnable"]
+psp22_metadata = ["pendzl_contracts/psp22_metadata"]
+psp22_vault = ["pendzl_contracts/psp22_vault"]
 psp34 = ["pendzl_contracts/psp34"]
-# # psp37 = ["pendzl_contracts/psp37"]
+psp34_mintable = ["pendzl_contracts/psp34_mintable"]
+psp34_burnable = ["pendzl_contracts/psp34_burnable"]
+psp34_metadata = ["pendzl_contracts/psp34_metadata"]
 access_control = ["pendzl_contracts/access_control"]
 ownable = ["pendzl_contracts/ownable"]
 pausable = ["pendzl_contracts/pausable"]
 vesting = ["pendzl_contracts/vesting"]
-# timelock_controller = ["pendzl_contracts/timelock_controller"]
-# governance = ["pendzl_contracts/governance", "pendzl_contracts/checkpoints"]
-# crypto = ["pendzl_contracts/crypto"]
-# nonces = ["pendzl_contracts/nonces"]
-# checkpoints = ["pendzl_contracts/checkpoints"]
-# psp61 = ["pendzl_contracts/psp61"]
+psp22_impl = ["pendzl_contracts/psp22_impl"]
+psp22_mintable_impl = ["pendzl_contracts/psp22_mintable_impl"]
+psp22_burnable_impl = ["pendzl_contracts/psp22_burnable_impl"]
+psp22_metadata_impl = ["pendzl_contracts/psp22_metadata_impl"]
+psp22_vault_impl = ["pendzl_contracts/psp22_vault_impl"]
+psp22_vault_metadata_impl = ["pendzl_contracts/psp22_vault_metadata_impl"]
+psp34_impl = ["pendzl_contracts/psp34_impl"]
+psp34_mintable_impl = ["pendzl_contracts/psp34_mintable_impl"]
+psp34_burnable_impl = ["pendzl_contracts/psp34_burnable_impl"]
+psp34_metadata_impl = ["pendzl_contracts/psp34_metadata_impl"]
+access_control_impl = ["pendzl_contracts/access_control_impl"]
+ownable_impl = ["pendzl_contracts/ownable_impl"]
+pausable_impl = ["pendzl_contracts/pausable_impl"]
+vesting_impl = ["pendzl_contracts/vesting_impl"]
 
 test-all = [
     "psp22",
+    "psp22_impl",
+    "psp22_mintable",
+    "psp22_mintable_impl",
+    "psp22_burnable",
+    "psp22_burnable_impl",
+    "psp22_metadata",
+    "psp22_metadata_impl",
+    "psp22_vault",
+    "psp22_vault_impl",
     "psp34",
-    # "psp37",
+    "psp34_impl",
+    "psp34_mintable",
+    "psp34_mintable_impl",
+    "psp34_burnable",
+    "psp34_burnable_impl",
+    "psp34_metadata",
+    "psp34_metadata_impl",
     "access_control",
+    "access_control_impl",
     "ownable",
+    "ownable_impl",
     "pausable",
+    "pausable_impl",
     "vesting",
-    # "timelock_controller",
-    # "governance",
-    # "crypto",
-    # "nonces",
-    # "checkpoints",
+    "vesting_impl",
 ]
 
 [profile.release]
