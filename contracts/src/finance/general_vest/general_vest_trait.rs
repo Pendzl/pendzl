@@ -1,20 +1,15 @@
 // SPDX-License-Identifier: MIT
-pub use pendzl::traits::Balance;
 
-use ink::contract_ref;
-use ink::{prelude::vec::Vec, primitives::AccountId};
-
-pub type VestingRef = contract_ref!(Vesting, DefaultEnvironment);
+pub type GeneralVestRef = contract_ref!(GeneralVest, DefaultEnvironment);
 #[ink::trait_definition]
-pub trait Vesting {
+pub trait GeneralVest {
     #[ink(message, payable)]
     fn create_vest(
         &mut self,
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         data: Vec<u8>,
     ) -> Result<(), VestingError>;
     #[ink(message)]
@@ -39,19 +34,18 @@ pub trait Vesting {
         asset: Option<AccountId>,
         id: u32,
         data: Vec<u8>,
-    ) -> Option<VestingSchedule>;
+    ) -> Option<VestingData>;
     #[ink(message)]
     fn next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: Vec<u8>) -> u32;
 }
 
-pub trait VestingInternal {
+pub trait GeneralVestInternal {
     fn _create_vest(
         &mut self,
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         data: &Vec<u8>,
     ) -> Result<(), VestingError>;
 
@@ -90,17 +84,16 @@ pub trait VestingInternal {
         asset: Option<AccountId>,
         id: u32,
         data: &Vec<u8>,
-    ) -> Option<VestingSchedule>;
+    ) -> Option<VestingData>;
     fn _next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: &Vec<u8>) -> u32;
 }
-pub trait VestingStorage {
+pub trait GeneralVestStorage {
     fn create(
         &mut self,
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         data: &Vec<u8>,
     ) -> Result<(), VestingError>;
 
@@ -125,5 +118,5 @@ pub trait VestingStorage {
         asset: Option<AccountId>,
         id: u32,
         data: &Vec<u8>,
-    ) -> Option<VestingSchedule>;
+    ) -> Option<VestingData>;
 }

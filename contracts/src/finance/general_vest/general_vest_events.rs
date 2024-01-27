@@ -16,11 +16,11 @@ pub struct TokenReleased {
     /// The amount of tokens released.
     pub amount: Balance,
 }
-/// Emitted when vesting schedule is created
+/// Emitted when general_vest schedule is created
 #[ink::event]
 #[derive(Debug)]
 pub struct VestingScheduled {
-    // creator of the vesting schedule
+    // creator of the general_vest schedule
     #[ink(topic)]
     pub creator: AccountId,
     /// The locked asset.
@@ -31,8 +31,6 @@ pub struct VestingScheduled {
     pub receiver: AccountId,
     /// The amount of tokens released.
     pub amount: Balance,
-    // The vesting start time.
-    pub vesting_start: VestingTimeConstraint,
-    // The vesting end time.
-    pub vesting_end: VestingTimeConstraint,
+    // The general_vest schedule.
+    pub schedule: VestingSchedule,
 }

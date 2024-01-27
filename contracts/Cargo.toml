@@ -51,7 +51,7 @@ psp34_metadata = []
 access_control = []
 ownable = []
 pausable = []
-vesting = ["psp22"]
+general_vest = ["psp22"]
 psp22_impl = ["psp22"]
 psp22_mintable_impl = ["psp22_impl", "psp22_mintable"]
 psp22_burnable_impl = ["psp22_impl", "psp22_burnable"]
@@ -65,7 +65,9 @@ psp34_metadata_impl = ["psp34_impl", "psp34_metadata"]
 access_control_impl = ["access_control"]
 ownable_impl = ["ownable"]
 pausable_impl = ["pausable"]
-vesting_impl = ["psp22", "vesting"]
+general_vest_impl = ["psp22", "general_vest"]
+provide_vest_schedule_info = ["psp22"]
+
 
 test-all = [
     "psp22_impl",
@@ -80,7 +82,8 @@ test-all = [
     "access_control_impl",
     "ownable_impl",
     "pausable_impl",
-    "vesting_impl",
+    "general_vest_impl",
+    "provide_vest_schedule_info"
 ]
 
 # [doc]

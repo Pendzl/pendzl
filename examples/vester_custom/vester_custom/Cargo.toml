@@ -19,7 +19,9 @@ scale-info = { version = "2.10", default-features = false, features = [
 
 # These dependencies
 pendzl = { path = "../../..", default-features = false, features = [
-    "vesting_impl",
+    "general_vest",
+    "provide_vest_schedule_info",
+    "general_vest_impl",
 ] }
 my_psp22_mintable = { path = "../../psp22_extensions/mintable", default-features = false }
 ts_provider = { path = "../ts_provider", default-features = false }

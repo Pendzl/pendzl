@@ -17,6 +17,10 @@ scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ], optional = true }
 
+pendzl = { path = "../../..", default-features = false, features = [
+    "provide_vest_schedule_info",
+] }
+
 # These dependencies
 
 [dev-dependencies]

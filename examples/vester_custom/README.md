@@ -1,1 +1,1 @@
-## Vesting contract
+## GeneralVest contract

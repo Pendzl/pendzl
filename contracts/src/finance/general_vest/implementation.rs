@@ -1,46 +1,52 @@
 // SPDX-License-Identifier: MIT
-use ink::prelude::vec::*;
-use ink::{prelude::vec, storage::Mapping};
-use pendzl::traits::{AccountId, Balance, StorageFieldGetter};
+use ink::{prelude::vec, prelude::vec::Vec, storage::Mapping};
+use pendzl::{
+    math::errors::MathError::Overflow,
+    traits::{AccountId, Balance, DefaultEnv, StorageFieldGetter},
+};
 
 use crate::{
-    finance::vesting::VestingSchedule,
+    finance::general_vest::VestingData,
     token::psp22::{PSP22Ref, PSP22},
 };
 
 use super::{
-    TokenReleased, VestingError, VestingInternal, VestingScheduled, VestingStorage,
-    VestingTimeConstraint,
+    GeneralVestInternal, GeneralVestStorage, TokenReleased, VestingError, VestingSchedule,
+    VestingScheduled,
 };
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
-pub struct VestingData {
-    schedules: Mapping<(AccountId, Option<AccountId>, u32), VestingSchedule>,
+pub struct GeneralVestData {
+    vesting_datas: Mapping<(AccountId, Option<AccountId>, u32), VestingData>,
     next_id: Mapping<(AccountId, Option<AccountId>), u32>,
 }
 
-impl VestingStorage for VestingData {
+impl GeneralVestStorage for GeneralVestData {
     fn create(
         &mut self,
         to: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         _data: &Vec<u8>,
     ) -> Result<(), VestingError> {
         let id = self.next_id.get((to, asset)).unwrap_or(0);
-        self.schedules.insert(
+
+        self.vesting_datas.insert(
             (to, asset, id),
-            &VestingSchedule {
-                start: vesting_start,
-                end: vesting_end,
+            &VestingData {
+                creation_time: Self::env().block_timestamp(),
+                schedule: schedule.clone(),
                 amount,
                 released: 0,
             },
         );
-        self.next_id.insert((to, asset), &(id + 1));
+
+        self.next_id.insert(
+            (to, asset),
+            &(id.checked_add(1).ok_or(VestingError::MathError(Overflow))?),
+        );
         Ok(())
     }
 
@@ -62,7 +68,9 @@ impl VestingStorage for VestingData {
                 tail_id = tail_id.saturating_sub(1);
                 continue;
             }
-            current_id += 1;
+            current_id = current_id
+                .checked_add(1)
+                .ok_or(VestingError::MathError(Overflow))?;
         }
         Ok(total_amount)
     }
@@ -74,7 +82,7 @@ impl VestingStorage for VestingData {
         id: u32,
         _data: &Vec<u8>,
     ) -> Result<(bool, Balance), VestingError> {
-        let mut data = match self.schedules.get(&(to, asset, id)) {
+        let mut data = match self.vesting_datas.get(&(to, asset, id)) {
             Some(data) => data,
             None => return Ok((false, 0)),
         };
@@ -84,17 +92,17 @@ impl VestingStorage for VestingData {
             let next_id = self.next_id.get((to, asset)).unwrap(); // data is some => next_id must exist and be > 0
             let tail_id = next_id - 1;
             let tail = self
-                .schedules
+                .vesting_datas
                 .get(&(to, asset, tail_id))
                 .ok_or(VestingError::InvalidScheduleKey)?;
-            self.schedules.remove(&(to, asset, tail_id));
+            self.vesting_datas.remove(&(to, asset, tail_id));
             if tail_id != id {
-                self.schedules.insert((to, asset, id), &tail);
+                self.vesting_datas.insert((to, asset, id), &tail);
             }
             self.next_id.insert((to, asset), &(tail_id));
             return Ok((true, amount_released + leftover));
         }
-        self.schedules.insert((to, asset, id), &data);
+        self.vesting_datas.insert((to, asset, id), &data);
         Ok((false, amount_released))
     }
 
@@ -104,22 +112,21 @@ impl VestingStorage for VestingData {
         asset: Option<AccountId>,
         id: u32,
         _data: &Vec<u8>,
-    ) -> Option<VestingSchedule> {
-        self.schedules.get(&(to, asset, id))
+    ) -> Option<VestingData> {
+        self.vesting_datas.get(&(to, asset, id))
     }
 }
 
-pub trait VestingDefaultImpl: VestingInternal + Sized {
+pub trait GeneralVestDefaultImpl: GeneralVestInternal + Sized {
     fn create_vest_default_impl(
         &mut self,
-        receiver: AccountId,
+        to: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         data: Vec<u8>,
     ) -> Result<(), VestingError> {
-        self._create_vest(receiver, asset, amount, vesting_start, vesting_end, &data)
+        self._create_vest(to, asset, amount, schedule, &data)
     }
 
     fn release_default_impl(
@@ -146,7 +153,7 @@ pub trait VestingDefaultImpl: VestingInternal + Sized {
         asset: Option<AccountId>,
         id: u32,
         data: Vec<u8>,
-    ) -> Option<VestingSchedule> {
+    ) -> Option<VestingData> {
         self._vesting_schedule_of(of, asset, id, &data)
     }
     fn next_id_vest_of_default_impl(
@@ -159,36 +166,29 @@ pub trait VestingDefaultImpl: VestingInternal + Sized {
     }
 }
 
-pub trait VestingInternalDefaultImpl: StorageFieldGetter<VestingData> + VestingInternal
+pub trait GeneralVestInternalDefaultImpl:
+    StorageFieldGetter<GeneralVestData> + GeneralVestInternal
 where
-    VestingData: VestingStorage,
+    GeneralVestData: GeneralVestStorage,
 {
     fn _create_vest_default_impl(
         &mut self,
         receiver: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
         data: &Vec<u8>,
     ) -> Result<(), VestingError> {
         let creator = Self::env().caller();
         self._handle_transfer_in(asset, creator, amount, data)?;
-        self.data().create(
-            receiver,
-            asset,
-            amount,
-            vesting_start.clone(),
-            vesting_end.clone(),
-            data,
-        )?;
+        self.data()
+            .create(receiver, asset, amount, schedule.clone(), data)?;
         Self::env().emit_event(VestingScheduled {
             creator,
             receiver,
             asset,
             amount,
-            vesting_start: vesting_start.clone(),
-            vesting_end: vesting_end.clone(),
+            schedule,
         });
         Ok(())
     }
@@ -278,8 +278,8 @@ where
         asset: Option<AccountId>,
         id: u32,
         _data: &Vec<u8>,
-    ) -> Option<VestingSchedule> {
-        self.data().schedules.get(&(of, asset, id))
+    ) -> Option<VestingData> {
+        self.data().vesting_datas.get(&(of, asset, id))
     }
 
     fn _next_id_vest_of_default_impl(

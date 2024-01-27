@@ -256,8 +256,8 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
     let mut mintable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::token::psp22::extensions::mintable::PSP22Mintable for #storage_struct_name {
             #[ink(message)]
-            fn mint(&mut self, from: AccountId, amount: Balance) -> Result<(), PSP22Error> {
-                pendzl::contracts::token::psp22::extensions::mintable::implementation::PSP22MintableDefaultImpl::mint_default_impl(self,from,amount)
+            fn mint(&mut self, to: AccountId, amount: Balance) -> Result<(), PSP22Error> {
+                pendzl::contracts::token::psp22::extensions::mintable::implementation::PSP22MintableDefaultImpl::mint_default_impl(self, to, amount)
             }
         }
     ))
@@ -1019,125 +1019,122 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
 pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
-        impl pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl for #storage_struct_name {}
+        impl pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl for #storage_struct_name {}
     ))
     .expect("Should parse");
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
-        impl pendzl::contracts::finance::vesting::VestingInternal for #storage_struct_name {
+        impl pendzl::contracts::finance::general_vest::GeneralVestInternal for #storage_struct_name {
             fn _create_vest(&mut self,
                 receiver: AccountId,
                 asset: Option<AccountId>,
                 amount: Balance,
-                vesting_start: VestingTimeConstraint,
-                vesting_end: VestingTimeConstraint,
-                data: &Vec<u8>)-> Result<(), VestingError>  {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_create_vest_default_impl(
+                schedule: VestingSchedule,
+                data: &Vec<u8>
+            )-> Result<(), VestingError>  {
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_create_vest_default_impl(
                     self,
                     receiver,
                     asset,
                     amount,
-                    vesting_start,
-                    vesting_end,
+                    schedule,
                     data
                 )
             }
 
             fn _release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: &Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_release_default_impl(self, receiver, asset, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_release_default_impl(self, receiver, asset, data)
             }
 
             fn _release_by_vest_id(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_release_by_vest_id_default_impl(self, receiver, asset, id, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_release_by_vest_id_default_impl(self, receiver, asset, id, data)
             }
             
             fn _handle_transfer_in(&mut self, asset: Option<AccountId>, from: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_handle_transfer_in_default_impl(self, asset, from, amount, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_handle_transfer_in_default_impl(self, asset, from, amount, data)
             }
             
             fn _handle_transfer_out(&mut self, asset: Option<AccountId>, to: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_handle_transfer_out_default_impl(self, asset, to, amount, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_handle_transfer_out_default_impl(self, asset, to, amount, data)
             }
 
             fn _next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: &Vec<u8>) -> u32 {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_next_id_vest_of_default_impl(self, of, asset, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_next_id_vest_of_default_impl(self, of, asset, data)
             }
 
-            fn _vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Option<VestingSchedule> {
-                pendzl::contracts::finance::vesting::implementation::VestingInternalDefaultImpl::_vesting_schedule_of_default_impl(self, of, asset, id, data)
+            fn _vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Option<VestingData> {
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_vesting_schedule_of_default_impl(self, of, asset, id, data)
             }
         }
     ))
     .expect("Should parse");
 
     let vesting_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
-        impl  pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl for #storage_struct_name {}
+        impl  pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl for #storage_struct_name {}
     ))
     .expect("Should parse");
 
-    let mut vesting = syn::parse2::<syn::ItemImpl>(quote!(
-        impl  pendzl::contracts::finance::vesting::Vesting for #storage_struct_name {
+    let mut general_vest = syn::parse2::<syn::ItemImpl>(quote!(
+        impl  pendzl::contracts::finance::general_vest::GeneralVest for #storage_struct_name {
             #[ink(message, payable)]
             fn create_vest(
                 &mut self,
                 receiver: AccountId,
                 asset: Option<AccountId>,
                 amount: Balance,
-                vesting_start: VestingTimeConstraint,
-                vesting_end: VestingTimeConstraint,
+                schedule: VestingSchedule,
                 data: Vec<u8>,
             ) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::create_vest_default_impl(
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::create_vest_default_impl(
                     self,
                     receiver,
                     asset,
                     amount,
-                    vesting_start,
-                    vesting_end,
+                    schedule,
                     data
                 )
             }
             #[ink(message)]
             fn release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::release_default_impl(self, receiver, asset, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::release_default_impl(self, receiver, asset, data)
             }
             #[ink(message)]
             fn release_by_vest_id(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, id: u32, data: Vec<u8>) -> Result<(), VestingError> {
-                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::release_by_vest_id_default_impl(self, receiver, asset, id, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::release_by_vest_id_default_impl(self, receiver, asset, id, data)
             }
             #[ink(message)]
             fn next_id_vest_of(&self,  of: AccountId, asset: Option<AccountId>, data: Vec<u8>) -> u32 {
-                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::next_id_vest_of_default_impl(self, of, asset, data)
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::next_id_vest_of_default_impl(self, of, asset, data)
             }
             #[ink(message)]
-            fn vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: Vec<u8>) -> Option<VestingSchedule> {
-                pendzl::contracts::finance::vesting::implementation::VestingDefaultImpl::vesting_schedule_of_default_impl(self, of, asset, id, data)
+            fn vesting_schedule_of(&self, of: AccountId, asset: Option<AccountId>, id: u32, data: Vec<u8>) -> Option<VestingData> {
+                pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::vesting_schedule_of_default_impl(self, of, asset, id, data)
             }
         }
     ))
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::finance::vesting::*;
+      pub use pendzl::contracts::finance::general_vest::*;
     ))
     .expect("Should parse import");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::finance::vesting::implementation::VestingData;
+      pub use pendzl::contracts::finance::general_vest::implementation::GeneralVestData;
     ))
     .expect("Should parse import");
-    impl_args.imports.insert("Vesting", import);
-    impl_args.imports.insert("VestingData", import_data);
+    impl_args.imports.insert("GeneralVest", import);
+    impl_args.imports.insert("GeneralVestData", import_data);
 
     impl_args.vec_import();
 
-    override_functions("VestingInternal", &mut internal, impl_args.map);
-    override_functions("Vesting", &mut vesting, impl_args.map);
+    override_functions("GeneralVestInternal", &mut internal, impl_args.map);
+    override_functions("GeneralVest", &mut general_vest, impl_args.map);
 
     impl_args.items.push(syn::Item::Impl(internal_default_impl));
     impl_args.items.push(syn::Item::Impl(internal));
     impl_args.items.push(syn::Item::Impl(vesting_default_impl));
-    impl_args.items.push(syn::Item::Impl(vesting));
+    impl_args.items.push(syn::Item::Impl(general_vest));
 }
 
 fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map: &OverridenFnMap) {

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[pendzl::implementation(Vesting)]
+#[pendzl::implementation(GeneralVest)]
 #[ink::contract]
 pub mod vester_custom {
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
     pub struct Vester {
         #[storage_field]
-        vesting: VestingData,
+        general_vest: GeneralVestData,
     }
 
     impl Vester {
@@ -21,7 +21,7 @@ pub mod vester_custom {
 
 #[cfg(all(test, feature = "e2e-tests"))]
 pub mod tests {
-    use crate::vester_custom::{VesterRef, VestingTimeConstraint, *};
+    use crate::vester_custom::{VesterRef, VestingSchedule, *};
     use ink::{env::DefaultEnvironment, scale::Decode as _, ToAccountId};
     use ink_e2e::{events::ContractEmitted, ChainBackend, ContractsBackend};
     use my_psp22_mintable::my_psp22_mintable::{ContractRef as PSP22Ref, *};
@@ -40,8 +40,7 @@ pub mod tests {
         vest_to: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
     }
 
     fn assert_vesting_scheduled_event(
@@ -50,24 +49,21 @@ pub mod tests {
         expected_receiver: AccountId,
         expected_asset: Option<AccountId>,
         expected_amount: Balance,
-        expected_vesting_start: VestingTimeConstraint,
-        expected_vesting_end: VestingTimeConstraint,
+        expected_schedule: VestingSchedule,
     ) {
         let VestingScheduled {
             creator,
             asset,
             receiver,
             amount,
-            vesting_start,
-            vesting_end,
+            schedule,
         } = <VestingScheduled>::decode(&mut &event.data[..])
             .expect("encountered invalid contract event data buffer");
         assert_eq_msg!("Asset", asset, expected_asset);
         assert_eq_msg!("creator", creator, expected_creator);
         assert_eq_msg!("receiver", receiver, expected_receiver);
         assert_eq_msg!("Amounts", amount, expected_amount);
-        assert_eq_msg!("Vesting start", vesting_start, expected_vesting_start);
-        assert_eq_msg!("Vesting end", vesting_end, expected_vesting_end);
+        assert_eq_msg!("schedule", schedule, expected_schedule);
     }
 
     fn assert_psp22_transfer_event<E: ink::env::Environment<AccountId = AccountId>>(
@@ -113,7 +109,9 @@ pub mod tests {
     type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
     #[ink_e2e::test]
-    async fn release_psp22_incorrect_selector(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+    async fn release_psp22_incorrect_account_id(
+        mut client: ink_e2e::Client<C, E>,
+    ) -> E2EResult<()> {
         let vester_creator = ink_e2e::alice();
         let vester_submitter = client
             .create_and_fund_account(&ink_e2e::alice(), 10_000_000_000_000)
@@ -133,53 +131,17 @@ pub mod tests {
 
         let vest_to = ink_e2e::charlie();
 
-        let mut ts_provider_constructor = TSProviderRef::new(0, 0);
-        let mut ts_provider = client
-            .instantiate("ts_provider", &vester_creator, &mut ts_provider_constructor)
-            .submit()
-            .await
-            .expect("instantiate ts_provider failed")
-            .call::<TSProvider>();
-
-        let current_ts = client
-            .call(&ink_e2e::alice(), &ts_provider.get_current_timestamp())
-            .dry_run()
-            .await?
-            .return_value();
-
-        let start_time = current_ts;
-        let end_time = current_ts;
-        let amount = end_time - start_time;
-
-        let _ = client
-            .call(&vester_submitter, &ts_provider.set_start_time(start_time))
-            .submit()
-            .await
-            .expect("set_start_time failed")
-            .return_value();
-        let _ = client
-            .call(&vester_submitter, &ts_provider.set_end_time(end_time))
-            .submit()
-            .await
-            .expect("set_end_time failed")
-            .return_value();
-
-        let vesting_start = VestingTimeConstraint::External(
-            ts_provider.to_account_id(),
-            ink::selector_bytes!("start_xtime"),
-        );
-        let vesting_end = VestingTimeConstraint::External(
-            ts_provider.to_account_id(),
-            ink::selector_bytes!("end_time"),
-        );
+        let amount = 5000_u128;
 
         // create_vest args
         let create_vest_args = CreateVestingScheduleArgs {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: Some(psp22.to_account_id()),
-            amount: amount.into(),
-            vesting_start,
-            vesting_end,
+            amount,
+            schedule: VestingSchedule::External(ExternalTimeConstraint {
+                account: keypair_to_account(&ink_e2e::dave()),
+                fallback_values: (123, 456),
+            }),
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -219,8 +181,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -252,8 +213,10 @@ pub mod tests {
             create_vest_args.vest_to,
             Some(psp22.to_account_id()),
             create_vest_args.amount,
-            create_vest_args.vesting_start.clone(),
-            create_vest_args.vesting_end.clone(),
+            VestingSchedule::External(ExternalTimeConstraint {
+                account: keypair_to_account(&ink_e2e::dave()),
+                fallback_values: (123, 456),
+            }),
         );
 
         let release_res = client
@@ -269,16 +232,13 @@ pub mod tests {
             .await?
             .return_value();
 
-        assert_eq!(
-            release_res,
-            Err(VestingError::CouldNotResolveTimeConstraint)
-        );
+        assert_eq!(release_res, Ok(()),);
 
         Ok(())
     }
 
     #[ink_e2e::test]
-    async fn release_psp22(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+    async fn shorten_durations(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
         let vester_creator = ink_e2e::alice();
         let vester_submitter = client
             .create_and_fund_account(&ink_e2e::alice(), 10_000_000_000_000)
@@ -317,34 +277,35 @@ pub mod tests {
         let amount = end_time - start_time;
 
         let _ = client
-            .call(&vester_submitter, &ts_provider.set_start_time(start_time))
+            .call(
+                &vester_submitter,
+                &ts_provider.set_waiting_duration(start_time),
+            )
             .submit()
             .await
-            .expect("set_start_time failed")
+            .expect("set_waiting_duration failed")
             .return_value();
         let _ = client
-            .call(&vester_submitter, &ts_provider.set_end_time(end_time))
+            .call(
+                &vester_submitter,
+                &ts_provider.set_vesting_duration(end_time),
+            )
             .submit()
             .await
-            .expect("set_end_time failed")
+            .expect("set_vesting_duration failed")
             .return_value();
 
-        let vesting_start = VestingTimeConstraint::External(
-            ts_provider.to_account_id(),
-            ink::selector_bytes!("start_time"),
-        );
-        let vesting_end = VestingTimeConstraint::External(
-            ts_provider.to_account_id(),
-            ink::selector_bytes!("end_time"),
-        );
+        let schedule = VestingSchedule::External(ExternalTimeConstraint {
+            account: ts_provider.to_account_id(),
+            fallback_values: (start_time, end_time),
+        });
 
         // create_vest args
         let create_vest_args = CreateVestingScheduleArgs {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: Some(psp22.to_account_id()),
             amount: amount.into(),
-            vesting_start,
-            vesting_end,
+            schedule,
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -384,8 +345,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -417,8 +377,7 @@ pub mod tests {
             create_vest_args.vest_to,
             Some(psp22.to_account_id()),
             create_vest_args.amount,
-            create_vest_args.vesting_start.clone(),
-            create_vest_args.vesting_end.clone(),
+            create_vest_args.schedule.clone(),
         );
 
         let release_res = client
@@ -466,24 +425,18 @@ pub mod tests {
             0,
         );
 
-        // modify start/end times so release function releases whole vesting amount
+        // modify start/end times so release function releases whole general_vest amount
         let _ = client
-            .call(
-                &vester_submitter,
-                &ts_provider.set_start_time(current_ts - ONE_DAY),
-            )
+            .call(&vester_submitter, &ts_provider.set_waiting_duration(1))
             .submit()
             .await
-            .expect("set_start_time failed")
+            .expect("set_waiting_duration failed")
             .return_value();
         let _ = client
-            .call(
-                &vester_submitter,
-                &ts_provider.set_end_time(current_ts - ONE_HOUR),
-            )
+            .call(&vester_submitter, &ts_provider.set_vesting_duration(2))
             .submit()
             .await
-            .expect("set_end_time failed")
+            .expect("set_vesting_duration failed")
             .return_value();
 
         let release_res = client

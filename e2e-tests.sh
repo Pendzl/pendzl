@@ -7,6 +7,7 @@ fi
 
 IGNORED_DIRS=(
   "./examples/test_helpers"
+  "./examples/test_helpers/"
 )
 
 ignore_dir() {

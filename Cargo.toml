@@ -63,7 +63,7 @@ psp34_metadata = ["pendzl_contracts/psp34_metadata"]
 access_control = ["pendzl_contracts/access_control"]
 ownable = ["pendzl_contracts/ownable"]
 pausable = ["pendzl_contracts/pausable"]
-vesting = ["pendzl_contracts/vesting"]
+general_vest = ["pendzl_contracts/general_vest"]
 psp22_impl = ["pendzl_contracts/psp22_impl"]
 psp22_mintable_impl = ["pendzl_contracts/psp22_mintable_impl"]
 psp22_burnable_impl = ["pendzl_contracts/psp22_burnable_impl"]
@@ -77,7 +77,8 @@ psp34_metadata_impl = ["pendzl_contracts/psp34_metadata_impl"]
 access_control_impl = ["pendzl_contracts/access_control_impl"]
 ownable_impl = ["pendzl_contracts/ownable_impl"]
 pausable_impl = ["pendzl_contracts/pausable_impl"]
-vesting_impl = ["pendzl_contracts/vesting_impl"]
+general_vest_impl = ["pendzl_contracts/general_vest_impl"]
+provide_vest_schedule_info = ["pendzl_contracts/provide_vest_schedule_info"]
 
 test-all = [
     "psp22",
@@ -104,8 +105,9 @@ test-all = [
     "ownable_impl",
     "pausable",
     "pausable_impl",
-    "vesting",
-    "vesting_impl",
+    "general_vest",
+    "general_vest_impl",
+    "provide_vest_schedule_info"
 ]
 
 [profile.release]

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[pendzl::implementation(Vesting)]
+#[pendzl::implementation(GeneralVest)]
 #[ink::contract]
 pub mod vester {
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
     pub struct Vester {
         #[storage_field]
-        vesting: VestingData,
+        general_vest: GeneralVestData,
     }
 
     impl Vester {
@@ -21,7 +21,7 @@ pub mod vester {
 
 #[cfg(all(test, feature = "e2e-tests"))]
 pub mod tests {
-    use crate::vester::{VesterRef, VestingError, VestingTimeConstraint, *};
+    use crate::vester::{VesterRef, VestingError, VestingSchedule, *};
     use ink::{
         codegen::Env,
         env::{test::EmittedEvent, DefaultEnvironment},
@@ -32,6 +32,10 @@ pub mod tests {
     use my_psp22_mintable::my_psp22_mintable::{ContractRef as PSP22Ref, *};
     use pendzl::{
         contracts::token::psp22::{PSP22Error, Transfer, PSP22},
+        test_utils::{
+            accounts, change_caller, get_account_balance, set_account_balance, set_block_timestamp,
+            set_value_transferred,
+        },
         traits::{AccountId, Balance, Timestamp},
     };
     use test_helpers::{assert_eq_msg, assert_lt, keypair_to_account};
@@ -43,23 +47,20 @@ pub mod tests {
         vest_to: AccountId,
         asset: Option<AccountId>,
         amount: Balance,
-        vesting_start: VestingTimeConstraint,
-        vesting_end: VestingTimeConstraint,
+        schedule: VestingSchedule,
     }
 
     fn create_duration_as_amount_schedule_args(
         vest_to: AccountId,
         asset: Option<AccountId>,
-        start_timestamp: Timestamp,
-        end_timestamp: Timestamp,
+        waiting_duration: Timestamp,
+        duration: Timestamp,
     ) -> CreateVestingScheduleArgs {
-        let duration = end_timestamp - start_timestamp;
         CreateVestingScheduleArgs {
             vest_to,
             asset,
-            amount: duration.into(), // 1 per timestamp unit, for simplicity
-            vesting_start: VestingTimeConstraint::Default(start_timestamp),
-            vesting_end: VestingTimeConstraint::Default(end_timestamp),
+            amount: duration.into(),
+            schedule: VestingSchedule::Constant(waiting_duration, duration),
         }
     }
 
@@ -90,24 +91,21 @@ pub mod tests {
         expected_receiver: AccountId,
         expected_asset: Option<AccountId>,
         expected_amount: Balance,
-        expected_vesting_start: VestingTimeConstraint,
-        expected_vesting_end: VestingTimeConstraint,
+        expected_schedule: VestingSchedule,
     ) {
         let VestingScheduled {
             creator,
             asset,
             receiver,
             amount,
-            vesting_start,
-            vesting_end,
+            schedule,
         } = <VestingScheduled>::decode(&mut &event.data[..])
             .expect("encountered invalid contract event data buffer");
         assert_eq_msg!("Asset", asset, expected_asset);
         assert_eq_msg!("creator", creator, expected_creator);
         assert_eq_msg!("receiver", receiver, expected_receiver);
         assert_eq_msg!("Amounts", amount, expected_amount);
-        assert_eq_msg!("Vesting start", vesting_start, expected_vesting_start);
-        assert_eq_msg!("Vesting end", vesting_end, expected_vesting_end);
+        assert_eq_msg!("schedule", schedule, expected_schedule);
     }
 
     fn assert_psp22_transfer_event<E: ink::env::Environment<AccountId = AccountId>>(
@@ -149,27 +147,6 @@ pub mod tests {
         assert_eq_msg!("Amounts", amount, expected_amount);
     }
 
-    fn set_next_caller(caller: AccountId) {
-        ink::env::test::set_caller::<ink::env::DefaultEnvironment>(caller);
-    }
-
-    fn set_account_balance(account: AccountId, balance: Balance) {
-        ink::env::test::set_account_balance::<ink::env::DefaultEnvironment>(account, balance);
-    }
-
-    fn get_account_balance(account: AccountId) -> Balance {
-        ink::env::test::get_account_balance::<DefaultEnvironment>(account)
-            .expect("Cannot get account balance")
-    }
-
-    fn set_value_transferred(value: Balance) {
-        ink::env::test::set_value_transferred::<ink::env::DefaultEnvironment>(value);
-    }
-
-    fn set_block_timestamp(timestamp: Timestamp) {
-        ink::env::test::set_block_timestamp::<ink::env::DefaultEnvironment>(timestamp);
-    }
-
     type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
     #[ink_e2e::test]
     async fn create_vesting_schedule_psp22(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
@@ -195,8 +172,7 @@ pub mod tests {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: Some(psp22.to_account_id()),
             amount: 100,
-            vesting_start: VestingTimeConstraint::Default(100),
-            vesting_end: VestingTimeConstraint::Default(101),
+            schedule: VestingSchedule::Constant(1, 2),
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -214,8 +190,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -245,8 +220,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -296,8 +270,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -329,8 +302,7 @@ pub mod tests {
             create_vest_args.vest_to,
             Some(psp22.to_account_id()),
             create_vest_args.amount,
-            create_vest_args.vesting_start,
-            create_vest_args.vesting_end,
+            create_vest_args.schedule,
         );
 
         let balance_of_vester = client
@@ -377,8 +349,7 @@ pub mod tests {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: Some(psp22.to_account_id()),
             amount: 100,
-            vesting_start: VestingTimeConstraint::Default(100),
-            vesting_end: VestingTimeConstraint::Default(101),
+            schedule: VestingSchedule::Constant(1, 2),
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -417,15 +388,6 @@ pub mod tests {
             .await?
             .return_value();
 
-        let balance_of_vester_submitter = client
-            .call(
-                &ink_e2e::alice(),
-                &psp22.balance_of(keypair_to_account(&vester_submitter)),
-            )
-            .dry_run()
-            .await?
-            .return_value();
-
         let create_vest_res = client
             .call(
                 &vester_submitter,
@@ -433,8 +395,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -466,8 +427,7 @@ pub mod tests {
             create_vest_args.vest_to,
             Some(psp22.to_account_id()),
             create_vest_args.amount,
-            create_vest_args.vesting_start.clone(),
-            create_vest_args.vesting_end.clone(),
+            create_vest_args.schedule,
         );
 
         let balance_of_vester_pre = client
@@ -475,7 +435,7 @@ pub mod tests {
             .dry_run()
             .await?
             .return_value();
-        let balance_of_vest_receiver = client
+        let balance_of_vest_receiver_pre = client
             .call(
                 &ink_e2e::alice(),
                 &psp22.balance_of(create_vest_args.vest_to),
@@ -483,6 +443,19 @@ pub mod tests {
             .dry_run()
             .await?
             .return_value();
+
+        let dry_run = client
+            .call(
+                &vest_to,
+                &vester.release(
+                    Some(create_vest_args.vest_to),
+                    create_vest_args.asset,
+                    vec![],
+                ),
+            )
+            .dry_run()
+            .await
+            .expect("release failed");
 
         let release_res = client
             .call(
@@ -493,9 +466,19 @@ pub mod tests {
                     vec![],
                 ),
             )
+            .gas_limit(dry_run.exec_result.gas_required * 2)
             .submit()
             .await
             .expect("release failed");
+
+        let balance_of_vest_receiver = client
+            .call(
+                &ink_e2e::alice(),
+                &psp22.balance_of(create_vest_args.vest_to),
+            )
+            .dry_run()
+            .await?
+            .return_value();
 
         let contract_emitted_events = release_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
@@ -529,6 +512,15 @@ pub mod tests {
             create_vest_args.amount,
         );
 
+        assert_eq!(
+            balance_of_vester,
+            balance_of_vester_pre - create_vest_args.amount
+        );
+        assert_eq!(
+            balance_of_vest_receiver,
+            balance_of_vest_receiver_pre + create_vest_args.amount
+        );
+
         Ok(())
     }
 
@@ -560,8 +552,7 @@ pub mod tests {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: Some(psp22.to_account_id()),
             amount: 100,
-            vesting_start: VestingTimeConstraint::Default(100),
-            vesting_end: VestingTimeConstraint::Default(101),
+            schedule: VestingSchedule::Constant(1, 2),
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -594,21 +585,6 @@ pub mod tests {
             .await
             .expect("mint failed");
 
-        let balance_of_vester = client
-            .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
-            .dry_run()
-            .await?
-            .return_value();
-
-        let balance_of_vester_submitter = client
-            .call(
-                &ink_e2e::alice(),
-                &psp22.balance_of(keypair_to_account(&vester_submitter)),
-            )
-            .dry_run()
-            .await?
-            .return_value();
-
         let create_vest_res = client
             .call(
                 &vester_submitter,
@@ -616,8 +592,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -653,8 +628,7 @@ pub mod tests {
             create_vest_args.vest_to,
             Some(psp22.to_account_id()),
             create_vest_args.amount,
-            create_vest_args.vesting_start,
-            create_vest_args.vesting_end,
+            create_vest_args.schedule,
         );
 
         let balance_of_vester_pre = client
@@ -662,7 +636,7 @@ pub mod tests {
             .dry_run()
             .await?
             .return_value();
-        let balance_of_vest_receiver = client
+        let balance_of_vest_receiver_pre = client
             .call(
                 &ink_e2e::alice(),
                 &psp22.balance_of(create_vest_args.vest_to),
@@ -680,9 +654,37 @@ pub mod tests {
                     vec![],
                 ),
             )
+            .dry_run()
+            .await
+            .expect("release failed");
+
+        let release_res = client
+            .call(
+                &release_caller,
+                &vester.release(
+                    Some(create_vest_args.vest_to),
+                    create_vest_args.asset,
+                    vec![],
+                ),
+            )
+            .gas_limit(release_res.exec_result.gas_required * 2)
             .submit()
             .await
             .expect("release failed");
+
+        let balance_of_vester = client
+            .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+            .dry_run()
+            .await?
+            .return_value();
+        let balance_of_vest_receiver = client
+            .call(
+                &ink_e2e::alice(),
+                &psp22.balance_of(create_vest_args.vest_to),
+            )
+            .dry_run()
+            .await?
+            .return_value();
 
         let contract_emitted_events = release_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
@@ -716,6 +718,15 @@ pub mod tests {
             create_vest_args.amount,
         );
 
+        assert_eq!(
+            balance_of_vester,
+            balance_of_vester_pre - create_vest_args.amount
+        );
+        assert_eq!(
+            balance_of_vest_receiver,
+            balance_of_vest_receiver_pre + create_vest_args.amount
+        );
+
         Ok(())
     }
 
@@ -731,8 +742,7 @@ pub mod tests {
             vest_to: keypair_to_account(&ink_e2e::charlie()),
             asset: None,
             amount: 10_000_000,
-            vesting_start: VestingTimeConstraint::Default(100),
-            vesting_end: VestingTimeConstraint::Default(101),
+            schedule: VestingSchedule::Constant(1, 2),
         };
 
         let mut vester_constructor = VesterRef::new();
@@ -759,8 +769,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -778,8 +787,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -797,8 +805,7 @@ pub mod tests {
                     create_vest_args.vest_to,
                     create_vest_args.asset,
                     create_vest_args.amount,
-                    create_vest_args.vesting_start.clone(),
-                    create_vest_args.vesting_end.clone(),
+                    create_vest_args.schedule.clone(),
                     vec![],
                 ),
             )
@@ -830,8 +837,7 @@ pub mod tests {
             create_vest_args.vest_to,
             None,
             create_vest_args.amount,
-            create_vest_args.vesting_start.clone(),
-            create_vest_args.vesting_end.clone(),
+            create_vest_args.schedule,
         );
 
         let balance_of_vester_after = client
@@ -856,42 +862,48 @@ pub mod tests {
 
     #[ink::test]
     fn release_works() {
-        let accounts = ink::env::test::default_accounts::<DefaultEnvironment>();
+        let accounts = accounts();
         let vest_to = accounts.charlie;
         let vester_submitter = accounts.bob;
         let mut vester = Vester::new();
 
-        set_next_caller(vester_submitter);
-        let init_timestamp = vester.env().block_timestamp();
+        change_caller(vester_submitter);
+        let creation_timestamp = vester.env().block_timestamp();
 
-        let vesting_start = init_timestamp + ONE_DAY * 3;
-        let vesting_end = init_timestamp + ONE_DAY * 9;
-        let create_vest_args =
-            create_duration_as_amount_schedule_args(vest_to, None, vesting_start, vesting_end);
+        let waiting_duration = ONE_DAY * 3;
+        let vesting_duration = ONE_DAY * 6;
+
+        let vesting_start = creation_timestamp + waiting_duration;
+        let vesting_end = vesting_start + vesting_duration;
+        let create_vest_args = create_duration_as_amount_schedule_args(
+            vest_to,
+            None,
+            waiting_duration,
+            vesting_duration,
+        );
         let starting_balance = 100_000;
         set_account_balance(vest_to, starting_balance);
         set_account_balance(
             vester.env().account_id(),
             create_vest_args.amount + starting_balance,
-        ); // why transfer does not work?
+        );
         let vest_to_balance_pre = get_account_balance(vest_to);
         let vester_balance_pre = get_account_balance(vester.env().account_id());
 
         set_value_transferred(create_vest_args.amount);
-        let res = Vesting::create_vest(
+        let res = GeneralVest::create_vest(
             &mut vester,
             create_vest_args.vest_to,
             create_vest_args.asset,
             create_vest_args.amount,
-            create_vest_args.vesting_start.clone(),
-            create_vest_args.vesting_end.clone(),
+            create_vest_args.schedule.clone(),
             vec![],
         );
         set_block_timestamp(vesting_start - 1);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         //try release succeeds & does not release anything
-        set_next_caller(create_vest_args.vest_to);
-        let res = Vesting::release(
+        change_caller(create_vest_args.vest_to);
+        let res = GeneralVest::release(
             &mut vester,
             Some(create_vest_args.vest_to),
             create_vest_args.asset,
@@ -908,7 +920,7 @@ pub mod tests {
         );
         // try release succeeds & does release adequate amount of tokens eq 1
         set_block_timestamp(vesting_start + 2);
-        let res = Vesting::release(
+        let res = GeneralVest::release(
             &mut vester,
             Some(create_vest_args.vest_to),
             create_vest_args.asset,
@@ -924,18 +936,20 @@ pub mod tests {
             1, // accounting for rounding down
         );
         //verify storage
-        let vesting_schedule =
+        let vesting_data =
             vester.vesting_schedule_of(create_vest_args.vest_to, create_vest_args.asset, 0, vec![]);
-        assert!(vesting_schedule.is_some());
-        let vesting_schedule = vesting_schedule.unwrap();
-        assert_eq!(vesting_schedule.released, 1);
-        assert_eq!(vesting_schedule.amount, create_vest_args.amount);
-        assert_eq!(vesting_schedule.end, create_vest_args.vesting_end);
-        assert_eq!(vesting_schedule.start, create_vest_args.vesting_start);
+        assert!(vesting_data.is_some());
+        let vesting_data = vesting_data.unwrap();
+        assert_eq!(vesting_data.released, 1);
+        assert_eq!(vesting_data.amount, create_vest_args.amount);
+        assert_eq!(
+            vesting_data.schedule,
+            VestingSchedule::Constant(waiting_duration, vesting_duration)
+        );
 
         // try release succeeds & does release adequate amount of tokens
         set_block_timestamp(vesting_start + ONE_DAY);
-        let res = Vesting::release(&mut vester, Some(vest_to), create_vest_args.asset, vec![]);
+        let res = GeneralVest::release(&mut vester, Some(vest_to), create_vest_args.asset, vec![]);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_token_released_event(
@@ -946,22 +960,24 @@ pub mod tests {
             (ONE_DAY - 1 - 1).into(), //1 already released + accounting for rounding down
         );
         //verify storage
-        let vesting_schedule =
+        let vesting_data =
             vester.vesting_schedule_of(create_vest_args.vest_to, create_vest_args.asset, 0, vec![]);
-        assert!(vesting_schedule.is_some());
-        let vesting_schedule = vesting_schedule.unwrap();
-        assert_eq!(vesting_schedule.released, (ONE_DAY - 1).into());
-        assert_eq!(vesting_schedule.amount, create_vest_args.amount);
-        assert_eq!(vesting_schedule.end, create_vest_args.vesting_end);
-        assert_eq!(vesting_schedule.start, create_vest_args.vesting_start);
+        assert!(vesting_data.is_some());
+        let vesting_data = vesting_data.unwrap();
+        assert_eq!(vesting_data.released, (ONE_DAY - 1).into());
+        assert_eq!(vesting_data.amount, create_vest_args.amount);
+        assert_eq!(
+            vesting_data.schedule,
+            VestingSchedule::Constant(waiting_duration, vesting_duration)
+        );
 
         // try release succeeds & does release the rest of tokens
         // use django as caller
-        set_next_caller(accounts.django);
+        change_caller(accounts.django);
         // get django balance
         let django_balance_pre = get_account_balance(accounts.django);
         set_block_timestamp(vesting_end + 1);
-        let res = Vesting::release(&mut vester, Some(vest_to), create_vest_args.asset, vec![]);
+        let res = GeneralVest::release(&mut vester, Some(vest_to), create_vest_args.asset, vec![]);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_token_released_event(
@@ -974,9 +990,9 @@ pub mod tests {
         let next_id =
             vester.next_id_vest_of(create_vest_args.vest_to, create_vest_args.asset, vec![]);
         assert_eq!(next_id, 0);
-        let vesting_schedule =
+        let vesting_data =
             vester.vesting_schedule_of(create_vest_args.vest_to, create_vest_args.asset, 0, vec![]);
-        assert!(vesting_schedule.is_none());
+        assert!(vesting_data.is_none());
 
         let vest_to_balance_post = get_account_balance(vest_to);
         let vester_balance_post = get_account_balance(vester.env().account_id());
@@ -994,45 +1010,46 @@ pub mod tests {
 
     #[ink::test]
     fn release_when_multiple_schedules_created() {
-        let accounts = ink::env::test::default_accounts::<DefaultEnvironment>();
+        let accounts = accounts();
         let vest_to = accounts.charlie;
         let vester_submitter = accounts.bob;
 
         let mut vester = Vester::new();
 
-        set_next_caller(vester_submitter);
-        let init_timestamp = vester.env().block_timestamp() + ONE_DAY * 365;
+        change_caller(vester_submitter);
+        let creation_timestamp = vester.env().block_timestamp();
+        let first_action_timestamp = creation_timestamp + ONE_DAY * 365;
         let create_vest_args_vec: Vec<CreateVestingScheduleArgs> = vec![
             create_duration_as_amount_schedule_args(
                 vest_to,
                 None,
-                init_timestamp - ONE_DAY * 9,
-                init_timestamp - ONE_DAY * 3,
-            ), //overdue
+                (first_action_timestamp - ONE_DAY * 9) - creation_timestamp,
+                ONE_DAY * 6,
+            ), //overdue (at the first_action_timestamp)
             create_duration_as_amount_schedule_args(
                 vest_to,
                 None,
-                init_timestamp - ONE_DAY * 6,
-                init_timestamp + ONE_DAY * 3,
-            ), //started
+                (first_action_timestamp - ONE_DAY * 6) - creation_timestamp,
+                ONE_DAY * 9,
+            ), //started (at the first_action_timestamp)
             create_duration_as_amount_schedule_args(
                 vest_to,
                 None,
-                init_timestamp + ONE_DAY * 1,
-                init_timestamp + ONE_DAY * 6,
-            ), //not started
+                (first_action_timestamp + ONE_DAY * 1) - creation_timestamp,
+                ONE_DAY * 5,
+            ), //not started (at the first_action_timestamp)
             create_duration_as_amount_schedule_args(
                 vest_to,
                 None,
-                init_timestamp + ONE_DAY * 3,
-                init_timestamp + ONE_DAY * 9,
-            ), //not started
+                (first_action_timestamp + ONE_DAY * 3) - creation_timestamp,
+                ONE_DAY * 6,
+            ), //not started (at the first_action_timestamp)
             create_duration_as_amount_schedule_args(
                 vest_to,
                 None,
-                init_timestamp + ONE_DAY * 18,
-                init_timestamp + ONE_DAY * 64,
-            ), //not started
+                (first_action_timestamp + ONE_DAY * 18) - creation_timestamp,
+                ONE_DAY * 46,
+            ), //not started (at the first_action_timestamp)
         ];
         let starting_balance = 100_000;
         set_account_balance(vest_to, starting_balance);
@@ -1042,15 +1059,14 @@ pub mod tests {
             set_account_balance(
                 vester.env().account_id(),
                 create_vest_args.amount + vester_balance,
-            ); // why transfer does not work?
+            );
             set_value_transferred(create_vest_args.amount);
-            let res = Vesting::create_vest(
+            let res = GeneralVest::create_vest(
                 &mut vester,
                 create_vest_args.vest_to,
                 create_vest_args.asset,
                 create_vest_args.amount,
-                create_vest_args.vesting_start.clone(),
-                create_vest_args.vesting_end.clone(),
+                create_vest_args.schedule.clone(),
                 vec![],
             );
             assert!(res.is_ok(), "release failed. res: {:?}", res);
@@ -1058,7 +1074,7 @@ pub mod tests {
         let vest_to_balance_pre = get_account_balance(vest_to);
         let vester_balance_pre = get_account_balance(vester.env().account_id());
 
-        set_block_timestamp(init_timestamp);
+        set_block_timestamp(first_action_timestamp);
         // pre action
         let event_count_before = ink::env::test::recorded_events().collect::<Vec<_>>().len();
         assert_eq!(vester.next_id_vest_of(vest_to, None, vec![]), 5);
@@ -1067,8 +1083,8 @@ pub mod tests {
                 .vesting_schedule_of(vest_to, None, i.try_into().unwrap(), vec![])
                 .is_some());
         }
-        set_next_caller(vest_to);
-        let res = Vesting::release(&mut vester, Some(vest_to), None, vec![]);
+        change_caller(vest_to);
+        let res = GeneralVest::release(&mut vester, Some(vest_to), None, vec![]);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_token_released_event(
@@ -1089,14 +1105,17 @@ pub mod tests {
                 .is_some());
         }
 
-        // move time past 1st schedule end
-        if let VestingTimeConstraint::Default(vesting_end) = create_vest_args_vec[1].vesting_end {
+        // move time past 2nd schedule end
+        if let VestingSchedule::Constant(waiting_duration, vesting_duration) =
+            create_vest_args_vec[1].schedule
+        {
+            let vesting_end = creation_timestamp + waiting_duration + vesting_duration;
             set_block_timestamp(vesting_end + ONE_DAY);
         } else {
             panic!("variant expected to be default")
         }
         let event_count_before = ink::env::test::recorded_events().collect::<Vec<_>>().len();
-        let res = Vesting::release(&mut vester, Some(vest_to), None, vec![]);
+        let res = GeneralVest::release(&mut vester, Some(vest_to), None, vec![]);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_token_released_event(
@@ -1118,14 +1137,15 @@ pub mod tests {
         }
 
         // move time past last schedule end
-        if let VestingTimeConstraint::Default(vesting_end) =
-            create_vest_args_vec[create_vest_args_vec.len() - 1].vesting_end
+        if let VestingSchedule::Constant(waiting_duration, vesting_duration) =
+            create_vest_args_vec[create_vest_args_vec.len() - 1].schedule
         {
+            let vesting_end = creation_timestamp + waiting_duration + vesting_duration;
             set_block_timestamp(vesting_end + 1);
         } else {
             panic!("variant expected to be default")
         }
-        let res = Vesting::release(&mut vester, Some(vest_to), None, vec![]);
+        let res = GeneralVest::release(&mut vester, Some(vest_to), None, vec![]);
         assert!(res.is_ok(), "release failed. res: {:?}", res);
         let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_token_released_event(
