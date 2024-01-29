@@ -36,7 +36,12 @@ pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
     })
 }
 
-fn wrap_fields_to_be_upgradeable_safely(
+/// this function takes fields with #[lazy] atribute and Mappings and generates storage keys for them based on the struct name and field name
+///     pub my_field: u32 -> pub my_field :u32
+///     #[lazy]
+///     my_lazy_field: u32, -> my_lazy_field: ::ink::storage::Lazy<u32, ::ink::storage::traits::ManualKey<my_lazy_field_STORAGE_KEY>>
+///     my_mapping: Mapping<AccountId, u128> -> my_mapping: Mapping<AccountId, u128, ::ink::storage::traits::ManualKey<my_mapping_STORAGE_KEY>>
+fn generate_manual_keys_for_fields(
     structure_name: &str,
     fields: Fields,
 ) -> (Vec<Field>, Vec<Option<TokenStream>>) {
@@ -140,7 +145,7 @@ fn generate_struct(s: &synstructure::Structure, struct_item: DataStruct) -> Toke
     let attrs = s.ast().attrs.clone();
     let (_, _, where_closure) = s.ast().generics.split_for_impl();
 
-    let (fields, storage_keys) = wrap_fields_to_be_upgradeable_safely(
+    let (fields, storage_keys) = generate_manual_keys_for_fields(
         struct_ident.to_string().as_str(),
         struct_item.fields.clone(),
     );
@@ -196,7 +201,7 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
         };
 
         // get wrapped variant fields & keys - handles both unit, named (ExNamed{a: bool}) or unnamed (ExNamed(bool))
-        let (fields, storage_keys) = wrap_fields_to_be_upgradeable_safely(
+        let (fields, storage_keys) = generate_manual_keys_for_fields(
             format!("{}_{}", enum_ident, variant_ident).as_str(),
             variant.fields.clone(),
         );

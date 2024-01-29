@@ -29,7 +29,7 @@ mod pausable {
     use pendzl::test_utils::accounts;
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct MyFlipper {
         #[storage_field]
         pause: PausableData,

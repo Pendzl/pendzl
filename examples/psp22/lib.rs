@@ -11,7 +11,7 @@ pub mod my_psp22 {
     }
 
     #[ink(storage)]
-    #[derive(Storage)]
+    #[derive(StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp22: PSP22Data,

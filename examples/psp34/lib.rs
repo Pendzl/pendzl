@@ -5,7 +5,7 @@
 #[ink::contract]
 pub mod my_psp34 {
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp34: PSP34Data,

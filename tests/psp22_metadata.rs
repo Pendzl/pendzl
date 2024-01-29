@@ -30,7 +30,7 @@ mod psp22_metadata {
 
     /// A simple PSP-22 contract.
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct PSP22Struct {
         #[storage_field]
         psp22: PSP22Data,

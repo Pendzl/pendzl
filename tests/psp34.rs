@@ -31,7 +31,7 @@ mod psp34 {
         traits::String,
     };
 
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct PSP34Struct {
         #[storage_field]

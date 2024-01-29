@@ -29,7 +29,7 @@ mod psp22_burnable {
 
     /// A simple PSP-20 contract.
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct PSP22Struct {
         #[storage_field]
         psp22: PSP22Data,

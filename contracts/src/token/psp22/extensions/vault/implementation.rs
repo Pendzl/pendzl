@@ -4,7 +4,7 @@ use ink::env::DefaultEnvironment;
 use ink::primitives::AccountId;
 use ink::ToAccountId;
 use pendzl::math::errors::MathError;
-use pendzl::traits::{Balance, DefaultEnv, Storage};
+use pendzl::traits::{Balance, DefaultEnv, StorageFieldGetter};
 
 use super::{Deposit, PSP22VaultInternal, PSP22VaultStorage, Withdraw};
 use crate::token::psp22::implementation::PSP22Data;
@@ -63,7 +63,10 @@ fn mul_div(x: u128, y: u128, denominator: u128, round: Rounding) -> Result<u128,
 }
 
 pub trait PSP22VaultInternalDefaultImpl:
-    Storage<PSP22Data> + Storage<PSP22VaultData> + PSP22Internal + PSP22VaultInternal
+    StorageFieldGetter<PSP22Data>
+    + StorageFieldGetter<PSP22VaultData>
+    + PSP22Internal
+    + PSP22VaultInternal
 where
     PSP22Data: PSP22Storage,
     PSP22VaultData: PSP22VaultStorage,

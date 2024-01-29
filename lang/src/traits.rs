@@ -20,17 +20,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-use ::ink::env::{
-    DefaultEnvironment,
-    Environment,
-};
+use ::ink::env::{DefaultEnvironment, Environment};
 pub use const_format;
 use core::mem::ManuallyDrop;
-use ink::storage::traits::{
-    Storable,
-    StorageKey,
-};
-pub use pendzl_lang_macro::Storage;
+use ink::storage::traits::{Storable, StorageKey};
+pub use pendzl_lang_macro::StorageFieldGetter;
 pub use xxhash_rust::const_xxh32::xxh32;
 
 /// Aliases for types of the default environment
@@ -61,12 +55,12 @@ impl<T> DefaultEnv for T {}
 ///
 /// The trait is used as bound in pendzl to provide a generic implementation for contracts'
 /// traits. The user of pendzl can "inherit" the default implementation by implementing the
-/// `Storage<Data>` trait.
+/// `StorageFieldGetter<Data>` trait.
 ///
 /// In most cases, the trait is implemented automatically by the derive macro.
 /// The trait methods should not be used directly. Instead use the `data` method of
 /// `StorageAsRef` or `StorageAsMut`.
-pub trait Storage<Data>
+pub trait StorageFieldGetter<Data>
 where
     Self: Flush + StorageAsRef + StorageAsMut + DefaultEnv,
 {
@@ -77,27 +71,27 @@ where
     fn get_mut(&mut self) -> &mut Data;
 }
 
-/// Helper trait for `Storage` to provide user-friendly API to retrieve data as reference.
+/// Helper trait for `StorageFieldGetter` to provide user-friendly API to retrieve data as reference.
 pub trait StorageAsRef {
     #[inline(always)]
     fn data<Data>(&self) -> &Data
     where
-        Self: Storage<Data>,
+        Self: StorageFieldGetter<Data>,
     {
         #[allow(deprecated)]
-        <Self as Storage<Data>>::get(self)
+        <Self as StorageFieldGetter<Data>>::get(self)
     }
 }
 
-/// Helper trait for `Storage` to provide user-friendly API to retrieve data as mutable reference.
+/// Helper trait for `StorageFieldGetter` to provide user-friendly API to retrieve data as mutable reference.
 pub trait StorageAsMut: StorageAsRef {
     #[inline(always)]
     fn data<Data>(&mut self) -> &mut Data
     where
-        Self: Storage<Data>,
+        Self: StorageFieldGetter<Data>,
     {
         #[allow(deprecated)]
-        <Self as Storage<Data>>::get_mut(self)
+        <Self as StorageFieldGetter<Data>>::get_mut(self)
     }
 }
 

@@ -22,10 +22,10 @@
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-use pendzl_lang_codegen::{implementation, storage_derive, storage_item};
+use pendzl_lang_codegen::{implementation, storage_field_getter_derive, storage_item};
 use proc_macro::TokenStream;
 
-/// The macro implements `pendzl::traits::Storage`
+/// The macro implements `pendzl::traits::StorageFieldGetter`
 /// trait for each field marked by `#[storage_field]` attribute,
 /// so it will be possible to access them via `self.data::<Type>()` method. It is mostly used for pendzl
 /// to understand which fields should be accessed by traits.
@@ -33,15 +33,15 @@ use proc_macro::TokenStream;
 /// # Example
 /// ```skip
 ///     #[ink(storage)]
-///     #[derive(Storage)]
+///     #[derive(StorageFieldGetter)]
 ///     pub struct Contract {
 ///         #[storage_field]
 ///         field: u32,
 ///     }
 /// ```
-#[proc_macro_derive(Storage, attributes(storage_field))]
-pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    storage_derive::storage_derive(item.into()).into()
+#[proc_macro_derive(StorageFieldGetter, attributes(storage_field))]
+pub fn storage_field_getter_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    storage_field_getter_derive::storage_field_getter_derive(item.into()).into()
 }
 
 ////This macro implements the default traits defined in pendzl, while also allowing users
@@ -52,10 +52,10 @@ pub fn storage_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream 
 ////#[pendzl::implementation(PSP22)]
 ////#[ink::contract]
 ////pub mod MyInkToken {
-////    use pendzl::traits::Storage;
+////    use pendzl::traits::StorageFieldGetter;
 ////
 ////    #[ink(storage)]
-////    #[derive(Storage)]
+////    #[derive(StorageFieldGetter)]
 ////    pub struct MyInkToken {
 ////        #[storage_field]
 ////        psp22: psp22::Data
@@ -89,7 +89,7 @@ synstructure::decl_attribute!(
     /// to be a part of contract's storage. Also, inside of struct marked by this macro you can use
     /// `#[lazy]` attribute to mark fields, that should be lazily loaded and wrapped in `::ink::storage::Lazy`.
     /// The macro also generates constant storage keys for every mapping or lazy field and inserts them into
-    /// type definition.
+    /// type definition following recomendation from https://use.ink/datastructures/storage-layout
     ///
     /// # Example
     /// ```skip
@@ -111,5 +111,27 @@ synstructure::decl_attribute!(
     ///     b: u32,
     /// }
     ///
+    /// # Example
+    ///
+    /// ```skip
+    /// #[pendzl::storage_item]
+    /// pub struct MyStruct {
+    ///     field: u32
+    ///     #[lazy]
+    ///     lazy_field: u32,
+    ///     mappping: Mapping<AccountId, u128>,
+    /// }
+    /// ```
+    /// will be transformed into:
+    /// ```skip
+    /// #[::ink::storage_item]
+    /// pub struct MyStruct {
+    ///    field: u32
+    ///    lazy_field: ::ink::storage::Lazy<u32, ::ink::storage::traits::ManualKey<MYSTRUCT_LAZY_FIELD_STORAGE_KEY>>,
+    ///    mappping: ::ink::storage::Lazy<Mapping<AccountId, u128>, ::ink::storage::traits::ManualKey<MYSTRUCT_MAPPING_STORAGE_KEY>>,
+    /// }
+    /// pub const MYSTRUCT_LAZY_FIELD_STORAGE_KEY: u32 = ::pendzl::storage_unique_key!(MyStruct, lazy_field);
+    /// pub const MYSTRUCT_MAPPING_STORAGE_KEY: u32 = ::pendzl::storage_unique_key!(MyStruct, mapping);
+    /// ```
     storage_item::storage_item
 );

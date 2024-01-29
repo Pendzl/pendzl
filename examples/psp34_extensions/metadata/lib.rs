@@ -6,7 +6,7 @@
 pub mod my_psp34_metadata {
     use ink::prelude::string::*;
     use pendzl::contracts::token::psp34::*;
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct Contract {
         #[storage_field]

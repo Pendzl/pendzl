@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 use ink::prelude::vec::*;
 use ink::{prelude::vec, storage::Mapping};
-use pendzl::traits::{AccountId, Balance, Storage};
+use pendzl::traits::{AccountId, Balance, StorageFieldGetter};
 
 use crate::{
     finance::vesting::VestingSchedule,
@@ -159,7 +159,7 @@ pub trait VestingDefaultImpl: VestingInternal + Sized {
     }
 }
 
-pub trait VestingInternalDefaultImpl: Storage<VestingData> + VestingInternal
+pub trait VestingInternalDefaultImpl: StorageFieldGetter<VestingData> + VestingInternal
 where
     VestingData: VestingStorage,
 {

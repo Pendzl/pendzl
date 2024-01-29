@@ -87,7 +87,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
     cleanup_imports(impl_args.imports);
 
     let import_storage = syn::parse2::<syn::ItemUse>(quote!(
-        use pendzl::traits::Storage;
+        use pendzl::traits::StorageFieldGetter;
     ))
     .expect("Should parse import");
 

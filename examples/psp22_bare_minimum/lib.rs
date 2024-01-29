@@ -4,7 +4,7 @@
 #[ink::contract]
 pub mod my_psp22_bare_minimum {
     #[ink(storage)]
-    #[derive(Storage)]
+    #[derive(StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp22: PSP22Data,

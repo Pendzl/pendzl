@@ -5,7 +5,7 @@ pub use super::*;
 use ink::prelude::string::String;
 
 #[allow(unused_imports)]
-use pendzl::traits::Storage;
+use pendzl::traits::StorageFieldGetter;
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
 pub struct PSP22MetadataData {
@@ -32,7 +32,7 @@ impl PSP22MetadataStorage for PSP22MetadataData {
 }
 
 #[cfg(all(feature = "psp22_metadata_impl"))]
-pub trait PSP22MetadataDefaultImpl: Storage<PSP22MetadataData>
+pub trait PSP22MetadataDefaultImpl: StorageFieldGetter<PSP22MetadataData>
 where
     PSP22MetadataData: PSP22MetadataStorage,
 {
@@ -62,7 +62,7 @@ use crate::token::psp22::extensions::vault::{
     not(feature = "psp22_metadata_impl")
 ))]
 pub trait PSP22MetadataDefaultImpl:
-    Storage<PSP22VaultData> + Storage<PSP22MetadataData> + PSP22VaultInternal
+    StorageFieldGetter<PSP22VaultData> + StorageFieldGetter<PSP22MetadataData> + PSP22VaultInternal
 where
     PSP22VaultData: PSP22VaultStorage,
     PSP22MetadataData: PSP22MetadataStorage,

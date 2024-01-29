@@ -28,7 +28,7 @@ mod ownable {
     use pendzl::test_utils::change_caller;
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct MyOwnable {
         #[storage_field]
         ownable: OwnableData,

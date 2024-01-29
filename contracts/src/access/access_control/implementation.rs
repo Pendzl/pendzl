@@ -5,7 +5,7 @@ pub use super::{
     RoleAdminChanged, RoleGranted, RoleRevoked, RoleType, DEFAULT_ADMIN_ROLE,
 };
 use ink::storage::Mapping;
-use pendzl::traits::{AccountId, DefaultEnv, Storage};
+use pendzl::traits::{AccountId, DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -80,7 +80,7 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
     }
 }
 
-pub trait AccessControlInternalDefaultImpl: Storage<AccessControlData>
+pub trait AccessControlInternalDefaultImpl: StorageFieldGetter<AccessControlData>
 where
     AccessControlData: AccessControlStorage,
 {

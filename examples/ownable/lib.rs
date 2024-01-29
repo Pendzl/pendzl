@@ -1,5 +1,16 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
+use ink::storage::Mapping;
+use pendzl::traits::AccountId;
+#[derive(Default, Debug)]
+#[pendzl::storage_item]
+pub struct Ownable2Data {
+    #[lazy]
+    pub lazy_owner: Option<AccountId>,
+    pub owner: Option<AccountId>,
+
+    pub map: Mapping<AccountId, u128>,
+}
 
 #[pendzl::implementation(PSP22, Ownable)]
 #[ink::contract]
@@ -9,7 +20,7 @@ pub mod ownable {
     };
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp22: PSP22Data,

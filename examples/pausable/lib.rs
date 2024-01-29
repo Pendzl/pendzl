@@ -8,7 +8,7 @@ pub mod my_pausable {
     // use pendzl::contracts::security::pausable::PausableInternal;
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         pause: PausableData,

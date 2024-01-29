@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 #[ink::contract]
 mod base_psp22 {
-    use pendzl::traits::Storage;
+    use pendzl::traits::StorageFieldGetter;
 
     #[ink(storage)]
-    #[derive(Storage)]
+    #[derive(StorageFieldGetter)]
     pub struct PSP22Struct {
         pub value: bool,
     }

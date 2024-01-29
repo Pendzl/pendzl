@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 use crate::token::psp34::Id;
 use ink::{prelude::string::String, storage::Mapping};
-use pendzl::traits::Storage;
+use pendzl::traits::StorageFieldGetter;
 
 use super::{AttribiuteSet, PSP34MetadataStorage};
 use ink::prelude::string::ToString;
@@ -19,13 +19,13 @@ impl PSP34MetadataStorage for PSP34MetadataData {
     }
 }
 
-pub trait PSP34MetadataDefaultImpl: Storage<PSP34MetadataData> {
+pub trait PSP34MetadataDefaultImpl: StorageFieldGetter<PSP34MetadataData> {
     fn get_attribute_default_impl(&self, id: Id, key: String) -> Option<String> {
         self.data().attributes.get(&(id, key))
     }
 }
 
-pub trait PSP34MetadataInternalDefaultImpl: Storage<PSP34MetadataData> {
+pub trait PSP34MetadataInternalDefaultImpl: StorageFieldGetter<PSP34MetadataData> {
     fn _set_attribute_default_impl(&mut self, id: &Id, key: &String, value: &String) {
         self.data().set_attribute(id, key, value);
 

@@ -36,7 +36,7 @@ mod access_control {
     const MINTER: RoleType = ink::selector_id!("MINTER");
     const PAUSER: RoleType = ink::selector_id!("PAUSER");
 
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct AccessControlStruct {
         #[storage_field]

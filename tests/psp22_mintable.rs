@@ -29,7 +29,7 @@ mod psp22_mintable {
 
     /// A simple PSP22 contract.
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct PSP22Struct {
         #[storage_field]
         psp22: PSP22Data,

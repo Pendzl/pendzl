@@ -2,7 +2,7 @@
 
 use crate::token::psp34::{Approval, Id, PSP34Error, PSP34Internal, PSP34Storage, Transfer};
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
-use pendzl::traits::{DefaultEnv, Storage};
+use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -137,7 +137,7 @@ pub trait PSP34DefaultImpl: PSP34Internal + DefaultEnv {
     }
 }
 
-pub trait PSP34InternalDefaultImpl: Storage<PSP34Data>
+pub trait PSP34InternalDefaultImpl: StorageFieldGetter<PSP34Data>
 where
     PSP34Data: PSP34Storage,
 {

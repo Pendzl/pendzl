@@ -6,7 +6,7 @@
 pub mod my_psp22_mintable {
     use pendzl::contracts::token::psp22::*;
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp22: PSP22Data,

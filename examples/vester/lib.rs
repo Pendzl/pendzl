@@ -5,7 +5,7 @@
 #[ink::contract]
 pub mod vester {
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Vester {
         #[storage_field]
         vesting: VestingData,

@@ -27,7 +27,7 @@ mod psp34_burnable {
     use pendzl::{test_utils::accounts, traits::String};
     use pendzl_contracts::token::psp34::{Id, PSP34Error, PSP34Internal, PSP34};
 
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct PSP34Struct {
         #[storage_field]

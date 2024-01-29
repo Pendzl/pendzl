@@ -23,5 +23,5 @@
 pub mod implementation;
 mod implementations;
 pub mod internal;
-pub mod storage_derive;
+pub mod storage_field_getter_derive;
 pub mod storage_item;

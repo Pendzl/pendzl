@@ -29,7 +29,7 @@ mod psp34_metadata {
         extensions::metadata::PSP34MetadataInternal, Id, PSP34Error,
     };
 
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct PSP34Struct {
         #[storage_field]

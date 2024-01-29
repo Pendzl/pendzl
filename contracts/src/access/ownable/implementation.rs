@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 use super::{OwnableError, OwnableInternal, OwnableStorage, OwnershipTransferred};
-use pendzl::traits::{AccountId, Storage};
+use pendzl::traits::{AccountId, StorageFieldGetter};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -41,7 +41,7 @@ pub trait OwnableDefaultImpl: OwnableInternal {
     }
 }
 
-pub trait OwnableInternalDefaultImpl: Storage<OwnableData>
+pub trait OwnableInternalDefaultImpl: StorageFieldGetter<OwnableData>
 where
     OwnableData: OwnableStorage,
 {

@@ -10,7 +10,7 @@ pub mod my_access_control {
     };
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp34: PSP34Data,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pub use super::{Pausable, PausableError, PausableInternal, PausableStorage, Paused, Unpaused};
-use pendzl::traits::Storage;
+use pendzl::traits::StorageFieldGetter;
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -26,7 +26,7 @@ pub trait PausableDefaultImpl: PausableInternal {
     }
 }
 
-pub trait PausableInternalDefaultImpl: Storage<PausableData>
+pub trait PausableInternalDefaultImpl: StorageFieldGetter<PausableData>
 where
     PausableData: PausableStorage,
 {

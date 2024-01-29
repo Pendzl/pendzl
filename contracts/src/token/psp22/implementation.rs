@@ -2,7 +2,7 @@
 
 use super::{Approval, Balance, PSP22Error, PSP22Internal, PSP22Storage, Transfer};
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
-use pendzl::traits::{DefaultEnv, Storage};
+use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -163,7 +163,7 @@ pub trait PSP22DefaultImpl: DefaultEnv + PSP22Internal {
     }
 }
 
-pub trait PSP22InternalDefaultImpl: Storage<PSP22Data>
+pub trait PSP22InternalDefaultImpl: StorageFieldGetter<PSP22Data>
 where
     PSP22Data: PSP22Storage,
 {
