@@ -552,7 +552,7 @@ dependencies = [
 
 [[package]]
 name = "test_helpers"
-version = "0.1.0-alpha2"
+version = "0.1.0-beta1"
 dependencies = [
  "subxt-signer",
 ]

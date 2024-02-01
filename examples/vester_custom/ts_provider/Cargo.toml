@@ -1,6 +1,6 @@
 [package]
 name = "ts_provider"
-version = "0.1.0-beta"
+version = "0.1.0-beta1"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",

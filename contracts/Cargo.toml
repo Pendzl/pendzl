@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_contracts"
-version = "0.1.0-beta"
+version = "0.1.0-beta1"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -24,7 +24,7 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
 
-pendzl = { version = "0.1.0-beta", package = "pendzl_lang", path = "../lang", default-features = false, features = [
+pendzl = { version = "0.1.0-beta1", package = "pendzl_lang", path = "../lang", default-features = false, features = [
     "crypto",
 ] }
 
@@ -83,7 +83,7 @@ test-all = [
     "ownable_impl",
     "pausable_impl",
     "general_vest_impl",
-    "provide_vest_schedule_info"
+    "provide_vest_schedule_info",
 ]
 
 # [doc]
