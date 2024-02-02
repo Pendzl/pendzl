@@ -24,7 +24,9 @@
 #[pendzl::implementation(PSP22, PSP22Mintable)]
 #[ink::contract]
 mod psp22_mintable {
-    use pendzl::contracts::token::psp22::{PSP22Error, PSP22Internal, Transfer, PSP22};
+    use pendzl::contracts::token::psp22::{
+        PSP22Error, PSP22Internal, Transfer, PSP22,
+    };
     use pendzl::{test_utils::*, traits::String};
 
     /// A simple PSP22 contract.
@@ -51,7 +53,9 @@ mod psp22_mintable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)?;
+        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(
+            self, from, to, amount,
+        )?;
 
         if self.return_err_on_after {
             return Err(PSP22Error::Custom(String::from(
@@ -66,7 +70,12 @@ mod psp22_mintable {
         pub fn new(total_supply: Balance) -> Self {
             let mut instance = Self::default();
             let caller = instance.env().caller();
-            assert!(PSP22Internal::_mint_to(&mut instance, &caller, &total_supply).is_ok());
+            assert!(PSP22Internal::_mint_to(
+                &mut instance,
+                &caller,
+                &total_supply
+            )
+            .is_ok());
             instance
         }
 
@@ -94,8 +103,8 @@ mod psp22_mintable {
         assert_eq!(to, expected_to, "encountered invalid Transfer.to");
         assert_eq!(value, expected_value, "encountered invalid Trasfer.value");
 
-        let signature_topic =
-            <Transfer as ink::env::Event>::SIGNATURE_TOPIC.map(|topic| topic.to_vec());
+        let signature_topic = <Transfer as ink::env::Event>::SIGNATURE_TOPIC
+            .map(|topic| topic.to_vec());
 
         for (n, (actual_topic, expected_topic)) in
             event.topics.iter().zip(signature_topic).enumerate()
@@ -118,9 +127,13 @@ mod psp22_mintable {
         let accounts = accounts();
         let amount_to_mint = 10;
 
-        assert!(PSP22Mintable::mint(&mut psp22, accounts.bob, amount_to_mint).is_ok());
+        assert!(
+            PSP22Mintable::mint(&mut psp22, accounts.bob, amount_to_mint)
+                .is_ok()
+        );
 
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(emitted_events.len(), 2);
         // Check first transfer event related to PSP22 instantiation.
         assert_transfer_event(
@@ -147,7 +160,12 @@ mod psp22_mintable {
         let total_supply = PSP22::total_supply(&mut psp22);
         let amount_to_mint = 10;
 
-        assert!(PSP22Mintable::mint(&mut psp22, accounts.alice, amount_to_mint).is_ok());
+        assert!(PSP22Mintable::mint(
+            &mut psp22,
+            accounts.alice,
+            amount_to_mint
+        )
+        .is_ok());
 
         // Contract's total supply after minting
         let newtotal_supply = PSP22::total_supply(&mut psp22);
@@ -164,7 +182,12 @@ mod psp22_mintable {
         let account_balance = PSP22::balance_of(&mut psp22, accounts.alice);
         let amount_to_mint = 10;
 
-        assert!(PSP22Mintable::mint(&mut psp22, accounts.alice, amount_to_mint).is_ok());
+        assert!(PSP22Mintable::mint(
+            &mut psp22,
+            accounts.alice,
+            amount_to_mint
+        )
+        .is_ok());
 
         // Owner account's balance after minting
         let new_account_balance = PSP22::balance_of(&mut psp22, accounts.alice);

@@ -34,7 +34,8 @@ impl PSP22MetadataStorage for PSP22MetadataData {
 }
 
 #[cfg(feature = "psp22_metadata_impl")]
-pub trait PSP22MetadataDefaultImpl: StorageFieldGetter<PSP22MetadataData>
+pub trait PSP22MetadataDefaultImpl:
+    StorageFieldGetter<PSP22MetadataData>
 where
     PSP22MetadataData: PSP22MetadataStorage,
 {
@@ -88,7 +89,9 @@ use crate::token::psp22::extensions::vault::{
     not(feature = "psp22_metadata_impl")
 ))]
 pub trait PSP22MetadataDefaultImpl:
-    StorageFieldGetter<PSP22VaultData> + StorageFieldGetter<PSP22MetadataData> + PSP22VaultInternal
+    StorageFieldGetter<PSP22VaultData>
+    + StorageFieldGetter<PSP22MetadataData>
+    + PSP22VaultInternal
 where
     PSP22VaultData: PSP22VaultStorage,
     PSP22MetadataData: PSP22VaultMetadataStorage,
@@ -106,7 +109,10 @@ where
             "underlying_decimals: {:?}",
             self.data::<PSP22VaultData>().underlying_decimals()
         );
-        ink::env::debug_println!("decimals_offset: {:?}", self._decimals_offset());
+        ink::env::debug_println!(
+            "decimals_offset: {:?}",
+            self._decimals_offset()
+        );
         self.data::<PSP22VaultData>()
             .underlying_decimals()
             .checked_add(self._decimals_offset())

@@ -69,7 +69,7 @@ fn generate_manual_keys_for_fields(
                 new_field.ty = syn::Type::Verbatim(quote_spanned!(span =>
                     ::ink::storage::Lazy<#ty, ::ink::storage::traits::ManualKey<#key_name>>
                 ));
-        
+
                 // consume lazy attribute
                 new_field.attrs = field
                     .attrs
@@ -89,7 +89,6 @@ fn generate_manual_keys_for_fields(
                     structure_name.to_uppercase(),
                     field_name.to_uppercase()
                 );
-                
 
                 let is_mapping = if let syn::Type::Path(path) = &field.ty {
                     if let Some(segment) = path.path.segments.last() {
@@ -100,7 +99,7 @@ fn generate_manual_keys_for_fields(
                 } else {
                     false
                 };
-                
+
                 // generate code for storage key to be unique and not default to AutoKey
                 let storage_key = if is_mapping {
                     Some(quote! {
@@ -109,7 +108,6 @@ fn generate_manual_keys_for_fields(
                 } else {
                     None
                 };
-
 
                 // Mapping<AccountId, u128>
                 // -> Mapping<AccountId, u128, ::ink::storage::traits::ManualKey<STORAGE_KEY_...>)>
@@ -138,7 +136,10 @@ fn generate_manual_keys_for_fields(
         .unzip()
 }
 
-fn generate_struct(s: &synstructure::Structure, struct_item: DataStruct) -> TokenStream {
+fn generate_struct(
+    s: &synstructure::Structure,
+    struct_item: DataStruct,
+) -> TokenStream {
     let struct_ident = s.ast().ident.clone();
     let vis = s.ast().vis.clone();
     let types = s.ast().generics.clone();
@@ -174,7 +175,10 @@ fn generate_struct(s: &synstructure::Structure, struct_item: DataStruct) -> Toke
     }
 }
 
-fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStream {
+fn generate_enum(
+    s: &synstructure::Structure,
+    enum_item: DataEnum,
+) -> TokenStream {
     let enum_ident = s.ast().ident.clone();
     let vis = s.ast().vis.clone();
     let attrs = s.ast().attrs.clone();
@@ -192,7 +196,7 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
     let variants = enum_item.variants.into_iter().map(|variant| {
         let attrs = variant.attrs;
         let variant_ident = &variant.ident;
-        
+
         // handle explicit discriminants, ex. `ExUnNamed(bool) = 123,`
         let discriminant = if let Some((eq, expr)) = variant.discriminant {
             quote! { #eq #expr}
@@ -233,11 +237,17 @@ fn generate_enum(s: &synstructure::Structure, enum_item: DataEnum) -> TokenStrea
     }
 }
 
-pub fn storage_item(_attrs: TokenStream, s: synstructure::Structure) -> TokenStream {
+pub fn storage_item(
+    _attrs: TokenStream,
+    s: synstructure::Structure,
+) -> TokenStream {
     let item = match s.ast().data.clone() {
         Data::Struct(struct_item) => generate_struct(&s, struct_item),
         Data::Enum(enum_item) => generate_enum(&s, enum_item),
-        Data::Union(_) => panic!("{} - pendzl storage_item cannot wrap Union", s.ast().ident.clone())
+        Data::Union(_) => panic!(
+            "{} - pendzl storage_item cannot wrap Union",
+            s.ast().ident.clone()
+        ),
     };
 
     quote! {

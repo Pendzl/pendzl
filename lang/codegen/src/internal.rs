@@ -71,7 +71,6 @@ pub fn format_arg_string(arg: &str) -> String {
     let mut chars = arg.chars().peekable();
 
     while let Some(ch) = chars.next() {
-
         match ch {
             '&' => {
                 if chars.peek() == Some(&' ') {
@@ -83,21 +82,18 @@ pub fn format_arg_string(arg: &str) -> String {
                 if chars.peek() == Some(&':') {
                     formatted.push(':');
                     chars.next();
-                }
-                else if chars.peek() == Some(&'>') {
+                } else if chars.peek() == Some(&'>') {
                     formatted.push('>');
                     chars.next();
                     chars.next();
-                }
-                else if chars.peek() == Some(&'<') {
+                } else if chars.peek() == Some(&'<') {
                     formatted.push('<');
                     chars.next();
                     chars.next();
-                }
-                else if chars.peek() == Some(&',') {
+                } else if chars.peek() == Some(&',') {
                     formatted.push(',');
                     chars.next();
-                }else {
+                } else {
                     formatted.push(ch);
                 }
             }
@@ -132,7 +128,10 @@ fn parse_meta_path(input: ParseStream) -> syn::Result<syn::Path> {
     })
 }
 
-fn parse_meta_list_after_path(path: syn::Path, input: ParseStream) -> syn::Result<MetaList> {
+fn parse_meta_list_after_path(
+    path: syn::Path,
+    input: ParseStream,
+) -> syn::Result<MetaList> {
     let content;
     Ok(MetaList {
         _path: path,
@@ -141,7 +140,10 @@ fn parse_meta_list_after_path(path: syn::Path, input: ParseStream) -> syn::Resul
     })
 }
 
-fn parse_meta_after_path(path: syn::Path, input: ParseStream) -> syn::Result<NestedMeta> {
+fn parse_meta_after_path(
+    path: syn::Path,
+    input: ParseStream,
+) -> syn::Result<NestedMeta> {
     if input.peek(syn::token::Paren) {
         parse_meta_list_after_path(path, input).map(NestedMeta::List)
     } else {

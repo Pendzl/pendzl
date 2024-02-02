@@ -42,7 +42,12 @@ mod psp34_metadata {
         #[ink(constructor)]
         pub fn new(id: Id, key: String, val: String) -> Self {
             let mut instance = Self::default();
-            PSP34MetadataInternal::_set_attribute(&mut instance, &id, &key, &val);
+            PSP34MetadataInternal::_set_attribute(
+                &mut instance,
+                &id,
+                &key,
+                &val,
+            );
             instance
         }
     }
@@ -50,7 +55,11 @@ mod psp34_metadata {
     #[ink::test]
     fn init_with_name_and_symbol_works() {
         let id = Id::U8(1u8);
-        let nft = PSP34Struct::new(id.clone(), String::from("KEY"), String::from("VAL"));
+        let nft = PSP34Struct::new(
+            id.clone(),
+            String::from("KEY"),
+            String::from("VAL"),
+        );
 
         assert_eq!(
             PSP34Metadata::get_attribute(&nft, id.clone(), String::from("KEY")),

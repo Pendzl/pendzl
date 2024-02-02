@@ -53,7 +53,10 @@ mod pausable {
     }
 
     use ink::scale::Decode as _;
-    fn assert_paused_event(event: &ink::env::test::EmittedEvent, expected_account: AccountId) {
+    fn assert_paused_event(
+        event: &ink::env::test::EmittedEvent,
+        expected_account: AccountId,
+    ) {
         let Paused { account } = <Paused>::decode(&mut &event.data[..])
             .expect("encountered invalid contract event data buffer");
 
@@ -64,7 +67,10 @@ mod pausable {
         );
     }
 
-    fn assert_unpaused_event(event: &ink::env::test::EmittedEvent, expected_account: AccountId) {
+    fn assert_unpaused_event(
+        event: &ink::env::test::EmittedEvent,
+        expected_account: AccountId,
+    ) {
         let Unpaused { account } = <Unpaused>::decode(&mut &event.data[..])
             .expect("encountered invalid contract event data buffer");
 
@@ -88,7 +94,8 @@ mod pausable {
         assert!(PausableInternal::_pause(&mut inst).is_ok());
         assert!(inst.pause.paused.get_or_default());
 
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_paused_event(&emitted_events[0], accounts.alice);
     }
 
@@ -138,7 +145,8 @@ mod pausable {
         assert!(PausableInternal::_unpause(&mut inst).is_ok());
         assert!(!inst.pause.paused.get_or_default());
 
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_unpaused_event(&emitted_events[0], accounts.alice);
     }
 }

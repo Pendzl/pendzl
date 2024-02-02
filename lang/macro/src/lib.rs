@@ -22,7 +22,9 @@
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-use pendzl_lang_codegen::{implementation, storage_field_getter_derive, storage_item};
+use pendzl_lang_codegen::{
+    implementation, storage_field_getter_derive, storage_item,
+};
 use proc_macro::TokenStream;
 
 /// The macro implements `pendzl::traits::StorageFieldGetter`
@@ -40,7 +42,9 @@ use proc_macro::TokenStream;
 ///     }
 /// ```
 #[proc_macro_derive(StorageFieldGetter, attributes(storage_field))]
-pub fn storage_field_getter_derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn storage_field_getter_derive(
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     storage_field_getter_derive::storage_field_getter_derive(item.into()).into()
 }
 
@@ -79,7 +83,10 @@ pub fn storage_field_getter_derive(item: proc_macro::TokenStream) -> proc_macro:
 ////    }
 //// ```
 #[proc_macro_attribute]
-pub fn implementation(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
+pub fn implementation(
+    attrs: TokenStream,
+    ink_module: TokenStream,
+) -> TokenStream {
     implementation::generate(attrs.into(), ink_module.into()).into()
 }
 

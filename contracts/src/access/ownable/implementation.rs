@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-use super::{OwnableError, OwnableInternal, OwnableStorage, OwnershipTransferred};
+use super::{
+    OwnableError, OwnableInternal, OwnableStorage, OwnershipTransferred,
+};
 use pendzl::traits::{AccountId, StorageFieldGetter};
 
 #[derive(Default, Debug)]

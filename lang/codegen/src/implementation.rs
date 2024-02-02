@@ -37,12 +37,17 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         .expect("No default contracts to implement provided")
         .iter()
         .map(|arg| match arg {
-            NestedMeta::Path(method) => method.to_token_stream().to_string().replace(' ', ""),
-            _ => panic!("Expected names of pendzl traits to implement in the contract!"),
+            NestedMeta::Path(method) => {
+                method.to_token_stream().to_string().replace(' ', "")
+            }
+            _ => panic!(
+                "Expected names of pendzl traits to implement in the contract!"
+            ),
         })
         .collect::<Vec<String>>();
 
-    let mut module = syn::parse2::<syn::ItemMod>(input).expect("Can't parse contract module");
+    let mut module = syn::parse2::<syn::ItemMod>(input)
+        .expect("Can't parse contract module");
     let (braces, items) = match module.clone().content {
         Some((brace, items)) => (brace, items),
         None => {
@@ -63,7 +68,13 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
     // if multiple contracts are using the same trait implemented differently we override it this way
     let mut overriden_traits = HashMap::<&str, syn::Item>::default();
 
-    let mut impl_args = ImplArgs::new(&map, &mut items, &mut imports, &mut overriden_traits, ident);
+    let mut impl_args = ImplArgs::new(
+        &map,
+        &mut items,
+        &mut imports,
+        &mut overriden_traits,
+        ident,
+    );
 
     for to_default_implement in &args {
         match to_default_implement.as_str() {
@@ -117,10 +128,12 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
 //TODO verify
 fn cleanup_imports(imports: &mut HashMap<&str, syn::ItemUse>) {
     // we will remove unnecessary imports
-    let psp22_default_impls = vec!["PSP22Mintable", "PSP22Burnable", "PSP22Metadata"];
+    let psp22_default_impls =
+        vec!["PSP22Mintable", "PSP22Burnable", "PSP22Metadata"];
     check_and_remove_import("PSP22", psp22_default_impls, imports);
 
-    let psp34_default_impls = vec!["PSP34Mintable", "PSP34Burnable", "PSP34Metadata"];
+    let psp34_default_impls =
+        vec!["PSP34Mintable", "PSP34Burnable", "PSP34Metadata"];
     check_and_remove_import("PSP34", psp34_default_impls, imports);
 }
 
@@ -136,7 +149,9 @@ fn check_and_remove_import(
 
 // this method consumes override annotated methods and returns then mapped to code and the mod without them
 // we will later override the methods
-fn consume_overriders(items: Vec<syn::Item>) -> (OverridenFnMap, Vec<syn::Item>) {
+fn consume_overriders(
+    items: Vec<syn::Item>,
+) -> (OverridenFnMap, Vec<syn::Item>) {
     let mut map = HashMap::new();
     let mut result: Vec<syn::Item> = vec![];
     items.into_iter().for_each(|mut item| {

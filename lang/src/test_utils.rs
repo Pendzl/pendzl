@@ -40,7 +40,8 @@ where
         result.as_mut()[..len_encoded].copy_from_slice(&encoded);
         return result;
     }
-    let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
+    let mut hash_output =
+        <<Blake2x256 as HashOutput>::Type as Default>::default();
     <Blake2x256 as CryptoHash>::hash(&encoded, &mut hash_output);
     let copy_len = core::cmp::min(hash_output.len(), len_result);
     result.as_mut()[0..copy_len].copy_from_slice(&hash_output[0..copy_len]);
@@ -75,13 +76,17 @@ pub fn accounts() -> DefaultAccounts<DefaultEnvironment> {
 }
 
 #[cfg(feature = "std")]
-pub fn change_caller(new_caller: <DefaultEnvironment as Environment>::AccountId) {
+pub fn change_caller(
+    new_caller: <DefaultEnvironment as Environment>::AccountId,
+) {
     ink::env::test::set_caller::<ink::env::DefaultEnvironment>(new_caller);
 }
 
 #[cfg(feature = "std")]
 pub fn set_account_balance(account: AccountId, balance: Balance) {
-    ink::env::test::set_account_balance::<ink::env::DefaultEnvironment>(account, balance);
+    ink::env::test::set_account_balance::<ink::env::DefaultEnvironment>(
+        account, balance,
+    );
 }
 
 #[cfg(feature = "std")]
@@ -92,10 +97,14 @@ pub fn get_account_balance(account: AccountId) -> Balance {
 
 #[cfg(feature = "std")]
 pub fn set_value_transferred(value: Balance) {
-    ink::env::test::set_value_transferred::<ink::env::DefaultEnvironment>(value);
+    ink::env::test::set_value_transferred::<ink::env::DefaultEnvironment>(
+        value,
+    );
 }
 
 #[cfg(feature = "std")]
 pub fn set_block_timestamp(timestamp: Timestamp) {
-    ink::env::test::set_block_timestamp::<ink::env::DefaultEnvironment>(timestamp);
+    ink::env::test::set_block_timestamp::<ink::env::DefaultEnvironment>(
+        timestamp,
+    );
 }

@@ -40,7 +40,11 @@ mod psp22_metadata {
 
     impl PSP22Struct {
         #[ink(constructor)]
-        pub fn new(name: Option<String>, symbol: Option<String>, decimal: u8) -> Self {
+        pub fn new(
+            name: Option<String>,
+            symbol: Option<String>,
+            decimal: u8,
+        ) -> Self {
             let mut instance = Self::default();
             instance.metadata.name.set(&name);
             instance.metadata.symbol.set(&symbol);
@@ -51,7 +55,11 @@ mod psp22_metadata {
 
     #[ink::test]
     fn init_with_name_and_symbol_works() {
-        let token = PSP22Struct::new(Some(String::from("TOKEN")), Some(String::from("TKN")), 18);
+        let token = PSP22Struct::new(
+            Some(String::from("TOKEN")),
+            Some(String::from("TKN")),
+            18,
+        );
 
         assert_eq!(
             PSP22Metadata::token_name(&token),

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-use super::{Approval, Balance, PSP22Error, PSP22Internal, PSP22Storage, Transfer};
+use super::{
+    Approval, Balance, PSP22Error, PSP22Internal, PSP22Storage, Transfer,
+};
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
 use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
@@ -17,7 +19,10 @@ impl PSP22Storage for PSP22Data {
     fn total_supply(&self) -> Balance {
         self.total_supply.get_or_default()
     }
-    fn increase_total_supply(&mut self, amount: &Balance) -> Result<(), PSP22Error> {
+    fn increase_total_supply(
+        &mut self,
+        amount: &Balance,
+    ) -> Result<(), PSP22Error> {
         let new_total_supply = self
             .total_supply
             .get_or_default()
@@ -26,7 +31,10 @@ impl PSP22Storage for PSP22Data {
         self.total_supply.set(&new_total_supply);
         Ok(())
     }
-    fn decrease_total_supply(&mut self, amount: &Balance) -> Result<(), PSP22Error> {
+    fn decrease_total_supply(
+        &mut self,
+        amount: &Balance,
+    ) -> Result<(), PSP22Error> {
         let new_total_supply = self
             .total_supply()
             .checked_sub(*amount)
@@ -66,7 +74,12 @@ impl PSP22Storage for PSP22Data {
     fn allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance {
         self.allowances.get(&(*owner, *spender)).unwrap_or_default()
     }
-    fn set_allowance(&mut self, owner: &AccountId, spender: &AccountId, value: &Balance) {
+    fn set_allowance(
+        &mut self,
+        owner: &AccountId,
+        spender: &AccountId,
+        value: &Balance,
+    ) {
         self.allowances.insert(&(*owner, *spender), value);
     }
     fn increase_allowance(
@@ -106,7 +119,11 @@ pub trait PSP22DefaultImpl: DefaultEnv + PSP22Internal {
         self._balance_of(&owner)
     }
 
-    fn allowance_default_impl(&self, owner: AccountId, spender: AccountId) -> Balance {
+    fn allowance_default_impl(
+        &self,
+        owner: AccountId,
+        spender: AccountId,
+    ) -> Balance {
         self._allowance(&owner, &spender)
     }
 
@@ -175,7 +192,11 @@ where
         self.data().balance_of(owner)
     }
 
-    fn _allowance_default_impl(&self, owner: &AccountId, spender: &AccountId) -> Balance {
+    fn _allowance_default_impl(
+        &self,
+        owner: &AccountId,
+        spender: &AccountId,
+    ) -> Balance {
         self.data().allowance(owner, spender)
     }
 
@@ -251,7 +272,8 @@ where
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error> {
-        let new_allowance = self.data().decrease_allowance(owner, spender, amount)?;
+        let new_allowance =
+            self.data().decrease_allowance(owner, spender, amount)?;
         Self::env().emit_event(Approval {
             owner: *owner,
             spender: *spender,
@@ -265,7 +287,8 @@ where
         spender: &AccountId,
         amount: &Balance,
     ) -> Result<(), PSP22Error> {
-        let new_allowance = self.data().increase_allowance(owner, spender, amount)?;
+        let new_allowance =
+            self.data().increase_allowance(owner, spender, amount)?;
         Self::env().emit_event(Approval {
             owner: *owner,
             spender: *spender,

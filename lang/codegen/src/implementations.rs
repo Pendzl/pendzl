@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: MIT
+use quote::ToTokens;
 use quote::{format_ident, quote};
 use std::collections::HashMap;
-use quote::ToTokens;
 use syn::{punctuated::Punctuated, token::Comma, Block, FnArg};
 
-pub type OverridenFnMap =
-    HashMap<String, Vec<(String, (Box<Block>, Vec<syn::Attribute>, Punctuated<FnArg, Comma>))>>;
+pub type OverridenFnMap = HashMap<
+    String,
+    Vec<(
+        String,
+        (Box<Block>, Vec<syn::Attribute>, Punctuated<FnArg, Comma>),
+    )>,
+>;
 
 pub struct ImplArgs<'a> {
     pub map: &'a OverridenFnMap,
@@ -91,7 +96,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
             ) -> Result<(), PSP22Error> {
                 pendzl::contracts::token::psp22::PSP22Internal::_update(self, None, Some(to), amount)
             }
-            
+
             fn _burn_from(
                 &mut self,
                 from: &AccountId,
@@ -188,12 +193,12 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::*;
+        pub use pendzl::contracts::token::psp22::*;
     ))
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::implementation::PSP22Data;
+        pub use pendzl::contracts::token::psp22::implementation::PSP22Data;
     ))
     .expect("Should parse import");
 
@@ -201,11 +206,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     impl_args.imports.insert("PSP22Data", import_data);
     impl_args.vec_import();
 
-    override_functions(
-        "PSP22Internal",
-        &mut internal,
-        impl_args.map,
-    );
+    override_functions("PSP22Internal", &mut internal, impl_args.map);
     override_functions("PSP22", &mut psp22, impl_args.map);
 
     impl_args.items.push(syn::Item::Impl(internal_default_impl));
@@ -232,7 +233,7 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::burnable::*;
+        pub use pendzl::contracts::token::psp22::extensions::burnable::*;
     ))
     .expect("Should parse");
 
@@ -244,7 +245,6 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(burnable_default_impl));
     impl_args.items.push(syn::Item::Impl(burnable));
 }
-
 
 pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
@@ -264,7 +264,7 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::mintable::*;
+        pub use pendzl::contracts::token::psp22::extensions::mintable::*;
     ))
     .expect("Should parse");
 
@@ -305,11 +305,11 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::metadata::*;
+        pub use pendzl::contracts::token::psp22::extensions::metadata::*;
     ))
     .expect("Should parse");
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::metadata::implementation::PSP22MetadataData;
+        pub use pendzl::contracts::token::psp22::extensions::metadata::implementation::PSP22MetadataData;
     ))
     .expect("Should parse");
 
@@ -335,60 +335,60 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             fn _decimals_offset(&self) -> u8 {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_decimals_offset_default_impl(self)
             }
-        
+
             fn _try_get_asset_decimals(&self) -> (bool, u8) {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_try_get_asset_decimals_default_impl(self)
             }
-        
+
             fn _asset(&self) -> PSP22Ref {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_asset_default_impl(self)
             }
-        
+
             fn _total_assets(&self) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_total_assets_default_impl(self)
             }
-        
+
             fn _convert_to_shares(&self, assets: &Balance, rounding: Rounding) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_shares_default_impl(self, assets, rounding)
             }
-        
+
             fn _convert_to_assets(&self, shares: &Balance, rounding: Rounding) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_convert_to_assets_default_impl(self, shares, rounding)
 
             }
-        
+
             fn _max_deposit(&self, to: &AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_deposit_default_impl(self, to)
             }
-        
+
             fn _max_mint(&self, to: &AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_mint_default_impl(self, to)
             }
-        
+
             fn _max_withdraw(&self, owner: &AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_withdraw_default_impl(self, owner)
             }
-        
+
             fn _max_redeem(&self, owner: &AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_max_redeem_default_impl(self, owner)
             }
-        
+
             fn _preview_deposit(&self, assets: &Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_deposit_default_impl(self, assets)
             }
-        
+
             fn _preview_mint(&self, shares: &Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_mint_default_impl(self, shares)
             }
-        
+
             fn _preview_withdraw(&self, assets: &Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_withdraw_default_impl(self, assets)
             }
-        
+
             fn _preview_redeem(&self, shares: &Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_preview_redeem_default_impl(self, shares)
             }
-        
+
             fn _deposit(
                 &mut self,
                 caller: &AccountId,
@@ -398,7 +398,7 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             ) -> Result<(), PSP22Error> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl::_deposit_default_impl(self, caller, receiver, assets, shares)
             }
-        
+
             fn _withdraw(
                 &mut self,
                 caller: &AccountId,
@@ -424,77 +424,77 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             fn asset(&self) -> AccountId {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::asset_default_impl(self)
             }
-        
+
             #[ink(message)]
             fn total_assets(&self) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::total_assets_default_impl(self)
             }
-        
+
             #[ink(message)]
             fn convert_to_shares(&self, assets: Balance, round: Rounding) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_shares_default_impl(self, assets, round)
             }
-        
+
             #[ink(message)]
             fn convert_to_assets(&self, shares: Balance, round: Rounding) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::convert_to_assets_default_impl(self, shares, round)
             }
-        
+
             #[ink(message)]
             fn max_deposit(&self, to: AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_deposit_default_impl(self, to)
             }
-        
+
             #[ink(message)]
             fn max_mint(&self, to: AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_mint_default_impl(self, to)
             }
-        
+
             #[ink(message)]
             fn max_withdraw(&self, owner: AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_withdraw_default_impl(self, owner)
             }
-        
+
             #[ink(message)]
             fn max_redeem(&self, owner: AccountId) -> Balance {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::max_redeem_default_impl(self, owner)
             }
-        
+
             #[ink(message)]
             fn preview_deposit(&self, assets: Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_deposit_default_impl(self, assets)
             }
-        
+
             #[ink(message)]
             fn preview_mint(&self, shares: Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_mint_default_impl(self, shares)
             }
-        
+
             #[ink(message)]
             fn preview_withdraw(&self, assets: Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_withdraw_default_impl(self, assets)
             }
-        
+
             #[ink(message)]
             fn preview_redeem(&self, shares: Balance) -> Result<Balance, MathError> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::preview_redeem_default_impl(self, shares)
             }
-        
+
             #[ink(message)]
             fn deposit(&mut self, assets: Balance, receiver: AccountId) -> Result<Balance, PSP22Error> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::deposit_default_impl(self, assets, receiver)
             }
-        
+
             #[ink(message)]
             fn mint(&mut self, shares: Balance, receiver: AccountId) -> Result<Balance, PSP22Error> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::mint_default_impl(self, shares, receiver)
             }
-        
+
             #[ink(message)]
             fn withdraw(&mut self, assets: Balance, receiver: AccountId, owner: AccountId) -> Result<Balance, PSP22Error> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::withdraw_default_impl(self, assets, receiver, owner)
             }
-        
+
             #[ink(message)]
             fn redeem(&mut self, shares: Balance, receiver: AccountId, owner: AccountId) -> Result<Balance, PSP22Error> {
                 pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultDefaultImpl::redeem_default_impl(self, shares, receiver, owner)
@@ -504,38 +504,37 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::vault::*;
+        pub use pendzl::contracts::token::psp22::extensions::vault::*;
     ))
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultData;
+        pub use pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultData;
     ))
     .expect("Should parse import");
 
     let import_rounding = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp22::extensions::vault::Rounding;
+        pub use pendzl::contracts::token::psp22::extensions::vault::Rounding;
     ))
     .expect("Should parse import");
 
     impl_args.imports.insert("PSP22Vault", import);
     impl_args.imports.insert("PSP22VaultData", import_data);
-    impl_args.imports.insert("PSP22VaultRounding", import_rounding);
+    impl_args
+        .imports
+        .insert("PSP22VaultRounding", import_rounding);
     impl_args.vec_import();
 
-    override_functions(
-        "PSP22VaultInternal",
-        &mut internal,
-        impl_args.map,
-    );
+    override_functions("PSP22VaultInternal", &mut internal, impl_args.map);
     override_functions("PSP22Vault", &mut psp22_vault, impl_args.map);
 
     impl_args.items.push(syn::Item::Impl(internal_default_impl));
     impl_args.items.push(syn::Item::Impl(internal));
-    impl_args.items.push(syn::Item::Impl(psp22_vault_default_impl));
+    impl_args
+        .items
+        .push(syn::Item::Impl(psp22_vault_default_impl));
     impl_args.items.push(syn::Item::Impl(psp22_vault));
 }
-
 
 pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
@@ -557,11 +556,11 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
             fn _owner_of(&self, id: &Id) -> Option<AccountId> {
                 pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_owner_of_default_impl(self,id)
             }
-            
+
             fn _allowance(&self, owner: &AccountId, operator: &AccountId, id: &Option<Id>) -> bool {
                 pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_allowance_default_impl(self, owner, operator, id)
             }
-            
+
             fn _approve(&mut self, owner: &AccountId,operator: &AccountId, id: &Option<Id>, approved: &bool) -> Result<(), PSP34Error> {
                 pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_approve_default_impl(self, owner, operator, id, approved)
             }
@@ -575,7 +574,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
                 pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(self, from, to, id)
 
             }
-        
+
             fn _transfer(&mut self, from: &AccountId, to: &AccountId, id: &Id, data: &Vec<u8>) -> Result<(), PSP34Error> {
                 pendzl::contracts::token::psp34::PSP34Internal::_update(self, &Some(from), &Some(to), id)
             }
@@ -638,12 +637,12 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::*;
+        pub use pendzl::contracts::token::psp34::*;
     ))
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::implementation::PSP34Data;
+        pub use pendzl::contracts::token::psp34::implementation::PSP34Data;
     ))
     .expect("Should parse import");
 
@@ -660,7 +659,6 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(psp34_default_impl));
     impl_args.items.push(syn::Item::Impl(psp34));
 }
-
 
 pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
@@ -680,7 +678,7 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::extensions::burnable::*;
+        pub use pendzl::contracts::token::psp34::extensions::burnable::*;
     ))
     .expect("Should parse");
 
@@ -692,7 +690,6 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(burnable_default_impl));
     impl_args.items.push(syn::Item::Impl(burnable));
 }
-
 
 pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
@@ -712,7 +709,7 @@ pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::extensions::mintable::*;
+        pub use pendzl::contracts::token::psp34::extensions::mintable::*;
     ))
     .expect("Should parse");
 
@@ -758,12 +755,12 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::extensions::metadata::*;
+        pub use pendzl::contracts::token::psp34::extensions::metadata::*;
     ))
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::token::psp34::extensions::metadata::implementation::PSP34MetadataData;
+        pub use pendzl::contracts::token::psp34::extensions::metadata::implementation::PSP34MetadataData;
     ))
     .expect("Should parse import");
 
@@ -830,12 +827,12 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::ownable::*;
+        pub use pendzl::contracts::access::ownable::*;
     ))
     .expect("Should parse");
-    
+
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::ownable::implementation::OwnableData;
+        pub use pendzl::contracts::access::ownable::implementation::OwnableData;
     ))
     .expect("Should parse import");
 
@@ -875,7 +872,7 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
             fn _do_revoke_role(&mut self, role: RoleType, account: Option<AccountId>)  -> Result<(), AccessControlError>  {
                 pendzl::contracts::access::access_control::implementation::AccessControlInternalDefaultImpl::_do_revoke_role_default_impl(self, role, account)
             }
-            
+
             fn _get_role_admin(&self, role: RoleType) -> RoleType {
                 pendzl::contracts::access::access_control::implementation::AccessControlInternalDefaultImpl::_get_role_admin_default_impl(self, role)
             }
@@ -928,15 +925,15 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::access_control::*;
+        pub use pendzl::contracts::access::access_control::*;
     ))
     .expect("Should parse");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::access::access_control::implementation::AccessControlData;
+        pub use pendzl::contracts::access::access_control::implementation::AccessControlData;
     ))
     .expect("Should parse import");
-        
+
     impl_args.imports.insert("AccessControl", import);
     impl_args.imports.insert("AccessControlData", import_data);
 
@@ -945,7 +942,9 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
 
     impl_args.items.push(syn::Item::Impl(internal_default_impl));
     impl_args.items.push(syn::Item::Impl(internal));
-    impl_args.items.push(syn::Item::Impl(access_control_default_impl));
+    impl_args
+        .items
+        .push(syn::Item::Impl(access_control_default_impl));
     impl_args.items.push(syn::Item::Impl(access_control));
 }
 
@@ -997,12 +996,12 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::security::pausable::*;
+        pub use pendzl::contracts::security::pausable::*;
     ))
     .expect("Should parse import");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::security::pausable::implementation::PausableData;
+        pub use pendzl::contracts::security::pausable::implementation::PausableData;
     ))
     .expect("Should parse import");
     impl_args.imports.insert("Pausable", import);
@@ -1049,11 +1048,11 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
             fn _release_by_vest_id(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, id: u32, data: &Vec<u8>) -> Result<(), VestingError> {
                 pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_release_by_vest_id_default_impl(self, receiver, asset, id, data)
             }
-            
+
             fn _handle_transfer_in(&mut self, asset: Option<AccountId>, from: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
                 pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_handle_transfer_in_default_impl(self, asset, from, amount, data)
             }
-            
+
             fn _handle_transfer_out(&mut self, asset: Option<AccountId>, to: AccountId, amount: Balance, data: &Vec<u8>) -> Result<(), VestingError> {
                 pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_handle_transfer_out_default_impl(self, asset, to, amount, data)
             }
@@ -1115,12 +1114,12 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     .expect("Should parse");
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::finance::general_vest::*;
+        pub use pendzl::contracts::finance::general_vest::*;
     ))
     .expect("Should parse import");
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
-      pub use pendzl::contracts::finance::general_vest::implementation::GeneralVestData;
+        pub use pendzl::contracts::finance::general_vest::implementation::GeneralVestData;
     ))
     .expect("Should parse import");
     impl_args.imports.insert("GeneralVest", import);
@@ -1137,7 +1136,11 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(general_vest));
 }
 
-fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map: &OverridenFnMap) {
+fn override_functions(
+    trait_name: &str,
+    implementation: &mut syn::ItemImpl,
+    map: &OverridenFnMap,
+) {
     if let Some(overrides) = map.get(trait_name) {
         // we will find which fns we wanna override
         for (fn_name, (fn_code, attributes, inputs)) in overrides {
@@ -1145,26 +1148,45 @@ fn override_functions(trait_name: &str, implementation: &mut syn::ItemImpl, map:
             for item in implementation.items.iter_mut() {
                 if let syn::ImplItem::Method(method) = item {
                     if &method.sig.ident.to_string() == fn_name {
-                        let args_diff = crate::internal::inputs_diff(method.sig.inputs.clone(), inputs.clone());
-                        if args_diff.added.len() > 0 || args_diff.removed.len() > 0 {
-                            
-                            let original_args = method.sig.inputs.clone()
+                        let args_diff = crate::internal::inputs_diff(
+                            method.sig.inputs.clone(),
+                            inputs.clone(),
+                        );
+                        if args_diff.added.len() > 0
+                            || args_diff.removed.len() > 0
+                        {
+                            let original_args = method
+                                .sig
+                                .inputs
+                                .clone()
                                 .into_iter()
-                                .map(|arg| crate::internal::format_arg_string(&arg.into_token_stream().to_string()))
+                                .map(|arg| {
+                                    crate::internal::format_arg_string(
+                                        &arg.into_token_stream().to_string(),
+                                    )
+                                })
                                 .collect::<Vec<_>>()
                                 .join(", ");
-                            let current_args = inputs.clone()
+                            let current_args = inputs
+                                .clone()
                                 .into_iter()
-                                .map(|arg| crate::internal::format_arg_string(&arg.into_token_stream().to_string()))
+                                .map(|arg| {
+                                    crate::internal::format_arg_string(
+                                        &arg.into_token_stream().to_string(),
+                                    )
+                                })
                                 .collect::<Vec<_>>()
                                 .join(", ");
-                            
-                            panic!("Function arguments do not match for fn {} in trait {} \n
+
+                            panic!(
+                                "Function arguments do not match for fn {} in trait {} \n
                             original args: {:?} \n
                             current args: {:?} \n
-                            diff: {:?}", fn_name, trait_name, original_args, current_args, args_diff)
+                            diff: {:?}",
+                                fn_name, trait_name, original_args, current_args, args_diff
+                            )
                         }
-                        
+
                         method.block = *fn_code.clone();
                         method.attrs.append(&mut attributes.to_vec());
 

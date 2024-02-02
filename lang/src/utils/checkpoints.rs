@@ -28,21 +28,34 @@ use ink::prelude::vec::Vec;
 ///
 /// To create a history of checkpoints define a variable type `Checkpoints` in your contract, and store a new
 /// checkpoint for the current transaction block using the `push` function.
-#[derive(scale::Decode, scale::Encode, Default, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout))]
+#[derive(
+    scale::Decode, scale::Encode, Default, Clone, Debug, PartialEq, Eq,
+)]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)
+)]
 pub struct Checkpoints {
     pub checkpoints: Vec<Checkpoint>,
 }
 
-#[derive(scale::Decode, scale::Encode, Default, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout))]
+#[derive(
+    scale::Decode, scale::Encode, Default, Clone, Debug, PartialEq, Eq,
+)]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)
+)]
 pub struct Checkpoint {
     pub key: u64,
     pub value: u128,
 }
 
 #[derive(scale::Decode, scale::Encode, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout))]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)
+)]
 pub enum CheckpointsError {
     UnorderedInsertion,
 }
@@ -61,7 +74,11 @@ fn sqrt(x: u64) -> u64 {
 impl Checkpoints {
     /// Pushes a (`key`, `value`) pair into a Checkpoint so that it is stored as the checkpoint.
     /// Returns previous value and new value.
-    pub fn push(&mut self, key: u64, value: u128) -> Result<(u128, u128), CheckpointsError> {
+    pub fn push(
+        &mut self,
+        key: u64,
+        value: u128,
+    ) -> Result<(u128, u128), CheckpointsError> {
         self._insert(key, value)
     }
 
@@ -149,14 +166,18 @@ impl Checkpoints {
     }
 
     /// Inserts a (`key`, `value`) pair into a Checkpoints so that it is stored as the checkpoint.
-    fn _insert(&mut self, key: u64, value: u128) -> Result<(u128, u128), CheckpointsError> {
+    fn _insert(
+        &mut self,
+        key: u64,
+        value: u128,
+    ) -> Result<(u128, u128), CheckpointsError> {
         let pos = self.checkpoints.len();
 
         if pos > 0 {
             let last = self.checkpoints[pos - 1].clone();
 
             if last.key > key {
-                return Err(CheckpointsError::UnorderedInsertion)
+                return Err(CheckpointsError::UnorderedInsertion);
             }
 
             if last.key == key {
@@ -173,7 +194,12 @@ impl Checkpoints {
 
     /// Return the index of the last (most recent) checkpoint with key lower or equal than the search key, or `high` if there is none.
     /// `low` and `high` define a section where to do the search, with inclusive `low` and exclusive `high`.
-    fn _upper_binary_lookup(&self, key: u64, mut low: usize, mut high: usize) -> usize {
+    fn _upper_binary_lookup(
+        &self,
+        key: u64,
+        mut low: usize,
+        mut high: usize,
+    ) -> usize {
         while low < high {
             let mid = (low + high) / 2;
             if key < self.checkpoints[mid].key {
@@ -186,7 +212,12 @@ impl Checkpoints {
     }
     /// Return the index of the first (oldest) checkpoint with key is greater or equal than the search key, or `high` if there is none.
     /// `low` and `high` define a section where to do the search, with inclusive `low` and exclusive `high`.
-    fn _lower_binary_lookup(&self, key: u64, mut low: usize, mut high: usize) -> usize {
+    fn _lower_binary_lookup(
+        &self,
+        key: u64,
+        mut low: usize,
+        mut high: usize,
+    ) -> usize {
         while low < high {
             let mid = (low + high) / 2;
             if key > self.checkpoints[mid].key {

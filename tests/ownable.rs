@@ -62,8 +62,9 @@ mod ownable {
         event: &ink::env::test::EmittedEvent,
         expected_new_owner: Option<AccountId>,
     ) {
-        let OwnershipTransferred { new } = <OwnershipTransferred>::decode(&mut &event.data[..])
-            .expect("encountered invalid contract event data buffer");
+        let OwnershipTransferred { new } =
+            <OwnershipTransferred>::decode(&mut &event.data[..])
+                .expect("encountered invalid contract event data buffer");
         assert_eq!(
             new, expected_new_owner,
             "New owner was not equal to expected new owner."
@@ -74,10 +75,14 @@ mod ownable {
     fn constructor_works() {
         let instance = MyOwnable::new();
 
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(1, emitted_events.len());
 
-        assert_ownership_transferred_event(&emitted_events[0], Ownable::owner(&instance))
+        assert_ownership_transferred_event(
+            &emitted_events[0],
+            Ownable::owner(&instance),
+        )
     }
 
     #[ink::test]
@@ -95,7 +100,8 @@ mod ownable {
         assert_eq!(creator, Some(caller));
         assert!(Ownable::renounce_ownership(&mut my_ownable,).is_ok());
         assert_eq!(Ownable::owner(&mut my_ownable), None);
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(2, emitted_events.len());
         assert_ownership_transferred_event(&emitted_events[0], creator);
         assert_ownership_transferred_event(&emitted_events[1], None);
@@ -120,7 +126,8 @@ mod ownable {
         let new_owner = AccountId::from([5u8; 32]);
         assert!(Ownable::transfer_ownership(&mut my_ownable, new_owner).is_ok());
         assert_eq!(Ownable::owner(&mut my_ownable), Some(new_owner));
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(2, emitted_events.len());
         assert_ownership_transferred_event(&emitted_events[0], creator);
         assert_ownership_transferred_event(&emitted_events[1], Some(new_owner));

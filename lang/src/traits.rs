@@ -64,10 +64,16 @@ pub trait StorageFieldGetter<Data>
 where
     Self: Flush + StorageAsRef + StorageAsMut + DefaultEnv,
 {
-    #[deprecated(since = "2.1.0", note = "please use `StorageAsRef::data` instead")]
+    #[deprecated(
+        since = "2.1.0",
+        note = "please use `StorageAsRef::data` instead"
+    )]
     fn get(&self) -> &Data;
 
-    #[deprecated(since = "2.1.0", note = "please use `StorageAsMut::data` instead")]
+    #[deprecated(
+        since = "2.1.0",
+        note = "please use `StorageAsMut::data` instead"
+    )]
     fn get_mut(&mut self) -> &mut Data;
 }
 
@@ -112,7 +118,9 @@ pub trait Flush: Storable + Sized + StorageKey {
     /// you have to this method on storage struct.
     fn load(&mut self) {
         let mut state = ink::env::get_contract_storage(&Self::KEY)
-            .unwrap_or_else(|error| panic!("Failed to load contract state: {:?}", error))
+            .unwrap_or_else(|error| {
+                panic!("Failed to load contract state: {:?}", error)
+            })
             .unwrap_or_else(|| panic!("Contract state is not initialized"));
         core::mem::swap(self, &mut state);
         let _ = ManuallyDrop::new(state);

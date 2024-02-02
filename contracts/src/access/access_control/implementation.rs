@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 
 pub use super::{
-    AccessControl, AccessControlError, AccessControlInternal, AccessControlStorage,
-    RoleAdminChanged, RoleGranted, RoleRevoked, RoleType, DEFAULT_ADMIN_ROLE,
+    AccessControl, AccessControlError, AccessControlInternal,
+    AccessControlStorage, RoleAdminChanged, RoleGranted, RoleRevoked, RoleType,
+    DEFAULT_ADMIN_ROLE,
 };
 use ink::storage::Mapping;
 use pendzl::traits::{AccountId, DefaultEnv, StorageFieldGetter};
@@ -16,7 +17,8 @@ pub struct AccessControlData {
 
 impl AccessControlStorage for AccessControlData {
     fn has_role(&self, role: RoleType, address: &Option<AccountId>) -> bool {
-        self.members.contains(&(role, *address)) || self.members.contains(&(role, None))
+        self.members.contains(&(role, *address))
+            || self.members.contains(&(role, None))
     }
 
     fn add(&mut self, role: RoleType, member: &Option<AccountId>) {
@@ -37,7 +39,11 @@ impl AccessControlStorage for AccessControlData {
 }
 
 pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
-    fn has_role_default_impl(&self, role: RoleType, address: Option<AccountId>) -> bool {
+    fn has_role_default_impl(
+        &self,
+        role: RoleType,
+        address: Option<AccountId>,
+    ) -> bool {
         self._has_role(role, address)
     }
 
@@ -50,7 +56,10 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
         role: RoleType,
         account: Option<AccountId>,
     ) -> Result<(), AccessControlError> {
-        self._ensure_has_role(self._get_role_admin(role), Some(Self::env().caller()))?;
+        self._ensure_has_role(
+            self._get_role_admin(role),
+            Some(Self::env().caller()),
+        )?;
 
         self._grant_role(role, account)?;
 
@@ -62,7 +71,10 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
         role: RoleType,
         account: Option<AccountId>,
     ) -> Result<(), AccessControlError> {
-        self._ensure_has_role(self._get_role_admin(role), Some(Self::env().caller()))?;
+        self._ensure_has_role(
+            self._get_role_admin(role),
+            Some(Self::env().caller()),
+        )?;
         self._do_revoke_role(role, account)?;
         Ok(())
     }
@@ -80,7 +92,8 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
     }
 }
 
-pub trait AccessControlInternalDefaultImpl: StorageFieldGetter<AccessControlData>
+pub trait AccessControlInternalDefaultImpl:
+    StorageFieldGetter<AccessControlData>
 where
     AccessControlData: AccessControlStorage,
 {
@@ -88,7 +101,11 @@ where
         DEFAULT_ADMIN_ROLE
     }
 
-    fn _has_role_default_impl(&self, role: RoleType, account: Option<AccountId>) -> bool {
+    fn _has_role_default_impl(
+        &self,
+        role: RoleType,
+        account: Option<AccountId>,
+    ) -> bool {
         self.data().has_role(role, &account)
     }
 

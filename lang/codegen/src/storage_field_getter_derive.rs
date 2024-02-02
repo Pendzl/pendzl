@@ -32,7 +32,9 @@ pub fn storage_field_getter_derive(item: TokenStream) -> TokenStream {
 
     let fields: Vec<_> = match &derive.data {
         Data::Struct(st) => st.fields.iter().collect(),
-        Data::Enum(en) => en.variants.iter().flat_map(|v| v.fields.iter()).collect(),
+        Data::Enum(en) => {
+            en.variants.iter().flat_map(|v| v.fields.iter()).collect()
+        }
         Data::Union(un) => un.fields.named.iter().collect(),
     };
 

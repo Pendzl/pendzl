@@ -19,14 +19,27 @@ impl PSP34MetadataStorage for PSP34MetadataData {
     }
 }
 
-pub trait PSP34MetadataDefaultImpl: StorageFieldGetter<PSP34MetadataData> {
-    fn get_attribute_default_impl(&self, id: Id, key: String) -> Option<String> {
+pub trait PSP34MetadataDefaultImpl:
+    StorageFieldGetter<PSP34MetadataData>
+{
+    fn get_attribute_default_impl(
+        &self,
+        id: Id,
+        key: String,
+    ) -> Option<String> {
         self.data().attributes.get(&(id, key))
     }
 }
 
-pub trait PSP34MetadataInternalDefaultImpl: StorageFieldGetter<PSP34MetadataData> {
-    fn _set_attribute_default_impl(&mut self, id: &Id, key: &String, value: &String) {
+pub trait PSP34MetadataInternalDefaultImpl:
+    StorageFieldGetter<PSP34MetadataData>
+{
+    fn _set_attribute_default_impl(
+        &mut self,
+        id: &Id,
+        key: &String,
+        value: &String,
+    ) {
         self.data().set_attribute(id, key, value);
 
         Self::env().emit_event(AttribiuteSet {

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-use crate::token::psp34::{Approval, Id, PSP34Error, PSP34Internal, PSP34Storage, Transfer};
+use crate::token::psp34::{
+    Approval, Id, PSP34Error, PSP34Internal, PSP34Storage, Transfer,
+};
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
 use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
@@ -27,7 +29,12 @@ impl PSP34Storage for PSP34Data {
         self.owner_of.get(id)
     }
 
-    fn allowance(&self, owner: &AccountId, operator: &AccountId, id: &Option<Id>) -> bool {
+    fn allowance(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<Id>,
+    ) -> bool {
         self.allowances.get(&(*owner, *operator, None)).is_some()
             || (id.is_some()
                 && self
@@ -44,15 +51,24 @@ impl PSP34Storage for PSP34Data {
         approved: &bool,
     ) {
         if *approved {
-            self.allowances
-                .insert(&(*owner, *operator, id.as_ref().map(|v| v.clone())), &());
+            self.allowances.insert(
+                &(*owner, *operator, id.as_ref().map(|v| v.clone())),
+                &(),
+            );
         } else {
-            self.allowances
-                .remove(&(*owner, *operator, id.as_ref().map(|v| v.clone())));
+            self.allowances.remove(&(
+                *owner,
+                *operator,
+                id.as_ref().map(|v| v.clone()),
+            ));
         }
     }
 
-    fn insert_token_owner(&mut self, id: &Id, to: &AccountId) -> Result<(), PSP34Error> {
+    fn insert_token_owner(
+        &mut self,
+        id: &Id,
+        to: &AccountId,
+    ) -> Result<(), PSP34Error> {
         if self.owner_of.get(id).is_some() {
             return Err(PSP34Error::TokenExists);
         }
@@ -67,7 +83,11 @@ impl PSP34Storage for PSP34Data {
         Ok(())
     }
 
-    fn remove_token_owner(&mut self, id: &Id, from: &AccountId) -> Result<(), PSP34Error> {
+    fn remove_token_owner(
+        &mut self,
+        id: &Id,
+        from: &AccountId,
+    ) -> Result<(), PSP34Error> {
         if self.owner_of.get(id) != Some(*from) {
             return Err(PSP34Error::NotApproved);
         }
@@ -126,7 +146,9 @@ pub trait PSP34DefaultImpl: PSP34Internal + DefaultEnv {
     ) -> Result<(), PSP34Error> {
         if let Some(owner) = self._owner_of(&id) {
             let caller = Self::env().caller();
-            if caller == owner || self._allowance(&owner, &caller, &Some(id.clone())) {
+            if caller == owner
+                || self._allowance(&owner, &caller, &Some(id.clone()))
+            {
                 self._transfer(&owner, &to, &id, &data)
             } else {
                 Err(PSP34Error::NotApproved)
@@ -218,11 +240,19 @@ where
         self._update_default_impl(&Some(from), &Some(to), id)
     }
 
-    fn _mint_to_default_impl(&mut self, to: &AccountId, id: &Id) -> Result<(), PSP34Error> {
+    fn _mint_to_default_impl(
+        &mut self,
+        to: &AccountId,
+        id: &Id,
+    ) -> Result<(), PSP34Error> {
         self._update_default_impl(&None, &Some(to), id)
     }
 
-    fn _burn_from_default_impl(&mut self, from: &AccountId, id: &Id) -> Result<(), PSP34Error> {
+    fn _burn_from_default_impl(
+        &mut self,
+        from: &AccountId,
+        id: &Id,
+    ) -> Result<(), PSP34Error> {
         self._update_default_impl(&Some(from), &None, id)
     }
 

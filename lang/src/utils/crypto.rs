@@ -38,10 +38,13 @@ pub fn pub_key_to_ss58(pub_key: &[u8; 33]) -> AccountId {
 }
 
 /// Converts a public key to an Ethereum address
-pub fn pub_key_to_eth_address(pub_key: &[u8; 33]) -> Result<[u8; 20], CryptoError> {
+pub fn pub_key_to_eth_address(
+    pub_key: &[u8; 33],
+) -> Result<[u8; 20], CryptoError> {
     let mut output = [0u8; 20];
 
-    ink::env::ecdsa_to_eth_address(pub_key, &mut output).map_err(|_| CryptoError::EcdsaToEthAddressFailed)?;
+    ink::env::ecdsa_to_eth_address(pub_key, &mut output)
+        .map_err(|_| CryptoError::EcdsaToEthAddressFailed)?;
 
     Ok(output)
 }
@@ -81,9 +84,11 @@ impl Signature {
                 let mut output: [u8; 33] = [0; 33];
                 let message_hash = hash_blake2b256(message);
 
-                let result = ink::env::ecdsa_recover(sig, &message_hash, &mut output);
+                let result =
+                    ink::env::ecdsa_recover(sig, &message_hash, &mut output);
 
-                return result.is_ok() && pub_key_to_ss58(&output) == address.clone()
+                return result.is_ok()
+                    && pub_key_to_ss58(&output) == address.clone();
             }
             _ => false,
         }
@@ -91,7 +96,10 @@ impl Signature {
 }
 
 #[derive(scale::Decode, scale::Encode, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout))]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)
+)]
 pub enum CryptoError {
     EcdsaRecoverFailed,
     EcdsaToEthAddressFailed,

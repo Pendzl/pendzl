@@ -33,7 +33,12 @@ impl PSP22VaultStorage for PSP22VaultData {
     }
 }
 use ethnum::U256;
-fn mul_div(x: u128, y: u128, denominator: u128, round: Rounding) -> Result<u128, MathError> {
+fn mul_div(
+    x: u128,
+    y: u128,
+    denominator: u128,
+    round: Rounding,
+) -> Result<u128, MathError> {
     if denominator == 0 {
         return Err(MathError::DivByZero);
     }
@@ -152,19 +157,31 @@ where
     fn _max_redeem_default_impl(&self, owner: &AccountId) -> Balance {
         self._balance_of(&owner)
     }
-    fn _preview_deposit_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
+    fn _preview_deposit_default_impl(
+        &self,
+        assets: &Balance,
+    ) -> Result<Balance, MathError> {
         self._convert_to_shares(&assets, Rounding::Down)
     }
 
-    fn _preview_mint_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {
+    fn _preview_mint_default_impl(
+        &self,
+        shares: &Balance,
+    ) -> Result<Balance, MathError> {
         self._convert_to_assets(&shares, Rounding::Up)
     }
 
-    fn _preview_withdraw_default_impl(&self, assets: &Balance) -> Result<Balance, MathError> {
+    fn _preview_withdraw_default_impl(
+        &self,
+        assets: &Balance,
+    ) -> Result<Balance, MathError> {
         self._convert_to_shares(&assets, Rounding::Up)
     }
 
-    fn _preview_redeem_default_impl(&self, shares: &Balance) -> Result<Balance, MathError> {
+    fn _preview_redeem_default_impl(
+        &self,
+        shares: &Balance,
+    ) -> Result<Balance, MathError> {
         self._convert_to_assets(&shares, Rounding::Down)
     }
 
@@ -225,7 +242,9 @@ where
     }
 }
 
-pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv {
+pub trait PSP22VaultDefaultImpl:
+    PSP22VaultInternal + PSP22Internal + DefaultEnv
+{
     fn asset_default_impl(&self) -> AccountId {
         self._asset().to_account_id()
     }
@@ -266,19 +285,31 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
         self._max_redeem(&owner)
     }
 
-    fn preview_deposit_default_impl(&self, assets: Balance) -> Result<Balance, MathError> {
+    fn preview_deposit_default_impl(
+        &self,
+        assets: Balance,
+    ) -> Result<Balance, MathError> {
         self._preview_deposit(&assets)
     }
 
-    fn preview_mint_default_impl(&self, shares: Balance) -> Result<Balance, MathError> {
+    fn preview_mint_default_impl(
+        &self,
+        shares: Balance,
+    ) -> Result<Balance, MathError> {
         self._preview_mint(&shares)
     }
 
-    fn preview_withdraw_default_impl(&self, assets: Balance) -> Result<Balance, MathError> {
+    fn preview_withdraw_default_impl(
+        &self,
+        assets: Balance,
+    ) -> Result<Balance, MathError> {
         self._preview_withdraw(&assets)
     }
 
-    fn preview_redeem_default_impl(&self, shares: Balance) -> Result<Balance, MathError> {
+    fn preview_redeem_default_impl(
+        &self,
+        shares: Balance,
+    ) -> Result<Balance, MathError> {
         self._preview_redeem(&shares)
     }
 
@@ -323,8 +354,14 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
             return Err(PSP22Error::Custom("Vault: Max".to_string()));
         }
         let shares = self._preview_withdraw(&assets)?;
-        self._withdraw(&Self::env().caller(), &receiver, &owner, &assets, &shares)?;
-        Ok(shares)
+        self._withdraw(
+            &Self::env().caller(),
+            &receiver,
+            &owner,
+            &assets,
+            &shares,
+        )?;
+        Ok(assets)
     }
 
     fn redeem_default_impl(
@@ -337,7 +374,13 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
             return Err(PSP22Error::Custom("Vault: Max".to_string()));
         }
         let assets = self._preview_redeem(&shares)?;
-        self._withdraw(&Self::env().caller(), &receiver, &owner, &assets, &shares)?;
+        self._withdraw(
+            &Self::env().caller(),
+            &receiver,
+            &owner,
+            &assets,
+            &shares,
+        )?;
         Ok(assets)
     }
 }

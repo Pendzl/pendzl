@@ -53,7 +53,9 @@ mod psp34_mintable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(self, from, to, id)?;
+        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(
+            self, from, to, id,
+        )?;
 
         if self.return_err_on_after {
             return Err(PSP34Error::Custom(String::from(
@@ -88,7 +90,9 @@ mod psp34_mintable {
         // Alice does not owns tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 0);
         // Create token Id 1.
-        assert!(PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         // Alice owns 1 token.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
     }
@@ -99,11 +103,16 @@ mod psp34_mintable {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         // Create token Id 1.
-        assert!(PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         // Alice owns 1 token.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Alice owns token Id 1.
-        assert_eq!(PSP34::owner_of(&mut nft, Id::U8(1u8)), Some(accounts.alice));
+        assert_eq!(
+            PSP34::owner_of(&mut nft, Id::U8(1u8)),
+            Some(accounts.alice)
+        );
         // Cannot create token Id if it _exists.
         assert_eq!(
             PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)),
@@ -122,7 +131,9 @@ mod psp34_mintable {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         // Can mint token to Alice
-        assert!(PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Turn on error on _before_token_transfer
         nft.change_state_err_on_before();
@@ -142,7 +153,9 @@ mod psp34_mintable {
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
         // Can mint token to Alice
-        assert!(PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Mintable::mint(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Turn on error on _after_token_transfer
         nft.change_state_err_on_after();

@@ -11,8 +11,8 @@ use crate::{
 };
 
 use super::{
-    GeneralVestInternal, GeneralVestStorage, TokenReleased, VestingError, VestingSchedule,
-    VestingScheduled,
+    GeneralVestInternal, GeneralVestStorage, TokenReleased, VestingError,
+    VestingSchedule, VestingScheduled,
 };
 
 #[derive(Default, Debug)]
@@ -220,7 +220,8 @@ where
     ) -> Result<(), VestingError> {
         let caller = Self::env().caller();
         let receiver = receiver.unwrap_or(caller);
-        let (_, amount_released) = self.data().release_by_vest_id(receiver, asset, id, &data)?;
+        let (_, amount_released) =
+            self.data().release_by_vest_id(receiver, asset, id, &data)?;
         self._handle_transfer_out(asset, receiver, amount_released, &data)?;
         Self::env().emit_event(TokenReleased {
             caller,

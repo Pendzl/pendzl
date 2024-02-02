@@ -25,7 +25,9 @@
 #[ink::contract]
 mod psp22_burnable {
     use pendzl::{test_utils::*, traits::String};
-    use pendzl_contracts::token::psp22::{PSP22Error, PSP22Internal, Transfer, PSP22};
+    use pendzl_contracts::token::psp22::{
+        PSP22Error, PSP22Internal, Transfer, PSP22,
+    };
 
     /// A simple PSP-20 contract.
     #[ink(storage)]
@@ -51,7 +53,9 @@ mod psp22_burnable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)?;
+        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(
+            self, from, to, amount,
+        )?;
 
         if self.return_err_on_after {
             return Err(PSP22Error::Custom(String::from(
@@ -94,8 +98,8 @@ mod psp22_burnable {
         assert_eq!(to, expected_to, "encountered invalid Transfer.to");
         assert_eq!(value, expected_value, "encountered invalid Trasfer.value");
 
-        let signature_topic =
-            <Transfer as ink::env::Event>::SIGNATURE_TOPIC.map(|topic| topic.to_vec());
+        let signature_topic = <Transfer as ink::env::Event>::SIGNATURE_TOPIC
+            .map(|topic| topic.to_vec());
 
         for (n, (actual_topic, expected_topic)) in
             event.topics.iter().zip(signature_topic).enumerate()
@@ -133,9 +137,15 @@ mod psp22_burnable {
         // Transfer event triggered during initial construction.
         let amount_to_burn = 10;
 
-        assert!(PSP22Burnable::burn(&mut psp22, accounts.alice, amount_to_burn).is_ok());
+        assert!(PSP22Burnable::burn(
+            &mut psp22,
+            accounts.alice,
+            amount_to_burn
+        )
+        .is_ok());
 
-        let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+        let emitted_events =
+            ink::env::test::recorded_events().collect::<Vec<_>>();
         assert_eq!(emitted_events.len(), 2);
         // Check first transfer event related to PSP-20 instantiation.
         assert_transfer_event(
@@ -162,7 +172,12 @@ mod psp22_burnable {
         let total_supply = PSP22::total_supply(&mut psp22);
         let amount_to_burn = 10;
 
-        assert!(PSP22Burnable::burn(&mut psp22, accounts.alice, amount_to_burn).is_ok());
+        assert!(PSP22Burnable::burn(
+            &mut psp22,
+            accounts.alice,
+            amount_to_burn
+        )
+        .is_ok());
 
         // Contract's total supply after burning
         let newtotal_supply = PSP22::total_supply(&mut psp22);
@@ -179,7 +194,12 @@ mod psp22_burnable {
         let alice_balance = PSP22::balance_of(&mut psp22, accounts.alice);
         let amount_to_burn = 10;
 
-        assert!(PSP22Burnable::burn(&mut psp22, accounts.alice, amount_to_burn).is_ok());
+        assert!(PSP22Burnable::burn(
+            &mut psp22,
+            accounts.alice,
+            amount_to_burn
+        )
+        .is_ok());
 
         // Alice's balance after burning
         let new_alice_balance = PSP22::balance_of(&mut psp22, accounts.alice);
@@ -199,7 +219,12 @@ mod psp22_burnable {
         change_caller(accounts.bob);
 
         // Burning some amount from Alice's account
-        assert!(PSP22Burnable::burn(&mut psp22, accounts.alice, amount_to_burn).is_ok());
+        assert!(PSP22Burnable::burn(
+            &mut psp22,
+            accounts.alice,
+            amount_to_burn
+        )
+        .is_ok());
 
         // Expecting Alice's balance decrease
         assert_eq!(

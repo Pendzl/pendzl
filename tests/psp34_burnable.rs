@@ -25,7 +25,9 @@
 #[ink::contract]
 mod psp34_burnable {
     use pendzl::{test_utils::accounts, traits::String};
-    use pendzl_contracts::token::psp34::{Id, PSP34Error, PSP34Internal, PSP34};
+    use pendzl_contracts::token::psp34::{
+        Id, PSP34Error, PSP34Internal, PSP34,
+    };
 
     #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
@@ -50,7 +52,9 @@ mod psp34_burnable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(self, from, to, id)?;
+        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(
+            self, from, to, id,
+        )?;
 
         if self.return_err_on_after {
             return Err(PSP34Error::Custom(String::from(
@@ -80,13 +84,23 @@ mod psp34_burnable {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(
+            &mut nft,
+            &accounts.alice,
+            &Id::U8(1u8)
+        )
+        .is_ok());
         // Alice owns 1 token.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 1);
         // Alice owns token Id 1.
-        assert_eq!(PSP34::owner_of(&mut nft, Id::U8(1u8)), Some(accounts.alice));
+        assert_eq!(
+            PSP34::owner_of(&mut nft, Id::U8(1u8)),
+            Some(accounts.alice)
+        );
         // Destroy token Id 1.
-        assert!(PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         // Alice does not owns tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 0);
         // Token Id 1 does not _exists
@@ -110,12 +124,24 @@ mod psp34_burnable {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
-        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(
+            &mut nft,
+            &accounts.alice,
+            &Id::U8(1u8)
+        )
+        .is_ok());
+        assert!(PSP34Internal::_mint_to(
+            &mut nft,
+            &accounts.alice,
+            &Id::U8(2u8)
+        )
+        .is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Alice can burn token
-        assert!(PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         // Turn on error on _before_token_transfer
         nft.change_state_err_on_before();
         // Alice gets an error on _before_token_transfer
@@ -132,12 +158,24 @@ mod psp34_burnable {
         let accounts = accounts();
         // Create a new contract instance.
         let mut nft = PSP34Struct::new();
-        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(1u8)).is_ok());
-        assert!(PSP34Internal::_mint_to(&mut nft, &accounts.alice, &Id::U8(2u8)).is_ok());
+        assert!(PSP34Internal::_mint_to(
+            &mut nft,
+            &accounts.alice,
+            &Id::U8(1u8)
+        )
+        .is_ok());
+        assert!(PSP34Internal::_mint_to(
+            &mut nft,
+            &accounts.alice,
+            &Id::U8(2u8)
+        )
+        .is_ok());
         // Alice owns 2 tokens.
         assert_eq!(PSP34::balance_of(&mut nft, accounts.alice), 2);
         // Alice can burn token
-        assert!(PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok());
+        assert!(
+            PSP34Burnable::burn(&mut nft, accounts.alice, Id::U8(1u8)).is_ok()
+        );
         // Turn on error on _after_token_transfer
         nft.change_state_err_on_after();
         // Alice gets an error on _after_token_transfer

@@ -26,20 +26,24 @@
 #[macro_export]
 macro_rules! storage_unique_key {
     ($struct:ident) => {{
-        $crate::traits::ConstHasher::hash($crate::traits::const_format::concatcp!(
-            ::core::module_path!(),
-            "::",
-            ::core::stringify!($struct)
-        ))
+        $crate::traits::ConstHasher::hash(
+            $crate::traits::const_format::concatcp!(
+                ::core::module_path!(),
+                "::",
+                ::core::stringify!($struct)
+            ),
+        )
     }};
     ($struct:literal, $field:literal) => {{
-        $crate::traits::ConstHasher::hash($crate::traits::const_format::concatcp!(
-            ::core::module_path!(),
-            "::",
-            $struct,
-            "::",
-            $field
-        ))
+        $crate::traits::ConstHasher::hash(
+            $crate::traits::const_format::concatcp!(
+                ::core::module_path!(),
+                "::",
+                $struct,
+                "::",
+                $field
+            ),
+        )
     }};
 }
 
@@ -70,9 +74,17 @@ fn correct_storage_key() {
         }
     }
 
-    let expected_hash_psp22 = ConstHasher::hash("pendzl_lang::macros::contracts::psp22::Data");
-    assert_eq!(expected_hash_psp22, <contracts::psp22::Data as StorageKey>::KEY);
+    let expected_hash_psp22 =
+        ConstHasher::hash("pendzl_lang::macros::contracts::psp22::Data");
+    assert_eq!(
+        expected_hash_psp22,
+        <contracts::psp22::Data as StorageKey>::KEY
+    );
 
-    let expected_hash_psp34 = ConstHasher::hash("pendzl_lang::macros::contracts::psp34::Data");
-    assert_eq!(expected_hash_psp34, <contracts::psp34::Data as StorageKey>::KEY);
+    let expected_hash_psp34 =
+        ConstHasher::hash("pendzl_lang::macros::contracts::psp34::Data");
+    assert_eq!(
+        expected_hash_psp34,
+        <contracts::psp34::Data as StorageKey>::KEY
+    );
 }

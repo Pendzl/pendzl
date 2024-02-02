@@ -1,0 +1,18 @@
+max_width = 80                   # changed
+hard_tabs = false
+tab_spaces = 4
+newline_style = "Auto"
+use_small_heuristics = "Default"
+
+
+reorder_imports = true
+reorder_modules = true
+
+remove_nested_parens = true
+match_block_trailing_comma = false
+edition = "2021"                   # changed
+merge_derives = true
+use_try_shorthand = true           # changed
+use_field_init_shorthand = true    # changed
+force_explicit_abi = true
+disable_all_formatting = false
