@@ -4,7 +4,7 @@ test-chain-state-tmp
 *.testrun*.log
 *.log
 dist
-typechain
+/typechain
 
 # Ignore build artifacts from the local tests sub-crate.
 target
