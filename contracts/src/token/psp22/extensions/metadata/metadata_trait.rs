@@ -26,3 +26,9 @@ pub trait PSP22MetadataStorage {
 
     fn token_decimals(&self) -> u8;
 }
+
+pub trait PSP22VaultMetadataStorage {
+    fn token_name(&self) -> Option<String>;
+
+    fn token_symbol(&self) -> Option<String>;
+}
