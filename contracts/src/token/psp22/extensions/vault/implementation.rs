@@ -319,12 +319,12 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
         receiver: AccountId,
         owner: AccountId,
     ) -> Result<Balance, PSP22Error> {
-        if assets > self._max_withdraw(&receiver) {
+        if assets > self._max_withdraw(&owner) {
             return Err(PSP22Error::Custom("Vault: Max".to_string()));
         }
         let shares = self._preview_withdraw(&assets)?;
         self._withdraw(&Self::env().caller(), &receiver, &owner, &assets, &shares)?;
-        Ok(assets)
+        Ok(shares)
     }
 
     fn redeem_default_impl(
@@ -333,7 +333,7 @@ pub trait PSP22VaultDefaultImpl: PSP22VaultInternal + PSP22Internal + DefaultEnv
         receiver: AccountId,
         owner: AccountId,
     ) -> Result<Balance, PSP22Error> {
-        if shares > self._max_redeem(&receiver) {
+        if shares > self._max_redeem(&owner) {
             return Err(PSP22Error::Custom("Vault: Max".to_string()));
         }
         let assets = self._preview_redeem(&shares)?;

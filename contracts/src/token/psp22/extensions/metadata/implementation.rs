@@ -52,7 +52,10 @@ where
 }
 
 // vault metadata
-#[cfg(feature = "psp22_vault_metadata_impl")]
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
 pub struct PSP22MetadataData {
@@ -73,11 +76,17 @@ impl PSP22VaultMetadataStorage for PSP22MetadataData {
     }
 }
 
-#[cfg(feature = "psp22_vault_metadata_impl")]
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
 use crate::token::psp22::extensions::vault::{
     implementation::PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
 };
-#[cfg(feature = "psp22_vault_metadata_impl")]
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
 pub trait PSP22MetadataDefaultImpl:
     StorageFieldGetter<PSP22VaultData> + StorageFieldGetter<PSP22MetadataData> + PSP22VaultInternal
 where
