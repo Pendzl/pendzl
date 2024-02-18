@@ -35,18 +35,18 @@ pub mod ts_provider {
         pub fn get_current_timestamp(&self) -> Timestamp {
             self.env().block_timestamp()
         }
-    }
-
-    impl ProvideVestScheduleInfo for TSProvider {
         #[ink(message)]
-        fn waiting_duration(&self) -> Timestamp {
+        pub fn waiting_duration(&self) -> Timestamp {
             self.waiting_duration
         }
 
         #[ink(message)]
-        fn vesting_duration(&self) -> Timestamp {
+        pub fn vesting_duration(&self) -> Timestamp {
             self.vesting_duration
         }
+    }
+
+    impl ProvideVestScheduleInfo for TSProvider {
         #[ink(message)]
         fn get_waiting_and_vesting_durations(&self) -> (Timestamp, Timestamp) {
             (self.waiting_duration, self.vesting_duration)

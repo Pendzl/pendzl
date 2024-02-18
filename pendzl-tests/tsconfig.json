@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./build-test",
+    "rootDirs": ["./test"],
+    "composite": true
+  },
+  "include": ["./test/**/*.ts"],
+  "exclude": ["./node_modules"],
+  "references": [
+    {
+      "path": "./src"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+test-chain-data
+test-chain-state-tmp
+
+*.testrun*.log
+dist
+typechain
+
+# Ignore build artifacts from the local tests sub-crate.
+target
+artifacts
+
+# Ignore backup files creates by cargo fmt.
+**/*.rs.bk
+
+
+# Dependency directory
+node_modules

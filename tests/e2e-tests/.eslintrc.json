@@ -1,0 +1,73 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true,
+    "commonjs": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "import"],
+  "rules": {
+    "no-console": 0,
+    "no-undefined": 0,
+    "block-scoped-var": "error",
+    "consistent-return": "error",
+    "no-magic-numbers": [
+      "error",
+      {
+        "ignoreArrayIndexes": true,
+        "ignore": [-1, 0, 1, 2, 10]
+      }
+    ],
+    "wrap-iife": "off",
+    "no-shadow": "error",
+    "array-bracket-newline": "error",
+    "brace-style": "error",
+    "eqeqeq": "error",
+    "complexity": "error",
+    "no-var": "error",
+    "no-prototype-builtins": 0
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "no-magic-numbers": "off",
+        "@typescript-eslint/no-magic-numbers": [
+          "warn",
+          {
+            "ignoreArrayIndexes": true,
+            "ignoreEnums": true,
+            "ignore": [-1, 0, 1, 2, 10]
+          }
+        ],
+        "@typescript-eslint/no-namespace": ["error", { "allowDeclarations": true }]
+      }
+    }
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}
