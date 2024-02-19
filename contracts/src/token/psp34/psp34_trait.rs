@@ -23,7 +23,12 @@ pub trait PSP34 {
     /// Returns `true` if the operator is approved by the owner to withdraw `id` token.
     /// If `id` is `None`, returns `true` if the operator is approved to withdraw all owner's tokens.
     #[ink(message)]
-    fn allowance(&self, owner: AccountId, operator: AccountId, id: Option<Id>) -> bool;
+    fn allowance(
+        &self,
+        owner: AccountId,
+        operator: AccountId,
+        id: Option<Id>,
+    ) -> bool;
 
     /// Approves `operator` to withdraw the `id` token from the caller's account.
     /// If `id` is `None` approves or disapproves the operator for all tokens of the caller.
@@ -55,7 +60,12 @@ pub trait PSP34 {
     ///
     /// Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer.
     #[ink(message)]
-    fn transfer(&mut self, to: AccountId, id: Id, data: Vec<u8>) -> Result<(), PSP34Error>;
+    fn transfer(
+        &mut self,
+        to: AccountId,
+        id: Id,
+        data: Vec<u8>,
+    ) -> Result<(), PSP34Error>;
 
     /// Returns current NFT total supply.
     #[ink(message)]
@@ -73,7 +83,12 @@ pub trait PSP34Internal {
     fn _owner_of(&self, id: &Id) -> Option<AccountId>;
 
     /// Checks if an operator is approved to manage a specific token.
-    fn _allowance(&self, owner: &AccountId, operator: &AccountId, id: &Option<Id>) -> bool;
+    fn _allowance(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<Id>,
+    ) -> bool;
 
     /// Approves `operator` to withdraw the `id` token from the caller's account.
     /// If `id` is `None` approves or disapproves the operator for all tokens of the caller.
@@ -128,7 +143,11 @@ pub trait PSP34Internal {
     /// Internal function to burn an existing token.
     /// # Errors
     /// - Various errors as defined in `PSP34Error`.
-    fn _burn_from(&mut self, from: &AccountId, id: &Id) -> Result<(), PSP34Error>;
+    fn _burn_from(
+        &mut self,
+        from: &AccountId,
+        id: &Id,
+    ) -> Result<(), PSP34Error>;
 }
 
 pub trait PSP34Storage {
@@ -142,7 +161,12 @@ pub trait PSP34Storage {
     fn owner_of(&self, id: &Id) -> Option<AccountId>;
 
     /// Checks if an operator is approved to manage a specific token.
-    fn allowance(&self, owner: &AccountId, operator: &AccountId, id: &Option<Id>) -> bool;
+    fn allowance(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<Id>,
+    ) -> bool;
 
     /// Sets the approval status of an operator for a specific token.
     fn set_operator_approval(
@@ -157,11 +181,19 @@ pub trait PSP34Storage {
     ///
     /// # Errors
     /// Returns 'TokenExists' if a token with `id` has an owner alraedy.
-    fn insert_token_owner(&mut self, id: &Id, to: &AccountId) -> Result<(), PSP34Error>;
+    fn insert_token_owner(
+        &mut self,
+        id: &Id,
+        to: &AccountId,
+    ) -> Result<(), PSP34Error>;
 
     /// Removes a token with `id` owner.
     ///
     /// # Errors
     /// - Returns `NotApproved` if `from` is not an owner of token with `id`.
-    fn remove_token_owner(&mut self, id: &Id, from: &AccountId) -> Result<(), PSP34Error>;
+    fn remove_token_owner(
+        &mut self,
+        id: &Id,
+        from: &AccountId,
+    ) -> Result<(), PSP34Error>;
 }

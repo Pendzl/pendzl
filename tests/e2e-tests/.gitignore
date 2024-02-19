@@ -3,6 +3,7 @@ test-chain-state-tmp
 
 *.testrun*.log
 *.log
+*.html
 dist
 /typechain
 

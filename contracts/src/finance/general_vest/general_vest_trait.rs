@@ -18,7 +18,7 @@ pub trait GeneralVest {
         receiver: Option<AccountId>,
         asset: Option<AccountId>,
         data: Vec<u8>,
-    ) -> Result<(), VestingError>;
+    ) -> Result<u128, VestingError>;
     #[ink(message)]
     fn release_by_vest_id(
         &mut self,
@@ -36,7 +36,12 @@ pub trait GeneralVest {
         data: Vec<u8>,
     ) -> Option<VestingData>;
     #[ink(message)]
-    fn next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: Vec<u8>) -> u32;
+    fn next_id_vest_of(
+        &self,
+        of: AccountId,
+        asset: Option<AccountId>,
+        data: Vec<u8>,
+    ) -> u32;
 }
 
 pub trait GeneralVestInternal {
@@ -54,7 +59,7 @@ pub trait GeneralVestInternal {
         receiver: Option<AccountId>,
         asset: Option<AccountId>,
         data: &Vec<u8>,
-    ) -> Result<(), VestingError>;
+    ) -> Result<u128, VestingError>;
 
     fn _release_by_vest_id(
         &mut self,
@@ -85,7 +90,12 @@ pub trait GeneralVestInternal {
         id: u32,
         data: &Vec<u8>,
     ) -> Option<VestingData>;
-    fn _next_id_vest_of(&self, of: AccountId, asset: Option<AccountId>, data: &Vec<u8>) -> u32;
+    fn _next_id_vest_of(
+        &self,
+        of: AccountId,
+        asset: Option<AccountId>,
+        data: &Vec<u8>,
+    ) -> u32;
 }
 pub trait GeneralVestStorage {
     fn create(

@@ -1,11 +1,16 @@
 [workspace]
 members = ["contracts", "lang"]
 
-exclude = ["examples", "example_project_structure", "mocks"]
+exclude = [
+    "examples",
+    "example_project_structure",
+    "mocks",
+    "tests/e2e-tests/contracts",
+]
 
 [package]
 name = "pendzl"
-version = "0.1.0-beta1"
+version = "0.1.0-beta2"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
@@ -29,8 +34,8 @@ scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "0.1.0-beta1", path = "contracts", default-features = false }
-pendzl_lang = { version = "0.1.0-beta1", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.1.0-beta2", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.1.0-beta2", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"

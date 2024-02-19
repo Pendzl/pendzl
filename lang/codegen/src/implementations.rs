@@ -920,6 +920,11 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
             fn renounce_role(&mut self, role: RoleType, account: Option<AccountId>) -> Result<(), AccessControlError> {
                 pendzl::contracts::access::access_control::implementation::AccessControlDefaultImpl::renounce_role_default_impl(self, role, account)
             }
+
+            #[ink(message)]
+            fn set_role_admin(&mut self, role: RoleType, new_admin: RoleType) -> Result<(), AccessControlError> {
+                pendzl::contracts::access::access_control::implementation::AccessControlDefaultImpl::set_role_admin_default_impl(self, role, new_admin)
+            }
         }
     ))
     .expect("Should parse");
@@ -1041,7 +1046,7 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
                 )
             }
 
-            fn _release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: &Vec<u8>) -> Result<(), VestingError> {
+            fn _release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: &Vec<u8>) -> Result<u128, VestingError> {
                 pendzl::contracts::finance::general_vest::implementation::GeneralVestInternalDefaultImpl::_release_default_impl(self, receiver, asset, data)
             }
 
@@ -1094,7 +1099,7 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
                 )
             }
             #[ink(message)]
-            fn release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: Vec<u8>) -> Result<(), VestingError> {
+            fn release(&mut self, receiver: Option<AccountId>, asset: Option<AccountId>, data: Vec<u8>) -> Result<u128, VestingError> {
                 pendzl::contracts::finance::general_vest::implementation::GeneralVestDefaultImpl::release_default_impl(self, receiver, asset, data)
             }
             #[ink(message)]

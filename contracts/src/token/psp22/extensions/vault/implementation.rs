@@ -319,7 +319,7 @@ pub trait PSP22VaultDefaultImpl:
         receiver: AccountId,
     ) -> Result<Balance, PSP22Error> {
         if assets > self._max_deposit(&receiver) {
-            return Err(PSP22Error::Custom("Vault: Max".to_string()));
+            return Err(PSP22Error::Custom("V:MaxDeposit".to_string()));
         }
         let shares = self._preview_deposit(&assets)?;
         ink::env::debug_println!(
@@ -337,7 +337,7 @@ pub trait PSP22VaultDefaultImpl:
         receiver: AccountId,
     ) -> Result<Balance, PSP22Error> {
         if shares > self._max_mint(&receiver) {
-            return Err(PSP22Error::Custom("Vault: Max".to_string()));
+            return Err(PSP22Error::Custom("V:MaxMint".to_string()));
         }
         let assets = self._preview_mint(&shares)?;
         self._deposit(&Self::env().caller(), &receiver, &assets, &shares)?;
@@ -351,7 +351,7 @@ pub trait PSP22VaultDefaultImpl:
         owner: AccountId,
     ) -> Result<Balance, PSP22Error> {
         if assets > self._max_withdraw(&owner) {
-            return Err(PSP22Error::Custom("Vault: Max".to_string()));
+            return Err(PSP22Error::Custom("V:MaxWithdraw".to_string()));
         }
         let shares = self._preview_withdraw(&assets)?;
         self._withdraw(
@@ -371,7 +371,7 @@ pub trait PSP22VaultDefaultImpl:
         owner: AccountId,
     ) -> Result<Balance, PSP22Error> {
         if shares > self._max_redeem(&owner) {
-            return Err(PSP22Error::Custom("Vault: Max".to_string()));
+            return Err(PSP22Error::Custom("V:MaxRedeem".to_string()));
         }
         let assets = self._preview_redeem(&shares)?;
         self._withdraw(

@@ -3,7 +3,7 @@ import { KeyringPair } from "@polkadot/keyring/types";
 import BN from "bn.js";
 import { expect } from "chai";
 import { SignAndSendSuccessResponse } from "wookashwackomytest-typechain-types";
-import { PSP22 } from "wookashwackomytest-polkahat-chai-matchers";
+import { PSP22 } from "../../types/PSP22.type";
 import "wookashwackomytest-polkahat-chai-matchers";
 
 type ShouldBehaveLikeERC20Params = {
@@ -23,14 +23,23 @@ export function shouldBehaveLikeERC20(
       to: KeyringPair,
       value: BN
     ) => Promise<SignAndSendSuccessResponse>;
+    approve: (
+      from: KeyringPair,
+      to: KeyringPair,
+      amount: BN
+    ) => Promise<SignAndSendSuccessResponse>;
   } = {} as any;
   beforeEach(async function () {
     Object.assign(ctx, getParams());
+    ctx.transfer = (from: KeyringPair, to: KeyringPair, value: BN) =>
+      ctx.token.withSigner(from).tx.transfer(to.address, value, []);
+    ctx.approve = (from: KeyringPair, to: KeyringPair, amount: BN) =>
+      ctx.token.withSigner(from).tx.approve(to.address, amount);
   });
 
   it("total supply: returns the total token value", async function () {
-    expect((await ctx.token.query.totalSupply()).value.ok?.toString()).to.equal(
-      ctx.initialSupply.toString()
+    await expect(ctx.token.query.totalSupply()).to.haveOkResult(
+      ctx.initialSupply
     );
   });
 
@@ -81,14 +90,14 @@ export function shouldBehaveLikeERC20(
             });
 
             it("transfers the requested value", async function () {
-              await expect(ctx.tx).to.changeTokenBalances(
+              await expect(ctx.tx).to.changePSP22Balances(
                 ctx.token,
                 [ctx.holder.address, ctx.other.address],
                 [value.neg(), value]
               );
             });
             it("decreases the spender allowance", async function () {
-              await expect(ctx.tx).to.changeTokenAllowances(
+              await expect(ctx.tx).to.changePSP22Allowances(
                 ctx.token,
                 [[ctx.holder.address, ctx.recipient.address]],
                 [value.neg()]
@@ -235,6 +244,11 @@ type ShouldBehaveLikeERC20TransferParams = {
   initialSupply: BN;
   holder: KeyringPair;
   recipient: KeyringPair;
+  transfer: (
+    from: KeyringPair,
+    to: KeyringPair,
+    value: BN
+  ) => Promise<SignAndSendSuccessResponse>;
 };
 
 export function shouldBehaveLikeERC20Transfer(
@@ -251,8 +265,6 @@ export function shouldBehaveLikeERC20Transfer(
   describe("when the recipient is not the zero address", function () {
     beforeEach(function () {
       Object.assign(ctx, getParams());
-      ctx.transfer = (from: KeyringPair, to: KeyringPair, value: BN) =>
-        ctx.token.withSigner(from).tx.transfer(to.address, value);
     });
     it("reverts when the sender does not have enough balance", async function () {
       const value = ctx.initialSupply.addn(1);
@@ -274,7 +286,7 @@ export function shouldBehaveLikeERC20Transfer(
       });
 
       it("transfers the requested value", async function () {
-        await expect(ctx.tx).to.changeTokenBalances(
+        await expect(ctx.tx).to.changePSP22Balances(
           ctx.token,
           [ctx.holder.address, ctx.recipient.address],
           [value.neg(), value]
@@ -298,7 +310,7 @@ export function shouldBehaveLikeERC20Transfer(
       });
 
       it("transfers the requested value", async function () {
-        await expect(ctx.tx).to.changeTokenBalances(
+        await expect(ctx.tx).to.changePSP22Balances(
           ctx.token,
           [ctx.holder.address, ctx.recipient.address],
           [new BN(0), new BN(0)]
@@ -314,18 +326,17 @@ export function shouldBehaveLikeERC20Transfer(
       });
     });
   });
-
-  // it('reverts when the recipient is the zero address', async function () {
-  //   await expect(ctx.transfer(ctx.holder, ethers.ZeroAddress, balance))
-  //     .to.be.revertedWithCustomError(ctx.token, 'ERC20InvalidReceiver')
-  //     .withArgs(ethers.ZeroAddress);
-  // });
 }
 type ShouldBehaveLikeERC20ApproveParams = {
   token: PSP22;
   initialSupply: BN;
   holder: KeyringPair;
   recipient: KeyringPair;
+  approve: (
+    from: KeyringPair,
+    to: KeyringPair,
+    amount: BN
+  ) => Promise<SignAndSendSuccessResponse>;
 };
 
 export function shouldBehaveLikeERC20Approve(
@@ -333,17 +344,10 @@ export function shouldBehaveLikeERC20Approve(
 ) {
   const ctx: ShouldBehaveLikeERC20ApproveParams & {
     tx: any;
-    approve: (
-      from: KeyringPair,
-      to: KeyringPair,
-      amount: BN
-    ) => Promise<SignAndSendSuccessResponse>;
   } = {} as any;
   describe("when the spender is not the zero address", function () {
     beforeEach(async function () {
       Object.assign(ctx, getParams());
-      ctx.approve = (from: KeyringPair, to: KeyringPair, amount: BN) =>
-        ctx.token.withSigner(from).tx.approve(to.address, amount);
     });
     describe("when the sender has enough balance", function () {
       let value: BN;
@@ -435,10 +439,4 @@ export function shouldBehaveLikeERC20Approve(
       });
     });
   });
-
-  // it('reverts when the spender is the zero address', async function () {
-  //   await expect(ctx.approve(ctx.holder, ethers.ZeroAddress, supply))
-  //     .to.be.revertedWithCustomError(ctx.token, `ERC20InvalidSpender`)
-  //     .withArgs(ethers.ZeroAddress);
-  // });
 }

@@ -52,7 +52,9 @@ pub mod my_pausable {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn success_flip_when_not_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn success_flip_when_not_paused(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
                 .instantiate("my_pausable", &alice(), &mut constructor)
@@ -67,90 +69,9 @@ pub mod my_pausable {
         }
 
         #[ink_e2e::test]
-        async fn success_pause_when_not_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            let mut constructor = ContractRef::new();
-            let mut contract = client
-                .instantiate("my_pausable", &alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed")
-                .call::<Contract>();
-
-            assert_eq!(method_call!(client, contract, pause), Ok(()));
-
-            Ok(())
-        }
-
-        #[ink_e2e::test]
-        async fn success_flip(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            let mut constructor = ContractRef::new();
-            let mut contract = client
-                .instantiate("my_pausable", &alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed")
-                .call::<Contract>();
-
-            assert_eq!(method_call!(client, contract, flip), Ok(()));
-
-            Ok(())
-        }
-
-        #[ink_e2e::test]
-        async fn failed_double_pause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            let mut constructor = ContractRef::new();
-            let mut contract = client
-                .instantiate("my_pausable", &alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed")
-                .call::<Contract>();
-
-            assert_eq!(method_call!(client, contract, pause), Ok(()));
-            assert!(matches!(
-                method_call_dry_run!(client, contract, pause),
-                Err(_)
-            ));
-
-            Ok(())
-        }
-
-        #[ink_e2e::test]
-        async fn success_pause_and_unpause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            let mut constructor = ContractRef::new();
-            let mut contract = client
-                .instantiate("my_pausable", &alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed")
-                .call::<Contract>();
-
-            assert_eq!(method_call!(client, contract, pause), Ok(()));
-            assert_eq!(method_call!(client, contract, unpause), Ok(()));
-
-            Ok(())
-        }
-
-        #[ink_e2e::test]
-        async fn failed_unpause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            let mut constructor = ContractRef::new();
-            let mut contract = client
-                .instantiate("my_pausable", &alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed")
-                .call::<Contract>();
-
-            assert!(matches!(
-                method_call_dry_run!(client, contract, unpause),
-                Err(_)
-            ));
-
-            Ok(())
-        }
-
-        #[ink_e2e::test]
-        async fn failed_flip_when_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn failed_flip_when_paused(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
                 .instantiate("my_pausable", &alice(), &mut constructor)

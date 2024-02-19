@@ -1,6 +1,6 @@
 [package]
 name = "my_psp34_metadata"
-version = "0.1.0-beta1"
+version = "0.1.0-beta2"
 previous-authors = ["Brushfam <m.konstantinovna@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",

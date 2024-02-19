@@ -71,6 +71,14 @@ pub trait AccessControl {
         role: RoleType,
         account: Option<AccountId>,
     ) -> Result<(), AccessControlError>;
+
+    /// Sets a admin of a specific `role` to as admin role.
+    #[ink(message)]
+    fn set_role_admin(
+        &mut self,
+        role: RoleType,
+        new_admin: RoleType,
+    ) -> Result<(), AccessControlError>;
 }
 
 /// Internal methods of the AccessControl Contract module that can (and should) be used while managing the module inside messages
@@ -112,6 +120,10 @@ pub trait AccessControlInternal {
     fn _get_role_admin(&self, role: RoleType) -> RoleType;
 
     /// Sets a admin of a specific `role` to `new_admin`.
+    ///
+    /// # Errors
+    ///
+    /// Returns with `MissingRole` error if caller is not admin.
     fn _set_role_admin(&mut self, role: RoleType, new_admin: RoleType);
 
     /// Ensures that a `account`` has a specific `role``.

@@ -90,6 +90,19 @@ pub trait AccessControlDefaultImpl: AccessControlInternal + Sized {
         self._do_revoke_role(role, account)?;
         Ok(())
     }
+
+    fn set_role_admin_default_impl(
+        &mut self,
+        role: RoleType,
+        new_admin: RoleType,
+    ) -> Result<(), AccessControlError> {
+        self._ensure_has_role(
+            self._get_role_admin(role),
+            Some(Self::env().caller()),
+        )?;
+        self._set_role_admin(role, new_admin);
+        Ok(())
+    }
 }
 
 pub trait AccessControlInternalDefaultImpl:

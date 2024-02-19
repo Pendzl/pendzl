@@ -57,7 +57,7 @@ impl GeneralVestStorage for GeneralVestData {
         data: &Vec<u8>,
     ) -> Result<Balance, VestingError> {
         let next_id = self.next_id.get((to, asset)).unwrap_or(0);
-        let mut tail_id = next_id - 1;
+        let mut tail_id = next_id.checked_sub(1).unwrap_or(0);
         let mut current_id = 0;
         let mut total_amount = 0;
         while current_id <= tail_id {
@@ -134,7 +134,7 @@ pub trait GeneralVestDefaultImpl: GeneralVestInternal + Sized {
         receiver: Option<AccountId>,
         asset: Option<AccountId>,
         data: Vec<u8>,
-    ) -> Result<(), VestingError> {
+    ) -> Result<u128, VestingError> {
         self._release(receiver, asset, &data)
     }
     fn release_by_vest_id_default_impl(
@@ -198,7 +198,7 @@ where
         receiver: Option<AccountId>,
         asset: Option<AccountId>,
         data: &Vec<u8>,
-    ) -> Result<(), VestingError> {
+    ) -> Result<u128, VestingError> {
         let caller = Self::env().caller();
         let receiver = receiver.unwrap_or(caller);
         let amount_released = self.data().release(receiver, asset, &data)?;
@@ -209,7 +209,7 @@ where
             to: receiver,
             amount: amount_released,
         });
-        Ok(())
+        Ok(amount_released)
     }
     fn _release_by_vest_id_default_impl(
         &mut self,

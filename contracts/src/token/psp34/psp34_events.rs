@@ -15,9 +15,9 @@ pub struct Transfer {
 #[ink::event]
 pub struct Approval {
     /// The account granting or revoking approval.
-    pub from: AccountId,
+    pub owner: AccountId,
     /// The account being approved or disapproved.
-    pub to: AccountId,
+    pub operator: AccountId,
     /// The Id of the token for specific approval. `None` for global approval.
     pub id: Option<Id>,
     /// The approval status.

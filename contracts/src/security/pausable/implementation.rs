@@ -15,7 +15,7 @@ pub struct PausableData {
 
 impl PausableStorage for PausableData {
     fn paused(&self) -> bool {
-        self.paused.get().unwrap_or(true)
+        self.paused.get().unwrap_or(false)
     }
 
     fn set_paused(&mut self, pause: bool) {

@@ -32,10 +32,12 @@ export default class FlipperDeployer {
         PathAPI.resolve(__dirname, `${fileName}.json`)
       ).toString()
     );
-
-    const wasm = FsAPI.readFileSync(
-      PathAPI.resolve(__dirname, `${fileName}.wasm`)
+    const contractFileParsed = JSON.parse(
+      FsAPI.readFileSync(
+        PathAPI.resolve(__dirname, `${fileName}.contract`)
+      ).toString()
     );
+    const wasm = contractFileParsed.source.wasm;
     const codePromise = new CodePromise(this.nativeAPI, abi, wasm);
     const gasLimit = (
       await _genValidGasLimitAndValue(this.nativeAPI, __options)
@@ -44,8 +46,8 @@ export default class FlipperDeployer {
     const storageDepositLimit = __options?.storageDepositLimit;
     const tx = codePromise.tx["default"]!({
       gasLimit,
-      storageDepositLimit,
-      value: __options?.value,
+      storageDepositLimit: storageDepositLimit as any,
+      value: __options?.value as any,
     });
     let response;
 
