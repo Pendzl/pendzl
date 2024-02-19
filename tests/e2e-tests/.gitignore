@@ -2,6 +2,7 @@ test-chain-data
 test-chain-state-tmp
 
 *.testrun*.log
+*.log
 dist
 typechain
 

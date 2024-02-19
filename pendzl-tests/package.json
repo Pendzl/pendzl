@@ -50,10 +50,10 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.8.0",
     "typescript": "~5.0.0",
-    "wookashwackomytest-polkahat-chai-matchers": "0.0.13"
+    "wookashwackomytest-polkahat-chai-matchers": "0.0.14"
   },
   "peerDependencies": {
-    "wookashwackomytest-polkahat-chai-matchers": "0.0.13",
+    "wookashwackomytest-polkahat-chai-matchers": "0.0.14",
     "chai": "^4.2.0"
   },
   "dependencies": {

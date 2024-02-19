@@ -6,7 +6,7 @@
     "ansiToHtml": "npx tsx ./scripts/ansiToHtml.ts",
     "cs": "npx tsx ./scripts/compile/compileSingleContract.ts",
     "ts": "tsc --noEmit --incremental --preserveWatchOutput --pretty",
-    "build:debug": "./build.sh path=../examples $*",
+    "build:debug": "./build.sh path=../../examples $*",
     "build:prod": "env BUILD_PROD=1 ./build.sh path=../../examples $*",
     "localnode": "./substrate-contracts-node --dev --tmp -lerror,runtime::contracts=debug --rpc-max-connections 5000 --pruning=archive",
     "test": "./runTests.sh",
@@ -57,7 +57,7 @@
     "tsx": "^4.6.2",
     "typescript": "^5.1.6",
     "wookashwackomytest-pendzl-tests": "../../pendzl-tests",
-    "wookashwackomytest-polkahat-chai-matchers": "0.0.13",
+    "wookashwackomytest-polkahat-chai-matchers": "0.0.14",
     "wookashwackomytest-typechain-compiler": "0.0.36",
     "wookashwackomytest-typechain-polkadot": "0.0.36",
     "wookashwackomytest-typechain-types": "0.0.36"

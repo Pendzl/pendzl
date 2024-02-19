@@ -86,8 +86,8 @@ devDependencies:
     specifier: ~5.0.0
     version: 5.0.4
   wookashwackomytest-polkahat-chai-matchers:
-    specifier: 0.0.13
-    version: 0.0.13(@polkadot/util-crypto@12.6.2)(chai@4.4.1)
+    specifier: 0.0.14
+    version: 0.0.14(@polkadot/util-crypto@12.6.2)(chai@4.4.1)
 
 packages:
 
@@ -1908,8 +1908,8 @@ packages:
       isexe: 2.0.0
     dev: true
 
-  /wookashwackomytest-polkahat-chai-matchers@0.0.13(@polkadot/util-crypto@12.6.2)(chai@4.4.1):
-    resolution: {integrity: sha512-uJb/2TcTLfYgOqCmsAYy+5LQs6GXNQj72Ee2la99XURIapOj2APLaOZO2aQm2XC4bMcA1neDEeIEslY8YHrvlA==}
+  /wookashwackomytest-polkahat-chai-matchers@0.0.14(@polkadot/util-crypto@12.6.2)(chai@4.4.1):
+    resolution: {integrity: sha512-LaxFPCpGB+1ArCP5pceiF+Y+6mrgmZAuuDmiYz4+ybn7qfTWrRG5IotEBLgoFuqvSGmtzrGE5Awl9PXVoLGxXQ==}
     peerDependencies:
       chai: ^4.2.0
     dependencies:
@@ -1925,7 +1925,7 @@ packages:
       deep-eql: 4.1.3
       ordinal: 1.0.3
       rxjs: 7.8.1
-      wookashwackomytest-typechain-types: 0.0.26
+      wookashwackomytest-typechain-types: 0.0.30
     transitivePeerDependencies:
       - '@polkadot/util-crypto'
       - bufferutil
@@ -1933,8 +1933,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /wookashwackomytest-typechain-types@0.0.26:
-    resolution: {integrity: sha512-4PEIv3k657DBCHm/04lcagiHPKmt3DOOm+xU8BGnjvivivzOrs78CFeuc9OeNbCIgHR5sWiRL1v3GHY2uWFLvA==}
+  /wookashwackomytest-typechain-types@0.0.30:
+    resolution: {integrity: sha512-aZPzpaKnq6ZOCuiVmDLxPE1X+G8uVi3YY5nkZ/XaVgoaV4Bq6rFB7uPvJEjulU2gmzNYv4KPif7dHh7nEvWVEw==}
     dependencies:
       '@polkadot/api': 10.11.2
       '@polkadot/api-contract': 10.11.2

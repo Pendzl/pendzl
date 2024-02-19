@@ -1,943 +1,0 @@
-Script started on 2024-02-18 15:43:00+01:00 [TERM="xterm-256color" TTY="/dev/pts/20" COLUMNS="189" LINES="22"]
-(node:127423) ExperimentalWarning: --experimental-loader is an experimental feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
-Found contract my_access_control!
-Found contract my_ownable!
-Found contract my_pausable!
-Found contract my_psp22_bare_minimum!
-Found contract my_psp22_burnable!
-Found contract my_psp22_metadata!
-Found contract my_psp22_mintable!
-Found contract my_psp22_vault!
-Found contract my_psp22!
-Found contract my_psp34_burnable!
-Found contract my_psp34_metadata!
-Found contract my_psp34_mintable!
-Found contract my_psp34!
-Found Cargo.toml in ../../examples/test_helpers/Cargo.toml but failed to determine ink dependency
-Found contract ts_provider!
-Found contract vester_custom!
-Found contract vester!
-Found contract my_access_control!
-============================================================
-[42mcompiling contract my_access_control from ../../examples/access_control...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_wFQANm/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/access_control/target/ink
-
-  - my_access_control.contract (code + metadata)
-  - my_access_control.wasm (the contract's code)
-  - my_access_control.json (the contract's metadata)
-Copying artifacts...
-Found contract my_ownable!
-============================================================
-[42mcompiling contract my_ownable from ../../examples/ownable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_MNzTVu/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/ownable/target/ink
-
-  - my_ownable.contract (code + metadata)
-  - my_ownable.wasm (the contract's code)
-  - my_ownable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_pausable!
-============================================================
-[42mcompiling contract my_pausable from ../../examples/pausable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_Qfho9L/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.17s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/pausable/target/ink
-
-  - my_pausable.contract (code + metadata)
-  - my_pausable.wasm (the contract's code)
-  - my_pausable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22_bare_minimum!
-============================================================
-[42mcompiling contract my_psp22_bare_minimum from ../../examples/psp22_bare_minimum...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.11s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22_bare_minimum/target/ink
-
-  - my_psp22_bare_minimum.contract (code + metadata)
-  - my_psp22_bare_minimum.wasm (the contract's code)
-  - my_psp22_bare_minimum.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22_burnable!
-============================================================
-[42mcompiling contract my_psp22_burnable from ../../examples/psp22_extensions/burnable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_sAjzi5/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/burnable/target/ink
-
-  - my_psp22_burnable.contract (code + metadata)
-  - my_psp22_burnable.wasm (the contract's code)
-  - my_psp22_burnable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22_metadata!
-============================================================
-[42mcompiling contract my_psp22_metadata from ../../examples/psp22_extensions/metadata...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_HC7PoZ/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/metadata/target/ink
-
-  - my_psp22_metadata.contract (code + metadata)
-  - my_psp22_metadata.wasm (the contract's code)
-  - my_psp22_metadata.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22_mintable!
-============================================================
-[42mcompiling contract my_psp22_mintable from ../../examples/psp22_extensions/mintable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_zRHsFe/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/target/ink
-
-  - my_psp22_mintable.contract (code + metadata)
-  - my_psp22_mintable.wasm (the contract's code)
-  - my_psp22_mintable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22_vault!
-============================================================
-[42mcompiling contract my_psp22_vault from ../../examples/psp22_extensions/vault...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/metadata/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.16s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/vault/target/ink
-
-  - my_psp22_vault.contract (code + metadata)
-  - my_psp22_vault.wasm (the contract's code)
-  - my_psp22_vault.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp22!
-============================================================
-[42mcompiling contract my_psp22 from ../../examples/psp22...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_98WHX1/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.15s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp22/target/ink
-
-  - my_psp22.contract (code + metadata)
-  - my_psp22.wasm (the contract's code)
-  - my_psp22.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp34_burnable!
-============================================================
-[42mcompiling contract my_psp34_burnable from ../../examples/psp34_extensions/burnable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_g8kTcH/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/burnable/target/ink
-
-  - my_psp34_burnable.contract (code + metadata)
-  - my_psp34_burnable.wasm (the contract's code)
-  - my_psp34_burnable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp34_metadata!
-============================================================
-[42mcompiling contract my_psp34_metadata from ../../examples/psp34_extensions/metadata...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_1D5xRC/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/metadata/target/ink
-
-  - my_psp34_metadata.contract (code + metadata)
-  - my_psp34_metadata.wasm (the contract's code)
-  - my_psp34_metadata.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp34_mintable!
-============================================================
-[42mcompiling contract my_psp34_mintable from ../../examples/psp34_extensions/mintable...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_Pfb0gt/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.15s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/mintable/target/ink
-
-  - my_psp34_mintable.contract (code + metadata)
-  - my_psp34_mintable.wasm (the contract's code)
-  - my_psp34_mintable.json (the contract's metadata)
-Copying artifacts...
-Found contract my_psp34!
-============================================================
-[42mcompiling contract my_psp34 from ../../examples/psp34...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_deqaR8/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m    Finished[0m release [optimized] target(s) in 0.15s
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/psp34/target/ink
-
-  - my_psp34.contract (code + metadata)
-  - my_psp34.wasm (the contract's code)
-  - my_psp34.json (the contract's metadata)
-Copying artifacts...
-Found contract ts_provider!
-============================================================
-[42mcompiling contract ts_provider from ../../examples/vester_custom/ts_provider...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m   Compiling[0m ts_provider v0.1.0-beta1 (/tmp/cargo-contract_VhOWCK)
-[1m[36m    Building[0m [=======================> ] 126/127: ts_provider(bin)                                [K[1m[32m    Finished[0m release [optimized] target(s) in 0.47s
- [2/4] Post processing code
- [3/4] Generating metadata
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m   Compiling[0m proc-macro2 v1.0.78
-[1m[32m   Compiling[0m radium v0.7.0
-[1m[32m   Compiling[0m cfg-if v1.0.0
-[1m[32m   Compiling[0m strsim v0.10.0
-[1m[32m   Compiling[0m ident_case v1.0.1
-[1m[32m   Compiling[0m fnv v1.0.7
-[1m[32m   Compiling[0m serde v1.0.195
-[1m[32m   Compiling[0m typenum v1.17.0
-[1m[32m   Compiling[0m serde_json v1.0.111
-[1m[32m   Compiling[0m generic-array v0.14.7
-[1m[32m   Compiling[0m arrayvec v0.7.4
-[1m[32m   Compiling[0m ryu v1.0.16
-[1m[32m   Compiling[0m schemars v0.8.16
-[1m[32m   Compiling[0m itoa v1.0.10
-[1m[32m   Compiling[0m tap v1.0.1
-[1m[32m   Compiling[0m funty v2.0.0
-[1m[32m   Compiling[0m byte-slice-cast v1.2.2
-[1m[32m   Compiling[0m dyn-clone v1.0.16
-[1m[32m   Compiling[0m libc v0.2.152
-[1m[32m   Compiling[0m wyz v0.5.1
-[1m[32m   Compiling[0m semver v1.0.21
-[1m[32m   Compiling[0m subtle v2.4.1
-[1m[32m   Compiling[0m smallvec v1.13.1
-[1m[32m   Compiling[0m either v1.9.0
-[1m[32m   Compiling[0m cc v1.0.83
-[1m[32m   Compiling[0m thiserror v1.0.56
-[1m[32m   Compiling[0m ink_prelude v5.0.0-rc
-[1m[32m   Compiling[0m platforms v3.3.0
-[1m[32m   Compiling[0m xxhash-rust v0.8.8
-[1m[32m   Compiling[0m cpufeatures v0.2.12
-[1m[32m   Compiling[0m ppv-lite86 v0.2.17
-[1m[32m   Compiling[0m keccak v0.1.5
-[1m[32m   Compiling[0m num-traits v0.2.17
-[1m[32m   Compiling[0m quote v1.0.35
-[1m[32m   Compiling[0m bitvec v1.0.1
-[1m[32m   Compiling[0m byteorder v1.5.0
-[1m[32m   Compiling[0m itertools v0.12.0
-[1m[32m   Compiling[0m syn v2.0.48
-[1m[32m   Compiling[0m syn v1.0.109
-[1m[32m   Compiling[0m rustc_version v0.4.0
-[1m[32m   Compiling[0m arrayref v0.3.7
-[1m[32m   Compiling[0m itertools v0.10.5
-[1m[32m   Compiling[0m ink_allocator v5.0.0-rc
-[1m[32m   Compiling[0m static_assertions v1.1.0
-[1m[32m   Compiling[0m array-init v2.1.0
-[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
-[1m[32m   Compiling[0m hex v0.4.3
-[1m[32m   Compiling[0m ethnum v1.5.0
-[1m[32m   Compiling[0m curve25519-dalek v4.1.1
-[1m[32m   Compiling[0m getrandom v0.2.12
-[1m[32m   Compiling[0m rand_core v0.6.4
-[1m[32m   Compiling[0m crypto-common v0.1.6
-[1m[32m   Compiling[0m block-buffer v0.10.4
-[1m[32m   Compiling[0m secp256k1-sys v0.9.2
-[1m[32m   Compiling[0m digest v0.10.7
-[1m[32m   Compiling[0m rand_chacha v0.3.1
-[1m[32m   Compiling[0m sha2 v0.10.8
-[1m[32m   Compiling[0m sha3 v0.10.8
-[1m[32m   Compiling[0m blake2 v0.10.6
-[1m[32m   Compiling[0m rand v0.8.5
-[1m[32m   Compiling[0m const_format v0.2.32
-[1m[32m   Compiling[0m getrandom_or_panic v0.0.3
-[1m[32m   Compiling[0m ink_ir v5.0.0-rc
-[1m[32m   Compiling[0m ink_ir v4.3.0
-[1m[32m   Compiling[0m synstructure v0.13.0
-[1m[32m   Compiling[0m serde_derive v1.0.195
-[1m[32m   Compiling[0m thiserror-impl v1.0.56
-[1m[32m   Compiling[0m zeroize_derive v1.4.2
-[1m[32m   Compiling[0m linkme-impl v0.3.22
-[1m[32m   Compiling[0m curve25519-dalek-derive v0.1.1
-[1m[32m   Compiling[0m darling_core v0.14.4
-[1m[32m   Compiling[0m serde_derive_internals v0.26.0
-[1m[32m   Compiling[0m const_env_impl v0.1.2
-[1m[32m   Compiling[0m synstructure v0.12.6
-[1m[32m   Compiling[0m zeroize v1.7.0
-[1m[32m   Compiling[0m linkme v0.3.22
-[1m[32m   Compiling[0m merlin v3.0.0
-[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
-[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
-[1m[32m   Compiling[0m derive_more v0.99.17
-[1m[32m   Compiling[0m scale-info-derive v2.10.0
-[1m[32m   Compiling[0m schemars_derive v0.8.16
-[1m[32m   Compiling[0m const_env v0.1.2
-[1m[32m   Compiling[0m pest v2.7.6
-[1m[32m   Compiling[0m darling_macro v0.14.4
-[1m[32m   Compiling[0m darling v0.14.4
-[1m[32m   Compiling[0m scale-decode-derive v0.9.0
-[1m[32m   Compiling[0m scale-encode-derive v0.5.0
-[1m[32m   Compiling[0m semver-parser v0.10.2
-[1m[32m   Compiling[0m secp256k1 v0.28.1
-[1m[32m   Compiling[0m parity-scale-codec v3.6.9
-[1m[32m   Compiling[0m semver v0.11.0
-[1m[32m   Compiling[0m cargo-platform v0.1.6
-[1m[32m   Compiling[0m impl-serde v0.4.0
-[1m[32m   Compiling[0m camino v1.1.6
-[1m[32m   Compiling[0m serde_bytes v0.11.14
-[1m[32m   Compiling[0m schnorrkel v0.11.4
-[1m[32m   Compiling[0m scale-info v2.10.0
-[1m[32m   Compiling[0m ink_primitives v4.3.0
-[1m[32m   Compiling[0m cargo_metadata v0.13.1
-[1m[32m   Compiling[0m scale-bits v0.4.0
-[1m[32m   Compiling[0m scale-encode v0.5.0
-[1m[32m   Compiling[0m pendzl_lang_codegen v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
-[1m[32m   Compiling[0m scale-decode v0.9.0
-[1m[32m   Compiling[0m pendzl_lang_macro v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
-[1m[32m   Compiling[0m ink_primitives v5.0.0-rc
-[1m[32m   Compiling[0m ink_codegen v5.0.0-rc
-[1m[32m   Compiling[0m ink_macro v5.0.0-rc
-[1m[32m   Compiling[0m ink_metadata v5.0.0-rc
-[1m[32m   Compiling[0m ink_engine v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage_traits v5.0.0-rc
-[1m[32m   Compiling[0m ink_env v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage v5.0.0-rc
-[1m[32m   Compiling[0m ink v5.0.0-rc
-[1m[32m   Compiling[0m pendzl_lang v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang)
-[1m[32m   Compiling[0m pendzl_contracts v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/contracts)
-[1m[32m   Compiling[0m pendzl v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl)
-[1m[32m   Compiling[0m ts_provider v0.1.0-beta1 (/tmp/cargo-contract_s0K9sZ)
-[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_s0K9sZ/.ink/metadata_gen)
-[1m[32m    Finished[0m release [optimized] target(s) in 28.29s
-[1m[32m     Running[0m `target/ink/release/metadata-gen`
- [4/4] Generating bundle
-
-Original wasm size: 43.8K, Optimized: 13.7K
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/vester_custom/ts_provider/target/ink
-
-  - ts_provider.contract (code + metadata)
-  - ts_provider.wasm (the contract's code)
-  - ts_provider.json (the contract's metadata)
-Copying artifacts...
-Found contract vester_custom!
-============================================================
-[42mcompiling contract vester_custom from ../../examples/vester_custom/vester_custom...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[36m    Blocking[0m waiting for file lock on package cache
-[1m[32m   Compiling[0m proc-macro2 v1.0.78
-[1m[32m   Compiling[0m unicode-ident v1.0.12
-[1m[32m   Compiling[0m compiler_builtins v0.1.103
-[1m[32m   Compiling[0m core v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core)
-[1m[32m   Compiling[0m syn v1.0.109
-[1m[32m   Compiling[0m equivalent v1.0.1
-[1m[32m   Compiling[0m hashbrown v0.14.3
-[1m[32m   Compiling[0m winnow v0.5.34
-[1m[32m   Compiling[0m toml_datetime v0.6.5
-[1m[32m   Compiling[0m version_check v0.9.4
-[1m[32m   Compiling[0m typenum v1.17.0
-[1m[32m   Compiling[0m serde v1.0.195
-[1m[32m   Compiling[0m cfg-if v1.0.0
-[1m[32m   Compiling[0m either v1.9.0
-[1m[32m   Compiling[0m subtle v2.4.1
-[1m[36m    Building[0m [                           ] 0/129: proc-macro2(build.rs), hashbrown, unicode-ide...[K[1m[32m   Compiling[0m unicode-xid v0.2.4
-[1m[36m    Building[0m [                           ] 1/129: proc-macro2(build.rs), hashbrown, unicode-ide...[K[1m[32m   Compiling[0m serde_json v1.0.111
-[1m[36m    Building[0m [                           ] 2/129: proc-macro2(build.rs), hashbrown, either, ser...[K[1m[32m   Compiling[0m arrayvec v0.7.4
-[1m[36m    Building[0m [                           ] 3/129: proc-macro2(build.rs), hashbrown, either, ser...[K[1m[32m   Compiling[0m byte-slice-cast v1.2.2
-[1m[36m    Building[0m [                           ] 4/129: proc-macro2(build.rs), hashbrown, byte-slice-...[K[1m[32m   Compiling[0m thiserror v1.0.56
-[1m[36m    Building[0m [>                          ] 5/129: proc-macro2(build.rs), hashbrown, byte-slice-...[K[1m[32m   Compiling[0m xxhash-rust v0.8.8
-[1m[36m    Building[0m [>                          ] 6/129: proc-macro2(build.rs), hashbrown, byte-slice-...[K[1m[32m   Compiling[0m itoa v1.0.10
-[1m[36m    Building[0m [>                          ] 7/129: proc-macro2(build.rs), hashbrown, byte-slice-...[K[1m[32m   Compiling[0m ryu v1.0.16
-[1m[36m    Building[0m [>                          ] 8/129: proc-macro2(build.rs), hashbrown, ryu, byte-s...[K[1m[32m   Compiling[0m autocfg v1.1.0
-[1m[36m    Building[0m [>                          ] 9/129: proc-macro2(build.rs), hashbrown, ryu, byte-s...[K[1m[32m   Compiling[0m ucd-trie v0.1.6
-[1m[36m    Building[0m [=>                        ] 10/129: proc-macro2(build.rs), hashbrown, ryu, byte-s...[1m[36m    Building[0m [=>                        ] 11/129: proc-macro2(build.rs), hashbrown, ryu, byte-s...[K[1m[32m   Compiling[0m generic-array v0.14.7
-[1m[36m    Building[0m [=>                        ] 12/129: proc-macro2(build.rs), hashbrown, ryu, byte-s...[K[1m[32m   Compiling[0m memchr v2.7.1
-[1m[36m    Building[0m [=>                        ] 13/129: proc-macro2(build.rs), hashbrown, byte-slice-...[1m[36m    Building[0m [=>                        ] 14/129: proc-macro2(build.rs), hashbrown, byte-slice-...[K[1m[32m   Compiling[0m ink_prelude v5.0.0-rc
-[1m[36m    Building[0m [==>                       ] 15/129: proc-macro2(build.rs), hashbrown, byte-slice-...[1m[36m    Building[0m [==>                       ] 16/129: hashbrown, byte-slice-cast, serde_json(build....[1m[36m    Building[0m [==>                       ] 17/129: serde_json(build), hashbrown, byte-slice-cast...[K[1m[32m   Compiling[0m libc v0.2.152
-[1m[36m    Building[0m [==>                       ] 18/129: serde_json(build), hashbrown, byte-slice-cast...[K[1m[32m   Compiling[0m camino v1.1.6
-[1m[36m    Building[0m [==>                       ] 19/129: hashbrown, byte-slice-cast, winnow, generic-a...[1m[36m    Building[0m [===>                      ] 20/129: hashbrown, byte-slice-cast, winnow, generic-a...[K[1m[32m   Compiling[0m paste v1.0.14
-[1m[36m    Building[0m [===>                      ] 21/129: hashbrown, byte-slice-cast, winnow, generic-a...[1m[36m    Building[0m [===>                      ] 22/129: hashbrown, compiler_builtins(build), byte-sli...[K[1m[32m   Compiling[0m itertools v0.12.0
-[1m[36m    Building[0m [===>                      ] 23/129: hashbrown, compiler_builtins(build), itertool...[K[1m[32m   Compiling[0m itertools v0.10.5
-[1m[36m    Building[0m [===>                      ] 24/129: hashbrown, itertools, winnow, generic-array(b...[K[1m[32m   Compiling[0m ink_prelude v4.3.0
-[1m[36m    Building[0m [====>                     ] 25/129: hashbrown, itertools, winnow, generic-array(b...[1m[36m    Building[0m [====>                     ] 26/129: hashbrown, proc-macro2, itertools, winnow, ge...[1m[36m    Building[0m [====>                     ] 27/129: hashbrown, proc-macro2, itertools, winnow, ge...[K[1m[32m   Compiling[0m unicode-segmentation v1.10.1
-[1m[36m    Building[0m [====>                     ] 28/129: hashbrown, proc-macro2, itertools, unicode-se...[1m[36m    Building[0m [====>                     ] 29/129: hashbrown, proc-macro2, generic-array(build),...[K[1m[32m   Compiling[0m heck v0.4.1
-[1m[36m    Building[0m [=====>                    ] 30/129: hashbrown, proc-macro2, itertools, unicode-se...[K[1m[32m   Compiling[0m once_cell v1.19.0
-[1m[36m    Building[0m [=====>                    ] 31/129: hashbrown, proc-macro2, itertools, unicode-se...[1m[36m    Building[0m [=====>                    ] 32/129: hashbrown, proc-macro2, itertools, unicode-se...[K[1m[32m   Compiling[0m num-traits v0.2.17
-[1m[36m    Building[0m [=====>                    ] 33/129: hashbrown, proc-macro2, itertools, unicode-se...[K[1m[32m   Compiling[0m indexmap v2.1.0
-[1m[36m    Building[0m [=====>                    ] 34/129: indexmap, hashbrown, proc-macro2, itertools, ...[1m[36m    Building[0m [======>                   ] 35/129: indexmap, hashbrown, proc-macro2, itertools, ...[1m[36m    Building[0m [======>                   ] 36/129: indexmap, paste(build), proc-macro2, itertool...[K[1m[32m   Compiling[0m unwrap v1.2.1
-[1m[36m    Building[0m [======>                   ] 37/129: indexmap, paste(build), proc-macro2, itertool...[1m[36m    Building[0m [======>                   ] 38/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [======>                   ] 39/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [=======>                  ] 40/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [=======>                  ] 41/129: indexmap, proc-macro2, itertools, unicode-seg...[K[1m[32m   Compiling[0m heck v0.3.3
-[1m[36m    Building[0m [=======>                  ] 41/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [=======>                  ] 42/129: indexmap, proc-macro2, itertools, unicode-seg...[K[1m[32m   Compiling[0m quote v1.0.35
-[1m[36m    Building[0m [=======>                  ] 42/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [=======>                  ] 43/129: indexmap, proc-macro2, itertools, unicode-seg...[1m[36m    Building[0m [=======>                  ] 44/129: indexmap, proc-macro2, itertools, num-traits(...[1m[36m    Building[0m [========>                 ] 45/129: indexmap, proc-macro2, itertools, winnow, typ...[1m[36m    Building[0m [========>                 ] 46/129: indexmap, proc-macro2, itertools, winnow, syn...[K[1m[32m   Compiling[0m syn v2.0.48
-[1m[36m    Building[0m [========>                 ] 46/129: indexmap, proc-macro2, itertools, winnow, syn...[1m[36m    Building[0m [========>                 ] 47/129: indexmap, itertools, winnow, syn, typenum, pa...[K[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
-[1m[36m    Building[0m [========>                 ] 48/129: indexmap, itertools, winnow, syn, typenum, pa...[1m[36m    Building[0m [========>                 ] 49/129: indexmap, itertools, winnow, syn, typenum, pa...[1m[36m    Building[0m [=========>                ] 50/129: itertools, winnow, syn, typenum, paste, const...[1m[36m    Building[0m [=========>                ] 51/129: itertools, winnow, syn, typenum, paste, const...[1m[36m    Building[0m [=========>                ] 52/129: itertools, winnow, syn, typenum, const_format...[1m[36m    Building[0m [=========>                ] 53/129: itertools, winnow, syn, const_format_proc_mac...[1m[36m    Building[0m [=========>                ] 54/129: itertools, winnow, syn, const_format_proc_mac...[1m[36m    Building[0m [==========>               ] 55/129: winnow, syn, const_format_proc_macros, syn, g...[K[1m[32m   Compiling[0m fs2 v0.4.3
-[1m[36m    Building[0m [==========>               ] 55/129: fs2, winnow, syn, const_format_proc_macros, s...[1m[36m    Building[0m [==========>               ] 56/129: fs2, winnow, syn, const_format_proc_macros, s...[1m[36m    Building[0m [==========>               ] 57/129: winnow, syn, const_format_proc_macros, syn, g...[K[1m[32m   Compiling[0m block-buffer v0.10.4
-[1m[32m   Compiling[0m crypto-common v0.1.6
-[1m[36m    Building[0m [==========>               ] 57/129: block-buffer, crypto-common, winnow, syn, con...[1m[36m    Building[0m [==========>               ] 58/129: block-buffer, crypto-common, winnow, syn, con...[K[1m[32m   Compiling[0m toml_edit v0.20.7
-[1m[32m   Compiling[0m toml_edit v0.19.15
-[1m[36m    Building[0m [==========>               ] 58/129: block-buffer, crypto-common, winnow, syn, con...[1m[36m    Building[0m [==========>               ] 59/129: block-buffer, winnow, syn, const_format_proc_...[K[1m[32m   Compiling[0m digest v0.10.7
-[1m[36m    Building[0m [==========>               ] 59/129: block-buffer, winnow, syn, digest, const_form...[1m[36m    Building[0m [===========>              ] 60/129: winnow, syn, digest, const_format_proc_macros...[1m[36m    Building[0m [===========>              ] 61/129: winnow, syn, digest, toml_edit, syn, toml_edi...[1m[36m    Building[0m [===========>              ] 62/129: syn, digest, toml_edit, syn, toml_edit, core    [K[1m[32m   Compiling[0m blake2 v0.10.6
-[1m[36m    Building[0m [===========>              ] 62/129: blake2, syn, digest, toml_edit, syn, toml_edi...[1m[36m    Building[0m [===========>              ] 63/129: blake2, syn, toml_edit, syn, toml_edit, core    [1m[36m    Building[0m [===========>              ] 64/129: syn, toml_edit, syn, toml_edit, core            [K[1m[32m   Compiling[0m proc-macro-crate v1.3.1
-[1m[36m    Building[0m [===========>              ] 64/129: proc-macro-crate, syn, toml_edit, syn, toml_e...[K[1m[32m   Compiling[0m proc-macro-crate v2.0.0
-[1m[36m    Building[0m [===========>              ] 64/129: proc-macro-crate, syn, toml_edit, syn, proc-m...[1m[36m    Building[0m [============>             ] 65/129: syn, toml_edit, syn, proc-macro-crate, toml_e...[1m[36m    Building[0m [============>             ] 66/129: syn, toml_edit, syn, toml_edit, core            [1m[36m    Building[0m [============>             ] 67/129: syn, syn, toml_edit, core                       [1m[36m    Building[0m [============>             ] 68/129: syn, syn, core                                  [K[1m[32m   Compiling[0m ink_ir v5.0.0-rc
-[1m[32m   Compiling[0m ink_ir v4.3.0
-[1m[32m   Compiling[0m synstructure v0.13.0
-[1m[36m    Building[0m [============>             ] 68/129: ink_ir, syn, synstructure, ink_ir, syn, core    [1m[36m    Building[0m [============>             ] 69/129: ink_ir, syn, ink_ir, syn, core                  [K[1m[32m   Compiling[0m const_env_impl v0.1.2
-[1m[32m   Compiling[0m synstructure v0.12.6
-[1m[36m    Building[0m [============>             ] 69/129: ink_ir, syn, ink_ir, synstructure, syn, const...[K[1m[32m   Compiling[0m serde_derive v1.0.195
-[1m[32m   Compiling[0m thiserror-impl v1.0.56
-[1m[36m    Building[0m [=============>            ] 70/129: thiserror-impl, ink_ir, syn, ink_ir, synstruc...[1m[36m    Building[0m [=============>            ] 71/129: thiserror-impl, ink_ir, syn, ink_ir, synstruc...[1m[36m    Building[0m [=============>            ] 72/129: thiserror-impl, ink_ir, syn, ink_ir, serde_de...[1m[36m    Building[0m [=============>            ] 74/129: thiserror-impl, syn, serde_derive, core         [K[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
-[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
-[1m[32m   Compiling[0m derive_more v0.99.17
-[1m[32m   Compiling[0m const_env v0.1.2
-[1m[32m   Compiling[0m scale-info-derive v2.10.0
-[1m[36m    Building[0m [==============>           ] 75/129: thiserror-impl, impl-trait-for-tuples, parity...[1m[36m    Building[0m [==============>           ] 76/129: impl-trait-for-tuples, parity-scale-codec-der...[K[1m[32m   Compiling[0m pest v2.7.6
-[1m[36m    Building[0m [==============>           ] 76/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [==============>           ] 77/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [==============>           ] 78/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [==============>           ] 79/129: impl-trait-for-tuples, parity-scale-codec-der...[K[1m[32m   Compiling[0m semver-parser v0.10.2
-[1m[36m    Building[0m [==============>           ] 79/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [===============>          ] 80/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [===============>          ] 81/129: impl-trait-for-tuples, parity-scale-codec-der...[1m[36m    Building[0m [===============>          ] 82/129: impl-trait-for-tuples, serde_derive, core, se...[1m[36m    Building[0m [===============>          ] 83/129: impl-trait-for-tuples, serde_derive, core       [1m[36m    Building[0m [===============>          ] 84/129: impl-trait-for-tuples, serde, core              [K[1m[32m   Compiling[0m parity-scale-codec v3.6.9
-[1m[36m    Building[0m [================>         ] 85/129: parity-scale-codec, serde, core                 [K[1m[32m   Compiling[0m ink_primitives v5.0.0-rc
-[1m[32m   Compiling[0m ink_primitives v4.3.0
-[1m[36m    Building[0m [================>         ] 85/129: parity-scale-codec, serde, ink_primitives, in...[1m[36m    Building[0m [================>         ] 86/129: serde, ink_primitives, ink_primitives, core     [1m[36m    Building[0m [================>         ] 87/129: serde, ink_primitives, core                     [1m[36m    Building[0m [================>         ] 88/129: serde, core                                     [K[1m[32m   Compiling[0m rustc-std-workspace-core v1.99.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/rustc-std-workspace-core)
-[1m[36m    Building[0m [================>         ] 88/129: rustc-std-workspace-core, serde, core           [1m[36m    Building[0m [================>         ] 88/129: rustc-std-workspace-core, serde, compiler_bui...[1m[36m    Building[0m [================>         ] 89/129: serde, compiler_builtins, core                  [K[1m[32m   Compiling[0m impl-serde v0.4.0
-[1m[32m   Compiling[0m semver v0.11.0
-[1m[32m   Compiling[0m cargo-platform v0.1.6
-[1m[36m    Building[0m [================>         ] 89/129: camino, serde, cargo-platform, serde_json, im...[1m[36m    Building[0m [=================>        ] 90/129: camino, cargo-platform, serde_json, impl-serd...[1m[36m    Building[0m [=================>        ] 91/129: camino, cargo-platform, serde_json, semver, c...[1m[36m    Building[0m [=================>        ] 92/129: camino, serde_json, semver, compiler_builtins...[1m[36m    Building[0m [=================>        ] 93/129: camino, serde_json, compiler_builtins, core     [K[1m[32m   Compiling[0m alloc v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc)
-[1m[36m    Building[0m [=================>        ] 93/129: camino, alloc, serde_json, compiler_builtins,...[1m[36m    Building[0m [=================>        ] 94/129: alloc, serde_json, compiler_builtins, core      [K[1m[32m   Compiling[0m ink_codegen v5.0.0-rc
-[1m[32m   Compiling[0m cargo_metadata v0.13.1
-[1m[36m    Building[0m [=================>        ] 94/129: ink_codegen, alloc, serde_json, compiler_buil...[1m[36m    Building[0m [==================>       ] 95/129: ink_codegen, alloc, compiler_builtins, cargo_...[1m[36m    Building[0m [==================>       ] 96/129: ink_codegen, alloc, cargo_metadata, core        [1m[36m    Building[0m [==================>       ] 97/129: ink_codegen, alloc, cargo_metadata              [K[1m[32m   Compiling[0m pendzl_lang_codegen v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
-[1m[36m    Building[0m [==================>       ] 97/129: ink_codegen, alloc, cargo_metadata, pendzl_la...[1m[36m    Building[0m [==================>       ] 98/129: ink_codegen, alloc, pendzl_lang_codegen         [K[1m[32m   Compiling[0m rlibc v1.0.0
-[1m[32m   Compiling[0m static_assertions v1.1.0
-[1m[32m   Compiling[0m array-init v2.1.0
-[1m[32m   Compiling[0m const_format v0.2.32
-[1m[32m   Compiling[0m hex v0.4.3
-[1m[32m   Compiling[0m ethnum v1.5.0
-[1m[36m    Building[0m [==================>       ] 98/129: ethnum, const_format, ink_codegen, num-traits...[1m[36m    Building[0m [==================>       ] 98/129: ink_prelude, ethnum, const_format, ink_codege...[K[1m[32m   Compiling[0m ink_allocator v5.0.0-rc
-[1m[36m    Building[0m [==================>       ] 99/129: ink_prelude, ethnum, const_format, ink_codege...[1m[36m    Building[0m [==================>      ] 100/129: ink_prelude, ethnum, const_format, ink_codege...[1m[36m    Building[0m [==================>      ] 101/129: ethnum, const_format, ink_codegen, num-traits...[1m[36m    Building[0m [==================>      ] 102/129: ethnum, const_format, ink_codegen, num-traits...[1m[36m    Building[0m [===================>     ] 104/129: ethnum, const_format, ink_codegen, num-traits...[1m[36m    Building[0m [===================>     ] 105/129: ethnum, const_format, ink_codegen, num-traits...[1m[36m    Building[0m [===================>     ] 105/129: ethnum, const_format, ink_codegen, parity-sca...[1m[36m    Building[0m [===================>     ] 106/129: ethnum, const_format, ink_codegen, parity-sca...[1m[36m    Building[0m [===================>     ] 107/129: ethnum, const_format, ink_codegen, parity-sca...[1m[36m    Building[0m [===================>     ] 108/129: ethnum, const_format, ink_codegen, parity-sca...[1m[36m    Building[0m [====================>    ] 109/129: ethnum, const_format, ink_codegen, parity-sca...[1m[36m    Building[0m [====================>    ] 110/129: ethnum, ink_codegen, parity-scale-codec, num-...[K[1m[32m   Compiling[0m pendzl_lang_macro v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
-[1m[36m    Building[0m [====================>    ] 111/129: ethnum, ink_codegen, parity-scale-codec, num-...[K[1m[32m   Compiling[0m ink_macro v5.0.0-rc
-[1m[36m    Building[0m [====================>    ] 112/129: ethnum, parity-scale-codec, num-traits, pendz...[K[1m[32m   Compiling[0m scale-info v2.10.0
-[1m[36m    Building[0m [====================>    ] 112/129: ethnum, ink_primitives, parity-scale-codec, n...[1m[36m    Building[0m [====================>    ] 113/129: ethnum, ink_primitives, num-traits, pendzl_la...[1m[36m    Building[0m [=====================>   ] 114/129: ethnum, ink_primitives, pendzl_lang_macro, sc...[K[1m[32m   Compiling[0m ink_storage_traits v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 114/129: ink_storage_traits, ethnum, ink_primitives, p...[1m[36m    Building[0m [=====================>   ] 115/129: ink_storage_traits, ethnum, pendzl_lang_macro...[K[1m[32m   Compiling[0m ink_env v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 115/129: ink_storage_traits, ethnum, ink_env, pendzl_l...[1m[36m    Building[0m [=====================>   ] 116/129: ethnum, ink_env, pendzl_lang_macro, scale-inf...[1m[36m    Building[0m [=====================>   ] 117/129: ink_env, pendzl_lang_macro, scale-info, ink_m...[1m[36m    Building[0m [=====================>   ] 118/129: ink_env, scale-info, ink_macro                  [K[1m[32m   Compiling[0m ink_storage v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 118/129: ink_storage, ink_env, scale-info, ink_macro     [1m[36m    Building[0m [======================>  ] 119/129: ink_storage, scale-info, ink_macro              [1m[36m    Building[0m [======================>  ] 120/129: scale-info, ink_macro                           [K[1m[32m   Compiling[0m ink v5.0.0-rc
-[1m[36m    Building[0m [======================>  ] 121/129: ink, scale-info                                 [K[1m[32m   Compiling[0m pendzl_lang v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang)
-[1m[36m    Building[0m [======================>  ] 121/129: ink, pendzl_lang, scale-info                    [1m[36m    Building[0m [======================>  ] 122/129: pendzl_lang, scale-info                         [K[1m[32m   Compiling[0m pendzl_contracts v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/contracts)
-[1m[36m    Building[0m [======================>  ] 122/129: pendzl_lang, scale-info, pendzl_contracts       [1m[36m    Building[0m [======================>  ] 123/129: scale-info, pendzl_contracts                    [1m[36m    Building[0m [=======================> ] 124/129: pendzl_contracts                                [K[1m[32m   Compiling[0m pendzl v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl)
-[1m[36m    Building[0m [=======================> ] 124/129: pendzl, pendzl_contracts                        [K[1m[32m   Compiling[0m my_psp22_mintable v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
-[1m[32m   Compiling[0m ts_provider v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/vester_custom/ts_provider)
-[1m[36m    Building[0m [=======================> ] 124/129: pendzl, my_psp22_mintable, pendzl_contracts, ...[1m[36m    Building[0m [=======================> ] 125/129: my_psp22_mintable, pendzl_contracts, ts_provider[1m[36m    Building[0m [=======================> ] 126/129: my_psp22_mintable, ts_provider                  [1m[36m    Building[0m [=======================> ] 127/129: my_psp22_mintable                               [K[1m[32m   Compiling[0m vester_custom v0.1.0-beta1 (/tmp/cargo-contract_ugjUZr)
-[1m[36m    Building[0m [=======================> ] 128/129: vester_custom(bin)                              [K[1m[32m    Finished[0m release [optimized] target(s) in 18.18s
- [2/4] Post processing code
- [3/4] Generating metadata
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m   Compiling[0m proc-macro2 v1.0.78
-[1m[32m   Compiling[0m radium v0.7.0
-[1m[32m   Compiling[0m cfg-if v1.0.0
-[1m[32m   Compiling[0m ident_case v1.0.1
-[1m[32m   Compiling[0m fnv v1.0.7
-[1m[32m   Compiling[0m strsim v0.10.0
-[1m[32m   Compiling[0m serde v1.0.195
-[1m[32m   Compiling[0m typenum v1.17.0
-[1m[32m   Compiling[0m serde_json v1.0.111
-[1m[32m   Compiling[0m generic-array v0.14.7
-[1m[32m   Compiling[0m tap v1.0.1
-[1m[32m   Compiling[0m schemars v0.8.16
-[1m[32m   Compiling[0m ryu v1.0.16
-[1m[32m   Compiling[0m arrayvec v0.7.4
-[1m[32m   Compiling[0m itoa v1.0.10
-[1m[32m   Compiling[0m libc v0.2.152
-[1m[32m   Compiling[0m byte-slice-cast v1.2.2
-[1m[32m   Compiling[0m dyn-clone v1.0.16
-[1m[32m   Compiling[0m wyz v0.5.1
-[1m[32m   Compiling[0m funty v2.0.0
-[1m[32m   Compiling[0m semver v1.0.21
-[1m[32m   Compiling[0m subtle v2.4.1
-[1m[32m   Compiling[0m either v1.9.0
-[1m[32m   Compiling[0m smallvec v1.13.1
-[1m[32m   Compiling[0m cc v1.0.83
-[1m[32m   Compiling[0m thiserror v1.0.56
-[1m[32m   Compiling[0m ink_prelude v5.0.0-rc
-[1m[32m   Compiling[0m keccak v0.1.5
-[1m[32m   Compiling[0m platforms v3.3.0
-[1m[32m   Compiling[0m cpufeatures v0.2.12
-[1m[32m   Compiling[0m xxhash-rust v0.8.8
-[1m[32m   Compiling[0m ppv-lite86 v0.2.17
-[1m[32m   Compiling[0m quote v1.0.35
-[1m[32m   Compiling[0m num-traits v0.2.17
-[1m[32m   Compiling[0m byteorder v1.5.0
-[1m[32m   Compiling[0m itertools v0.12.0
-[1m[32m   Compiling[0m syn v2.0.48
-[1m[32m   Compiling[0m syn v1.0.109
-[1m[32m   Compiling[0m bitvec v1.0.1
-[1m[32m   Compiling[0m rustc_version v0.4.0
-[1m[32m   Compiling[0m arrayref v0.3.7
-[1m[32m   Compiling[0m itertools v0.10.5
-[1m[32m   Compiling[0m ink_allocator v5.0.0-rc
-[1m[32m   Compiling[0m static_assertions v1.1.0
-[1m[32m   Compiling[0m array-init v2.1.0
-[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
-[1m[32m   Compiling[0m ethnum v1.5.0
-[1m[32m   Compiling[0m curve25519-dalek v4.1.1
-[1m[32m   Compiling[0m hex v0.4.3
-[1m[32m   Compiling[0m getrandom v0.2.12
-[1m[32m   Compiling[0m rand_core v0.6.4
-[1m[32m   Compiling[0m crypto-common v0.1.6
-[1m[32m   Compiling[0m block-buffer v0.10.4
-[1m[32m   Compiling[0m digest v0.10.7
-[1m[32m   Compiling[0m rand_chacha v0.3.1
-[1m[32m   Compiling[0m secp256k1-sys v0.9.2
-[1m[32m   Compiling[0m sha2 v0.10.8
-[1m[32m   Compiling[0m rand v0.8.5
-[1m[32m   Compiling[0m blake2 v0.10.6
-[1m[32m   Compiling[0m sha3 v0.10.8
-[1m[32m   Compiling[0m const_format v0.2.32
-[1m[32m   Compiling[0m getrandom_or_panic v0.0.3
-[1m[32m   Compiling[0m ink_ir v5.0.0-rc
-[1m[32m   Compiling[0m ink_ir v4.3.0
-[1m[32m   Compiling[0m synstructure v0.13.0
-[1m[32m   Compiling[0m serde_derive v1.0.195
-[1m[32m   Compiling[0m thiserror-impl v1.0.56
-[1m[32m   Compiling[0m zeroize_derive v1.4.2
-[1m[32m   Compiling[0m linkme-impl v0.3.22
-[1m[32m   Compiling[0m curve25519-dalek-derive v0.1.1
-[1m[32m   Compiling[0m darling_core v0.14.4
-[1m[32m   Compiling[0m serde_derive_internals v0.26.0
-[1m[32m   Compiling[0m const_env_impl v0.1.2
-[1m[32m   Compiling[0m synstructure v0.12.6
-[1m[32m   Compiling[0m zeroize v1.7.0
-[1m[32m   Compiling[0m merlin v3.0.0
-[1m[32m   Compiling[0m linkme v0.3.22
-[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
-[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
-[1m[32m   Compiling[0m derive_more v0.99.17
-[1m[32m   Compiling[0m scale-info-derive v2.10.0
-[1m[32m   Compiling[0m schemars_derive v0.8.16
-[1m[32m   Compiling[0m const_env v0.1.2
-[1m[32m   Compiling[0m pest v2.7.6
-[1m[32m   Compiling[0m darling_macro v0.14.4
-[1m[32m   Compiling[0m secp256k1 v0.28.1
-[1m[32m   Compiling[0m semver-parser v0.10.2
-[1m[32m   Compiling[0m darling v0.14.4
-[1m[32m   Compiling[0m scale-encode-derive v0.5.0
-[1m[32m   Compiling[0m scale-decode-derive v0.9.0
-[1m[32m   Compiling[0m parity-scale-codec v3.6.9
-[1m[32m   Compiling[0m semver v0.11.0
-[1m[32m   Compiling[0m camino v1.1.6
-[1m[32m   Compiling[0m cargo-platform v0.1.6
-[1m[32m   Compiling[0m impl-serde v0.4.0
-[1m[32m   Compiling[0m serde_bytes v0.11.14
-[1m[32m   Compiling[0m schnorrkel v0.11.4
-[1m[32m   Compiling[0m scale-info v2.10.0
-[1m[32m   Compiling[0m ink_primitives v4.3.0
-[1m[32m   Compiling[0m cargo_metadata v0.13.1
-[1m[32m   Compiling[0m scale-bits v0.4.0
-[1m[32m   Compiling[0m scale-encode v0.5.0
-[1m[32m   Compiling[0m scale-decode v0.9.0
-[1m[32m   Compiling[0m pendzl_lang_codegen v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
-[1m[32m   Compiling[0m pendzl_lang_macro v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
-[1m[32m   Compiling[0m ink_primitives v5.0.0-rc
-[1m[32m   Compiling[0m ink_codegen v5.0.0-rc
-[1m[32m   Compiling[0m ink_macro v5.0.0-rc
-[1m[32m   Compiling[0m ink_metadata v5.0.0-rc
-[1m[32m   Compiling[0m ink_engine v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage_traits v5.0.0-rc
-[1m[32m   Compiling[0m ink_env v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage v5.0.0-rc
-[1m[32m   Compiling[0m ink v5.0.0-rc
-[1m[32m   Compiling[0m pendzl_lang v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang)
-[1m[32m   Compiling[0m pendzl_contracts v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/contracts)
-[1m[32m   Compiling[0m pendzl v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl)
-[1m[32m   Compiling[0m my_psp22_mintable v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
-[1m[32m   Compiling[0m ts_provider v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/vester_custom/ts_provider)
-[1m[32m   Compiling[0m vester_custom v0.1.0-beta1 (/tmp/cargo-contract_AcbDiQ)
-[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_AcbDiQ/.ink/metadata_gen)
-[1m[32m    Finished[0m release [optimized] target(s) in 35.53s
-[1m[32m     Running[0m `target/ink/release/metadata-gen`
- [4/4] Generating bundle
-
-Original wasm size: 89.8K, Optimized: 40.9K
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/vester_custom/vester_custom/target/ink
-
-  - vester_custom.contract (code + metadata)
-  - vester_custom.wasm (the contract's code)
-  - vester_custom.json (the contract's metadata)
-Copying artifacts...
-Found contract vester!
-============================================================
-[42mcompiling contract vester from ../../examples/vester...[49m
-============================================================
-============================================================
-[42mrunning cargo contract build...[49m
-============================================================
- [1/*] Building cargo project
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[36m    Blocking[0m waiting for file lock on package cache
-[1m[36m    Blocking[0m waiting for file lock on package cache
-[1m[32m   Compiling[0m proc-macro2 v1.0.78
-[1m[32m   Compiling[0m unicode-ident v1.0.12
-[1m[32m   Compiling[0m compiler_builtins v0.1.103
-[1m[32m   Compiling[0m syn v1.0.109
-[1m[32m   Compiling[0m core v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core)
-[1m[32m   Compiling[0m equivalent v1.0.1
-[1m[32m   Compiling[0m hashbrown v0.14.3
-[1m[32m   Compiling[0m winnow v0.5.34
-[1m[32m   Compiling[0m toml_datetime v0.6.5
-[1m[32m   Compiling[0m version_check v0.9.4
-[1m[32m   Compiling[0m typenum v1.17.0
-[1m[32m   Compiling[0m serde v1.0.195
-[1m[32m   Compiling[0m cfg-if v1.0.0
-[1m[32m   Compiling[0m subtle v2.4.1
-[1m[32m   Compiling[0m either v1.9.0
-[1m[36m    Building[0m [                           ] 0/128: unicode-ident, cfg-if, proc-macro2(build.rs),...[K[1m[32m   Compiling[0m arrayvec v0.7.4
-[1m[36m    Building[0m [                           ] 1/128: cfg-if, proc-macro2(build.rs), subtle, either...[K[1m[32m   Compiling[0m thiserror v1.0.56
-[1m[36m    Building[0m [                           ] 2/128: cfg-if, proc-macro2(build.rs), subtle, either...[K[1m[32m   Compiling[0m unicode-xid v0.2.4
-[1m[36m    Building[0m [                           ] 3/128: unicode-xid, proc-macro2(build.rs), subtle, e...[K[1m[32m   Compiling[0m serde_json v1.0.111
-[1m[36m    Building[0m [                           ] 4/128: unicode-xid, proc-macro2(build.rs), either, t...[K[1m[32m   Compiling[0m byte-slice-cast v1.2.2
-[1m[36m    Building[0m [>                          ] 5/128: unicode-xid, proc-macro2(build.rs), thiserror...[K[1m[32m   Compiling[0m xxhash-rust v0.8.8
-[1m[36m    Building[0m [>                          ] 6/128: proc-macro2(build.rs), thiserror(build.rs), x...[K[1m[32m   Compiling[0m ryu v1.0.16
-[1m[36m    Building[0m [>                          ] 7/128: ryu, proc-macro2(build.rs), thiserror(build.r...[K[1m[32m   Compiling[0m itoa v1.0.10
-[1m[36m    Building[0m [>                          ] 8/128: itoa, ryu, proc-macro2(build.rs), thiserror(b...[K[1m[32m   Compiling[0m memchr v2.7.1
-[1m[36m    Building[0m [>                          ] 9/128: itoa, ryu, proc-macro2(build.rs), thiserror(b...[1m[36m    Building[0m [=>                        ] 10/128: itoa, ryu, proc-macro2(build.rs), thiserror(b...[1m[36m    Building[0m [=>                        ] 11/128: itoa, ryu, proc-macro2(build), thiserror(buil...[1m[36m    Building[0m [=>                        ] 12/128: itoa, ryu, proc-macro2(build), serde(build), ...[K[1m[32m   Compiling[0m ucd-trie v0.1.6
-[1m[36m    Building[0m [=>                        ] 13/128: itoa, ryu, proc-macro2(build), serde(build), ...[K[1m[32m   Compiling[0m generic-array v0.14.7
-[1m[36m    Building[0m [=>                        ] 14/128: itoa, ryu, proc-macro2(build), serde(build), ...[1m[36m    Building[0m [==>                       ] 15/128: itoa, ryu, proc-macro2(build), serde(build), ...[K[1m[32m   Compiling[0m autocfg v1.1.0
-[1m[36m    Building[0m [==>                       ] 16/128: itoa, proc-macro2(build), serde(build), ucd-t...[K[1m[32m   Compiling[0m ink_prelude v5.0.0-rc
-[1m[36m    Building[0m [==>                       ] 17/128: itoa, proc-macro2(build), ink_prelude, ucd-tr...[K[1m[32m   Compiling[0m libc v0.2.152
-[1m[36m    Building[0m [==>                       ] 18/128: libc(build.rs), proc-macro2(build), ink_prelu...[1m[36m    Building[0m [==>                       ] 19/128: libc(build.rs), proc-macro2(build), ink_prelu...[K[1m[32m   Compiling[0m camino v1.1.6
-[1m[36m    Building[0m [===>                      ] 20/128: libc(build.rs), proc-macro2(build), ink_prelu...[K[1m[32m   Compiling[0m paste v1.0.14
-[1m[36m    Building[0m [===>                      ] 21/128: libc(build.rs), proc-macro2(build), ucd-trie,...[K[1m[32m   Compiling[0m itertools v0.12.0
-[1m[36m    Building[0m [===>                      ] 22/128: libc(build.rs), proc-macro2(build), ucd-trie,...[K[1m[32m   Compiling[0m itertools v0.10.5
-[1m[36m    Building[0m [===>                      ] 24/128: libc(build.rs), proc-macro2(build), compiler_...[1m[36m    Building[0m [====>                     ] 25/128: libc(build.rs), compiler_builtins(build), ucd...[K[1m[32m   Compiling[0m ink_prelude v4.3.0
-[1m[36m    Building[0m [====>                     ] 26/128: libc(build.rs), ucd-trie, paste(build.rs), ca...[K[1m[32m   Compiling[0m once_cell v1.19.0
-[1m[36m    Building[0m [====>                     ] 27/128: libc(build.rs), ucd-trie, paste(build.rs), ca...[1m[36m    Building[0m [====>                     ] 28/128: libc(build.rs), generic-array(build), ucd-tri...[K[1m[32m   Compiling[0m unicode-segmentation v1.10.1
-[1m[36m    Building[0m [====>                     ] 29/128: libc(build.rs), ucd-trie, paste(build.rs), ca...[K[1m[32m   Compiling[0m heck v0.4.1
-[1m[36m    Building[0m [=====>                    ] 30/128: libc(build.rs), paste(build.rs), camino(build...[1m[36m    Building[0m [=====>                    ] 31/128: libc(build.rs), paste(build.rs), camino(build...[K[1m[32m   Compiling[0m indexmap v2.1.0
-[1m[36m    Building[0m [=====>                    ] 32/128: libc(build.rs), paste(build.rs), itertools, p...[1m[36m    Building[0m [=====>                    ] 33/128: libc(build.rs), itertools, proc-macro2, heck,...[1m[36m    Building[0m [=====>                    ] 34/128: libc(build.rs), camino(build), itertools, pro...[1m[36m    Building[0m [======>                   ] 35/128: libc(build.rs), camino(build), itertools, pro...[1m[36m    Building[0m [======>                   ] 36/128: libc(build.rs), camino(build), itertools, pro...[K[1m[32m   Compiling[0m num-traits v0.2.17
-[1m[36m    Building[0m [======>                   ] 37/128: libc(build.rs), camino(build), itertools, pro...[1m[36m    Building[0m [======>                   ] 38/128: camino(build), libc(build), itertools, proc-m...[K[1m[32m   Compiling[0m unwrap v1.2.1
-[1m[36m    Building[0m [======>                   ] 39/128: camino(build), libc(build), unwrap, itertools...[1m[36m    Building[0m [=======>                  ] 40/128: camino(build), unwrap, libc, itertools, proc-...[1m[36m    Building[0m [=======>                  ] 41/128: unwrap, libc, itertools, proc-macro2, heck, p...[1m[36m    Building[0m [=======>                  ] 42/128: unwrap, libc, itertools, proc-macro2, paste, ...[1m[36m    Building[0m [=======>                  ] 43/128: libc, itertools, proc-macro2, paste, num-trai...[K[1m[32m   Compiling[0m quote v1.0.35
-[1m[36m    Building[0m [=======>                  ] 43/128: quote, libc, itertools, proc-macro2, paste, n...[K[1m[32m   Compiling[0m heck v0.3.3
-[1m[36m    Building[0m [=======>                  ] 43/128: quote, libc, itertools, proc-macro2, paste, n...[1m[36m    Building[0m [=======>                  ] 44/128: quote, libc, itertools, proc-macro2, paste, n...[1m[36m    Building[0m [========>                 ] 45/128: quote, libc, itertools, proc-macro2, paste, i...[1m[36m    Building[0m [========>                 ] 46/128: quote, libc, itertools, proc-macro2, paste, i...[1m[36m    Building[0m [========>                 ] 47/128: quote, libc, itertools, paste, indexmap, winn...[1m[36m    Building[0m [========>                 ] 48/128: quote, libc, itertools, paste, indexmap, winn...[K[1m[32m   Compiling[0m syn v2.0.48
-[1m[36m    Building[0m [========>                 ] 48/128: quote, libc, itertools, paste, indexmap, winn...[K[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
-[1m[36m    Building[0m [========>                 ] 49/128: libc, itertools, paste, const_format_proc_mac...[1m[36m    Building[0m [=========>                ] 50/128: libc, itertools, const_format_proc_macros, in...[1m[36m    Building[0m [=========>                ] 51/128: libc, itertools, const_format_proc_macros, in...[1m[36m    Building[0m [=========>                ] 52/128: libc, itertools, const_format_proc_macros, wi...[1m[36m    Building[0m [=========>                ] 52/128: generic-array, libc, itertools, const_format_...[1m[36m    Building[0m [=========>                ] 53/128: generic-array, libc, const_format_proc_macros...[K[1m[32m   Compiling[0m fs2 v0.4.3
-[1m[36m    Building[0m [=========>                ] 53/128: generic-array, libc, const_format_proc_macros...[1m[36m    Building[0m [=========>                ] 54/128: generic-array, libc, const_format_proc_macros...[1m[36m    Building[0m [==========>               ] 55/128: generic-array, const_format_proc_macros, winn...[1m[36m    Building[0m [==========>               ] 56/128: generic-array, const_format_proc_macros, winn...[1m[36m    Building[0m [==========>               ] 57/128: generic-array, const_format_proc_macros, winn...[K[1m[32m   Compiling[0m crypto-common v0.1.6
-[1m[32m   Compiling[0m block-buffer v0.10.4
-[1m[36m    Building[0m [==========>               ] 57/128: generic-array, block-buffer, const_format_pro...[1m[36m    Building[0m [==========>               ] 58/128: generic-array, block-buffer, winnow, core, sy...[1m[36m    Building[0m [==========>               ] 59/128: block-buffer, winnow, core, syn, syn, crypto-...[1m[36m    Building[0m [===========>              ] 60/128: block-buffer, winnow, core, syn, syn            [K[1m[32m   Compiling[0m digest v0.10.7
-[1m[36m    Building[0m [===========>              ] 60/128: block-buffer, digest, winnow, core, syn, syn    [K[1m[32m   Compiling[0m toml_edit v0.20.7
-[1m[32m   Compiling[0m toml_edit v0.19.15
-[1m[36m    Building[0m [===========>              ] 60/128: toml_edit, block-buffer, digest, winnow, core...[1m[36m    Building[0m [===========>              ] 61/128: toml_edit, digest, winnow, core, syn, syn, to...[1m[36m    Building[0m [===========>              ] 62/128: toml_edit, digest, core, syn, syn, toml_edit    [K[1m[32m   Compiling[0m blake2 v0.10.6
-[1m[36m    Building[0m [===========>              ] 62/128: toml_edit, blake2, digest, core, syn, syn, to...[1m[36m    Building[0m [===========>              ] 63/128: toml_edit, blake2, core, syn, syn, toml_edit    [1m[36m    Building[0m [============>             ] 64/128: toml_edit, core, syn, syn, toml_edit            [K[1m[32m   Compiling[0m proc-macro-crate v1.3.1
-[1m[36m    Building[0m [============>             ] 64/128: toml_edit, proc-macro-crate, core, syn, syn, ...[K[1m[32m   Compiling[0m proc-macro-crate v2.0.0
-[1m[36m    Building[0m [============>             ] 64/128: toml_edit, proc-macro-crate, core, syn, syn, ...[1m[36m    Building[0m [============>             ] 65/128: toml_edit, core, syn, syn, toml_edit, proc-ma...[1m[36m    Building[0m [============>             ] 66/128: toml_edit, core, syn, syn, toml_edit            [1m[36m    Building[0m [============>             ] 67/128: toml_edit, core, syn, syn                       [1m[36m    Building[0m [============>             ] 68/128: core, syn, syn                                  [K[1m[32m   Compiling[0m ink_ir v5.0.0-rc
-[1m[32m   Compiling[0m synstructure v0.13.0
-[1m[32m   Compiling[0m ink_ir v4.3.0
-[1m[36m    Building[0m [============>             ] 68/128: synstructure, ink_ir, core, syn, syn, ink_ir    [1m[36m    Building[0m [=============>            ] 69/128: ink_ir, core, syn, syn, ink_ir                  [K[1m[32m   Compiling[0m serde_derive v1.0.195
-[1m[32m   Compiling[0m thiserror-impl v1.0.56
-[1m[36m    Building[0m [=============>            ] 70/128: thiserror-impl, ink_ir, serde_derive, core, s...[K[1m[32m   Compiling[0m const_env_impl v0.1.2
-[1m[32m   Compiling[0m synstructure v0.12.6
-[1m[36m    Building[0m [=============>            ] 70/128: thiserror-impl, synstructure, ink_ir, serde_d...[1m[36m    Building[0m [=============>            ] 71/128: thiserror-impl, synstructure, ink_ir, serde_d...[1m[36m    Building[0m [=============>            ] 72/128: thiserror-impl, synstructure, ink_ir, serde_d...[1m[36m    Building[0m [=============>            ] 73/128: thiserror-impl, ink_ir, serde_derive, core, syn [1m[36m    Building[0m [==============>           ] 74/128: thiserror-impl, serde_derive, core, syn         [K[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
-[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
-[1m[32m   Compiling[0m derive_more v0.99.17
-[1m[32m   Compiling[0m const_env v0.1.2
-[1m[32m   Compiling[0m scale-info-derive v2.10.0
-[1m[36m    Building[0m [==============>           ] 75/128: thiserror-impl, const_env, scale-info-derive,...[1m[36m    Building[0m [==============>           ] 76/128: const_env, scale-info-derive, thiserror, deri...[K[1m[32m   Compiling[0m pest v2.7.6
-[1m[36m    Building[0m [==============>           ] 76/128: const_env, scale-info-derive, thiserror, pest...[1m[36m    Building[0m [==============>           ] 77/128: const_env, scale-info-derive, pest, derive_mo...[1m[36m    Building[0m [==============>           ] 78/128: scale-info-derive, pest, derive_more, parity-...[1m[36m    Building[0m [===============>          ] 79/128: pest, derive_more, parity-scale-codec-derive,...[K[1m[32m   Compiling[0m semver-parser v0.10.2
-[1m[36m    Building[0m [===============>          ] 79/128: semver-parser, pest, derive_more, parity-scal...[1m[36m    Building[0m [===============>          ] 80/128: semver-parser, pest, parity-scale-codec-deriv...[1m[36m    Building[0m [===============>          ] 81/128: semver-parser, pest, serde_derive, core, impl...[1m[36m    Building[0m [===============>          ] 82/128: semver-parser, serde_derive, core, impl-trait...[1m[36m    Building[0m [===============>          ] 83/128: serde_derive, core, impl-trait-for-tuples       [1m[36m    Building[0m [================>         ] 84/128: serde, core, impl-trait-for-tuples              [K[1m[32m   Compiling[0m parity-scale-codec v3.6.9
-[1m[36m    Building[0m [================>         ] 85/128: parity-scale-codec, serde, core                 [K[1m[32m   Compiling[0m ink_primitives v5.0.0-rc
-[1m[32m   Compiling[0m ink_primitives v4.3.0
-[1m[36m    Building[0m [================>         ] 85/128: parity-scale-codec, ink_primitives, serde, in...[1m[36m    Building[0m [================>         ] 86/128: ink_primitives, serde, ink_primitives, core     [1m[36m    Building[0m [================>         ] 87/128: serde, ink_primitives, core                     [1m[36m    Building[0m [================>         ] 88/128: serde, core                                     [K[1m[32m   Compiling[0m rustc-std-workspace-core v1.99.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/rustc-std-workspace-core)
-[1m[36m    Building[0m [================>         ] 88/128: rustc-std-workspace-core, serde, core           [1m[36m    Building[0m [================>         ] 88/128: rustc-std-workspace-core, serde, compiler_bui...[1m[36m    Building[0m [=================>        ] 89/128: serde, compiler_builtins, core                  [K[1m[32m   Compiling[0m alloc v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc)
-[1m[36m    Building[0m [=================>        ] 89/128: serde, compiler_builtins, alloc, core           [K[1m[32m   Compiling[0m semver v0.11.0
-[1m[32m   Compiling[0m impl-serde v0.4.0
-[1m[32m   Compiling[0m cargo-platform v0.1.6
-[1m[36m    Building[0m [=================>        ] 89/128: cargo-platform, serde_json, serde, compiler_b...[1m[36m    Building[0m [=================>        ] 90/128: cargo-platform, serde_json, compiler_builtins...[1m[36m    Building[0m [=================>        ] 91/128: cargo-platform, serde_json, compiler_builtins...[1m[36m    Building[0m [=================>        ] 92/128: serde_json, compiler_builtins, alloc, camino,...[1m[36m    Building[0m [=================>        ] 93/128: serde_json, compiler_builtins, alloc, camino,...[1m[36m    Building[0m [==================>       ] 94/128: serde_json, compiler_builtins, alloc, core      [K[1m[32m   Compiling[0m ink_codegen v5.0.0-rc
-[1m[32m   Compiling[0m cargo_metadata v0.13.1
-[1m[36m    Building[0m [==================>       ] 94/128: serde_json, compiler_builtins, alloc, core, i...[1m[36m    Building[0m [==================>       ] 95/128: serde_json, compiler_builtins, alloc, ink_cod...[1m[36m    Building[0m [==================>       ] 96/128: serde_json, alloc, ink_codegen, cargo_metadata  [1m[36m    Building[0m [==================>       ] 97/128: alloc, ink_codegen, cargo_metadata              [K[1m[32m   Compiling[0m pendzl_lang_codegen v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
-[1m[36m    Building[0m [==================>       ] 97/128: alloc, pendzl_lang_codegen, ink_codegen, carg...[1m[36m    Building[0m [==================>       ] 98/128: alloc, pendzl_lang_codegen, ink_codegen         [K[1m[32m   Compiling[0m rlibc v1.0.0
-[1m[32m   Compiling[0m static_assertions v1.1.0
-[1m[32m   Compiling[0m array-init v2.1.0
-[1m[32m   Compiling[0m const_format v0.2.32
-[1m[32m   Compiling[0m hex v0.4.3
-[1m[32m   Compiling[0m ethnum v1.5.0
-[1m[36m    Building[0m [==================>       ] 98/128: hex, arrayvec, static_assertions, num-traits,...[K[1m[32m   Compiling[0m ink_allocator v5.0.0-rc
-[1m[36m    Building[0m [===================>      ] 99/128: hex, arrayvec, static_assertions, num-traits,...[1m[36m    Building[0m [==================>      ] 100/128: hex, arrayvec, num-traits, const_format, ink_...[1m[36m    Building[0m [==================>      ] 102/128: hex, arrayvec, num-traits, const_format, byte...[1m[36m    Building[0m [===================>     ] 103/128: hex, arrayvec, num-traits, const_format, byte...[1m[36m    Building[0m [===================>     ] 104/128: hex, arrayvec, num-traits, const_format, byte...[1m[36m    Building[0m [===================>     ] 105/128: hex, arrayvec, num-traits, const_format, byte...[1m[36m    Building[0m [===================>     ] 106/128: hex, num-traits, const_format, byte-slice-cas...[1m[36m    Building[0m [===================>     ] 106/128: hex, parity-scale-codec, num-traits, const_fo...[1m[36m    Building[0m [===================>     ] 107/128: hex, parity-scale-codec, num-traits, const_fo...[1m[36m    Building[0m [====================>    ] 108/128: parity-scale-codec, num-traits, const_format,...[1m[36m    Building[0m [====================>    ] 109/128: parity-scale-codec, num-traits, alloc, pendzl...[1m[36m    Building[0m [====================>    ] 110/128: parity-scale-codec, num-traits, pendzl_lang_c...[K[1m[32m   Compiling[0m scale-info v2.10.0
-[1m[36m    Building[0m [====================>    ] 110/128: parity-scale-codec, num-traits, scale-info, i...[K[1m[32m   Compiling[0m ink_macro v5.0.0-rc
-[1m[36m    Building[0m [====================>    ] 111/128: parity-scale-codec, num-traits, scale-info, i...[1m[36m    Building[0m [====================>    ] 112/128: num-traits, scale-info, ink_macro, ink_primit...[K[1m[32m   Compiling[0m pendzl_lang_macro v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
-[1m[36m    Building[0m [=====================>   ] 114/128: pendzl_lang_macro, scale-info, ink_macro, ink...[K[1m[32m   Compiling[0m ink_storage_traits v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 114/128: pendzl_lang_macro, scale-info, ink_macro, ink...[1m[36m    Building[0m [=====================>   ] 115/128: pendzl_lang_macro, scale-info, ink_macro, ink...[K[1m[32m   Compiling[0m ink_env v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 115/128: pendzl_lang_macro, scale-info, ink_macro, ink...[1m[36m    Building[0m [=====================>   ] 116/128: pendzl_lang_macro, scale-info, ink_macro, eth...[1m[36m    Building[0m [=====================>   ] 117/128: pendzl_lang_macro, scale-info, ink_macro, ink...[K[1m[32m   Compiling[0m ink_storage v5.0.0-rc
-[1m[36m    Building[0m [=====================>   ] 117/128: ink_storage, pendzl_lang_macro, scale-info, i...[1m[36m    Building[0m [======================>  ] 118/128: ink_storage, pendzl_lang_macro, scale-info, i...[1m[36m    Building[0m [======================>  ] 119/128: ink_storage, scale-info, ink_macro              [1m[36m    Building[0m [======================>  ] 120/128: scale-info, ink_macro                           [K[1m[32m   Compiling[0m ink v5.0.0-rc
-[1m[36m    Building[0m [======================>  ] 121/128: scale-info, ink                                 [K[1m[32m   Compiling[0m pendzl_lang v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang)
-[1m[36m    Building[0m [======================>  ] 121/128: scale-info, ink, pendzl_lang                    [1m[36m    Building[0m [======================>  ] 122/128: scale-info, pendzl_lang                         [K[1m[32m   Compiling[0m pendzl_contracts v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/contracts)
-[1m[36m    Building[0m [======================>  ] 122/128: scale-info, pendzl_lang, pendzl_contracts       [1m[36m    Building[0m [=======================> ] 123/128: scale-info, pendzl_contracts                    [1m[36m    Building[0m [=======================> ] 124/128: pendzl_contracts                                [K[1m[32m   Compiling[0m pendzl v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl)
-[1m[36m    Building[0m [=======================> ] 124/128: pendzl_contracts, pendzl                        [K[1m[32m   Compiling[0m my_psp22_mintable v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
-[1m[36m    Building[0m [=======================> ] 124/128: my_psp22_mintable, pendzl_contracts, pendzl     [1m[36m    Building[0m [=======================> ] 125/128: my_psp22_mintable, pendzl_contracts             [1m[36m    Building[0m [=======================> ] 126/128: my_psp22_mintable                               [K[1m[32m   Compiling[0m vester v0.1.0-beta1 (/tmp/cargo-contract_rYYZ4K)
-[1m[36m    Building[0m [=======================> ] 127/128: vester(bin)                                     [K[1m[32m    Finished[0m release [optimized] target(s) in 18.21s
- [2/4] Post processing code
- [3/4] Generating metadata
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
-[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
-[1m[32m   Compiling[0m proc-macro2 v1.0.78
-[1m[32m   Compiling[0m radium v0.7.0
-[1m[32m   Compiling[0m cfg-if v1.0.0
-[1m[32m   Compiling[0m strsim v0.10.0
-[1m[32m   Compiling[0m fnv v1.0.7
-[1m[32m   Compiling[0m ident_case v1.0.1
-[1m[32m   Compiling[0m serde v1.0.195
-[1m[32m   Compiling[0m typenum v1.17.0
-[1m[32m   Compiling[0m serde_json v1.0.111
-[1m[32m   Compiling[0m generic-array v0.14.7
-[1m[32m   Compiling[0m ryu v1.0.16
-[1m[32m   Compiling[0m schemars v0.8.16
-[1m[32m   Compiling[0m tap v1.0.1
-[1m[32m   Compiling[0m arrayvec v0.7.4
-[1m[32m   Compiling[0m itoa v1.0.10
-[1m[32m   Compiling[0m byte-slice-cast v1.2.2
-[1m[32m   Compiling[0m dyn-clone v1.0.16
-[1m[32m   Compiling[0m funty v2.0.0
-[1m[32m   Compiling[0m wyz v0.5.1
-[1m[32m   Compiling[0m libc v0.2.152
-[1m[32m   Compiling[0m subtle v2.4.1
-[1m[32m   Compiling[0m semver v1.0.21
-[1m[32m   Compiling[0m either v1.9.0
-[1m[32m   Compiling[0m smallvec v1.13.1
-[1m[32m   Compiling[0m cc v1.0.83
-[1m[32m   Compiling[0m thiserror v1.0.56
-[1m[32m   Compiling[0m ink_prelude v5.0.0-rc
-[1m[32m   Compiling[0m ppv-lite86 v0.2.17
-[1m[32m   Compiling[0m xxhash-rust v0.8.8
-[1m[32m   Compiling[0m cpufeatures v0.2.12
-[1m[32m   Compiling[0m keccak v0.1.5
-[1m[32m   Compiling[0m platforms v3.3.0
-[1m[32m   Compiling[0m num-traits v0.2.17
-[1m[32m   Compiling[0m byteorder v1.5.0
-[1m[32m   Compiling[0m quote v1.0.35
-[1m[32m   Compiling[0m bitvec v1.0.1
-[1m[32m   Compiling[0m rustc_version v0.4.0
-[1m[32m   Compiling[0m syn v2.0.48
-[1m[32m   Compiling[0m syn v1.0.109
-[1m[32m   Compiling[0m itertools v0.12.0
-[1m[32m   Compiling[0m arrayref v0.3.7
-[1m[32m   Compiling[0m itertools v0.10.5
-[1m[32m   Compiling[0m ink_allocator v5.0.0-rc
-[1m[32m   Compiling[0m static_assertions v1.1.0
-[1m[32m   Compiling[0m array-init v2.1.0
-[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
-[1m[32m   Compiling[0m hex v0.4.3
-[1m[32m   Compiling[0m curve25519-dalek v4.1.1
-[1m[32m   Compiling[0m ethnum v1.5.0
-[1m[32m   Compiling[0m block-buffer v0.10.4
-[1m[32m   Compiling[0m crypto-common v0.1.6
-[1m[32m   Compiling[0m getrandom v0.2.12
-[1m[32m   Compiling[0m digest v0.10.7
-[1m[32m   Compiling[0m secp256k1-sys v0.9.2
-[1m[32m   Compiling[0m rand_core v0.6.4
-[1m[32m   Compiling[0m sha2 v0.10.8
-[1m[32m   Compiling[0m sha3 v0.10.8
-[1m[32m   Compiling[0m blake2 v0.10.6
-[1m[32m   Compiling[0m rand_chacha v0.3.1
-[1m[32m   Compiling[0m const_format v0.2.32
-[1m[32m   Compiling[0m rand v0.8.5
-[1m[32m   Compiling[0m getrandom_or_panic v0.0.3
-[1m[32m   Compiling[0m ink_ir v5.0.0-rc
-[1m[32m   Compiling[0m synstructure v0.13.0
-[1m[32m   Compiling[0m ink_ir v4.3.0
-[1m[32m   Compiling[0m darling_core v0.14.4
-[1m[32m   Compiling[0m serde_derive_internals v0.26.0
-[1m[32m   Compiling[0m const_env_impl v0.1.2
-[1m[32m   Compiling[0m synstructure v0.12.6
-[1m[32m   Compiling[0m serde_derive v1.0.195
-[1m[32m   Compiling[0m zeroize_derive v1.4.2
-[1m[32m   Compiling[0m thiserror-impl v1.0.56
-[1m[32m   Compiling[0m linkme-impl v0.3.22
-[1m[32m   Compiling[0m curve25519-dalek-derive v0.1.1
-[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
-[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
-[1m[32m   Compiling[0m derive_more v0.99.17
-[1m[32m   Compiling[0m scale-info-derive v2.10.0
-[1m[32m   Compiling[0m schemars_derive v0.8.16
-[1m[32m   Compiling[0m const_env v0.1.2
-[1m[32m   Compiling[0m zeroize v1.7.0
-[1m[32m   Compiling[0m linkme v0.3.22
-[1m[32m   Compiling[0m merlin v3.0.0
-[1m[32m   Compiling[0m pest v2.7.6
-[1m[32m   Compiling[0m darling_macro v0.14.4
-[1m[32m   Compiling[0m darling v0.14.4
-[1m[32m   Compiling[0m secp256k1 v0.28.1
-[1m[32m   Compiling[0m scale-encode-derive v0.5.0
-[1m[32m   Compiling[0m scale-decode-derive v0.9.0
-[1m[32m   Compiling[0m semver-parser v0.10.2
-[1m[32m   Compiling[0m parity-scale-codec v3.6.9
-[1m[32m   Compiling[0m semver v0.11.0
-[1m[32m   Compiling[0m impl-serde v0.4.0
-[1m[32m   Compiling[0m cargo-platform v0.1.6
-[1m[32m   Compiling[0m camino v1.1.6
-[1m[32m   Compiling[0m serde_bytes v0.11.14
-[1m[32m   Compiling[0m schnorrkel v0.11.4
-[1m[32m   Compiling[0m scale-info v2.10.0
-[1m[32m   Compiling[0m ink_primitives v4.3.0
-[1m[32m   Compiling[0m cargo_metadata v0.13.1
-[1m[32m   Compiling[0m scale-bits v0.4.0
-[1m[32m   Compiling[0m scale-encode v0.5.0
-[1m[32m   Compiling[0m pendzl_lang_codegen v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
-[1m[32m   Compiling[0m scale-decode v0.9.0
-[1m[32m   Compiling[0m pendzl_lang_macro v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
-[1m[32m   Compiling[0m ink_primitives v5.0.0-rc
-[1m[32m   Compiling[0m ink_codegen v5.0.0-rc
-[1m[32m   Compiling[0m ink_macro v5.0.0-rc
-[1m[32m   Compiling[0m ink_metadata v5.0.0-rc
-[1m[32m   Compiling[0m ink_engine v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage_traits v5.0.0-rc
-[1m[32m   Compiling[0m ink_env v5.0.0-rc
-[1m[32m   Compiling[0m ink_storage v5.0.0-rc
-[1m[32m   Compiling[0m ink v5.0.0-rc
-[1m[32m   Compiling[0m pendzl_lang v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/lang)
-[1m[32m   Compiling[0m pendzl_contracts v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/contracts)
-[1m[32m   Compiling[0m pendzl v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl)
-[1m[32m   Compiling[0m my_psp22_mintable v0.1.0-beta1 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
-[1m[32m   Compiling[0m vester v0.1.0-beta1 (/tmp/cargo-contract_kcJrS0)
-[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_kcJrS0/.ink/metadata_gen)
-[1m[32m    Finished[0m release [optimized] target(s) in 29.16s
-[1m[32m     Running[0m `target/ink/release/metadata-gen`
- [4/4] Generating bundle
-
-Original wasm size: 89.7K, Optimized: 40.9K
-
-The contract was built in DEBUG mode.
-
-Your contract artifacts are ready. You can find them in:
-/home/lukas/repos/abax/simple_pendzl/examples/vester/target/ink
-
-  - vester.contract (code + metadata)
-  - vester.wasm (the contract's code)
-  - vester.json (the contract's metadata)
-Copying artifacts...
-All contracts compiled successfuly!
-
-Script done on 2024-02-18 15:45:50+01:00 [COMMAND_EXIT_CODE="0"]
