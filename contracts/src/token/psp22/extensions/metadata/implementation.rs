@@ -18,6 +18,24 @@ pub struct PSP22MetadataData {
     pub decimals: u8,
 }
 
+impl PSP22MetadataData {
+    pub fn new(
+        name: Option<String>,
+        symbol: Option<String>,
+        decimals: u8,
+    ) -> Self {
+        let mut instance: PSP22MetadataData = Default::default();
+        if name.is_some() {
+            instance.name.set(&name);
+        }
+        if symbol.is_some() {
+            instance.symbol.set(&symbol);
+        }
+        instance.decimals.set(&decimals);
+        instance
+    }
+}
+
 #[cfg(feature = "psp22_metadata_impl")]
 impl PSP22MetadataStorage for PSP22MetadataData {
     fn token_name(&self) -> Option<String> {
@@ -64,6 +82,23 @@ pub struct PSP22MetadataData {
     pub name: Option<String>,
     #[lazy]
     pub symbol: Option<String>,
+}
+
+#[cfg(all(
+    feature = "psp22_vault_metadata_impl",
+    not(feature = "psp22_metadata_impl")
+))]
+impl PSP22Metadata {
+    pub fn new(name: Option<String>, symbol: Option<String>) -> Self {
+        let mut instance: PSP22MetadataData = Default::default();
+        if name.is_some() {
+            instance.name.set(&name);
+        }
+        if symbol.is_some() {
+            instance.symbol.set(&symbol);
+        }
+        instance
+    }
 }
 
 #[cfg(feature = "psp22_vault_metadata_impl")]

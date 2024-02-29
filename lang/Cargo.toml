@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_lang"
-version = "0.1.0-beta2"
+version = "0.1.0-beta3"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
@@ -15,7 +15,7 @@ categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-pendzl_lang_macro = { version = "0.1.0-beta2", path = "macro", default-features = false }
+pendzl_lang_macro = { version = "0.1.0-beta3", path = "macro", default-features = false }
 
 ink = { version = "=5.0.0-rc", default-features = false }
 scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [

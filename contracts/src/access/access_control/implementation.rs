@@ -5,7 +5,7 @@ pub use super::{
     AccessControlStorage, RoleAdminChanged, RoleGranted, RoleRevoked, RoleType,
     DEFAULT_ADMIN_ROLE,
 };
-use ink::storage::Mapping;
+use ink::{env::DefaultEnvironment, storage::Mapping};
 use pendzl::traits::{AccountId, DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
@@ -13,6 +13,23 @@ use pendzl::traits::{AccountId, DefaultEnv, StorageFieldGetter};
 pub struct AccessControlData {
     pub admin_roles: Mapping<RoleType, RoleType>,
     pub members: Mapping<(RoleType, Option<AccountId>), ()>,
+}
+
+impl AccessControlData {
+    pub fn new(admin: Option<AccountId>) -> Self {
+        let mut instance: AccessControlData = Default::default();
+        if let Some(admin) = admin {
+            instance.add(DEFAULT_ADMIN_ROLE, &Some(admin));
+            ink::env::emit_event::<DefaultEnvironment, RoleGranted>(
+                RoleGranted {
+                    role: 0,
+                    grantee: None,
+                    grantor: Some(admin),
+                },
+            );
+        }
+        instance
+    }
 }
 
 impl AccessControlStorage for AccessControlData {

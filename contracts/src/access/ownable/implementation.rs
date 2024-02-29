@@ -3,6 +3,7 @@
 use super::{
     OwnableError, OwnableInternal, OwnableStorage, OwnershipTransferred,
 };
+use ink::env::DefaultEnvironment;
 use pendzl::traits::{AccountId, StorageFieldGetter};
 
 #[derive(Default, Debug)]
@@ -10,6 +11,20 @@ use pendzl::traits::{AccountId, StorageFieldGetter};
 pub struct OwnableData {
     #[lazy]
     pub owner: Option<AccountId>,
+}
+
+impl OwnableData {
+    pub fn new(owner: Option<AccountId>) -> Self {
+        let mut instance: OwnableData = Default::default();
+        if owner.is_some() {
+            instance.set_owner(&owner);
+            ink::env::emit_event::<DefaultEnvironment, OwnershipTransferred>(
+                OwnershipTransferred { new: owner },
+            )
+        }
+
+        instance
+    }
 }
 
 impl OwnableStorage for OwnableData {

@@ -24,6 +24,41 @@ pub struct PSP22VaultData {
     pub underlying_decimals: u8,
 }
 
+impl PSP22VaultData {
+    pub fn new(asset: AccountId, underlying_decimals: Option<u8>) -> Self {
+        let mut instance: PSP22VaultData = Default::default();
+        instance.asset.set(&asset.into());
+        if let Some(underlying_decimals) = underlying_decimals {
+            instance.underlying_decimals.set(&underlying_decimals);
+        } else {
+            let (success, decimals) = {
+                let call = build_call::<DefaultEnvironment>()
+                    .call(asset)
+                    .exec_input(ExecutionInput::new(
+                        ink::env::call::Selector::new(ink::selector_bytes!(
+                            "PSP22Metadata::token_decimals"
+                        )),
+                    ))
+                    .returns::<u8>();
+
+                match call.try_invoke() {
+                    Err(_) => (false, 0),
+                    Ok(v) => match v {
+                        Err(_) => (false, 0),
+                        Ok(v) => (true, v),
+                    },
+                }
+            };
+            if success {
+                instance.underlying_decimals.set(&decimals);
+            } else {
+                instance.underlying_decimals.set(&12);
+            }
+        }
+        instance
+    }
+}
+
 impl PSP22VaultStorage for PSP22VaultData {
     fn asset(&self) -> PSP22Ref {
         self.asset.get().unwrap()
