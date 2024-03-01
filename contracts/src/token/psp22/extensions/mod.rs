@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 #[cfg(feature = "psp22_burnable")]
 pub mod burnable;
-#[cfg(feature = "psp22_metadata")]
+#[cfg(any(feature = "psp22_metadata", feature = "psp22_vault_metadata"))]
 pub mod metadata;
 #[cfg(feature = "psp22_mintable")]
 pub mod mintable;

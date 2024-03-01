@@ -18,6 +18,7 @@ pub struct PSP22MetadataData {
     pub decimals: u8,
 }
 
+#[cfg(feature = "psp22_metadata_impl")]
 impl PSP22MetadataData {
     pub fn new(
         name: Option<String>,
@@ -70,11 +71,7 @@ where
     }
 }
 
-// vault metadata
-#[cfg(all(
-    feature = "psp22_vault_metadata_impl",
-    not(feature = "psp22_metadata_impl")
-))]
+#[cfg(feature = "psp22_vault_metadata_impl")]
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
 pub struct PSP22MetadataData {
@@ -84,11 +81,8 @@ pub struct PSP22MetadataData {
     pub symbol: Option<String>,
 }
 
-#[cfg(all(
-    feature = "psp22_vault_metadata_impl",
-    not(feature = "psp22_metadata_impl")
-))]
-impl PSP22Metadata {
+#[cfg(feature = "psp22_vault_metadata_impl")]
+impl PSP22MetadataData {
     pub fn new(name: Option<String>, symbol: Option<String>) -> Self {
         let mut instance: PSP22MetadataData = Default::default();
         if name.is_some() {
@@ -100,7 +94,6 @@ impl PSP22Metadata {
         instance
     }
 }
-
 #[cfg(feature = "psp22_vault_metadata_impl")]
 impl PSP22VaultMetadataStorage for PSP22MetadataData {
     fn token_name(&self) -> Option<String> {
@@ -112,17 +105,11 @@ impl PSP22VaultMetadataStorage for PSP22MetadataData {
     }
 }
 
-#[cfg(all(
-    feature = "psp22_vault_metadata_impl",
-    not(feature = "psp22_metadata_impl")
-))]
-use crate::token::psp22::extensions::vault::{
+#[cfg(feature = "psp22_vault_metadata_impl")]
+pub use crate::token::psp22::extensions::vault::{
     implementation::PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
 };
-#[cfg(all(
-    feature = "psp22_vault_metadata_impl",
-    not(feature = "psp22_metadata_impl")
-))]
+#[cfg(feature = "psp22_vault_metadata_impl")]
 pub trait PSP22MetadataDefaultImpl:
     StorageFieldGetter<PSP22VaultData>
     + StorageFieldGetter<PSP22MetadataData>
@@ -140,14 +127,6 @@ where
     }
 
     fn token_decimals_default_impl(&self) -> u8 {
-        ink::env::debug_println!(
-            "underlying_decimals: {:?}",
-            self.data::<PSP22VaultData>().underlying_decimals()
-        );
-        ink::env::debug_println!(
-            "decimals_offset: {:?}",
-            self._decimals_offset()
-        );
         self.data::<PSP22VaultData>()
             .underlying_decimals()
             .checked_add(self._decimals_offset())
