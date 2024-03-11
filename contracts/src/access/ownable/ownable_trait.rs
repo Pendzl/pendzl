@@ -5,9 +5,9 @@ use ink::primitives::AccountId;
 use ink::{contract_ref, env::DefaultEnvironment};
 pub type OwnableRef = contract_ref!(Ownable, DefaultEnvironment);
 
-/// Contract module which provides a basic access control mechanism, where
-/// there is an account (an owner) that can be granted exclusive access to
-/// specific functions.
+/// Ownable trait that provides a framework for implementing
+/// access mechanisms in smart contracts. One account can be granted an "ownership" of the contract.
+/// The ownership can be transferred and revoked with the `transfer_ownership` and `renounce_ownership` functions.
 #[ink::trait_definition]
 pub trait Ownable {
     /// Returns the address of the current owner.
@@ -39,10 +39,14 @@ pub trait Ownable {
     ///
     /// Panics with `NewOwnerIsZero` error if new owner's address is zero.
     #[ink(message)]
-    fn transfer_ownership(&mut self, new_owner: AccountId) -> Result<(), OwnableError>;
+    fn transfer_ownership(
+        &mut self,
+        new_owner: AccountId,
+    ) -> Result<(), OwnableError>;
 }
 
-/// A trait that should be implemented by the storage contract item to use default Internal implementation.
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// so the Pendzl OwnableInternal and Ownable implementation can be derived.
 pub trait OwnableStorage {
     /// Returns the current owner.
     fn owner(&self) -> Option<AccountId>;
@@ -51,7 +55,9 @@ pub trait OwnableStorage {
     fn set_owner(&mut self, new_owner: &Option<AccountId>);
 }
 
-/// Internal functions to support ownership operations.
+/// trait that is derived by Pendzl Ownable implementation macro assuming StorageFieldGetter<OwnableStorage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait OwnableInternal {
     /// Retrieves the current owner.
     fn _owner(&self) -> Option<AccountId>;

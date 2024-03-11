@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: MIT
 use ink::{prelude::vec::Vec, primitives::AccountId};
 
-/// Contract module which provides a basic implementation of non fungible token.
+/// # PSP-34: Token standard
+/// https://github.com/inkdevhub/standards/blob/master/PSPs/psp-34.md
+///
+/// !!! Note
+/// Pendzl implementation allows to use zero address as a valid address
+/// and doen't revert ZeroAddress errors.
+/// Pendzl implementation doesn't check if the recipient is a contract
+/// and doesn't revert SafeTransferCheckFailed
+/// Pendzl implementation returns 'TokenNotExists' error if token doesn't exist on approve.
 #[ink::trait_definition]
 pub trait PSP34 {
     /// Returns the collection `Id` of the NFT token.
@@ -55,9 +63,7 @@ pub trait PSP34 {
     /// # Errors
     ///
     /// Returns `TokenNotExists` error if `id` does not exist.
-    ///
     /// Returns `NotApproved` error if `from` doesn't have allowance for transferring.
-    ///
     /// Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer.
     #[ink(message)]
     fn transfer(
@@ -72,6 +78,58 @@ pub trait PSP34 {
     fn total_supply(&self) -> u64;
 }
 
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// so the Pendzl PSP34Internal and PSP34 implementation can be derived.
+pub trait PSP34Storage {
+    /// Retrieves the balance of unique tokens for an owner.
+    fn balance_of(&self, owner: &AccountId) -> u32;
+
+    /// Retrieves the total supply of NFT tokens.
+    fn total_supply(&self) -> u64;
+
+    /// Retrieves the owner of a specific token Id.
+    fn owner_of(&self, id: &Id) -> Option<AccountId>;
+
+    /// Checks if an operator is approved to manage a specific token.
+    fn allowance(
+        &self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<Id>,
+    ) -> bool;
+
+    /// Sets the approval status of an operator for a specific token.
+    fn set_operator_approval(
+        &mut self,
+        owner: &AccountId,
+        operator: &AccountId,
+        id: &Option<Id>,
+        approved: &bool,
+    );
+
+    /// Sets a token with `id` owner to `to`
+    ///
+    /// # Errors
+    /// Returns 'TokenExists' if a token with `id` has an owner alraedy.
+    fn insert_token_owner(
+        &mut self,
+        id: &Id,
+        to: &AccountId,
+    ) -> Result<(), PSP34Error>;
+
+    /// Removes a token with `id` owner.
+    ///
+    /// # Errors
+    /// - Returns `NotApproved` if `from` is not an owner of token with `id`.
+    fn remove_token_owner(
+        &mut self,
+        id: &Id,
+        from: &AccountId,
+    ) -> Result<(), PSP34Error>;
+}
+/// trait that is derived by Pendzl PSP34 implementation macro assuming StorageFieldGetter<PSP34Storage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait PSP34Internal {
     /// Retrieves the balance of unique tokens for an owner.
     fn _balance_of(&self, owner: &AccountId) -> u32;
@@ -147,53 +205,5 @@ pub trait PSP34Internal {
         &mut self,
         from: &AccountId,
         id: &Id,
-    ) -> Result<(), PSP34Error>;
-}
-
-pub trait PSP34Storage {
-    /// Retrieves the balance of unique tokens for an owner.
-    fn balance_of(&self, owner: &AccountId) -> u32;
-
-    /// Retrieves the total supply of NFT tokens.
-    fn total_supply(&self) -> u64;
-
-    /// Retrieves the owner of a specific token Id.
-    fn owner_of(&self, id: &Id) -> Option<AccountId>;
-
-    /// Checks if an operator is approved to manage a specific token.
-    fn allowance(
-        &self,
-        owner: &AccountId,
-        operator: &AccountId,
-        id: &Option<Id>,
-    ) -> bool;
-
-    /// Sets the approval status of an operator for a specific token.
-    fn set_operator_approval(
-        &mut self,
-        owner: &AccountId,
-        operator: &AccountId,
-        id: &Option<Id>,
-        approved: &bool,
-    );
-
-    /// Sets a token with `id` owner to `to`
-    ///
-    /// # Errors
-    /// Returns 'TokenExists' if a token with `id` has an owner alraedy.
-    fn insert_token_owner(
-        &mut self,
-        id: &Id,
-        to: &AccountId,
-    ) -> Result<(), PSP34Error>;
-
-    /// Removes a token with `id` owner.
-    ///
-    /// # Errors
-    /// - Returns `NotApproved` if `from` is not an owner of token with `id`.
-    fn remove_token_owner(
-        &mut self,
-        id: &Id,
-        from: &AccountId,
     ) -> Result<(), PSP34Error>;
 }

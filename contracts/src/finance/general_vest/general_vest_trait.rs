@@ -44,6 +44,45 @@ pub trait GeneralVest {
     ) -> u32;
 }
 
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// so the Pendzl GeneralVestInternal and GeneralVest implementation can be derived.
+pub trait GeneralVestStorage {
+    fn create(
+        &mut self,
+        receiver: AccountId,
+        asset: Option<AccountId>,
+        amount: Balance,
+        schedule: VestingSchedule,
+        data: &Vec<u8>,
+    ) -> Result<(), VestingError>;
+
+    fn release(
+        &mut self,
+        receiver: AccountId,
+        asset: Option<AccountId>,
+        data: &Vec<u8>,
+    ) -> Result<Balance, VestingError>;
+
+    fn release_by_vest_id(
+        &mut self,
+        receiver: AccountId,
+        asset: Option<AccountId>,
+        id: u32,
+        data: &Vec<u8>,
+    ) -> Result<(bool, Balance), VestingError>;
+
+    fn get_schedule_by_id(
+        &self,
+        receiver: AccountId,
+        asset: Option<AccountId>,
+        id: u32,
+        data: &Vec<u8>,
+    ) -> Option<VestingData>;
+}
+
+/// trait that is derived by Pendzl GeneralVest implementation macro assuming StorageFieldGetter<GeneralVestStorage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait GeneralVestInternal {
     fn _create_vest(
         &mut self,
@@ -96,37 +135,4 @@ pub trait GeneralVestInternal {
         asset: Option<AccountId>,
         data: &Vec<u8>,
     ) -> u32;
-}
-pub trait GeneralVestStorage {
-    fn create(
-        &mut self,
-        receiver: AccountId,
-        asset: Option<AccountId>,
-        amount: Balance,
-        schedule: VestingSchedule,
-        data: &Vec<u8>,
-    ) -> Result<(), VestingError>;
-
-    fn release(
-        &mut self,
-        receiver: AccountId,
-        asset: Option<AccountId>,
-        data: &Vec<u8>,
-    ) -> Result<Balance, VestingError>;
-
-    fn release_by_vest_id(
-        &mut self,
-        receiver: AccountId,
-        asset: Option<AccountId>,
-        id: u32,
-        data: &Vec<u8>,
-    ) -> Result<(bool, Balance), VestingError>;
-
-    fn get_schedule_by_id(
-        &self,
-        receiver: AccountId,
-        asset: Option<AccountId>,
-        id: u32,
-        data: &Vec<u8>,
-    ) -> Option<VestingData>;
 }

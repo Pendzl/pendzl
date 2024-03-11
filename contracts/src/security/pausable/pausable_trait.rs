@@ -5,8 +5,7 @@ use ink::primitives::AccountId;
 use ink::{contract_ref, env::DefaultEnvironment};
 pub type PausableRef = contract_ref!(Pausable, DefaultEnvironment);
 
-/// Contract trait, which allows children to implement an emergency stop
-/// mechanism that an authorized account can trigger.
+/// trait that should be implemented by the contract to use pausable functionality
 #[ink::trait_definition]
 pub trait Pausable {
     /// Returns true if the contract is paused, and false otherwise.
@@ -14,6 +13,19 @@ pub trait Pausable {
     fn paused(&self) -> bool;
 }
 
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// so the Pendzl PSP22Internal and PSP22 implementation can be derived.
+pub trait PausableStorage {
+    /// Retrieves the paused state.
+    fn paused(&self) -> bool;
+
+    /// Sets the paused state.
+    fn set_paused(&mut self, pause: bool);
+}
+
+/// trait that is derived by Pendzl Pausable implementation macro assuming StorageFieldGetter<PausableStorage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait PausableInternal {
     /// Internal function to check the paused state.
     fn _paused(&self) -> bool;
@@ -45,13 +57,4 @@ pub trait PausableInternal {
     /// # Errors
     /// Returns `Paused` error if the contract is paused.
     fn _ensure_not_paused(&self) -> Result<(), PausableError>;
-}
-
-/// A trait that should be implemented by the storage contract item to use default Internal implementation.
-pub trait PausableStorage {
-    /// Retrieves the paused state.
-    fn paused(&self) -> bool;
-
-    /// Sets the paused state.
-    fn set_paused(&mut self, pause: bool);
 }

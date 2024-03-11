@@ -4,6 +4,7 @@ use ink::{contract_ref, env::DefaultEnvironment, primitives::AccountId};
 use crate::token::psp34::{Id, PSP34Error};
 pub type PSP34BurnableRef = contract_ref!(PSP34Burnable, DefaultEnvironment);
 
+/// trait extending PSP34 with burn functionality
 #[ink::trait_definition]
 pub trait PSP34Burnable {
     /// Destroys token with id equal to `id` from `account`

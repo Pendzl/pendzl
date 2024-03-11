@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: MIT
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, scale::Encode, scale::Decode)]
+
+/// https://github.com/inkdevhub/standards/blob/master/PSPs/psp-34.md
+#[derive(
+    Debug, PartialEq, Eq, PartialOrd, Ord, Clone, scale::Encode, scale::Decode,
+)]
 #[cfg_attr(
     feature = "std",
     derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)

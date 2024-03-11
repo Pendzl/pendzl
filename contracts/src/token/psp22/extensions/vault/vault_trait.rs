@@ -32,7 +32,11 @@ pub trait PSP22Vault {
     /// “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
     /// from.
     #[ink(message)]
-    fn convert_to_shares(&self, assets: Balance, round: Rounding) -> Result<Balance, MathError>;
+    fn convert_to_shares(
+        &self,
+        assets: Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError>;
 
     /// Returns the amount of assets that the Vault would exchange for the amount of shares provided,
     /// in an ideal scenario where all the conditions are met.
@@ -46,7 +50,11 @@ pub trait PSP22Vault {
     /// “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
     /// from.
     #[ink(message)]
-    fn convert_to_assets(&self, shares: Balance, round: Rounding) -> Result<Balance, MathError>;
+    fn convert_to_assets(
+        &self,
+        shares: Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError>;
 
     /// Returns the maximum amount of the underlying asset that can be deposited into the Vault for the receiver,
     /// through a deposit call.
@@ -142,15 +150,18 @@ pub trait PSP22Vault {
 
     /// Mints shares Vault shares to receiver by depositing exactly amount of underlying tokens.
     ///
-    /// On success emits "Deposit" event.
-    ///
+    /// - MUST emit the Deposit event.
     /// - MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
     ///   deposit execution, and are accounted for during deposit.
     /// - MUST revert if all of assets cannot be deposited.
     ///
     /// NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
     #[ink(message)]
-    fn deposit(&mut self, assets: Balance, receiver: AccountId) -> Result<Balance, PSP22Error>;
+    fn deposit(
+        &mut self,
+        assets: Balance,
+        receiver: AccountId,
+    ) -> Result<Balance, PSP22Error>;
 
     /// Mints exactly shares Vault shares to receiver by depositing amount of underlying tokens.
     ///
@@ -161,7 +172,11 @@ pub trait PSP22Vault {
     ///
     /// NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
     #[ink(message)]
-    fn mint(&mut self, shares: Balance, receiver: AccountId) -> Result<Balance, PSP22Error>;
+    fn mint(
+        &mut self,
+        shares: Balance,
+        receiver: AccountId,
+    ) -> Result<Balance, PSP22Error>;
 
     /// Burns shares from owner and sends exactly assets of underlying tokens to receiver.
     ///
@@ -202,7 +217,9 @@ pub trait PSP22Vault {
     ) -> Result<Balance, PSP22Error>;
 }
 
-/// Trait for internal Vault operations, mirroring the functionality of the provided Solidity code.
+/// trait that is derived by Pendzl Pausable implementation macro assuming StorageFieldGetter<PSP22VaultStorage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait PSP22VaultInternal {
     /// Provides an offset for decimals, used in internal calculations.
     ///
@@ -222,12 +239,20 @@ pub trait PSP22VaultInternal {
     /// Internal conversion function from assets to shares with support for rounding direction.
     ///
     /// - Performs multiplication and division for asset to share conversion with specified rounding.
-    fn _convert_to_shares(&self, assets: &Balance, round: Rounding) -> Result<Balance, MathError>;
+    fn _convert_to_shares(
+        &self,
+        assets: &Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError>;
 
     /// Internal conversion function from shares to assets with support for rounding direction.
     ///
     /// - Performs multiplication and division for share to asset conversion with specified rounding.
-    fn _convert_to_assets(&self, shares: &Balance, round: Rounding) -> Result<Balance, MathError>;
+    fn _convert_to_assets(
+        &self,
+        shares: &Balance,
+        round: Rounding,
+    ) -> Result<Balance, MathError>;
 
     /// doc @ PSP22Vault::max_deposit
     fn _max_deposit(&self, to: &AccountId) -> Balance;
@@ -247,7 +272,8 @@ pub trait PSP22VaultInternal {
 
     /// doc @ PSP22Vault::preview_withdraw
 
-    fn _preview_withdraw(&self, assets: &Balance) -> Result<Balance, MathError>;
+    fn _preview_withdraw(&self, assets: &Balance)
+        -> Result<Balance, MathError>;
 
     /// doc @ PSP22Vault::preview_redeem
     fn _preview_redeem(&self, shares: &Balance) -> Result<Balance, MathError>;
@@ -278,6 +304,8 @@ pub trait PSP22VaultInternal {
     ) -> Result<(), PSP22Error>;
 }
 
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// together with PSP22Storage so the Pendzl PSP22VaultInternal and PSP22Vault implementation can be derived.
 pub trait PSP22VaultStorage {
     fn asset(&self) -> PSP22Ref;
 

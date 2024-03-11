@@ -8,9 +8,11 @@ pub const DEFAULT_ADMIN_ROLE: RoleType = 0;
 use ink::{contract_ref, env::DefaultEnvironment};
 pub type AccessControlRef = contract_ref!(AccessControl, DefaultEnvironment);
 
-/// Contract module that allows children to implement role-based access
-/// control mechanisms. This is a lightweight version that doesn't allow enumerating role
-/// members except through off-chain means by accessing the contract event logs.
+/// AccessControl trait that provides a framework for implementing role-based
+/// access control mechanisms in smart contracts. This lightweight version is
+/// designed without the neccesity to enumerate role members directly within the
+/// contract. Role membership can instead be tracked off-chain through the
+/// analysis of contract event logs.
 ///
 /// Roles can be granted and revoked dynamically via the `grant_role` and
 /// `revoke_role`. functions. Each role has an associated admin role, and only
@@ -81,7 +83,28 @@ pub trait AccessControl {
     ) -> Result<(), AccessControlError>;
 }
 
-/// Internal methods of the AccessControl Contract module that can (and should) be used while managing the module inside messages
+/// trait that must be implemented by exactly one storage field of a contract storage
+/// so the Pendzl AccessControlInternal and AccessControl implementation can be derived.
+pub trait AccessControlStorage {
+    /// Checks if `account` has the specified `role`.
+    fn has_role(&self, role: RoleType, account: &Option<AccountId>) -> bool;
+
+    /// Assigns the `role` to `account`.
+    fn add(&mut self, role: RoleType, account: &Option<AccountId>);
+
+    /// Removes the `role` from `account`.
+    fn remove(&mut self, role: RoleType, account: &Option<AccountId>);
+
+    /// Retrieves the admin role for the given `role`.
+    fn get_role_admin(&self, role: RoleType) -> Option<RoleType>;
+
+    /// Sets the admin role for a specific `role` to `new_admin`.
+    fn set_role_admin(&mut self, role: RoleType, new_admin: RoleType);
+}
+
+/// trait that is derived by Pendzl AccessControl implementation macro assuming StorageFieldGetter<AccessControlStorage> is implemented
+///
+/// functions of this trait are recomended to use while writing ink::messages
 pub trait AccessControlInternal {
     // returns the default admin role
     fn _default_admin() -> RoleType;
@@ -136,22 +159,4 @@ pub trait AccessControlInternal {
         role: RoleType,
         account: Option<AccountId>,
     ) -> Result<(), AccessControlError>;
-}
-
-/// A trait that should be implemented by the storage contract item to use default Internal implementation.
-pub trait AccessControlStorage {
-    /// Checks if `account` has the specified `role`.
-    fn has_role(&self, role: RoleType, account: &Option<AccountId>) -> bool;
-
-    /// Assigns the `role` to `account`.
-    fn add(&mut self, role: RoleType, account: &Option<AccountId>);
-
-    /// Removes the `role` from `account`.
-    fn remove(&mut self, role: RoleType, account: &Option<AccountId>);
-
-    /// Retrieves the admin role for the given `role`.
-    fn get_role_admin(&self, role: RoleType) -> Option<RoleType>;
-
-    /// Sets the admin role for a specific `role` to `new_admin`.
-    fn set_role_admin(&mut self, role: RoleType, new_admin: RoleType);
 }

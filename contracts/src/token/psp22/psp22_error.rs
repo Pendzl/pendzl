@@ -27,16 +27,24 @@ pub enum PSP22Error {
     PermitExpired,
 }
 
+/// Compatibility with pendzl::math::errors::MathError.
 impl From<MathError> for PSP22Error {
     fn from(err: MathError) -> Self {
         match err {
-            MathError::Overflow => PSP22Error::Custom(String::from("M::Overflow")),
-            MathError::Underflow => PSP22Error::Custom(String::from("M::Underflow")),
-            MathError::DivByZero => PSP22Error::Custom(String::from("M::DivByZero")),
+            MathError::Overflow => {
+                PSP22Error::Custom(String::from("M::Overflow"))
+            }
+            MathError::Underflow => {
+                PSP22Error::Custom(String::from("M::Underflow"))
+            }
+            MathError::DivByZero => {
+                PSP22Error::Custom(String::from("M::DivByZero"))
+            }
         }
     }
 }
 
+/// Compatibility with Ownable Errors.
 #[cfg(feature = "ownable")]
 use crate::access::ownable::OwnableError;
 #[cfg(feature = "ownable")]
@@ -46,18 +54,23 @@ impl From<OwnableError> for PSP22Error {
             OwnableError::CallerIsNotOwner => {
                 PSP22Error::Custom(String::from("O::CallerIsNotOwner"))
             }
-            OwnableError::ActionRedundant => PSP22Error::Custom(String::from("O::ActionRedundant")),
+            OwnableError::ActionRedundant => {
+                PSP22Error::Custom(String::from("O::ActionRedundant"))
+            }
         }
     }
 }
 
+/// Compatibility with AccessControl Errors.
 #[cfg(feature = "access_control")]
 use crate::access::access_control::AccessControlError;
 #[cfg(feature = "access_control")]
 impl From<AccessControlError> for PSP22Error {
     fn from(access: AccessControlError) -> Self {
         match access {
-            AccessControlError::MissingRole => PSP22Error::Custom(String::from("AC::MissingRole")),
+            AccessControlError::MissingRole => {
+                PSP22Error::Custom(String::from("AC::MissingRole"))
+            }
             AccessControlError::RoleRedundant => {
                 PSP22Error::Custom(String::from("AC::RoleRedundant"))
             }
@@ -68,14 +81,19 @@ impl From<AccessControlError> for PSP22Error {
     }
 }
 
+/// Compatibility with Pausable Errors.
 #[cfg(feature = "pausable")]
 use crate::security::pausable::PausableError;
 #[cfg(feature = "pausable")]
 impl From<PausableError> for PSP22Error {
     fn from(pausable: PausableError) -> Self {
         match pausable {
-            PausableError::Paused => PSP22Error::Custom(String::from("P::Paused")),
-            PausableError::NotPaused => PSP22Error::Custom(String::from("P::NotPaused")),
+            PausableError::Paused => {
+                PSP22Error::Custom(String::from("P::Paused"))
+            }
+            PausableError::NotPaused => {
+                PSP22Error::Custom(String::from("P::NotPaused"))
+            }
         }
     }
 }
