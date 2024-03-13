@@ -1141,6 +1141,55 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     impl_args.items.push(syn::Item::Impl(general_vest));
 }
 
+pub(crate) fn impl_upgradeable(impl_args: &mut ImplArgs) {
+    let storage_struct_name = impl_args.contract_name();
+    let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::upgradeability::implementation::UpgradeableInternalDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::upgradeability::UpgradeableInternal for #storage_struct_name {
+            fn _set_code_hash(&mut self, code_hash: Hash) -> Result<(), UpgradeableError> {
+                pendzl::contracts::upgradeability::implementation::UpgradeableInternalDefaultImpl::_set_code_hash_default_impl(self, code_hash)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let upgradeable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::upgradeability::implementation::UpgradeableDefaultImpl for #storage_struct_name {}
+    ))
+    .expect("Should parse");
+
+    let mut upgradeable = syn::parse2::<syn::ItemImpl>(quote!(
+        impl pendzl::contracts::upgradeability::Upgradeable for #storage_struct_name {
+            #[ink(message)]
+            fn set_code_hash(&mut self, code_hash: Hash) -> Result<(), UpgradeableError> {
+                pendzl::contracts::upgradeability::implementation::UpgradeableDefaultImpl::set_code_hash_default_impl(self, code_hash)
+            }
+        }
+    ))
+    .expect("Should parse");
+
+    let import = syn::parse2::<syn::ItemUse>(quote!(
+        pub use pendzl::contracts::upgradeability::*;
+    ))
+    .expect("Should parse");
+
+    impl_args.imports.insert("Upgradeable", import);
+
+    override_functions("UpgradeableInternal", &mut internal, impl_args.map);
+    override_functions("Upgradeable", &mut upgradeable, impl_args.map);
+
+    impl_args.items.push(syn::Item::Impl(internal_default_impl));
+    impl_args.items.push(syn::Item::Impl(internal));
+    impl_args
+        .items
+        .push(syn::Item::Impl(upgradeable_default_impl));
+    impl_args.items.push(syn::Item::Impl(upgradeable));
+}
+
 fn override_functions(
     trait_name: &str,
     implementation: &mut syn::ItemImpl,

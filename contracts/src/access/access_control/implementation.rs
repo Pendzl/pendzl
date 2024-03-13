@@ -190,7 +190,9 @@ where
         role: RoleType,
         account: Option<AccountId>,
     ) -> Result<(), AccessControlError> {
-        if !self.data().has_role(role, &account) {
+        if !self.data().has_role(role, &account)
+            && !self.data().has_role(role, &None)
+        {
             return Err(AccessControlError::MissingRole);
         }
         Ok(())

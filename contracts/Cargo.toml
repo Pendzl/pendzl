@@ -15,7 +15,7 @@ categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-ink = { version = "=5.0.0-rc", default-features = false }
+ink = { version = "5.0.0", default-features = false }
 scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
     "derive",
 ] }
@@ -51,6 +51,7 @@ psp34_burnable = ["psp34"]
 psp34_metadata = []
 access_control = []
 ownable = []
+upgradeable = []
 pausable = []
 general_vest = ["psp22"]
 psp22_impl = ["psp22"]
@@ -72,7 +73,7 @@ ownable_impl = ["ownable"]
 pausable_impl = ["pausable"]
 general_vest_impl = ["psp22", "general_vest"]
 provide_vest_schedule_info = ["psp22"]
-
+upgradeable_impl = ["upgradeable"]
 
 test-all = [
     "psp22_impl",

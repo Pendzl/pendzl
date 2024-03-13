@@ -91,6 +91,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
             "AccessControl" => impl_access_control(&mut impl_args),
             "Pausable" => impl_pausable(&mut impl_args),
             "GeneralVest" => impl_vesting(&mut impl_args),
+            "Upgradeable" => impl_upgradeable(&mut impl_args),
             _ => panic!("pendzl::implementation({to_default_implement}) not implemented!"),
         }
     }

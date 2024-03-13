@@ -8,7 +8,7 @@ authors = [
 edition = "2021"
 
 [dependencies]
-ink = { version = "=5.0.0-rc", default-features = false }
+ink = { version = "5.0.0", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
     "derive",

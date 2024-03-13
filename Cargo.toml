@@ -26,7 +26,7 @@ categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-ink = { version = "=5.0.0-rc", default-features = false }
+ink = { version = "5.0.0", default-features = false }
 scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
     "derive",
 ] }
@@ -43,9 +43,9 @@ path = "src/lib.rs"
 crate-type = ["rlib"]
 
 [dev-dependencies]
-ink_env = "=5.0.0-rc"
+ink_env = "5.0.0"
 trybuild = "1.0.80"
-ink_e2e = "=5.0.0-rc"
+ink_e2e = "5.0.0"
 
 [features]
 default = ["std"]
@@ -67,6 +67,7 @@ psp34_burnable = ["pendzl_contracts/psp34_burnable"]
 psp34_metadata = ["pendzl_contracts/psp34_metadata"]
 access_control = ["pendzl_contracts/access_control"]
 ownable = ["pendzl_contracts/ownable"]
+upgradeable = ["pendzl_contracts/upgradeable"]
 pausable = ["pendzl_contracts/pausable"]
 general_vest = ["pendzl_contracts/general_vest"]
 psp22_impl = ["pendzl_contracts/psp22_impl"]
@@ -82,6 +83,7 @@ psp34_metadata_impl = ["pendzl_contracts/psp34_metadata_impl"]
 access_control_impl = ["pendzl_contracts/access_control_impl"]
 ownable_impl = ["pendzl_contracts/ownable_impl"]
 pausable_impl = ["pendzl_contracts/pausable_impl"]
+upgradeable_impl = ["pendzl_contracts/upgradeable_impl"]
 general_vest_impl = ["pendzl_contracts/general_vest_impl"]
 provide_vest_schedule_info = ["pendzl_contracts/provide_vest_schedule_info"]
 

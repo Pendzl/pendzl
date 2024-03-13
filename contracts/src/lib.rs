@@ -6,3 +6,4 @@ pub mod access;
 pub mod finance;
 pub mod security;
 pub mod token;
+pub mod upgradeability;

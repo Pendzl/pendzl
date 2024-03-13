@@ -9,7 +9,7 @@ authors = [
 edition = "2021"
 
 [dependencies]
-ink = { version = "=5.0.0-rc", default-features = false }
+ink = { version = "5.0.0", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = [
     "derive",
@@ -27,7 +27,7 @@ pendzl = { path = "../..", default-features = false, features = [
 ] }
 
 [dev-dependencies]
-ink_e2e = "=5.0.0-rc"
+ink_e2e = "5.0.0"
 test_helpers = { path = "../test_helpers", default-features = false }
 
 [lib]

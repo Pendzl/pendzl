@@ -1,6 +1,7 @@
 [package]
-name = "t_psp34_metadata"
+name = "access_control_upgradeable"
 version = "0.1.0-beta4"
+previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -10,7 +11,7 @@ edition = "2021"
 [dependencies]
 ink = { version = "5.0.0", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
+scale = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = [
     "derive",
 ] }
 scale-info = { version = "2.10", default-features = false, features = [
@@ -18,13 +19,20 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-pendzl = { path = "../../../..", default-features = false, features = [
+pendzl = { path = "../..", default-features = false, features = [
+    "upgradeable_impl",
+    "access_control_impl",
     "psp34_impl",
-    "psp34_metadata_impl",
+    "psp34_burnable",
+    "psp34_mintable",
 ] }
 
+[dev-dependencies]
+ink_e2e = "5.0.0"
+test_helpers = { path = "../test_helpers", default-features = false }
+
 [lib]
-name = "t_psp34_metadata"
+name = "access_control_upgradeable"
 path = "lib.rs"
 
 
@@ -34,6 +42,7 @@ std = [
     "ink/std",
     "scale/std",
     "scale-info/std",
+
     # These dependencies
     "pendzl/std",
 ]
