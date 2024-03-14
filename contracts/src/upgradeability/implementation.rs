@@ -34,7 +34,7 @@ pub trait UpgradeableDefaultImpl:
 #[cfg(feature = "access_control")]
 use crate::access::access_control::{AccessControlInternal, RoleType};
 #[cfg(feature = "access_control")]
-pub const UPGRADER: RoleType = ink::selector_id!("UPGRADER");
+pub const CODE_UPGRADER: RoleType = ink::selector_id!("CODE_UPGRADER"); // 1_198_282_211_u32
 
 #[cfg(feature = "access_control")]
 pub trait UpgradeableDefaultImpl:
@@ -46,7 +46,7 @@ pub trait UpgradeableDefaultImpl:
     ) -> Result<(), UpgradeableError> {
         AccessControlInternal::_ensure_has_role(
             self,
-            UPGRADER,
+            CODE_UPGRADER,
             Some(Self::env().caller()),
         )?;
         UpgradeableInternal::_set_code_hash(self, code_hash)
