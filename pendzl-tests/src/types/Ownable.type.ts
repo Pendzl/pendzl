@@ -4,7 +4,6 @@ import type {
   EventDataTypeDescriptions,
   GasLimit,
   Result,
-  ReturnNumber,
   SignAndSendSuccessResponse,
 } from "wookashwackomytest-typechain-types";
 import type { QueryReturnType } from "wookashwackomytest-typechain-types";

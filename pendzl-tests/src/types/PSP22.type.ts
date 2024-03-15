@@ -4,7 +4,6 @@ import type {
   EventDataTypeDescriptions,
   GasLimit,
   Result,
-  ReturnNumber,
   SignAndSendSuccessResponse,
 } from "wookashwackomytest-typechain-types";
 import type { QueryReturnType } from "wookashwackomytest-typechain-types";
@@ -19,16 +18,16 @@ import {
 export interface PSP22Query {
   totalSupply(
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
   balanceOf(
     owner: AccountId,
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
   allowance(
     owner: AccountId,
     spender: AccountId,
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
   transfer(
     to: AccountId,
     value: string | number | BN,

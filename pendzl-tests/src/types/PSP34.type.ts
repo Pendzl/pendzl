@@ -4,7 +4,6 @@ import type {
   EventDataTypeDescriptions,
   GasLimit,
   Result,
-  ReturnNumber,
   SignAndSendSuccessResponse,
 } from "wookashwackomytest-typechain-types";
 import type { QueryReturnType } from "wookashwackomytest-typechain-types";
@@ -41,7 +40,7 @@ export interface PSP34Query {
   balanceOf(
     owner: AccountId,
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
   ownerOf(
     id: Id,
     __options?: GasLimit
@@ -66,7 +65,7 @@ export interface PSP34Query {
   ): Promise<QueryReturnType<Result<Result<null, PSP34Error>, LangError>>>;
   totalSupply(
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
 }
 
 export interface PSP34Tx {

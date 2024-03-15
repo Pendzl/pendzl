@@ -4,7 +4,6 @@ import type {
   EventDataTypeDescriptions,
   GasLimit,
   Result,
-  ReturnNumber,
   SignAndSendSuccessResponse,
 } from "wookashwackomytest-typechain-types";
 import type { QueryReturnType } from "wookashwackomytest-typechain-types";
@@ -25,7 +24,7 @@ export interface PSP22MetadataQuery {
   ): Promise<QueryReturnType<Result<string | null, LangError>>>;
   tokenDecimals(
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
 }
 
 export interface PSP22MetadataTx {

@@ -4,7 +4,6 @@ import type {
   EventDataTypeDescriptions,
   GasLimit,
   Result,
-  ReturnNumber,
   SignAndSendSuccessResponse,
 } from "wookashwackomytest-typechain-types";
 import type { QueryReturnType } from "wookashwackomytest-typechain-types";
@@ -30,7 +29,7 @@ interface AccessControlQuery {
   getRoleAdmin(
     role: number | string | BN,
     __options?: GasLimit
-  ): Promise<QueryReturnType<Result<ReturnNumber, LangError>>>;
+  ): Promise<QueryReturnType<Result<BN, LangError>>>;
   grantRole(
     role: number | string | BN,
     account: AccountId | null,
