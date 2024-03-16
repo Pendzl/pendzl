@@ -51,7 +51,7 @@
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",
     "typescript": "5.3.2",
-    "wookashwackomytest-polkahat-chai-matchers": "^0.0.67"
+    "wookashwackomytest-polkahat-chai-matchers": "^0.0.72"
   },
   "dependencies": {
     "@polkadot/api": "^10.12.2",
@@ -62,7 +62,7 @@
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
     "@types/chai-as-promised": "^7.1.8",
-    "wookashwackomytest-polkahat-network-helpers": "^0.0.12",
+    "wookashwackomytest-polkahat-network-helpers": "^0.0.19",
     "wookashwackomytest-typechain-types": "^0.0.43"
   }
 }

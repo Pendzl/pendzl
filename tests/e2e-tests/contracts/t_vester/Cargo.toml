@@ -22,11 +22,7 @@ pendzl = { path = "../../../..", default-features = false, features = [
     "general_vest_impl",
 ] }
 
-[dev-dependencies]
-ink_e2e = "5.0.0"
-
 [lib]
-name = "t_vester"
 path = "lib.rs"
 
 

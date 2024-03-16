@@ -1,5 +1,5 @@
 
 .idea
 /artifacts/
-/target/
+target
 /node_modules/

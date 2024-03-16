@@ -1,4 +1,3 @@
-import { ApiPromise } from '@polkadot/api';
 import BN from 'bn.js';
 import { expect } from 'chai';
 import TPsp22Contract from 'typechain/contracts/t_psp22';
@@ -15,9 +14,8 @@ describe('Vester', () => {
     mock: TVesterContract;
   } = {} as any;
 
-  let api: ApiPromise;
   beforeEach(async () => {
-    api = await localApi.get();
+    const api = await localApi.get();
     await time.setTo(10);
     const mock = await new TVesterDeployer(api, deployer).new();
     ctx.mock = mock.contract;
@@ -55,6 +53,7 @@ describe('Vester', () => {
     const SYBOL = 'ST';
     const DECIMALS = 18;
     beforeEach(async () => {
+      const api = await localApi.get();
       asset = (await new TPsp22Deployer(api, deployer).new(initialSupply, TOKEN_NAME, SYBOL, DECIMALS)).contract;
       createVestArgs = createDurationAsAmountScheduleArgs(charlie.address, asset.address, 0, 100);
     });
@@ -124,7 +123,7 @@ describe('Vester', () => {
         );
       });
 
-      it('anyone can release', async function () {
+      it('anyone can release', async () => {
         await expect(ctx.mock.withSigner(charlie).query.release(createVestArgs.vestTo, createVestArgs.asset, [])).to.haveOkResult();
         await expect(ctx.mock.withSigner(alice).query.release(createVestArgs.vestTo, createVestArgs.asset, [])).to.haveOkResult();
         await expect(ctx.mock.withSigner(bob).query.release(createVestArgs.vestTo, createVestArgs.asset, [])).to.haveOkResult();
@@ -194,6 +193,7 @@ describe('Vester', () => {
             await time.setTo(creationTimestamp + parseInt(createVestArgs.schedule.constant![0].toString()) + 2);
           });
           it('try release succeeds & does release adequate amount of tokens eq 1', async () => {
+            const api = await localApi.get();
             await expect(ctx.mock.withSigner(bob).query.release(createVestArgs.vestTo, createVestArgs.asset, [])).to.haveOkResult(1);
             const tx = ctx.mock.withSigner(bob).tx.release(createVestArgs.vestTo, createVestArgs.asset, []);
             await expect(tx).to.emitEvent(asset, 'Transfer', {
@@ -395,10 +395,13 @@ describe('Vester', () => {
       createDurationAsAmountScheduleArgs(vestTo.address, null, firstActionTimestamp + duration.days(3) - creationTimestamp, duration.days(6)), // not started (at the first_action_timestamp)
       createDurationAsAmountScheduleArgs(vestTo.address, null, firstActionTimestamp + duration.days(18) - creationTimestamp, duration.days(46)), // not started (at the first_action_timestamp)
     ];
-    let startingBalance: BN;
+    let vestToStartingBalance: BN;
+    let vesterStartingBalance: BN;
     beforeEach(async () => {
-      startingBalance = (await api.query.system.account(vestTo.address)).data.free;
+      const api = await localApi.get();
+      vestToStartingBalance = (await api.query.system.account(vestTo.address)).data.free;
       await time.setTo(creationTimestamp);
+
       for (const createVestArgs of createVestArgsVec) {
         await ctx.mock
           .withSigner(vesterSubmitter)
@@ -406,6 +409,7 @@ describe('Vester', () => {
             value: createVestArgs.amount,
           });
       }
+      vesterStartingBalance = (await api.query.system.account(ctx.mock.address)).data.free;
       await time.setTo(firstActionTimestamp);
     });
 
@@ -475,6 +479,7 @@ describe('Vester', () => {
         });
 
         it('should release appropriate amount', async () => {
+          const api = await localApi.get();
           await expect(ctx.mock.withSigner(releaseCaller).query.release(vestTo.address, null, [])).to.haveOkResult(duration.days(53) + 2);
           const tx = ctx.mock.withSigner(releaseCaller).tx.release(vestTo.address, null, []);
           await expect(tx).to.emitNativeEvent('Transfer', {
@@ -493,10 +498,12 @@ describe('Vester', () => {
           }
           await expect(ctx.mock.query.nextIdVestOf(vestTo.address, null, [])).to.haveOkResult(0);
           await expect(ctx.mock.query.release(vestTo.address, null, [])).to.haveOkResult(0);
-          const balancePost = (await api.query.system.account(vestTo.address)).data.free;
-          const vesterBalance = (await api.query.system.account(ctx.mock.address)).data.free;
-          expect(vesterBalance).to.equal(0);
-          expect(balancePost).to.equal(startingBalance.add(new BN(createVestArgsVec.reduce((acc, x) => acc + x.amount, 0))));
+          const vestToBalancePost = (await api.query.system.account(vestTo.address)).data.free;
+          const vesterBalancePost = (await api.query.system.account(ctx.mock.address)).data.free;
+          const totalVestToAmount = new BN(createVestArgsVec.reduce((acc, x) => acc + x.amount, 0));
+
+          expect(vestToBalancePost).to.equal(vestToStartingBalance.add(totalVestToAmount));
+          expect(vesterBalancePost).to.equal(vesterStartingBalance.sub(totalVestToAmount));
         });
       });
     });

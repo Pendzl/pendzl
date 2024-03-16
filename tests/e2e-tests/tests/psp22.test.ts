@@ -47,15 +47,15 @@ describe('PSP 22', () => {
 
   describe('metadata', () => {
     it('has a name', async function () {
-      expect(await ctx.token.query.tokenName()).to.haveOkResult(TOKEN_NAME);
+      await expect(ctx.token.query.tokenName()).to.haveOkResult(TOKEN_NAME);
     });
 
     it('has a symbol', async function () {
-      expect(await ctx.token.query.tokenSymbol()).to.equal(SYBOL);
+      await expect(ctx.token.query.tokenSymbol()).to.haveOkResult(SYBOL);
     });
 
     it('has 18 decimals', async function () {
-      expect(await ctx.token.query.tokenDecimals()).to.haveOkResult(18);
+      await expect(ctx.token.query.tokenDecimals()).to.haveOkResult(18);
     });
   });
   describe('_mint', function () {
@@ -71,7 +71,7 @@ describe('PSP 22', () => {
       });
 
       it('increments totalSupply', async function () {
-        await expect(await ctx.token.query.totalSupply()).to.haveOkResult(initialSupply.add(value));
+        await expect(ctx.token.query.totalSupply()).to.haveOkResult(initialSupply.add(value));
       });
 
       it('increments recipient balance', async function () {
@@ -96,7 +96,7 @@ describe('PSP 22', () => {
         });
 
         it('decrements totalSupply', async function () {
-          expect(await ctx.token.query.totalSupply()).to.haveOkResult(initialSupply.sub(value));
+          await expect(ctx.token.query.totalSupply()).to.haveOkResult(initialSupply.sub(value));
         });
 
         it('decrements holder balance', async function () {
@@ -117,14 +117,14 @@ describe('PSP 22', () => {
     const value = new BN(1);
 
     beforeEach(async function () {
-      ctx.totalSupply = (await ctx.token.query.totalSupply()).value.unwrap().rawNumber;
+      ctx.totalSupply = (await ctx.token.query.totalSupply()).value.unwrap();
     });
 
     it('from is none', async function () {
       const tx = await ctx.token.tx.tUpdate(null, ctx.holder.address, value);
       await expect(tx).to.emitEvent(ctx.token, 'Transfer', { from: null, to: ctx.holder.address, value });
 
-      expect(await ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply.add(value));
+      await expect(ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply.add(value));
       await expect(tx).to.changePSP22Balances(ctx.token, [ctx.holder.address], [value]);
     });
 
@@ -132,7 +132,7 @@ describe('PSP 22', () => {
       const tx = await ctx.token.tx.tUpdate(ctx.holder.address, null, value);
       await expect(tx).to.emitEvent(ctx.token, 'Transfer', { from: ctx.holder.address, to: null, value });
 
-      expect(await ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply.sub(value));
+      await expect(ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply.sub(value));
       await expect(tx).to.changePSP22Balances(ctx.token, [ctx.holder.address], [value.neg()]);
     });
 
@@ -141,7 +141,7 @@ describe('PSP 22', () => {
         const tx = await ctx.token.tx.tUpdate(null, null, value);
         await expect(tx).to.emitEvent(ctx.token, 'Transfer', { from: null, to: null, value });
 
-        expect(await ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply);
+        await expect(ctx.token.query.totalSupply()).to.haveOkResult(ctx.totalSupply);
       });
 
       describe('non null address', function () {

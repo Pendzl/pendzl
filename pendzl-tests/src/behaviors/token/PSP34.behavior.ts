@@ -331,7 +331,7 @@ export function shouldTransferTokenByUser(
 
     it("keeps ownership of the token", async function () {
       await tx;
-      expect(await ctx.token.query.ownerOf(ctx.tokenId)).to.equal(
+      await expect(ctx.token.query.ownerOf(ctx.tokenId)).to.haveOkResult(
         ctx.owner.address
       );
     });

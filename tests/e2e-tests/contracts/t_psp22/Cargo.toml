@@ -23,11 +23,7 @@ pendzl = { path = "../../../..", default-features = false, features = [
     "psp22_metadata_impl",
 ] }
 
-[dev-dependencies]
-ink_e2e = "5.0.0"
-
 [lib]
-name = "t_psp22"
 path = "lib.rs"
 
 

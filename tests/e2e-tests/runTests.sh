@@ -12,18 +12,17 @@ rm $SCRIPT_DIR/*.testrun*.log
 mkdir $TMP_DIR_NAME
 ($SCRIPT_DIR/substrate-contracts-node --dev --base-path $SCRIPT_DIR/$TMP_DIR_NAME --rpc-port 9944 &> substrate-contracts-node.testrun.log)&
 NODE_PID=$!
-sleep 1 #precautiously wait for node to finish start up
+sleep 3 #precautiously wait for node to finish start up
 export NODE_OPTIONS=$NODE_OPTIONS" --max-old-space-size=16384"
 start_time=$(date +%s.%3N)
 #for debugging memory leaks, unfreed handles: npx mocha => npx wtfnode node_modules/.bin/_mocha
 script -efq $SCRIPT_DIR/mocha.testrun.log -c \
-"env CARGO_TERM_COLOR=always FORCE_COLOR=1  npx tsx $SCRIPT_DIR/runWithoutWarnings.ts npx mocha --node-option max-old-space-size=16384 --config ./.mocharc.js -C --exit --full-trace false --require ts-node/register 'tests/**/*.ts' --colors"
+"env CARGO_TERM_COLOR=always FORCE_COLOR=1  npx tsx $SCRIPT_DIR/runWithoutWarnings.ts npx mocha --node-option max-old-space-size=16384 --config ./.mocharc.js -C --exit --full-trace false --require tsx/cjs --require 'tests/setup/globalHooks.ts' 'tests/**/*.ts' --colors"
 
 end_time=$(date +%s.%3N)
 elapsed=$(echo "scale=3; $end_time - $start_time" | bc)
 echo "Test execution took $elapsed seconds"
 npx tsx $SCRIPT_DIR/scripts/fixupNodeLog.ts $SCRIPT_DIR/substrate-contracts-node.testrun.log
-pnpm ansiToHtml $SCRIPT_DIR/mocha.testrun.log  $SCRIPT_DIR/mocha.testrun.log.html
 kill $NODE_PID
 
 rm -rf test-chain-state-tmp

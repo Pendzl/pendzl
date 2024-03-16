@@ -1,11 +1,7 @@
 [package]
-name = "t_access_control"
-version = "0.2.0-alpha"
-previous-authors = ["Brushfam <green@727.ventures>"]
-authors = [
-    "Konrad Wierzbik <konrad.wierzbik@gmail.com",
-    "Łukasz Łakomy <wookie.xp.07@gmail.com>",
-]
+name = "t_flipper"
+version = "0.1.0"
+authors = [""]
 edition = "2021"
 
 [dependencies]
@@ -17,30 +13,30 @@ scale = { package = "parity-scale-codec", version = "3.6.9", default-features = 
 scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ], optional = true }
-
-# These dependencies
 pendzl = { path = "../../../..", default-features = false, features = [
     "access_control_impl",
+    "upgradeable_impl"
 ] }
 
-
 [lib]
-name = "t_access_control"
 path = "lib.rs"
-
 
 [features]
 default = ["std"]
 std = [
     "ink/std",
     "scale/std",
+    "scale-info",
     "scale-info/std",
-
-    # These dependencies
     "pendzl/std",
 ]
 ink-as-dependency = []
-e2e-tests = []
 
 [profile.dev]
 codegen-units = 16
+panic = "abort"
+lto = false
+[profile.release]
+panic = "abort"
+lto = false
+

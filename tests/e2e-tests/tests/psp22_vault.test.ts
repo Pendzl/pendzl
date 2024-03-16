@@ -26,29 +26,29 @@ describe('ERC4626', function () {
     api = await localApi.get();
   });
   it('inherit decimals if from asset', async function () {
-    for (const decimals of [0, 9, 12, 18, 36]) {
-      const token = (await new TPsp22Deployer(api, deployer).new(0, '', '', decimals)).contract;
-      const vault = (await new TVault22Deployer(api, deployer).new(token.address, 0, '', '', null)).contract;
-      expect(await vault.query.tokenDecimals()).to.haveOkResult(decimals);
+    for (const customDecimals of [0, 9, 12, 18, 36]) {
+      token = (await new TPsp22Deployer(api, deployer).new(0, '', '', customDecimals)).contract;
+      vault = (await new TVault22Deployer(api, deployer).new(token.address, 0, '', '', null)).contract;
+      await expect(vault.query.tokenDecimals()).to.haveOkResult(customDecimals);
     }
   });
 
   it('asset has not yet been created', async function () {
-    const vault = (await new TVault22Deployer(api, deployer).new(other.address, 0, '', '', null)).contract;
-    expect(await vault.query.tokenDecimals()).to.haveOkResult(decimals);
+    vault = (await new TVault22Deployer(api, deployer).new(other.address, 0, '', '', null)).contract;
+    await expect(vault.query.tokenDecimals()).to.haveOkResult(decimals);
   });
 
   // removed excess underlying decimals
 
   it('decimals overflow', async function () {
     for (const offset of [1, 2, 3]) {
-      const token = (await new TPsp22Deployer(api, deployer).new(0, '', '', 255 - offset)).contract;
-      const vault = (await new TVault22Deployer(api, deployer).new(token.address, offset, '', '', null)).contract;
+      token = (await new TPsp22Deployer(api, deployer).new(0, '', '', 255 - offset)).contract;
+      vault = (await new TVault22Deployer(api, deployer).new(token.address, offset, '', '', null)).contract;
       await expect(vault.query.tokenDecimals()).to.haveOkResult(255);
     }
     for (const offset of [244, 250, 255]) {
-      const token = (await new TPsp22Deployer(api, deployer).new(0, '', '', decimals)).contract;
-      const vault = (await new TVault22Deployer(api, deployer).new(token.address, offset, '', '', null)).contract;
+      token = (await new TPsp22Deployer(api, deployer).new(0, '', '', decimals)).contract;
+      vault = (await new TVault22Deployer(api, deployer).new(token.address, offset, '', '', null)).contract;
       await expect(vault.query.tokenDecimals()).to.be.eventually.rejected; //panics
     }
   });
@@ -62,26 +62,26 @@ describe('ERC4626', function () {
     });
 
     it('reverts on deposit() above max deposit', async function () {
-      const maxDeposit = (await vault.query.maxDeposit(holder.address)).value.ok?.rawNumber;
+      const maxDeposit = (await vault.query.maxDeposit(holder.address)).value.ok;
       await expect(vault.withSigner(holder).query.deposit(maxDeposit!.addn(1), recipient.address)).to.be.revertedWithError({
         custom: 'V:MaxDeposit',
       });
     });
 
     it('reverts on mint() above max mint', async function () {
-      const maxMint = (await vault.query.maxMint(holder.address)).value.ok?.rawNumber;
+      const maxMint = (await vault.query.maxMint(holder.address)).value.ok;
       await expect(vault.withSigner(holder).query.mint(maxMint!.addn(1), recipient.address)).to.be.revertedWithError({ custom: 'V:MaxMint' });
     });
 
     it('reverts on withdraw() above max withdraw', async function () {
-      const maxWithdraw = (await vault.query.maxWithdraw(holder.address)).value.ok?.rawNumber;
+      const maxWithdraw = (await vault.query.maxWithdraw(holder.address)).value.ok;
       await expect(vault.withSigner(holder).query.withdraw(maxWithdraw!.addn(1), recipient.address, holder.address)).to.be.revertedWithError({
         custom: 'V:MaxWithdraw',
       });
     });
 
     it('reverts on redeem() above max redeem', async function () {
-      const maxRedeem = (await vault.query.maxRedeem(holder.address)).value.ok?.rawNumber;
+      const maxRedeem = (await vault.query.maxRedeem(holder.address)).value.ok;
       await expect(vault.withSigner(holder).query.redeem(maxRedeem!.addn(1), recipient.address, holder.address)).to.be.revertedWithError({
         custom: 'V:MaxRedeem',
       });
@@ -89,7 +89,7 @@ describe('ERC4626', function () {
   });
 
   for (const offset of [0, 6, 18]) {
-    const parseToken = (token: number) => new BN(token).mul(new BN(10).pow(new BN(decimals)));
+    const parseToken = (t: number) => new BN(t).mul(new BN(10).pow(new BN(decimals)));
     const parseShare = (share: number) => new BN(share).mul(new BN(10).pow(new BN(decimals + offset)));
 
     const virtualAssets = new BN(1);
@@ -217,8 +217,8 @@ describe('ERC4626', function () {
          * was trying to deposit
          */
         it('deposit', async function () {
-          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const depositAssets: BN = parseToken(1);
           const expectedShares = depositAssets.mul(effectiveShares).div(effectiveAssets);
@@ -251,8 +251,8 @@ describe('ERC4626', function () {
          * large deposits.
          */
         it('mint', async function () {
-          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const mintShares: BN = parseShare(1);
           const expectedAssets = mintShares.mul(effectiveAssets).div(effectiveShares);
@@ -335,8 +335,8 @@ describe('ERC4626', function () {
          * Virtual shares & assets captures part of the value
          */
         it('deposit', async function () {
-          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const depositAssets: BN = parseToken(1);
           const expectedShares = depositAssets.mul(effectiveShares).div(effectiveAssets);
@@ -368,8 +368,8 @@ describe('ERC4626', function () {
          * Virtual shares & assets captures part of the value
          */
         it('mint', async function () {
-          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const mintShares: BN = parseShare(1);
           const expectedAssets = mintShares.mul(effectiveAssets).div(effectiveShares).addn(1); // add for the rounding up
@@ -392,8 +392,8 @@ describe('ERC4626', function () {
         });
 
         it('withdraw', async function () {
-          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets: BN = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares: BN = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const withdrawAssets: BN = parseToken(1);
           const expectedShares = withdrawAssets.mul(effectiveShares).div(effectiveAssets).addn(1); // add for the rounding
@@ -427,8 +427,8 @@ describe('ERC4626', function () {
         });
 
         it('redeem', async function () {
-          const effectiveAssets = (await vault.query.totalAssets()).value.ok!.rawNumber.add(virtualAssets);
-          const effectiveShares = (await vault.query.totalSupply()).value.ok!.rawNumber.add(virtualShares);
+          const effectiveAssets = (await vault.query.totalAssets()).value.ok!.add(virtualAssets);
+          const effectiveShares = (await vault.query.totalSupply()).value.ok!.add(virtualShares);
 
           const redeemShares = parseShare(100);
           const expectedAssets = redeemShares.mul(effectiveAssets).div(effectiveShares);
@@ -468,8 +468,8 @@ describe('ERC4626', function () {
   it('multiple mint, deposit, redeem & withdrawal', async function () {
     // test designed with both asset using similar decimals
     const [alice, bruce] = accounts;
-    const token = (await new TPsp22Deployer(api, deployer).new(0, name, symbol, 18)).contract;
-    const vault = (await new TVault22Deployer(api, deployer).new(token.address, 0, '', '', null)).contract;
+    token = (await new TPsp22Deployer(api, deployer).new(0, name, symbol, 18)).contract;
+    vault = (await new TVault22Deployer(api, deployer).new(token.address, 0, '', '', null)).contract;
 
     await token.tx.tMint(alice.address, 4000);
     await token.tx.tMint(bruce.address, 7001);
@@ -486,9 +486,9 @@ describe('ERC4626', function () {
     await expect(vault.query.previewDeposit(2000)).to.haveOkResult(2000);
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(0);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(2000);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(0);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(2000);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(2000);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(0);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(2000);
     await expect(vault.query.totalSupply()).to.haveOkResult(2000);
     await expect(vault.query.totalAssets()).to.haveOkResult(2000);
 
@@ -501,9 +501,9 @@ describe('ERC4626', function () {
     await expect(vault.query.previewDeposit(4000)).to.haveOkResult(4000);
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(4000);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(2000);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(4000);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(6000);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(2000);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(4000);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(6000);
     await expect(vault.query.totalSupply()).to.haveOkResult(6000);
     await expect(vault.query.totalAssets()).to.haveOkResult(6000);
 
@@ -512,9 +512,9 @@ describe('ERC4626', function () {
 
     expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
     expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(4000);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(2999);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(5999);
-    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(6000);
+    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(2999);
+    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(5999);
+    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(6000);
     expect(await vault.query.totalSupply()).to.haveOkResult(6000);
     expect(await vault.query.totalAssets()).to.haveOkResult(9000);
 
@@ -527,9 +527,9 @@ describe('ERC4626', function () {
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(3333);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(4000);
 
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(4999);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(6000);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(7333);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(4999);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(6000);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(7333);
     await expect(vault.query.totalSupply()).to.haveOkResult(7333);
     await expect(vault.query.totalAssets()).to.haveOkResult(11000);
 
@@ -544,9 +544,9 @@ describe('ERC4626', function () {
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(3333);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(6000);
 
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(4999); // used to be 5000
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(9000);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(9333);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(4999); // used to be 5000
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(9000);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(9333);
     await expect(vault.query.totalSupply()).to.haveOkResult(9333);
     await expect(vault.query.totalAssets()).to.haveOkResult(14000); // used to be 14001
 
@@ -555,9 +555,9 @@ describe('ERC4626', function () {
 
     expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(3333);
     expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(6000);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(6070); // used to be 6071
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(10928); // used to be 10929
-    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(9333);
+    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(6070); // used to be 6071
+    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(10928); // used to be 10929
+    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(9333);
     expect(await vault.query.totalSupply()).to.haveOkResult(9333);
     expect(await vault.query.totalAssets()).to.haveOkResult(17000); // used to be 17001
 
@@ -568,9 +568,9 @@ describe('ERC4626', function () {
 
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(6000);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(3643);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(10929);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(8000);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(3643);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(10929);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(8000);
     await expect(vault.query.totalSupply()).to.haveOkResult(8000);
     await expect(vault.query.totalAssets()).to.haveOkResult(14573);
 
@@ -582,9 +582,9 @@ describe('ERC4626', function () {
 
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(4392);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(3643);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(8000);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(6392);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(3643);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(8000);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(6392);
     await expect(vault.query.totalSupply()).to.haveOkResult(6392);
     await expect(vault.query.totalAssets()).to.haveOkResult(11644);
 
@@ -597,9 +597,9 @@ describe('ERC4626', function () {
 
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(0);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(4392);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(0);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(8000); // used to be 8001
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(4392);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(0);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(8000); // used to be 8001
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(4392);
     await expect(vault.query.totalSupply()).to.haveOkResult(4392);
     await expect(vault.query.totalAssets()).to.haveOkResult(8001);
 
@@ -611,9 +611,9 @@ describe('ERC4626', function () {
 
     await expect(vault.query.balanceOf(alice.address)).to.haveOkResult(0);
     await expect(vault.query.balanceOf(bruce.address)).to.haveOkResult(0);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(0);
-    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(0);
-    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!.rawNumber, Rounding.down)).to.haveOkResult(0);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(0);
+    await expect(vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(0);
+    await expect(vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(0);
     await expect(vault.query.totalSupply()).to.haveOkResult(0);
     await expect(vault.query.totalAssets()).to.haveOkResult(1); // used to be 0
   });
