@@ -25,7 +25,7 @@
 #[ink::contract]
 mod psp34_mintable {
     use pendzl::{
-        contracts::token::psp34::{Id, PSP34Error, PSP34},
+        contracts::psp34::{Id, PSP34Error, PSP34},
         test_utils::accounts,
         traits::String,
     };
@@ -53,7 +53,7 @@ mod psp34_mintable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(
+        pendzl::contracts::psp34::PSP34InternalDefaultImpl::_update_default_impl(
             self, from, to, id,
         )?;
 

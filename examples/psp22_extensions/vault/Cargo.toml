@@ -21,7 +21,7 @@ ethnum = { version = "1.5", default-features = false }
 # These dependencies
 pendzl = { path = "../../..", default-features = false, features = [
     "psp22_vault_impl",
-    "psp22_vault_metadata_impl",
+    "psp22_metadata_impl",
 ] }
 
 [dev-dependencies]

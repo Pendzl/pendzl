@@ -6,8 +6,8 @@
 pub mod my_psp22_metadata {
     use ink::prelude::string::String;
 
-    use pendzl::contracts::token::psp22::PSP22Error;
-    use pendzl::contracts::token::psp22::PSP22Internal;
+    use pendzl::contracts::psp22::PSP22Error;
+    use pendzl::contracts::psp22::PSP22Internal;
 
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
@@ -51,13 +51,20 @@ pub mod my_psp22_metadata {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn metadata_works(client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn metadata_works(
+            client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let _name = String::from("TOKEN");
             let _symbol = String::from("TKN");
 
-            let mut constructor = ContractRef::new(1000, Some(_name), Some(_symbol), 18);
+            let mut constructor =
+                ContractRef::new(1000, Some(_name), Some(_symbol), 18);
             let contract = client
-                .instantiate("my_psp22_metadata", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_metadata",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")

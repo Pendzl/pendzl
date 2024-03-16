@@ -5,7 +5,7 @@
 #[ink::contract]
 pub mod my_access_control {
 
-    use pendzl::contracts::token::psp34::extensions::{
+    use pendzl::contracts::psp34::{
         burnable::PSP34Burnable, mintable::PSP34Mintable,
     };
 

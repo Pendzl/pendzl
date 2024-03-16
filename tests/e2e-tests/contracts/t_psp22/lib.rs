@@ -4,9 +4,9 @@
 #[ink::contract]
 pub mod t_psp22 {
     use ink::prelude::string::String;
-    use pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl;
-    use pendzl::contracts::token::psp22::PSP22Error;
-    use pendzl::contracts::token::psp22::PSP22Internal;
+    use pendzl::contracts::psp22::PSP22Error;
+    use pendzl::contracts::psp22::PSP22Internal;
+    use pendzl::contracts::psp22::PSP22InternalDefaultImpl;
 
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]

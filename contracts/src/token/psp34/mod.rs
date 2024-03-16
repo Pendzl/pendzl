@@ -5,6 +5,16 @@ include!("psp34_events.rs");
 include!("psp34_trait.rs");
 
 #[cfg(feature = "psp34_impl")]
-pub mod implementation;
+mod implementation;
 
-pub mod extensions;
+#[cfg(feature = "psp34_impl")]
+pub use implementation::*;
+
+mod extensions;
+
+#[cfg(feature = "psp34_burnable")]
+pub use extensions::burnable;
+#[cfg(feature = "psp34_metadata")]
+pub use extensions::metadata;
+#[cfg(feature = "psp34_mintable")]
+pub use extensions::mintable;

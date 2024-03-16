@@ -2,4 +2,7 @@
 include!("burnable_trait.rs");
 
 #[cfg(feature = "psp22_burnable_impl")]
-pub mod implementation;
+mod implementation;
+
+#[cfg(feature = "psp22_burnable_impl")]
+pub use implementation::*;

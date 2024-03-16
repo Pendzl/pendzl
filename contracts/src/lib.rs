@@ -2,8 +2,30 @@
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-pub mod access;
-pub mod finance;
-pub mod security;
-pub mod token;
-pub mod upgradeability;
+mod access;
+mod finance;
+mod security;
+mod token;
+mod upgradeability;
+
+#[cfg(feature = "access_control")]
+pub use access::access_control;
+#[cfg(feature = "ownable")]
+pub use access::ownable;
+
+#[cfg(any(
+    feature = "general_vest",
+    feature = "provide_vest_schedule_info"
+))]
+pub use finance::general_vest;
+
+#[cfg(feature = "pausable")]
+pub use security::pausable;
+
+#[cfg(feature = "psp22")]
+pub use token::psp22;
+#[cfg(feature = "psp34")]
+pub use token::psp34;
+
+#[cfg(feature = "upgradeable")]
+pub use upgradeability::code_hash;

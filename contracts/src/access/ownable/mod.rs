@@ -5,4 +5,8 @@ include!("ownable_trait.rs");
 
 /// implementation of the traits
 #[cfg(feature = "ownable_impl")]
-pub mod implementation;
+mod implementation;
+
+/// implementation of the traits
+#[cfg(feature = "ownable_impl")]
+pub use implementation::*;

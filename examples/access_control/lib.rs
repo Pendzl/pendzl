@@ -5,7 +5,7 @@
 #[ink::contract]
 pub mod my_access_control {
 
-    use pendzl::contracts::token::psp34::extensions::{
+    use pendzl::contracts::psp34::{
         burnable::PSP34Burnable, mintable::PSP34Mintable,
     };
 
@@ -26,7 +26,11 @@ pub mod my_access_control {
 
     impl PSP34Burnable for Contract {
         #[ink(message)]
-        fn burn(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+        fn burn(
+            &mut self,
+            account: AccountId,
+            id: Id,
+        ) -> Result<(), PSP34Error> {
             self._ensure_has_role(MINTER, Some(self.env().caller()))?;
             self._burn_from(&account, &id)
         }
@@ -34,7 +38,11 @@ pub mod my_access_control {
 
     impl PSP34Mintable for Contract {
         #[ink(message)]
-        fn mint(&mut self, account: AccountId, id: Id) -> Result<(), PSP34Error> {
+        fn mint(
+            &mut self,
+            account: AccountId,
+            id: Id,
+        ) -> Result<(), PSP34Error> {
             self._ensure_has_role(MINTER, Some(self.env().caller()))?;
             self._mint_to(&account, &id)
         }
@@ -91,7 +99,10 @@ pub mod my_access_control {
                 format!(
                     "{:?}",
                     client
-                        .call(&bob(), &mut contract.mint(account_id(Bob), Id::U8(1)))
+                        .call(
+                            &bob(),
+                            &mut contract.mint(account_id(Bob), Id::U8(1))
+                        )
                         .dry_run()
                         .await?
                         .return_value()
@@ -105,7 +116,10 @@ pub mod my_access_control {
 
             assert_eq!(
                 client
-                    .call(&bob(), &mut contract.mint(account_id(Bob), Id::U8(0)))
+                    .call(
+                        &bob(),
+                        &mut contract.mint(account_id(Bob), Id::U8(0))
+                    )
                     .submit()
                     .await?
                     .return_value(),
@@ -136,7 +150,10 @@ pub mod my_access_control {
                 .call::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Alice), true);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice), true);
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice),
+                true
+            );
 
             Ok(())
         }
@@ -154,13 +171,18 @@ pub mod my_access_control {
                 .call::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob), false);
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob),
+                false
+            );
 
             Ok(())
         }
 
         #[ink_e2e::test]
-        async fn should_grant_role(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn should_grant_role(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
                 .instantiate("my_access_control", &alice(), &mut constructor)
@@ -191,22 +213,36 @@ pub mod my_access_control {
                 .call::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob), false);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice), true);
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob),
+                false
+            );
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice),
+                true
+            );
             assert_eq!(has_role!(client, contract, MINTER, Alice), true);
 
             assert_eq!(grant_role!(client, contract, MINTER, Bob), Ok(()));
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), true);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob), false);
-            assert_eq!(has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice), true);
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Bob),
+                false
+            );
+            assert_eq!(
+                has_role!(client, contract, DEFAULT_ADMIN_ROLE, Alice),
+                true
+            );
             assert_eq!(has_role!(client, contract, MINTER, Alice), true);
 
             Ok(())
         }
 
         #[ink_e2e::test]
-        async fn should_revoke_role(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn should_revoke_role(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
                 .instantiate("my_access_control", &alice(), &mut constructor)
@@ -237,7 +273,9 @@ pub mod my_access_control {
         }
 
         #[ink_e2e::test]
-        async fn should_renounce_role(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn should_renounce_role(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
                 .instantiate("my_access_control", &alice(), &mut constructor)
@@ -326,7 +364,10 @@ pub mod my_access_control {
                 .await?
                 .return_value();
 
-            assert_eq!(format!("{:?}", renounce_role_res), "Err(InvalidCaller)");
+            assert_eq!(
+                format!("{:?}", renounce_role_res),
+                "Err(InvalidCaller)"
+            );
 
             Ok(())
         }
@@ -348,7 +389,10 @@ pub mod my_access_control {
 
             assert_eq!(
                 client
-                    .call(&bob(), &mut contract.mint(account_id(Bob), Id::U8(0)))
+                    .call(
+                        &bob(),
+                        &mut contract.mint(account_id(Bob), Id::U8(0))
+                    )
                     .submit()
                     .await?
                     .return_value(),
@@ -367,7 +411,10 @@ pub mod my_access_control {
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
 
             let burn_res = client
-                .call(&ink_e2e::bob(), &contract.burn(account_id(Bob), Id::U8(0)))
+                .call(
+                    &ink_e2e::bob(),
+                    &contract.burn(account_id(Bob), Id::U8(0)),
+                )
                 .dry_run()
                 .await?
                 .return_value();

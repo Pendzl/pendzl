@@ -5,7 +5,6 @@
 #[ink::contract]
 pub mod my_psp22_vault {
     use ink::prelude::string::ToString;
-    use pendzl::contracts::token::psp22::extensions::vault::implementation::PSP22VaultInternalDefaultImpl;
     use pendzl::traits::String;
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]

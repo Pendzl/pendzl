@@ -3,4 +3,7 @@ include!("metadata_events.rs");
 include!("metadata_trait.rs");
 
 #[cfg(feature = "psp34_metadata_impl")]
-pub mod implementation;
+mod implementation;
+
+#[cfg(feature = "psp34_metadata_impl")]
+pub use implementation::*;

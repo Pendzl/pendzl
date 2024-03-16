@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-use super::super::{Balance, PSP22Error};
+use super::super::PSP22Error;
 use ink::{contract_ref, env::DefaultEnvironment, primitives::AccountId};
+pub use pendzl::traits::Balance;
 
 pub type PSP22MintableRef = contract_ref!(PSP22Mintable, DefaultEnvironment);
 

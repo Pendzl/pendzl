@@ -66,7 +66,9 @@ pub mod tests {
         assert_eq_msg!("schedule", schedule, expected_schedule);
     }
 
-    fn assert_psp22_transfer_event<E: ink::env::Environment<AccountId = AccountId>>(
+    fn assert_psp22_transfer_event<
+        E: ink::env::Environment<AccountId = AccountId>,
+    >(
         event: &ContractEmitted<E>,
         expected_from: AccountId,
         expected_to: AccountId,
@@ -84,7 +86,9 @@ pub mod tests {
         assert_eq_msg!("Transfer.asset", event.contract, expected_asset);
     }
 
-    fn assert_token_released_event_e2e<E: ink::env::Environment<AccountId = AccountId>>(
+    fn assert_token_released_event_e2e<
+        E: ink::env::Environment<AccountId = AccountId>,
+    >(
         event: &ContractEmitted<E>,
         expected_caller: AccountId,
         expected_to: AccountId,
@@ -146,7 +150,11 @@ pub mod tests {
 
         let mut vester_constructor = VesterRef::new();
         let mut vester = client
-            .instantiate("vester_custom", &vester_creator, &mut vester_constructor)
+            .instantiate(
+                "vester_custom",
+                &vester_creator,
+                &mut vester_constructor,
+            )
             .submit()
             .await
             .expect("instantiate vester failed")
@@ -155,7 +163,10 @@ pub mod tests {
         let _ = client
             .call(
                 &vester_submitter,
-                &psp22.increase_allowance(vester.to_account_id(), create_vest_args.amount),
+                &psp22.increase_allowance(
+                    vester.to_account_id(),
+                    create_vest_args.amount,
+                ),
             )
             .submit()
             .await
@@ -189,14 +200,19 @@ pub mod tests {
             .await
             .expect("create vest failed");
 
-        let contract_emitted_events = create_vest_res.contract_emitted_events()?;
+        let contract_emitted_events =
+            create_vest_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == vester.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == vester.to_account_id()
+            })
             .collect();
         let psp22_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == psp22.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == psp22.to_account_id()
+            })
             .collect();
         assert!(matches!(create_vest_res.return_value(), Ok(())));
 
@@ -238,7 +254,9 @@ pub mod tests {
     }
 
     #[ink_e2e::test]
-    async fn shorten_durations(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+    async fn shorten_durations(
+        mut client: ink_e2e::Client<C, E>,
+    ) -> E2EResult<()> {
         let vester_creator = ink_e2e::alice();
         let vester_submitter = client
             .create_and_fund_account(&ink_e2e::alice(), 10_000_000_000_000)
@@ -260,7 +278,11 @@ pub mod tests {
 
         let mut ts_provider_constructor = TSProviderRef::new(0, 0);
         let mut ts_provider = client
-            .instantiate("ts_provider", &vester_creator, &mut ts_provider_constructor)
+            .instantiate(
+                "ts_provider",
+                &vester_creator,
+                &mut ts_provider_constructor,
+            )
             .submit()
             .await
             .expect("instantiate ts_provider failed")
@@ -310,7 +332,11 @@ pub mod tests {
 
         let mut vester_constructor = VesterRef::new();
         let mut vester = client
-            .instantiate("vester_custom", &vester_creator, &mut vester_constructor)
+            .instantiate(
+                "vester_custom",
+                &vester_creator,
+                &mut vester_constructor,
+            )
             .submit()
             .await
             .expect("instantiate vester failed")
@@ -319,7 +345,10 @@ pub mod tests {
         let _ = client
             .call(
                 &vester_submitter,
-                &psp22.increase_allowance(vester.to_account_id(), create_vest_args.amount),
+                &psp22.increase_allowance(
+                    vester.to_account_id(),
+                    create_vest_args.amount,
+                ),
             )
             .submit()
             .await
@@ -353,14 +382,19 @@ pub mod tests {
             .await
             .expect("create vest failed");
 
-        let contract_emitted_events = create_vest_res.contract_emitted_events()?;
+        let contract_emitted_events =
+            create_vest_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == vester.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == vester.to_account_id()
+            })
             .collect();
         let psp22_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == psp22.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == psp22.to_account_id()
+            })
             .collect();
         assert!(matches!(create_vest_res.return_value(), Ok(())));
 
@@ -396,11 +430,15 @@ pub mod tests {
         let contract_emitted_events = release_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == vester.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == vester.to_account_id()
+            })
             .collect();
         let psp22_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == psp22.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == psp22.to_account_id()
+            })
             .collect();
 
         let return_value = release_res.return_value();
@@ -455,11 +493,15 @@ pub mod tests {
         let contract_emitted_events = release_res.contract_emitted_events()?;
         let vester_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == vester.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == vester.to_account_id()
+            })
             .collect();
         let psp22_events: Vec<_> = contract_emitted_events
             .iter()
-            .filter(|event_with_topics| event_with_topics.event.contract == psp22.to_account_id())
+            .filter(|event_with_topics| {
+                event_with_topics.event.contract == psp22.to_account_id()
+            })
             .collect();
 
         let return_value = release_res.return_value();

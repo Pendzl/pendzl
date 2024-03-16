@@ -4,7 +4,7 @@
 #[pendzl::implementation(PSP34, PSP34Mintable)]
 #[ink::contract]
 pub mod my_psp34_mintable {
-    use pendzl::contracts::token::psp34::*;
+    use pendzl::contracts::psp34::*;
     #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct Contract {
@@ -34,10 +34,16 @@ pub mod my_psp34_mintable {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn mint_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn mint_works(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
-                .instantiate("my_psp34_mintable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp34_mintable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -80,10 +86,16 @@ pub mod my_psp34_mintable {
         }
 
         #[ink_e2e::test]
-        async fn mint_existing_should_fail(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn mint_existing_should_fail(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new();
             let mut contract = client
-                .instantiate("my_psp34_mintable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp34_mintable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")

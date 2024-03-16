@@ -3,7 +3,7 @@
 
 #[ink::contract]
 pub mod ts_provider {
-    use pendzl::contracts::finance::general_vest::ProvideVestScheduleInfo;
+    use pendzl::contracts::general_vest::ProvideVestScheduleInfo;
 
     #[ink(storage)]
     #[derive(Default)]
@@ -14,7 +14,10 @@ pub mod ts_provider {
 
     impl TSProvider {
         #[ink(constructor)]
-        pub fn new(waiting_duration: Timestamp, vesting_duration: Timestamp) -> Self {
+        pub fn new(
+            waiting_duration: Timestamp,
+            vesting_duration: Timestamp,
+        ) -> Self {
             Self {
                 waiting_duration,
                 vesting_duration,

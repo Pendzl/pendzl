@@ -27,9 +27,13 @@ pub mod my_psp22 {
         amount: &Balance,
     ) -> Result<(), PSP22Error> {
         if to == Some(&self.hated_storage.hated_account) {
-            return Err(PSP22Error::Custom(String::from("I hate this account!")));
+            return Err(PSP22Error::Custom(String::from(
+                "I hate this account!",
+            )));
         }
-        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
+        pendzl::contracts::psp22::PSP22InternalDefaultImpl::_update_default_impl(
+            self, from, to, amount,
+        )
     }
 
     impl Contract {
@@ -66,7 +70,9 @@ pub mod my_psp22 {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn assigns_initial_balance(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn assigns_initial_balance(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let contract = client
                 .instantiate("my_psp22", &ink_e2e::alice(), &mut constructor)
@@ -76,7 +82,10 @@ pub mod my_psp22 {
                 .call::<Contract>();
 
             let balance_of_deployer = client
-                .call(&ink_e2e::alice(), &contract.balance_of(account_id(Alice)))
+                .call(
+                    &ink_e2e::alice(),
+                    &contract.balance_of(account_id(Alice)),
+                )
                 .dry_run()
                 .await?
                 .return_value();

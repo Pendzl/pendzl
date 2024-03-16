@@ -11,7 +11,7 @@ pub mod t_access_control {
         access: AccessControlData,
     }
 
-    pub use pendzl::contracts::access::access_control::implementation::AccessControlInternalDefaultImpl;
+    pub use pendzl::contracts::access_control::AccessControlInternalDefaultImpl;
 
     impl Contract {
         #[ink(constructor)]

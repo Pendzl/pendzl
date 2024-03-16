@@ -13,4 +13,7 @@ include!("provide_vest_schedule_info_trait.rs");
 
 /// implementation of the traits
 #[cfg(feature = "general_vest_impl")]
-pub mod implementation;
+mod implementation;
+
+#[cfg(feature = "general_vest_impl")]
+pub use implementation::*;

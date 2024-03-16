@@ -4,7 +4,7 @@
 #[pendzl::implementation(PSP22, PSP22Mintable)]
 #[ink::contract]
 pub mod my_psp22_mintable {
-    use pendzl::contracts::token::psp22::*;
+    use pendzl::contracts::psp22::*;
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
@@ -38,10 +38,16 @@ pub mod my_psp22_mintable {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn assigns_initial_balance(client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn assigns_initial_balance(
+            client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(1000);
             let contract = client
-                .instantiate("my_psp22_mintable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_mintable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -53,10 +59,16 @@ pub mod my_psp22_mintable {
         }
 
         #[ink_e2e::test]
-        async fn minting_requested_amount(client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn minting_requested_amount(
+            client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(1000);
             let mut contract = client
-                .instantiate("my_psp22_mintable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_mintable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -90,7 +102,11 @@ pub mod my_psp22_mintable {
         ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(0);
             let mut contract = client
-                .instantiate("my_psp22_mintable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_mintable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -119,7 +135,10 @@ pub mod my_psp22_mintable {
                 .await?
                 .return_value();
 
-            assert!(matches!(total_supply, 1000), "Total supply should be 1000");
+            assert!(
+                matches!(total_supply, 1000),
+                "Total supply should be 1000"
+            );
 
             Ok(())
         }

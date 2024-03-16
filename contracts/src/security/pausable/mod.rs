@@ -4,4 +4,7 @@ include!("pausable_events.rs");
 include!("pausable_trait.rs");
 
 #[cfg(feature = "pausable_impl")]
-pub mod implementation;
+mod implementation;
+
+#[cfg(feature = "pausable_impl")]
+pub use implementation::*;

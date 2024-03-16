@@ -43,7 +43,6 @@ psp22 = []
 psp22_mintable = ["psp22"]
 psp22_burnable = ["psp22"]
 psp22_metadata = []
-psp22_vault_metadata = []
 psp22_vault = ["psp22"]
 psp34 = []
 psp34_mintable = ["psp34"]
@@ -59,11 +58,6 @@ psp22_mintable_impl = ["psp22_impl", "psp22_mintable"]
 psp22_burnable_impl = ["psp22_impl", "psp22_burnable"]
 psp22_metadata_impl = ["psp22_impl", "psp22_metadata"]
 psp22_vault_impl = ["psp22_impl", "psp22_vault"]
-psp22_vault_metadata_impl = [
-    "psp22_impl",
-    "psp22_vault",
-    "psp22_vault_metadata",
-]
 psp34_impl = ["psp34"]
 psp34_mintable_impl = ["psp34_impl", "psp34_mintable"]
 psp34_burnable_impl = ["psp34_impl", "psp34_burnable"]

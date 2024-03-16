@@ -25,8 +25,8 @@
 #[ink::contract]
 mod psp34_metadata {
     use pendzl::traits::String;
-    use pendzl_contracts::token::psp34::{
-        extensions::metadata::PSP34MetadataInternal, Id, PSP34Error,
+    use pendzl_contracts::psp34::{
+        metadata::PSP34MetadataInternal, Id, PSP34Error,
     };
 
     #[derive(Default, StorageFieldGetter)]

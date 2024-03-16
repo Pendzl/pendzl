@@ -24,7 +24,7 @@
 #[pendzl::implementation(PSP22, PSP22Mintable)]
 #[ink::contract]
 mod psp22_mintable {
-    use pendzl::contracts::token::psp22::{
+    use pendzl::contracts::psp22::{
         PSP22Error, PSP22Internal, Transfer, PSP22,
     };
     use pendzl::{test_utils::*, traits::String};
@@ -53,7 +53,7 @@ mod psp22_mintable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(
+        pendzl::contracts::psp22::PSP22InternalDefaultImpl::_update_default_impl(
             self, from, to, amount,
         )?;
 

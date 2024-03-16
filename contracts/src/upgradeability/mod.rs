@@ -1,5 +1,2 @@
-include!("upgradeable_error.rs");
-include!("upgradeable_trait.rs");
-
-#[cfg(feature = "upgradeable_impl")]
-pub mod implementation;
+#[cfg(feature = "upgradeable")]
+pub mod code_hash;

@@ -4,7 +4,7 @@
 #[pendzl::implementation(PSP34, PSP34Metadata)]
 #[ink::contract]
 pub mod t_psp34_metadata {
-    use pendzl::contracts::token::psp34::*;
+    use pendzl::contracts::psp34::*;
     use pendzl::traits::String;
 
     const COLLECTION_ID: Id = Id::U8(0);

@@ -4,9 +4,6 @@
 #[pendzl::implementation(Pausable)]
 #[ink::contract]
 pub mod my_pausable {
-    // use pendzl::contracts::security::pausable::PausableError;
-    // use pendzl::contracts::security::pausable::PausableInternal;
-
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {

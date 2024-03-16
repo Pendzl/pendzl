@@ -2,4 +2,7 @@
 include!("mintable_trait.rs");
 
 #[cfg(feature = "psp34_mintable_impl")]
-pub mod implementation;
+mod implementation;
+
+#[cfg(feature = "psp34_mintable_impl")]
+pub use implementation::*;

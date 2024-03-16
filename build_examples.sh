@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ $# -eq 0 ]; then
-  echo "Error: Please provide at least one glob pattern as an argument."
-  exit 1
-fi
-
 IGNORED_DIRS=(
   "./examples/test_helpers"
   "./examples/test_helpers/"
@@ -45,7 +40,7 @@ process_directory() {
   fi
 }
 
-for pattern in "$@"; do
+for pattern in "./examples"; do
   for dir in $pattern; do
     if [[ -d $dir ]]; then
       process_directory "$dir"

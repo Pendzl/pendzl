@@ -3,7 +3,7 @@
 #[pendzl::implementation(PSP22, Ownable)]
 #[ink::contract]
 pub mod ownable {
-    use pendzl::contracts::token::psp22::extensions::{
+    use pendzl::contracts::psp22::{
         burnable::PSP22Burnable, mintable::PSP22Mintable,
     };
 

@@ -1,10 +1,8 @@
-use pendzl::traits::{StorageFieldGetter, String};
+pub use super::*;
 
-use crate::token::psp22::extensions::vault::{
-    implementation::PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
-};
+use ink::prelude::string::String;
 
-use super::PSP22VaultMetadataStorage;
+use pendzl::traits::StorageFieldGetter;
 
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
@@ -27,7 +25,6 @@ impl PSP22MetadataData {
         instance
     }
 }
-
 impl PSP22VaultMetadataStorage for PSP22MetadataData {
     fn token_name(&self) -> Option<String> {
         self.name.get_or_default()
@@ -38,6 +35,11 @@ impl PSP22VaultMetadataStorage for PSP22MetadataData {
     }
 }
 
+pub use crate::token::psp22::vault::{
+    PSP22VaultData, PSP22VaultInternal, PSP22VaultStorage,
+};
+
+use super::PSP22VaultMetadataStorage;
 pub trait PSP22MetadataDefaultImpl:
     StorageFieldGetter<PSP22VaultData>
     + StorageFieldGetter<PSP22MetadataData>

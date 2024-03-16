@@ -4,7 +4,7 @@
 #[pendzl::implementation(PSP22, PSP22Burnable)]
 #[ink::contract]
 pub mod my_psp22_burnable {
-    use pendzl::contracts::token::psp22::*;
+    use pendzl::contracts::psp22::*;
     #[ink(storage)]
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
@@ -49,10 +49,16 @@ pub mod my_psp22_burnable {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn assigns_initial_balance(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn assigns_initial_balance(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -69,7 +75,11 @@ pub mod my_psp22_burnable {
         async fn can_burn(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -91,10 +101,16 @@ pub mod my_psp22_burnable {
         }
 
         #[ink_e2e::test]
-        async fn can_burn_without_allowance(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn can_burn_without_allowance(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -124,7 +140,11 @@ pub mod my_psp22_burnable {
         ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -158,10 +178,16 @@ pub mod my_psp22_burnable {
         }
 
         #[ink_e2e::test]
-        async fn can_burn_from(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn can_burn_from(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -198,10 +224,16 @@ pub mod my_psp22_burnable {
         }
 
         #[ink_e2e::test]
-        async fn can_burn_from_many(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn can_burn_from_many(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -238,8 +270,10 @@ pub mod my_psp22_burnable {
             let result = client
                 .call(
                     &ink_e2e::alice(),
-                    &contract
-                        .burn_from_many(vec![(account_id(Bob), 10), (account_id(Charlie), 10)]),
+                    &contract.burn_from_many(vec![
+                        (account_id(Bob), 10),
+                        (account_id(Charlie), 10),
+                    ]),
                 )
                 .submit()
                 .await
@@ -263,7 +297,11 @@ pub mod my_psp22_burnable {
         ) -> E2EResult<()> {
             let mut constructor = ContractRef::new(100);
             let mut contract = client
-                .instantiate("my_psp22_burnable", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp22_burnable",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")
@@ -301,8 +339,10 @@ pub mod my_psp22_burnable {
             let result = client
                 .call(
                     &ink_e2e::alice(),
-                    &contract
-                        .burn_from_many(vec![(account_id(Bob), 10), (account_id(Charlie), 10)]),
+                    &contract.burn_from_many(vec![
+                        (account_id(Bob), 10),
+                        (account_id(Charlie), 10),
+                    ]),
                 )
                 .dry_run()
                 .await?

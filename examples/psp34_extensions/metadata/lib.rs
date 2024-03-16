@@ -5,7 +5,7 @@
 #[ink::contract]
 pub mod my_psp34_metadata {
     use ink::prelude::string::*;
-    use pendzl::contracts::token::psp34::*;
+    use pendzl::contracts::psp34::*;
     #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
     pub struct Contract {
@@ -41,14 +41,21 @@ pub mod my_psp34_metadata {
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
         #[ink_e2e::test]
-        async fn metadata_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn metadata_works(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let id = Id::U8(0);
             let name = String::from("My PSP34");
             let symbol = String::from("MPS34");
 
-            let mut constructor = ContractRef::new(id.clone(), name.clone(), symbol.clone());
+            let mut constructor =
+                ContractRef::new(id.clone(), name.clone(), symbol.clone());
             let contract = client
-                .instantiate("my_psp34_metadata", &ink_e2e::alice(), &mut constructor)
+                .instantiate(
+                    "my_psp34_metadata",
+                    &ink_e2e::alice(),
+                    &mut constructor,
+                )
                 .submit()
                 .await
                 .expect("instantiate failed")

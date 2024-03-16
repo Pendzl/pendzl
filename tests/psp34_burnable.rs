@@ -25,9 +25,7 @@
 #[ink::contract]
 mod psp34_burnable {
     use pendzl::{test_utils::accounts, traits::String};
-    use pendzl_contracts::token::psp34::{
-        Id, PSP34Error, PSP34Internal, PSP34,
-    };
+    use pendzl_contracts::psp34::{Id, PSP34Error, PSP34Internal, PSP34};
 
     #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
@@ -52,7 +50,7 @@ mod psp34_burnable {
                 "Error on _before_token_transfer",
             )));
         }
-        pendzl::contracts::token::psp34::implementation::PSP34InternalDefaultImpl::_update_default_impl(
+        pendzl::contracts::psp34::PSP34InternalDefaultImpl::_update_default_impl(
             self, from, to, id,
         )?;
 
