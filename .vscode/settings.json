@@ -2,7 +2,7 @@
   "typescript.tsdk": "pendzl-tests/node_modules/typescript/lib",
   "rust-analyzer.linkedProjects": [
     "./Cargo.toml",
-    "./contracts/Cargo.toml",
+    "./contracts/Cargo.toml"
     // "./examples/access_control_upgradeable/Cargo.toml",
     // "./examples/psp34/Cargo.toml",
     // "./examples/pausable/Cargo.toml",
@@ -27,10 +27,10 @@
     // "./tests/e2e-tests/contracts/t_vault/Cargo.toml",
     // "./tests/e2e-tests/contracts/t_ownable/Cargo.toml",
     // "./tests/e2e-tests/contracts/t_psp22/Cargo.toml",
-    "./tests/e2e-tests/contracts/t_flipper_v0/Cargo.toml",
-    "./tests/e2e-tests/contracts/t_flipper_v1/Cargo.toml"
+    // "./tests/e2e-tests/contracts/t_flipper_v0/Cargo.toml",
+    // "./tests/e2e-tests/contracts/t_flipper_v1/Cargo.toml"
     // "./tests/e2e-tests/contracts/t_vester/Cargo.toml"
   ],
   "rust-analyzer.showUnlinkedFileNotification": true,
-  "rust-analyzer.cargo.features": "all"
+  "rust-analyzer.cargo.features": ["ownable_impl", "upgradeable_impl"]
 }

@@ -4,7 +4,7 @@
 #[pendzl::implementation(PSP22, PSP22Vault, PSP22Metadata)]
 #[ink::contract]
 pub mod t_vault {
-    use pendzl::contracts::token::psp22::{
+    use pendzl::contracts::psp22::{
         vault::PSP22VaultInternalDefaultImpl, PSP22InternalDefaultImpl,
     };
     use pendzl::traits::String;

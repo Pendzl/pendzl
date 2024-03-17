@@ -1,22 +1,7 @@
-use super::UpgradeableError;
-use super::UpgradeableInternal;
-use pendzl::traits::DefaultEnv;
-use pendzl::traits::Hash;
-
-pub trait UpgradeableInternalDefaultImpl: Sized {
-    fn _set_code_hash_default_impl(
-        &mut self,
-        code_hash: Hash,
-    ) -> Result<(), UpgradeableError> {
-        match Self::env().set_code_hash(&code_hash) {
-            Ok(_) => {}
-            Err(_) => return Err(UpgradeableError::SetCodeHashFailed),
-        }
-        Ok(())
-    }
-}
-
+use super::{UpgradeableError, UpgradeableInternal};
 use crate::access::access_control::{AccessControlInternal, RoleType};
+use pendzl::traits::{DefaultEnv, Hash};
+
 pub const CODE_UPGRADER: RoleType = ink::selector_id!("CODE_UPGRADER"); // 1_198_282_211_u32
 
 pub trait UpgradeableDefaultImpl:

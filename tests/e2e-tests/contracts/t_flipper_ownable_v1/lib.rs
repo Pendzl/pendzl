@@ -1,6 +1,6 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 use ink::prelude::string::{String, ToString};
-use pendzl::contracts::access_control::AccessControlError;
+use pendzl::contracts::ownable::OwnableError;
 
 #[ink::event]
 pub struct Flipped {
@@ -19,16 +19,16 @@ pub struct ModifiedV0Inner {
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub enum FlipperError {
-    AccessControlError(AccessControlError),
+    OwnableError(OwnableError),
     SomeError(String),
     SomeError2,
     SomeError3,
     NewError,
 }
 
-impl From<AccessControlError> for FlipperError {
-    fn from(e: AccessControlError) -> Self {
-        Self::AccessControlError(e)
+impl From<OwnableError> for FlipperError {
+    fn from(e: OwnableError) -> Self {
+        Self::OwnableError(e)
     }
 }
 
@@ -98,10 +98,9 @@ pub struct FlipUpgradeableStorageItem {
     pub struct_v1: NewStruct,
 }
 
-#[pendzl::implementation(AccessControl, Upgradeable)]
+#[pendzl::implementation(Ownable, Upgradeable)]
 #[ink::contract]
 mod t_flipper {
-    use pendzl::contracts::access_control::DEFAULT_ADMIN_ROLE;
 
     use crate::*;
 
@@ -110,7 +109,7 @@ mod t_flipper {
     pub struct Flipper {
         value: bool,
         #[storage_field]
-        access: AccessControlData,
+        ownable: OwnableData,
         #[storage_field]
         upgradeable: FlipUpgradeableStorageItem,
     }
@@ -190,10 +189,7 @@ mod t_flipper {
 
         #[ink(message)]
         pub fn set_value(&mut self, val: u128) -> Result<(), FlipperError> {
-            self._ensure_has_role(
-                DEFAULT_ADMIN_ROLE,
-                Some(self.env().caller()),
-            )?;
+            self._only_owner()?;
             self.upgradeable.val_v0 = val;
             Ok(())
         }
