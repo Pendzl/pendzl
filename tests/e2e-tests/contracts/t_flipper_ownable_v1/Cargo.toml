@@ -15,7 +15,7 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 pendzl = { path = "../../../..", default-features = false, features = [
     "ownable_impl",
-    "upgradeable_impl"
+    "set_code_hash_impl",
 ] }
 
 [lib]
@@ -23,13 +23,7 @@ path = "lib.rs"
 
 [features]
 default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info",
-    "scale-info/std",
-    "pendzl/std",
-]
+std = ["ink/std", "scale/std", "scale-info", "scale-info/std", "pendzl/std"]
 ink-as-dependency = []
 
 [profile.dev]
@@ -39,4 +33,3 @@ lto = false
 [profile.release]
 panic = "abort"
 lto = false
-

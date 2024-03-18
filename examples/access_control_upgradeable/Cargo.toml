@@ -20,7 +20,7 @@ scale-info = { version = "2.10", default-features = false, features = [
 
 # These dependencies
 pendzl = { path = "../..", default-features = false, features = [
-    "upgradeable_impl",
+    "set_code_hash_impl",
     "access_control_impl",
     "psp34_impl",
     "psp34_burnable",

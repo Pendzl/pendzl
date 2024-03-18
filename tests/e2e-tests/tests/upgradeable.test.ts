@@ -8,7 +8,7 @@ import TFlipperOwnableV0Deployer from 'typechain/deployers/t_flipper_ownable_v0'
 import TFlipperOwnableV1Deployer from 'typechain/deployers/t_flipper_ownable_v1';
 import TFlipperV0Deployer from 'typechain/deployers/t_flipper_v0';
 import TFlipperV1Deployer from 'typechain/deployers/t_flipper_v1';
-import { UpgradeableErrorBuilder } from 'typechain/types-returns/t_flipper_v0';
+import { SetCodeHashErrorBuilder } from 'typechain/types-returns/t_flipper_v0';
 import 'wookashwackomytest-polkahat-chai-matchers';
 import { getSigners, localApi, time } from 'wookashwackomytest-polkahat-network-helpers';
 
@@ -23,7 +23,7 @@ export function stringToSelectorId(str: string) {
 }
 
 const [defaultAdmin, alice, upgrader, charlie, bob] = getSigners();
-describe.only('Upgradeable', () => {
+describe('Set Code Hash', () => {
   describe('AccessControl', () => {
     const ctx: {
       flipper: TFlipperV0Contract;
@@ -66,10 +66,10 @@ describe.only('Upgradeable', () => {
         });
         it('only CODE_UPGRADER should be able to upgrade', async () => {
           await expect(ctx.flipper.withSigner(alice).query.setCodeHash(newCodeHash)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.PermissionError('AC::MissingRole'),
+            SetCodeHashErrorBuilder.PermissionError('AC::MissingRole'),
           );
           await expect(ctx.flipper.withSigner(defaultAdmin).query.setCodeHash(newCodeHash)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.PermissionError('AC::MissingRole'),
+            SetCodeHashErrorBuilder.PermissionError('AC::MissingRole'),
           );
           await expect(ctx.flipper.withSigner(defaultAdmin).tx.grantRole(CODE_UPGRADER_ROLE, charlie.address)).to.be.fulfilled;
           await expect(ctx.flipper.withSigner(charlie).query.setCodeHash(newCodeHash)).to.haveOkResult();
@@ -81,7 +81,7 @@ describe.only('Upgradeable', () => {
           //replace last chars with 0
           const invalidCode = newCodeHash.slice(0, -4) + '0000';
           await expect(ctx.flipper.withSigner(upgrader).query.setCodeHash(invalidCode)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.SetCodeHashFailed(),
+            SetCodeHashErrorBuilder.SetCodeHashFailed(),
           );
         });
 
@@ -207,10 +207,10 @@ describe.only('Upgradeable', () => {
         });
         it('only owner should be able to upgrade', async () => {
           await expect(ctx.flipper.withSigner(alice).query.setCodeHash(newCodeHash)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.PermissionError('O::CallerIsNotOwner'),
+            SetCodeHashErrorBuilder.PermissionError('O::CallerIsNotOwner'),
           );
           await expect(ctx.flipper.withSigner(defaultAdmin).query.setCodeHash(newCodeHash)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.PermissionError('O::CallerIsNotOwner'),
+            SetCodeHashErrorBuilder.PermissionError('O::CallerIsNotOwner'),
           );
           await expect(ctx.flipper.withSigner(owner).query.setCodeHash(newCodeHash)).to.haveOkResult();
           await expect(ctx.flipper.withSigner(owner).tx.setCodeHash(newCodeHash)).to.be.fulfilled;
@@ -220,7 +220,7 @@ describe.only('Upgradeable', () => {
           //replace last chars with 0
           const invalidCode = newCodeHash.slice(0, -4) + '0000';
           await expect(ctx.flipper.withSigner(owner).query.setCodeHash(invalidCode)).to.be.revertedWithError(
-            UpgradeableErrorBuilder.SetCodeHashFailed(),
+            SetCodeHashErrorBuilder.SetCodeHashFailed(),
           );
         });
 

@@ -50,7 +50,7 @@ pub struct FlipUpgradeableStorageItem {
     pub struct_v0: SomeStruct,
 }
 
-#[pendzl::implementation(AccessControl, Upgradeable)]
+#[pendzl::implementation(AccessControl, SetCodeHash)]
 #[ink::contract]
 mod t_flipper {
 

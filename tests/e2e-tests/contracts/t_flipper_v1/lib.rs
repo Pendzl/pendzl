@@ -98,7 +98,7 @@ pub struct FlipUpgradeableStorageItem {
     pub struct_v1: NewStruct,
 }
 
-#[pendzl::implementation(AccessControl, Upgradeable)]
+#[pendzl::implementation(AccessControl, SetCodeHash)]
 #[ink::contract]
 mod t_flipper {
     use pendzl::contracts::access_control::DEFAULT_ADMIN_ROLE;

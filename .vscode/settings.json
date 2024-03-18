@@ -32,5 +32,5 @@
     // "./tests/e2e-tests/contracts/t_vester/Cargo.toml"
   ],
   "rust-analyzer.showUnlinkedFileNotification": true,
-  "rust-analyzer.cargo.features": ["ownable_impl", "upgradeable_impl"]
+  "rust-analyzer.cargo.features": ["ownable_impl", "set_code_hash_impl"]
 }

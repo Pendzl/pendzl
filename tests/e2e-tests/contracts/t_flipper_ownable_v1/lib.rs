@@ -98,7 +98,7 @@ pub struct FlipUpgradeableStorageItem {
     pub struct_v1: NewStruct,
 }
 
-#[pendzl::implementation(Ownable, Upgradeable)]
+#[pendzl::implementation(Ownable, SetCodeHash)]
 #[ink::contract]
 mod t_flipper {
 

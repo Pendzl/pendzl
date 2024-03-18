@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-#[pendzl::implementation(PSP34, AccessControl, Upgradeable)]
+#[pendzl::implementation(PSP34, AccessControl, SetCodeHash)]
 #[ink::contract]
 pub mod my_access_control {
 

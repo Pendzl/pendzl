@@ -50,7 +50,7 @@ psp34_burnable = ["psp34"]
 psp34_metadata = []
 access_control = []
 ownable = []
-upgradeable = []
+set_code_hash = []
 pausable = []
 general_vest = ["psp22"]
 psp22_impl = ["psp22"]
@@ -67,7 +67,7 @@ ownable_impl = ["ownable"]
 pausable_impl = ["pausable"]
 general_vest_impl = ["psp22", "general_vest"]
 provide_vest_schedule_info = ["psp22"]
-upgradeable_impl = ["upgradeable"]
+set_code_hash_impl = ["set_code_hash"]
 
 test-all = [
     "psp22_impl",
