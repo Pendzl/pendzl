@@ -24,8 +24,6 @@
 
 mod macros;
 pub mod math;
-pub mod test_utils;
 pub mod traits;
-pub mod utils;
 
 pub use pendzl_lang_macro::{implementation, storage_item};

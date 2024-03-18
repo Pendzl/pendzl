@@ -1,5 +1,0 @@
-error: non `pub` ink! storage structs are not supported
- --> tests/ui/storage_derive/fail/not-public-struct.rs:6:5
-  |
-6 |     #[derive(StorageFieldGetter)]
-  |     ^

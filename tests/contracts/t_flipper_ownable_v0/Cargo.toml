@@ -1,0 +1,35 @@
+[package]
+name = "t_flipper"
+version = "0.1.0"
+authors = [""]
+edition = "2021"
+
+[dependencies]
+ink = { version = "5.0.0", default-features = false }
+
+scale = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.10", default-features = false, features = [
+    "derive",
+], optional = true }
+pendzl = { path = "../../..", default-features = false, features = [
+    "ownable_impl",
+    "set_code_hash_impl",
+] }
+
+[lib]
+path = "lib.rs"
+
+[features]
+default = ["std"]
+std = ["ink/std", "scale/std", "scale-info", "scale-info/std", "pendzl/std"]
+ink-as-dependency = []
+
+[profile.dev]
+codegen-units = 16
+panic = "abort"
+lto = false
+[profile.release]
+panic = "abort"
+lto = false
