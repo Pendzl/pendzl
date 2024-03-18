@@ -86,14 +86,7 @@ One can override the default_impl of functions from PSP22 and/or PSP22Internal a
 
     #[overrider(PSP22Internal)]
     fn _update(
-        &mut self,
-        from: Option<&AccountId>,
-        to: Option<&AccountId>,
-        amount: &Balance,
-    ) -> Result<(), PSP22Error> {
-        if to == HATED_ACCOUNT {
-            return Err(PSP22Error::Custom(String::from("Hated account can not receive tokens")));
-        }
+        &mut self,vault::PSP22VaultInternalDefaultImpl,
         /// one can use default_impl as in this example or provide completely new implementation.
         pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
     }
@@ -126,25 +119,24 @@ To work with the project you need to install ink! toolchain and NodeJS's depende
 
 1. you need an installer [rustup](https://www.rust-lang.org/tools/install).
 2. [ink! toolchain](https://use.ink/getting-started/setup)
-3. NodeJS deps you can install via `yarn` command
+3. NodeJS deps you can install via `pnpm` command inside tests/ folder
 
 ### Build
 
-```
-$ yarn build
-```
-
-If you want to build in release mode, you can use this command
+To build exapmles use
 
 ```
-$ yarn build:release
+$ bash build_examples.sh
 ```
 
 ### Tests
 
-You can run unit tests by `RUSTFLAGS="-D warnings" cargo test --workspace --features test-all -- --test-threads=10` command from the root of the directory.
+If you want to run tests enter the tests/ foldr and run
 
-After you run tests by the `npm run test` command, it will build all contracts required for integration tests and run them.
+```
+$ pnpm build:debug
+$ pnpm test
+```
 
 ## FAQ
 
