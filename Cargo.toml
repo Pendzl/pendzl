@@ -10,7 +10,7 @@ exclude = [
 
 [package]
 name = "pendzl"
-version = "0.2.0-alpha"
+version = "0.2.1"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
@@ -34,8 +34,8 @@ scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "0.2.0-alpha", path = "contracts", default-features = false }
-pendzl_lang = { version = "0.2.0-alpha", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.2.1", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.2.1", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"
