@@ -1,6 +1,6 @@
 [package]
 name = "vester"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
