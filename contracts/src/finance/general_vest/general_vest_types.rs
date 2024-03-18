@@ -76,15 +76,23 @@ impl VestingData {
         &mut self,
     ) -> Result<Balance, VestingError> {
         let amount_releaseable = self.amount_releaseable_rdown()?;
-        self.released += amount_releaseable;
+        self.released = self
+            .released
+            .checked_add(amount_releaseable)
+            .ok_or(MathError::Overflow)?;
         Ok(amount_releaseable)
     }
     pub fn amount_releaseable_rdown(&self) -> Result<Balance, VestingError> {
         let now: Timestamp = Self::env().block_timestamp();
         let (waiting_duration, vesting_duration) =
             self.schedule.get_waiting_and_duration_times();
-        let start_time = self.creation_time + waiting_duration;
-        let end_time = start_time + vesting_duration;
+        let start_time = self
+            .creation_time
+            .checked_add(waiting_duration)
+            .ok_or(MathError::Overflow)?;
+        let end_time = start_time
+            .checked_add(vesting_duration)
+            .ok_or(MathError::Overflow)?;
 
         let is_overdue = self.is_overdue()?;
         if is_overdue {
@@ -96,10 +104,14 @@ impl VestingData {
         if start_time == end_time && now > start_time {
             return Ok(self.amount - self.released);
         }
-        let total_to_release = self.amount
-            * u128::try_from(now - start_time).unwrap()
-            / u128::try_from(end_time - start_time).unwrap()
-            - 1; //TODO ??
+        let total_to_release = self
+            .amount
+            .checked_mul(u128::try_from(now - start_time).unwrap())
+            .ok_or(MathError::Overflow)?
+            .checked_div(u128::try_from(end_time - start_time).unwrap())
+            .ok_or(MathError::DivByZero)?
+            .checked_sub(1)
+            .ok_or(MathError::Underflow)?; //TODO ??
         let amount_releaseable = total_to_release - self.released;
         Ok(amount_releaseable)
     }
@@ -107,8 +119,13 @@ impl VestingData {
         let now: Timestamp = Self::env().block_timestamp();
         let (waiting_duration, vesting_duration) =
             self.schedule.get_waiting_and_duration_times();
-        let start_time = self.creation_time + waiting_duration;
-        let end_time = start_time + vesting_duration;
+        let start_time = self
+            .creation_time
+            .checked_add(waiting_duration)
+            .ok_or(MathError::Overflow)?;
+        let end_time = start_time
+            .checked_add(vesting_duration)
+            .ok_or(MathError::Overflow)?;
 
         Ok(now >= end_time)
     }

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+use pendzl::math::errors::MathError;
 use pendzl::traits::String;
 
 /// The PSP34 error type. Contract will throw one of this errors.
@@ -29,7 +30,9 @@ impl From<OwnableError> for PSP34Error {
             OwnableError::CallerIsNotOwner => {
                 PSP34Error::Custom(String::from("O::CallerIsNotOwner"))
             }
-            OwnableError::ActionRedundant => PSP34Error::Custom(String::from("O::ActionRedundant")),
+            OwnableError::ActionRedundant => {
+                PSP34Error::Custom(String::from("O::ActionRedundant"))
+            }
         }
     }
 }
@@ -40,7 +43,9 @@ use crate::access::access_control::AccessControlError;
 impl From<AccessControlError> for PSP34Error {
     fn from(access: AccessControlError) -> Self {
         match access {
-            AccessControlError::MissingRole => PSP34Error::Custom(String::from("AC::MissingRole")),
+            AccessControlError::MissingRole => {
+                PSP34Error::Custom(String::from("AC::MissingRole"))
+            }
             AccessControlError::RoleRedundant => {
                 PSP34Error::Custom(String::from("AC::RoleRedundant"))
             }
@@ -57,25 +62,27 @@ use crate::security::pausable::PausableError;
 impl From<PausableError> for PSP34Error {
     fn from(pausable: PausableError) -> Self {
         match pausable {
-            PausableError::Paused => PSP34Error::Custom(String::from("P::Paused")),
-            PausableError::NotPaused => PSP34Error::Custom(String::from("P::NotPaused")),
+            PausableError::Paused => {
+                PSP34Error::Custom(String::from("P::Paused"))
+            }
+            PausableError::NotPaused => {
+                PSP34Error::Custom(String::from("P::NotPaused"))
+            }
         }
     }
 }
 
-/// The PSP34Receiver error types.
-#[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-pub enum PSP34ReceiverError {
-    /// Returned if transfer is rejected.
-    TransferRejected(String),
-}
-
-impl From<PSP34ReceiverError> for PSP34Error {
-    fn from(error: PSP34ReceiverError) -> Self {
-        match error {
-            PSP34ReceiverError::TransferRejected(message) => {
-                PSP34Error::SafeTransferCheckFailed(message)
+impl From<MathError> for PSP34Error {
+    fn from(err: MathError) -> Self {
+        match err {
+            MathError::Overflow => {
+                PSP34Error::Custom(String::from("M::Overflow"))
+            }
+            MathError::Underflow => {
+                PSP34Error::Custom(String::from("M::Underflow"))
+            }
+            MathError::DivByZero => {
+                PSP34Error::Custom(String::from("M::DivByZero"))
             }
         }
     }

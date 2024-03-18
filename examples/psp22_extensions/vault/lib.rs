@@ -28,7 +28,7 @@ pub mod my_psp22_vault {
             decimals_offset: u8,
             max_deposit_and_mint: Option<u128>,
         ) -> Self {
-            let mut instance = Self {
+            Self {
                 psp22: PSP22Data::default(),
                 vault: PSP22VaultData::new(asset, None),
                 metadata: PSP22MetadataData::new(
@@ -37,9 +37,7 @@ pub mod my_psp22_vault {
                 ),
                 decimals_offset,
                 max_deposit_and_mint,
-            };
-
-            instance
+            }
         }
     }
 

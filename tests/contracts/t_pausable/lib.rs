@@ -43,7 +43,7 @@ pub mod my_pausable {
         #[ink(message)]
         pub fn normal_process(&mut self) -> Result<(), PausableError> {
             self._ensure_not_paused()?;
-            self.count += 1;
+            self.count = self.count.checked_add(1).unwrap();
             Ok(())
         }
 

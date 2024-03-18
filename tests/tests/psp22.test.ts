@@ -62,7 +62,7 @@ describe('PSP 22', () => {
     const value = new BN(50);
 
     it('rejects overflow', async function () {
-      await expect(ctx.token.query.tMint(ctx.recipient.address, MAX_U128)).to.be.revertedWithError({ custom: 'Overflow' });
+      await expect(ctx.token.query.tMint(ctx.recipient.address, MAX_U128)).to.be.revertedWithError({ custom: 'M::Overflow' });
     });
 
     describe('for a non zero account', function () {

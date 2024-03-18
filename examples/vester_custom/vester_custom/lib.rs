@@ -294,8 +294,11 @@ pub mod tests {
             .await?
             .return_value();
 
-        let start_time = current_ts + ONE_DAY;
-        let end_time = current_ts + ONE_DAY * 10;
+        let start_time =
+            current_ts.checked_add(ONE_DAY).ok_or(MathError::Overflow)?;
+        let end_time = current_ts
+            .checked_add(ONE_DAY * 10)
+            .ok_or(MathError::Overflow)?;
         let amount = end_time - start_time;
 
         let _ = client

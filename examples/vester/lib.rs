@@ -544,7 +544,9 @@ pub mod tests {
         );
         assert_eq!(
             balance_of_vest_receiver,
-            balance_of_vest_receiver_pre + create_vest_args.amount
+            balance_of_vest_receiver_pre
+                .checked_add(create_vest_args.amount)
+                .ok_or(MathError::Overflow)?
         );
 
         Ok(())
@@ -764,7 +766,9 @@ pub mod tests {
         );
         assert_eq!(
             balance_of_vest_receiver,
-            balance_of_vest_receiver_pre + create_vest_args.amount
+            balance_of_vest_receiver_pre
+                .checked_add(create_vest_args.amount)
+                .ok_or(MathError::Overflow)?
         );
 
         Ok(())
@@ -833,7 +837,12 @@ pub mod tests {
                     vec![],
                 ),
             )
-            .value(create_vest_args.amount + 1)
+            .value(
+                create_vest_args
+                    .amount
+                    .checked_add(1)
+                    .ok_or(MathError::Overflow)?,
+            )
             .dry_run()
             .await
             .expect("create vest failed")
@@ -898,7 +907,9 @@ pub mod tests {
 
         assert_eq!(
             balance_of_vester_after,
-            balance_of_vester_before + create_vest_args.amount
+            balance_of_vester_before
+                .checked_add(create_vest_args.amount)
+                .ok_or(MathError::Overflow)?
         );
         assert_lt(
             balance_of_vester_submitter_after,
@@ -1075,7 +1086,9 @@ pub mod tests {
             get_account_balance(vester.env().account_id());
         assert_eq!(
             vest_to_balance_post,
-            vest_to_balance_pre + create_vest_args.amount
+            vest_to_balance_pre
+                .checked_add(create_vest_args.amount)
+                .ok_or(MathError::Overflow)?
         );
         assert_eq!(
             vester_balance_post,
@@ -1095,7 +1108,9 @@ pub mod tests {
 
         change_caller(vester_submitter);
         let creation_timestamp = vester.env().block_timestamp();
-        let first_action_timestamp = creation_timestamp + ONE_DAY * 365;
+        let first_action_timestamp = creation_timestamp
+            .checked_add(ONE_DAY * 365)
+            .ok_or(MathError::Overflow)?;
         let create_vest_args_vec: Vec<CreateVestingScheduleArgs> = vec![
             create_duration_as_amount_schedule_args(
                 vest_to,
@@ -1199,9 +1214,11 @@ pub mod tests {
         if let VestingSchedule::Constant(waiting_duration, vesting_duration) =
             create_vest_args_vec[1].schedule
         {
-            let vesting_end =
-                creation_timestamp + waiting_duration + vesting_duration;
-            set_block_timestamp(vesting_end + ONE_DAY);
+            let vesting_end = creation_timestamp
+                .checked_add(waiting_duration + vesting_duration)
+                .ok_or(MathError::Overflow)?;
+            set_block_timestamp(vesting_end.checked_add(ONE_DAY))
+                .ok_or(MathError::Overflow)?;
         } else {
             panic!("variant expected to be default")
         }
@@ -1239,9 +1256,11 @@ pub mod tests {
         if let VestingSchedule::Constant(waiting_duration, vesting_duration) =
             create_vest_args_vec[create_vest_args_vec.len() - 1].schedule
         {
-            let vesting_end =
-                creation_timestamp + waiting_duration + vesting_duration;
-            set_block_timestamp(vesting_end + 1);
+            let vesting_end = creation_timestamp
+                .checked_add(waiting_duration + vesting_duration)
+                .ok_or(MathError::Overflow)?;
+            set_block_timestamp(vesting_end.checked_add(1))
+                .ok_or(MathError::Overflow)?;
         } else {
             panic!("variant expected to be default")
         }
@@ -1273,9 +1292,15 @@ pub mod tests {
         let vest_to_balance_post = get_account_balance(vest_to);
         let vester_balance_post =
             get_account_balance(vester.env().account_id());
-        let total_amount =
-            create_vest_args_vec.iter().fold(0, |acc, x| acc + x.amount);
-        assert_eq!(vest_to_balance_post, vest_to_balance_pre + total_amount);
+        let total_amount = create_vest_args_vec
+            .iter()
+            .fold(0, |acc, x| acc.checked_add(x.amount))
+            .ok_or(MathError::Overflow)?;
+        assert_eq!(
+            vest_to_balance_post,
+            vest_to_balance_pre.checked_add(total_amount)
+        )
+        .ok_or(MathError::Overflow)?;
         assert_eq!(vester_balance_post, vester_balance_pre - total_amount);
     }
 }

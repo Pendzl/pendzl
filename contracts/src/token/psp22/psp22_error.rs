@@ -9,8 +9,6 @@ use pendzl::traits::String;
 pub enum PSP22Error {
     /// Custom error type for cases if writer of traits added own restrictions
     Custom(String),
-    /// pendzl::errors::MathError
-    MathError(MathError),
     /// Returned if not enough balance to fulfill a request is available.
     InsufficientBalance,
     /// Returned if not enough allowance to fulfill a request is available.

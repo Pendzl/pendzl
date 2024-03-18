@@ -4,6 +4,7 @@ use super::{
     Approval, Balance, PSP22Error, PSP22Internal, PSP22Storage, Transfer,
 };
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
+use pendzl::math::errors::MathError;
 use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
@@ -27,7 +28,7 @@ impl PSP22Storage for PSP22Data {
             .total_supply
             .get_or_default()
             .checked_add(*amount)
-            .ok_or(PSP22Error::Custom("Overflow".into()))?;
+            .ok_or(MathError::Overflow)?;
         self.total_supply.set(&new_total_supply);
         Ok(())
     }
@@ -38,7 +39,7 @@ impl PSP22Storage for PSP22Data {
         let new_total_supply = self
             .total_supply()
             .checked_sub(*amount)
-            .ok_or(PSP22Error::Custom("Underflow".into()))?;
+            .ok_or(MathError::Underflow)?;
         self.total_supply.set(&new_total_supply);
         Ok(())
     }
@@ -54,7 +55,7 @@ impl PSP22Storage for PSP22Data {
         let new_balance = self
             .balance_of(account)
             .checked_add(*amount)
-            .ok_or(PSP22Error::Custom("Overflow".into()))?;
+            .ok_or(MathError::Overflow)?;
         self.balances.insert(account, &new_balance);
         Ok(())
     }
@@ -91,7 +92,7 @@ impl PSP22Storage for PSP22Data {
         let new_allowance = self
             .allowance(owner, spender)
             .checked_add(*amount)
-            .ok_or(PSP22Error::Custom("Overflow".into()))?;
+            .ok_or(MathError::Overflow)?;
         self.allowances.insert(&(*owner, *spender), &new_allowance);
         Ok(new_allowance)
     }

@@ -4,6 +4,7 @@ use crate::token::psp34::{
     Approval, Id, PSP34Error, PSP34Internal, PSP34Storage, Transfer,
 };
 use ink::{prelude::vec::Vec, primitives::AccountId, storage::Mapping};
+use pendzl::math::errors::MathError;
 use pendzl::traits::{DefaultEnv, StorageFieldGetter};
 
 #[derive(Default, Debug)]
@@ -75,10 +76,12 @@ impl PSP34Storage for PSP34Data {
         self.owner_of.insert(id, to);
 
         let balance = self.owned_tokens_count.get(to).unwrap_or(0);
-        self.owned_tokens_count.insert(to, &(balance + 1));
+        self.owned_tokens_count
+            .insert(to, &(balance.checked_add(1).ok_or(MathError::Overflow)?));
 
         let total_suply = self.total_supply.get().unwrap_or(0);
-        self.total_supply.set(&(total_suply + 1));
+        self.total_supply
+            .set(&(total_suply.checked_add(1).ok_or(MathError::Overflow)?));
 
         Ok(())
     }

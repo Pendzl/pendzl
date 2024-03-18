@@ -5,7 +5,7 @@ exclude = ["examples", "tests/contracts"]
 
 [package]
 name = "pendzl"
-version = "0.2.1"
+version = "0.2.2"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
@@ -22,15 +22,15 @@ include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
 ink = { version = "5.0.0", default-features = false }
-scale = { package = "parity-scale-codec", version = "3.6", default-features = false, features = [
+scale = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = [
     "derive",
 ] }
 scale-info = { version = "2.10", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "0.2.1", path = "contracts", default-features = false }
-pendzl_lang = { version = "0.2.1", path = "lang", default-features = false }
+pendzl_contracts = { version = "0.2.2", path = "contracts", default-features = false }
+pendzl_lang = { version = "0.2.2", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"
@@ -51,6 +51,7 @@ std = [
     "pendzl_contracts/std",
     "pendzl_lang/std",
 ]
+
 psp22 = ["pendzl_contracts/psp22"]
 psp22_mintable = ["pendzl_contracts/psp22_mintable"]
 psp22_burnable = ["pendzl_contracts/psp22_burnable"]

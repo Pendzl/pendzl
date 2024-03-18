@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 use ink::{prelude::vec, prelude::vec::Vec, storage::Mapping};
 use pendzl::{
-    math::errors::MathError::Overflow,
+    math::errors::MathError,
     traits::{AccountId, Balance, DefaultEnv, StorageFieldGetter},
 };
 
@@ -45,7 +45,7 @@ impl GeneralVestStorage for GeneralVestData {
 
         self.next_id.insert(
             (to, asset),
-            &(id.checked_add(1).ok_or(VestingError::MathError(Overflow))?),
+            &(id.checked_add(1).ok_or(MathError::Overflow)?),
         );
         Ok(())
     }
@@ -58,19 +58,20 @@ impl GeneralVestStorage for GeneralVestData {
     ) -> Result<Balance, VestingError> {
         let next_id = self.next_id.get((to, asset)).unwrap_or(0);
         let mut tail_id = next_id.checked_sub(1).unwrap_or(0);
-        let mut current_id = 0;
-        let mut total_amount = 0;
+        let mut current_id = 0_u32;
+        let mut total_amount = 0_u128;
         while current_id <= tail_id {
             let (was_swapped_for_tail, amount_released) =
                 self.release_by_vest_id(to, asset, current_id, &data)?;
-            total_amount += amount_released;
+            total_amount = total_amount
+                .checked_add(amount_released)
+                .ok_or(MathError::Overflow)?;
             if was_swapped_for_tail {
                 tail_id = tail_id.saturating_sub(1);
                 continue;
             }
-            current_id = current_id
-                .checked_add(1)
-                .ok_or(VestingError::MathError(Overflow))?;
+            current_id =
+                current_id.checked_add(1).ok_or(MathError::Overflow)?;
         }
         Ok(total_amount)
     }
@@ -100,7 +101,12 @@ impl GeneralVestStorage for GeneralVestData {
                 self.vesting_datas.insert((to, asset, id), &tail);
             }
             self.next_id.insert((to, asset), &(tail_id));
-            return Ok((true, amount_released + leftover));
+            return Ok((
+                true,
+                amount_released
+                    .checked_add(leftover)
+                    .ok_or(MathError::Overflow)?,
+            ));
         }
         self.vesting_datas.insert((to, asset, id), &data);
         Ok((false, amount_released))
