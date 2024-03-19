@@ -83,7 +83,7 @@ impl GeneralVestStorage for GeneralVestData {
         id: u32,
         _data: &Vec<u8>,
     ) -> Result<(bool, Balance), VestingError> {
-        let mut data = match self.vesting_datas.get(&(to, asset, id)) {
+        let mut data = match self.vesting_datas.get((to, asset, id)) {
             Some(data) => data,
             None => return Ok((false, 0)),
         };
@@ -92,12 +92,11 @@ impl GeneralVestStorage for GeneralVestData {
             let leftover = data.amount - data.released;
             let next_id = self.next_id.get((to, asset)).unwrap(); // data is some => next_id must exist and be > 0
             let tail_id = next_id - 1;
-            let tail = self
-                .vesting_datas
-                .get(&(to, asset, tail_id))
-                .ok_or(VestingError::InvalidScheduleKey)?;
             self.vesting_datas.remove(&(to, asset, tail_id));
             if tail_id != id {
+                //insert tail to the place of the removed one
+                let tail =
+                    self.vesting_datas.get((to, asset, tail_id)).unwrap(); // next_id must exist and be > 0 => tail must exist
                 self.vesting_datas.insert((to, asset, id), &tail);
             }
             self.next_id.insert((to, asset), &(tail_id));
@@ -119,7 +118,7 @@ impl GeneralVestStorage for GeneralVestData {
         id: u32,
         _data: &Vec<u8>,
     ) -> Option<VestingData> {
-        self.vesting_datas.get(&(to, asset, id))
+        self.vesting_datas.get((to, asset, id))
     }
 }
 
@@ -286,7 +285,7 @@ where
         id: u32,
         _data: &Vec<u8>,
     ) -> Option<VestingData> {
-        self.data().vesting_datas.get(&(of, asset, id))
+        self.data().vesting_datas.get((of, asset, id))
     }
 
     fn _next_id_vest_of_default_impl(

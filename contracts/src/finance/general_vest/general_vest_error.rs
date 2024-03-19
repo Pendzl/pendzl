@@ -6,12 +6,14 @@ use pendzl::math::errors::MathError;
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub enum VestingError {
-    PSP22Error(PSP22Error),
+    /// Custom error type for unpredicted cases for custom implementation
     Custom(String),
-    InvalidScheduleKey,
+    /// Returned if transfer of PSP22 token fails during creating vest or releasing tokens.
+    PSP22Error(PSP22Error),
+    /// Returned if transfer of native token fails during creating vest or releasing tokens.
     NativeTransferFailed,
+    /// Returned if the amount paid is invalid. (applicable only to native tokens)
     InvalidAmountPaid,
-    CouldNotResolveTimeConstraint,
 }
 
 impl From<PSP22Error> for VestingError {

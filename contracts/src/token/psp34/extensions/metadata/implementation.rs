@@ -27,7 +27,7 @@ pub trait PSP34MetadataDefaultImpl:
         id: Id,
         key: String,
     ) -> Option<String> {
-        self.data().attributes.get(&(id, key))
+        self.data().attributes.get((id, key))
     }
 }
 

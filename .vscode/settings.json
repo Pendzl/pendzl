@@ -1,36 +1,10 @@
 {
   "typescript.tsdk": "pendzl-tests/node_modules/typescript/lib",
-  "rust-analyzer.linkedProjects": [
-    "./Cargo.toml",
-    "./contracts/Cargo.toml"
-    // "./examples/access_control_upgradeable/Cargo.toml",
-    // "./examples/psp34/Cargo.toml",
-    // "./examples/pausable/Cargo.toml",
-    // "./examples/ownable/Cargo.toml",
-    // "./examples/test_helpers/Cargo.toml",
-    // "./examples/access_control/Cargo.toml",
-    // "./examples/psp34_extensions/metadata/Cargo.toml",
-    // "./examples/psp34_extensions/burnable/Cargo.toml",
-    // "./examples/psp34_extensions/mintable/Cargo.toml",
-    // "./examples/psp22_extensions/metadata/Cargo.toml",
-    // "./examples/psp22_extensions/burnable/Cargo.toml",
-    // "./examples/psp22_extensions/mintable/Cargo.toml",
-    // "./examples/psp22_extensions/vault/Cargo.toml",
-    // "./examples/vester/Cargo.toml",
-    // "./examples/psp22_bare_minimum/Cargo.toml",
-    // "./examples/vester_custom/ts_provider/Cargo.toml",
-    // "./examples/vester_custom/vester_custom/Cargo.toml",
-    // "./examples/psp22/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_psp34_metadata/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_access_control/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_pausable/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_vault/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_ownable/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_psp22/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_flipper_v0/Cargo.toml",
-    // "./tests/e2e-tests/contracts/t_flipper_v1/Cargo.toml"
-    // "./tests/e2e-tests/contracts/t_vester/Cargo.toml"
-  ],
+  "rust-analyzer.linkedProjects": ["./Cargo.toml", "./contracts/Cargo.toml"],
   "rust-analyzer.showUnlinkedFileNotification": true,
-  "rust-analyzer.cargo.features": ["ownable_impl", "set_code_hash_impl"]
+  "rust-analyzer.cargo.features": [
+    "ownable_impl",
+    "set_code_hash_impl",
+    "general_vest_impl"
+  ]
 }
