@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_contracts"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -24,11 +24,9 @@ scale-info = { version = "2.10", default-features = false, features = [
 ], optional = true }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
 
-pendzl = { version = "0.2.2", package = "pendzl_lang", path = "../lang", default-features = false, features = [
+pendzl = { version = "0.2.3", package = "pendzl_lang", path = "../lang", default-features = false, features = [
 
 ] }
-
-ethnum = { version = "1.5", default-features = false }
 
 [lib]
 name = "pendzl_contracts"

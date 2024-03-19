@@ -1,6 +1,6 @@
 [package]
 name = "my_psp34_burnable"
-version = "0.2.2"
+version = "0.2.3"
 previous-authors = ["Brushfam <m.konstantinovna@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
