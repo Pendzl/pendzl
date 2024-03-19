@@ -73,7 +73,7 @@ impl PSP22Storage for PSP22Data {
     }
 
     fn allowance(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-        self.allowances.get((*owner, *spender)).unwrap_or_default()
+        self.allowances.get(&(*owner, *spender)).unwrap_or_default()
     }
     fn set_allowance(
         &mut self,

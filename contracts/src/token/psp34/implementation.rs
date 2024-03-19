@@ -36,11 +36,11 @@ impl PSP34Storage for PSP34Data {
         operator: &AccountId,
         id: &Option<Id>,
     ) -> bool {
-        self.allowances.get((*owner, *operator, None)).is_some()
+        self.allowances.get(&(*owner, *operator, None)).is_some()
             || (id.is_some()
                 && self
                     .allowances
-                    .get((*owner, *operator, id.as_ref().map(|v| v.clone())))
+                    .get(&(*owner, *operator, id.as_ref().map(|v| v.clone())))
                     .is_some())
     }
 

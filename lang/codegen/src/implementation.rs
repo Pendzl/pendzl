@@ -198,8 +198,8 @@ pub fn extract_storage_struct_name(items: &[syn::Item]) -> String {
                 let ink_attr_maybe = structure
                     .attrs
                     .iter()
-                    .find(|&attr| is_attr(&[attr.clone()], "ink"))
-                    .cloned();
+                    .cloned()
+                    .find(|attr| is_attr(&[attr.clone()], "ink"));
 
                 if let Some(ink_attr) = ink_attr_maybe {
                     if let Ok(path) = ink_attr.parse_args::<Path>() {
