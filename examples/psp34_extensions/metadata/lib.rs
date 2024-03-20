@@ -36,7 +36,7 @@ pub mod my_psp34_metadata {
         use super::*;
         #[rustfmt::skip]
         use ink_e2e::ContractsBackend;
-        use pendzl::contracts::token::psp34::Id;
+        use pendzl::contracts::psp34::Id;
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -59,7 +59,7 @@ pub mod my_psp34_metadata {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result_name = client
                 .call(

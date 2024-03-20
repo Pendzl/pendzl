@@ -103,9 +103,8 @@ export function shouldBehaveLikePSP34(
           .withSigner(ctx.owner)
           .tx.approve(ctx.operator.address, null, true);
       });
-      shouldTransferTokenByUser(() => ({
+      shouldPSP34TransferTokenByUser(() => ({
         token: ctx.token,
-        fnName: "transfer",
         owner: ctx.owner,
         approved: ctx.approved,
         operator: ctx.operator,
@@ -207,7 +206,7 @@ export function shouldBehaveLikePSP34(
       });
 
       describe("when the sender does not own the given token ID", function () {
-        it("reverts", async function () {
+        it("reverts with appropriate error", async function () {
           await expect(
             ctx.token
               .withSigner(ctx.other)
@@ -222,7 +221,7 @@ export function shouldBehaveLikePSP34(
             .withSigner(ctx.owner)
             .query.approve(ctx.approved.address, tokenId, true);
         });
-        it("reverts", async function () {
+        it("reverts with appropriate error", async function () {
           await expect(
             ctx.token
               .withSigner(ctx.approved)
@@ -238,7 +237,7 @@ export function shouldBehaveLikePSP34(
             .tx.approve(ctx.operator.address, null, true);
         });
 
-        it("reverts", async function () {
+        it("reverts with appropriate error", async function () {
           await expect(
             ctx.token
               .withSigner(ctx.operator)
@@ -251,7 +250,6 @@ export function shouldBehaveLikePSP34(
 }
 
 export type shouldTransferTokenByUserParams = {
-  fnName: string;
   token: any;
   owner: KeyringPair;
   approved: KeyringPair;
@@ -262,7 +260,7 @@ export type shouldTransferTokenByUserParams = {
   nonExistentTokenId: Id;
 };
 
-export function shouldTransferTokenByUser(
+export function shouldPSP34TransferTokenByUser(
   getCtx: () => shouldTransferTokenByUserParams
 ) {
   describe("when called by the owner", function () {
@@ -272,9 +270,9 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       tx = ctx.token
         .withSigner(ctx.owner)
-        .tx[ctx.fnName](ctx.to.address, ctx.tokenId, []);
+        .tx.transfer(ctx.to.address, ctx.tokenId, []);
     });
-    transferWasSuccessful(() => ({
+    testPSP34TransferCorrectness(() => ({
       tx: tx,
       token: ctx.token,
       from: ctx.owner.address,
@@ -290,9 +288,9 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       tx = ctx.token
         .withSigner(ctx.approved)
-        .tx[ctx.fnName](ctx.to.address, ctx.tokenId, []);
+        .tx.transfer(ctx.to.address, ctx.tokenId, []);
     });
-    transferWasSuccessful(() => ({
+    testPSP34TransferCorrectness(() => ({
       tx: tx,
       from: ctx.owner.address,
       to: ctx.to.address,
@@ -308,9 +306,9 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       tx = ctx.token
         .withSigner(ctx.operator)
-        .tx[ctx.fnName](ctx.to.address, ctx.tokenId, []);
+        .tx.transfer(ctx.to.address, ctx.tokenId, []);
     });
-    transferWasSuccessful(() => ({
+    testPSP34TransferCorrectness(() => ({
       tx: tx,
       from: ctx.owner.address,
       to: ctx.to.address,
@@ -326,7 +324,7 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       tx = ctx.token
         .withSigner(ctx.owner)
-        .tx[ctx.fnName](ctx.owner.address, ctx.tokenId, []);
+        .tx.transfer(ctx.owner.address, ctx.tokenId, []);
     });
 
     it("keeps ownership of the token", async function () {
@@ -360,9 +358,9 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       query = ctx.token
         .withSigner(ctx.to)
-        .query[ctx.fnName](ctx.to.address, ctx.tokenId, []);
+        .query.transfer(ctx.to.address, ctx.tokenId, []);
     });
-    it("reverts", async function () {
+    it("reverts with appropriate error", async function () {
       await expect(
         ctx.token
           .withSigner(ctx.other)
@@ -378,15 +376,15 @@ export function shouldTransferTokenByUser(
       ctx = getCtx();
       query = ctx.token
         .withSigner(ctx.to)
-        .query[ctx.fnName](ctx.to.address, nonExistentTokenId, []);
+        .query.transfer(ctx.to.address, nonExistentTokenId, []);
     });
-    it("reverts", async function () {
+    it("reverts with appropriate error", async function () {
       await expect(query).to.be.revertedWithError({ tokenNotExists: null });
     });
   });
 }
 
-export type transferWasSuccesfulParams = {
+export type TransferWasSuccesfulParams = {
   tx: Promise<SignAndSendSuccessResponse>;
   token: any;
   from: string;
@@ -394,7 +392,9 @@ export type transferWasSuccesfulParams = {
   tokenId: Id;
 };
 
-export function transferWasSuccessful(ctx: () => transferWasSuccesfulParams) {
+export function testPSP34TransferCorrectness(
+  ctx: () => TransferWasSuccesfulParams
+) {
   it("transfers the ownership of the given token ID to the given address", async function () {
     await ctx().tx;
     await expect(ctx().token.query.ownerOf(ctx().tokenId)).to.haveOkResult(

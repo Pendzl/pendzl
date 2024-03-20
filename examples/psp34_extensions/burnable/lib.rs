@@ -59,7 +59,7 @@ pub mod my_psp34_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(balance_of!(client, contract, Alice), 3);
 
@@ -93,7 +93,7 @@ pub mod my_psp34_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(balance_of!(client, contract, Alice), 3);
 

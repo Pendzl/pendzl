@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ -n "$1" ]; then
+  echo "Building examples with tests"
+  BUILD_TESTS=true
+else
+  echo "Building examples without tests"
+  BUILD_TESTS=false
+fi
+
 IGNORED_DIRS=(
   "./examples/test_helpers"
   "./examples/test_helpers/"
@@ -27,8 +35,10 @@ process_directory() {
     echo "Building contract in $dir"
     cargo contract build  --release || exit
 
-    # echo "Running e2e-tests in $dir"
-    # cargo test --features e2e-tests --release || exit
+    if [ "$BUILD_TESTS" = true ]; then
+      echo "Running e2e-tests in $dir"
+      cargo test --features e2e-tests --release || exit
+    fi
 
     cd - || exit
   else

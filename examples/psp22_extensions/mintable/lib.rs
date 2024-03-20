@@ -51,7 +51,7 @@ pub mod my_psp22_mintable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert!(matches!(balance_of!(client, contract, Alice), 1000));
 
@@ -72,7 +72,7 @@ pub mod my_psp22_mintable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert!(
                 matches!(balance_of!(client, contract, Bob), 0),
@@ -110,7 +110,7 @@ pub mod my_psp22_mintable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let total_supply = client
                 .call(&ink_e2e::alice(), &contract.total_supply())

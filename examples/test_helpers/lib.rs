@@ -33,7 +33,7 @@ macro_rules! owner_of {
         $client
             .call(
                 &ink_e2e::alice(),
-                &$contract.owner_of(pendzl::contracts::token::psp34::Id::U8($id)),
+                &$contract.owner_of(pendzl::contracts::psp34::Id::U8($id)),
             )
             .dry_run()
             .await
@@ -45,8 +45,10 @@ macro_rules! owner_of {
 #[macro_export]
 macro_rules! balance_of_37 {
     ($client:ident, $contract:ident, $account:ident, $token:expr) => {{
-        let _msg = build_message::<ContractRef>($contract.clone())
-            .call(|contract| contract.balance_of(ink_e2e::account_id($account), $token));
+        let _msg =
+            build_message::<ContractRef>($contract.clone()).call(|contract| {
+                contract.balance_of(ink_e2e::account_id($account), $token)
+            });
         $client
             .call_dry_run(&ink_e2e::alice(), &_msg)
             .await
@@ -75,7 +77,8 @@ macro_rules! grant_role {
         $client
             .call(
                 &ink_e2e::alice(),
-                &mut $contract.grant_role($role, Some(ink_e2e::account_id($account))),
+                &mut $contract
+                    .grant_role($role, Some(ink_e2e::account_id($account))),
             )
             .submit()
             .await
@@ -90,7 +93,8 @@ macro_rules! revoke_role {
         $client
             .call(
                 &ink_e2e::alice(),
-                &$contract.revoke_role($role, Some(ink_e2e::account_id($account))),
+                &$contract
+                    .revoke_role($role, Some(ink_e2e::account_id($account))),
             )
             .submit()
             .await
@@ -292,7 +296,9 @@ macro_rules! assert_eq_msg {
     };
 }
 
-pub fn keypair_to_account<AccountId: From<[u8; 32]>>(keypair: &Keypair) -> AccountId {
+pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    keypair: &Keypair,
+) -> AccountId {
     AccountId::from(keypair.public_key().0)
 }
 

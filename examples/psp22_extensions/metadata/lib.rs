@@ -68,7 +68,7 @@ pub mod my_psp22_metadata {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let token_name = client
                 .call(&ink_e2e::alice(), &contract.token_name())

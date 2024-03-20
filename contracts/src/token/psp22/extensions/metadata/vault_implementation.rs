@@ -1,5 +1,3 @@
-pub use super::*;
-
 use ink::prelude::string::String;
 
 use pendzl::traits::StorageFieldGetter;

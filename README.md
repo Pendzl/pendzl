@@ -59,19 +59,19 @@ pub mod my_psp22 {
 The #[pendzl::implementation(PSP22)] macro implements the PSP22 by including the following code after the macro is expanded:
 
 ```rust
-impl  pendzl::contracts::token::psp22::PSP22Internal for Contract {
+impl  pendzl::contracts::psp22::PSP22Internal for Contract {
             fn _total_supply(&self) -> Balance {
-                pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_total_supply_default_impl(self)
+                pendzl::contracts::psp22::implementation::PSP22InternalDefaultImpl::_total_supply_default_impl(self)
             }
             .
             .
             .
 }
 
-impl pendzl::contracts::token::psp22::PSP22 for Contract {
+impl pendzl::contracts::psp22::PSP22 for Contract {
         #[ink(message)]
         fn total_supply(&self) -> Balance {
-            pendzl::contracts::token::psp22::implementation::PSP22DefaultImpl::total_supply_default_impl(self)
+            pendzl::contracts::psp22::implementation::PSP22DefaultImpl::total_supply_default_impl(self)
         }
         .
         .
@@ -88,7 +88,7 @@ One can override the default_impl of functions from PSP22 and/or PSP22Internal a
     fn _update(
         &mut self,vault::PSP22VaultInternalDefaultImpl,
         /// one can use default_impl as in this example or provide completely new implementation.
-        pendzl::contracts::token::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
+        pendzl::contracts::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
     }
 
     #[overrider(PSP22)]
@@ -101,7 +101,7 @@ One can override the default_impl of functions from PSP22 and/or PSP22Internal a
             return Err(PSP22Error::Custom(String::from("Hated account can not have allowance to spend tokens")));
         }
         /// one can use default_impl as in this example or provide completly new implementation.
-        pendzl::contracts::token::psp22::implementation::PSP22DefaultImpl::approve(self, spender, value)
+        pendzl::contracts::psp22::implementation::PSP22DefaultImpl::approve(self, spender, value)
     }
 ```
 
@@ -134,6 +134,7 @@ $ bash build_examples.sh
 If you want to run tests enter the tests/ foldr and run
 
 ```
+$ pnpm i
 $ pnpm build:debug
 $ pnpm test
 ```

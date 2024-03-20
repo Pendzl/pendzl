@@ -2,9 +2,5 @@
   "typescript.tsdk": "pendzl-tests/node_modules/typescript/lib",
   "rust-analyzer.linkedProjects": ["./Cargo.toml", "./contracts/Cargo.toml"],
   "rust-analyzer.showUnlinkedFileNotification": true,
-  "rust-analyzer.cargo.features": [
-    "ownable_impl",
-    "set_code_hash_impl",
-    "general_vest_impl"
-  ]
+  "rust-analyzer.cargo.features": "all"
 }
