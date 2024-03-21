@@ -171,7 +171,7 @@ pub mod tests {
             .submit()
             .await
             .expect("instantiate psp22 failed")
-            .call::<Contract>();
+            .call_builder::<Contract>();
 
         // create_vest args
         let create_vest_args = CreateVestingScheduleArgs {
@@ -355,7 +355,7 @@ pub mod tests {
             .submit()
             .await
             .expect("instantiate psp22 failed")
-            .call::<Contract>();
+            .call_builder::<Contract>();
         let vest_to = ink_e2e::charlie();
 
         // create_vest args
@@ -574,7 +574,7 @@ pub mod tests {
             .submit()
             .await
             .expect("instantiate psp22 failed")
-            .call::<Contract>();
+            .call_builder::<Contract>();
         let vest_to = ink_e2e::charlie();
 
         // create_vest args

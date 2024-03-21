@@ -47,7 +47,7 @@ pub mod my_psp34_mintable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(balance_of!(client, contract, Alice), 0);
             assert_eq!(balance_of!(client, contract, Bob), 0);
@@ -99,7 +99,7 @@ pub mod my_psp34_mintable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(balance_of!(client, contract, Alice), 0);
             assert_eq!(balance_of!(client, contract, Bob), 0);

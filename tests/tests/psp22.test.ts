@@ -1,6 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import BN from 'bn.js';
-import { shouldBehaveLikeERC20, shouldBehaveLikeERC20Approve, shouldBehaveLikeERC20Transfer } from 'wookashwackomytest-pendzl-tests';
+import { shouldBehaveLikePSP22, shouldBehaveLikePSP22Approve, shouldBehaveLikePSP22Transfer } from 'wookashwackomytest-pendzl-tests';
 import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
 import TPsp22Deployer from 'typechain/deployers/t_psp22';
 import TPsp22Contract from 'typechain/contracts/t_psp22';
@@ -43,7 +43,7 @@ describe('PSP 22', () => {
     ctx.other = others[1];
   });
 
-  shouldBehaveLikeERC20(() => ctx);
+  shouldBehaveLikePSP22(() => ctx);
 
   describe('metadata', () => {
     it('has a name', async function () {
@@ -165,7 +165,7 @@ describe('PSP 22', () => {
       ctx.transfer = (from: KeyringPair, to: KeyringPair, value: BN) => ctx.token.tx.tTransfer(from.address, to.address, value);
     });
 
-    shouldBehaveLikeERC20Transfer(() => ctx);
+    shouldBehaveLikePSP22Transfer(() => ctx);
   });
 
   describe('_approve', function () {
@@ -173,6 +173,6 @@ describe('PSP 22', () => {
       ctx.approve = (holder: KeyringPair, spender: KeyringPair, value: BN) => ctx.token.tx.tApprove(holder.address, spender.address, value);
     });
 
-    shouldBehaveLikeERC20Approve(() => ctx);
+    shouldBehaveLikePSP22Approve(() => ctx);
   });
 });

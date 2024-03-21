@@ -79,7 +79,7 @@ pub mod my_psp22 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let balance_of_deployer = client
                 .call(
@@ -105,7 +105,7 @@ pub mod my_psp22 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = {
                 client
@@ -141,7 +141,7 @@ pub mod my_psp22 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(
@@ -167,7 +167,7 @@ pub mod my_psp22 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(

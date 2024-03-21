@@ -53,11 +53,11 @@ pub mod ownable {
     pub mod tests {
         #[rustfmt::skip]
         use super::*;
-        #[rustfmt::skip]
-        use ink_e2e::ContractsBackend;
-        use ink_e2e::account_id;
-        use ink_e2e::AccountKeyring::{Alice, Bob};
-        use ink_e2e::{alice, bob};
+        use ink_e2e::{
+            account_id, alice,
+            AccountKeyring::{Alice, Bob},
+            ContractsBackend,
+        };
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -71,7 +71,7 @@ pub mod ownable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let owner = client
                 .call(&alice(), &contract.owner())
@@ -94,7 +94,7 @@ pub mod ownable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let owner = client
                 .call(&alice(), &contract.owner())

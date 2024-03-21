@@ -1,0 +1,2895 @@
+Building examples with tests
+Building contract in ./examples/access_control/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_mUjr5b/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/access_control/target/ink
+
+  - my_access_control.contract (code + metadata)
+  - my_access_control.wasm (the contract's code)
+  - my_access_control.json (the contract's metadata)
+Running e2e-tests in ./examples/access_control/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.24s
+     Running unittests lib.rs (target/release/deps/my_access_control-4a3b03cf4db451a5)
+
+running 10 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_7Ml4Ak/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_AHvJJq/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_AHvJJq/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.28s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_access_control::tests::should_grant_initial_roles_to_default_signer ... ok
+test my_access_control::tests::should_not_grant_initial_roles_for_random_role ... ok
+test my_access_control::tests::should_reject_when_renounce_not_self_role ... ok
+test my_access_control::tests::should_grant_role ... ok
+test my_access_control::tests::should_renounce_role ... ok
+test my_access_control::tests::should_reject_when_grant_or_revoke_not_by_admin_role ... ok
+test my_access_control::tests::should_revoke_role ... ok
+test my_access_control::tests::should_not_change_old_roles_after_grant_role ... ok
+test my_access_control::tests::only_minter_role_is_allowed_to_mint ... ok
+test my_access_control::tests::should_reject_burn_if_no_minter_role ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+
+   Doc-tests my_access_control
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/access_control_upgradeable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.22s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_8q01vV/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/access_control_upgradeable/target/ink
+
+  - access_control_upgradeable.contract (code + metadata)
+  - access_control_upgradeable.wasm (the contract's code)
+  - access_control_upgradeable.json (the contract's metadata)
+Running e2e-tests in ./examples/access_control_upgradeable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.58s
+     Running unittests lib.rs (target/release/deps/access_control_upgradeable-e242237f7dd507fe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests access_control_upgradeable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/ownable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.22s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_4hvrIF/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_jjLXlo/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_jjLXlo/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.54s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 41.5K, Optimized: 12.9K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/ownable/target/ink
+
+  - my_ownable.contract (code + metadata)
+  - my_ownable.wasm (the contract's code)
+  - my_ownable.json (the contract's metadata)
+Running e2e-tests in ./examples/ownable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.58s
+     Running unittests lib.rs (target/release/deps/my_ownable-86bcf142299836fb)
+
+running 2 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_rYMgOl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_EOii4K/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_EOii4K/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.25s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test ownable::tests::owner_is_by_default_contract_deployer ... ok
+test ownable::tests::only_owner_is_allowed_to_mint ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.38s
+
+   Doc-tests my_ownable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/pausable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.22s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_HUXXMi/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_N4rAwq/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_N4rAwq/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.49s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 26.2K, Optimized: 3.8K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/pausable/target/ink
+
+  - my_pausable.contract (code + metadata)
+  - my_pausable.wasm (the contract's code)
+  - my_pausable.json (the contract's metadata)
+Running e2e-tests in ./examples/pausable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.61s
+     Running unittests lib.rs (target/release/deps/my_pausable-fbc4a0f906fa2bed)
+
+running 2 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_B6XQcv/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_U05ycR/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_U05ycR/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.11s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_pausable::tests::success_flip_when_not_paused ... ok
+test my_pausable::tests::failed_flip_when_paused ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.94s
+
+   Doc-tests my_pausable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.21s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_r2KkeD/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_sjHhbm/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_sjHhbm/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.53s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 38.0K, Optimized: 11.5K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22/target/ink
+
+  - my_psp22.contract (code + metadata)
+  - my_psp22.wasm (the contract's code)
+  - my_psp22.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.58s
+     Running unittests lib.rs (target/release/deps/my_psp22-e7f856046b6f7424)
+
+running 4 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_PZZulE/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_sNZvny/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_sNZvny/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.22s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp22::tests::assigns_initial_balance ... ok
+test my_psp22::tests::cannot_transfer_above_the_amount ... ok
+test my_psp22::tests::transfer_adds_amount_to_destination_account ... ok
+test my_psp22::tests::cannot_transfer_to_hated_account ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.72s
+
+   Doc-tests my_psp22
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22_bare_minimum/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.22s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22_bare_minimum/target/ink
+
+  - my_psp22_bare_minimum.contract (code + metadata)
+  - my_psp22_bare_minimum.wasm (the contract's code)
+  - my_psp22_bare_minimum.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22_bare_minimum/
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.58s
+     Running unittests lib.rs (target/release/deps/my_psp22_bare_minimum-9118fea23f6ba702)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests my_psp22_bare_minimum
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22_extensions//burnable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.19s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_AOMcKZ/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.18s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_k90UDZ/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_k90UDZ/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.29s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 40.2K, Optimized: 12.7K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/burnable/target/ink
+
+  - my_psp22_burnable.contract (code + metadata)
+  - my_psp22_burnable.wasm (the contract's code)
+  - my_psp22_burnable.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22_extensions//burnable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.62s
+     Running unittests lib.rs (target/release/deps/my_psp22_burnable-a90a39d5f2254247)
+
+running 7 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_vsJNBI/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_VpH6Xr/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_VpH6Xr/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.20s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp22_burnable::tests::assigns_initial_balance ... ok
+test my_psp22_burnable::tests::can_burn ... ok
+test my_psp22_burnable::tests::decreases_total_supply_after_burning ... ok
+test my_psp22_burnable::tests::can_burn_from ... ok
+test my_psp22_burnable::tests::can_burn_without_allowance ... ok
+test my_psp22_burnable::tests::fails_if_one_of_the_accounts_balance_exceeds_amount_to_burn ... ok
+test my_psp22_burnable::tests::can_burn_from_many ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.00s
+
+   Doc-tests my_psp22_burnable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22_extensions//metadata/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.18s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_tI2Lk6/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_ulgQV0/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_ulgQV0/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.25s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 42.2K, Optimized: 13.2K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/metadata/target/ink
+
+  - my_psp22_metadata.contract (code + metadata)
+  - my_psp22_metadata.wasm (the contract's code)
+  - my_psp22_metadata.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22_extensions//metadata/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.40s
+     Running unittests lib.rs (target/release/deps/my_psp22_metadata-f319fc2b6642752c)
+
+running 1 test
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_bDS2iN/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_zhez6n/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_zhez6n/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.22s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp22_metadata::tests::metadata_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.40s
+
+   Doc-tests my_psp22_metadata
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22_extensions//mintable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_RBkV61/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_GTNbFZ/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_GTNbFZ/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.17s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 37.7K, Optimized: 11.1K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/target/ink
+
+  - my_psp22_mintable.contract (code + metadata)
+  - my_psp22_mintable.wasm (the contract's code)
+  - my_psp22_mintable.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22_extensions//mintable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.42s
+     Running unittests lib.rs (target/release/deps/my_psp22_mintable-8f22e088ddacb63d)
+
+running 3 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_lwv7FJ/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_FXpnNo/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_FXpnNo/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.19s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp22_mintable::tests::assigns_initial_balance ... ok
+test my_psp22_mintable::tests::increases_total_supply_after_minting ... ok
+test my_psp22_mintable::tests::minting_requested_amount ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.18s
+
+   Doc-tests my_psp22_mintable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp22_extensions//vault/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.10s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m proc-macro2 v1.0.79
+[1m[32m   Compiling[0m unicode-ident v1.0.12
+[1m[32m   Compiling[0m syn v1.0.109
+[1m[32m   Compiling[0m equivalent v1.0.1
+[1m[32m   Compiling[0m hashbrown v0.14.3
+[1m[32m   Compiling[0m winnow v0.5.32
+[1m[32m   Compiling[0m toml_datetime v0.6.5
+[1m[32m   Compiling[0m version_check v0.9.4
+[1m[32m   Compiling[0m serde v1.0.197
+[1m[32m   Compiling[0m typenum v1.17.0
+[1m[32m   Compiling[0m cfg-if v1.0.0
+[1m[32m   Compiling[0m subtle v2.5.0
+[1m[32m   Compiling[0m thiserror v1.0.58
+[1m[32m   Compiling[0m serde_json v1.0.114
+[1m[32m   Compiling[0m arrayvec v0.7.4
+[1m[32m   Compiling[0m xxhash-rust v0.8.8
+[1m[32m   Compiling[0m ryu v1.0.16
+[1m[32m   Compiling[0m itoa v1.0.10
+[1m[32m   Compiling[0m autocfg v1.1.0
+[1m[32m   Compiling[0m paste v1.0.14
+[1m[32m   Compiling[0m ucd-trie v0.1.6
+[1m[32m   Compiling[0m memchr v2.7.1
+[1m[32m   Compiling[0m ink_prelude v5.0.0
+[1m[32m   Compiling[0m unicode-xid v0.2.4
+[1m[32m   Compiling[0m camino v1.1.6
+[1m[32m   Compiling[0m libc v0.2.153
+[1m[32m   Compiling[0m ink_prelude v4.3.0
+[1m[32m   Compiling[0m once_cell v1.19.0
+[1m[32m   Compiling[0m heck v0.4.1
+[1m[32m   Compiling[0m unicode-segmentation v1.10.1
+[1m[32m   Compiling[0m generic-array v0.14.7
+[1m[32m   Compiling[0m unwrap v1.2.1
+[1m[32m   Compiling[0m num-traits v0.2.17
+[1m[32m   Compiling[0m heck v0.3.3
+[1m[32m   Compiling[0m indexmap v2.1.0
+[1m[32m   Compiling[0m quote v1.0.35
+[1m[32m   Compiling[0m pallet-contracts-uapi-next v6.0.3
+[1m[32m   Compiling[0m syn v2.0.52
+[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
+[1m[32m   Compiling[0m fs2 v0.4.3
+[1m[32m   Compiling[0m const_format v0.2.32
+[1m[32m   Compiling[0m block-buffer v0.10.4
+[1m[32m   Compiling[0m crypto-common v0.1.6
+[1m[32m   Compiling[0m digest v0.10.7
+[1m[32m   Compiling[0m toml_edit v0.20.7
+[1m[32m   Compiling[0m toml_edit v0.19.15
+[1m[32m   Compiling[0m blake2 v0.10.6
+[1m[32m   Compiling[0m proc-macro-crate v1.3.1
+[1m[32m   Compiling[0m proc-macro-crate v2.0.0
+[1m[32m   Compiling[0m synstructure v0.13.1
+[1m[32m   Compiling[0m ink_ir v4.3.0
+[1m[32m   Compiling[0m serde_derive v1.0.197
+[1m[32m   Compiling[0m thiserror-impl v1.0.58
+[1m[32m   Compiling[0m const_env_impl v0.1.2
+[1m[32m   Compiling[0m synstructure v0.12.6
+[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
+[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
+[1m[32m   Compiling[0m derive_more v0.99.17
+[1m[32m   Compiling[0m const_env v0.1.2
+[1m[32m   Compiling[0m scale-info-derive v2.10.0
+[1m[32m   Compiling[0m pest v2.7.6
+[1m[32m   Compiling[0m semver-parser v0.10.2
+[1m[32m   Compiling[0m parity-scale-codec v3.6.9
+[1m[32m   Compiling[0m ink_primitives v5.0.0
+[1m[32m   Compiling[0m ink_primitives v4.3.0
+[1m[32m   Compiling[0m scale-info v2.10.0
+[1m[32m   Compiling[0m ink_storage_traits v5.0.0
+[1m[32m   Compiling[0m ink_env v5.0.0
+[1m[32m   Compiling[0m ink_storage v5.0.0
+[1m[32m   Compiling[0m impl-serde v0.4.0
+[1m[32m   Compiling[0m cargo-platform v0.1.6
+[1m[32m   Compiling[0m semver v0.11.0
+[1m[32m   Compiling[0m ink_ir v5.0.0
+[1m[32m   Compiling[0m cargo_metadata v0.13.1
+[1m[32m   Compiling[0m ink_codegen v5.0.0
+[1m[32m   Compiling[0m pendzl_lang_codegen v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
+[1m[32m   Compiling[0m pendzl_lang_macro v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
+[1m[32m   Compiling[0m ink_macro v5.0.0
+[1m[32m   Compiling[0m ink v5.0.0
+[1m[32m   Compiling[0m pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+[1m[32m   Compiling[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m   Compiling[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m   Compiling[0m my_psp22_vault v0.2.3 (/tmp/cargo-contract_s6QVH6)
+[1m[32m    Finished[0m release [optimized] target(s) in 10.62s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m proc-macro2 v1.0.79
+[1m[32m   Compiling[0m unicode-ident v1.0.12
+[1m[32m   Compiling[0m syn v1.0.109
+[1m[32m   Compiling[0m serde v1.0.197
+[1m[32m   Compiling[0m equivalent v1.0.1
+[1m[32m   Compiling[0m hashbrown v0.14.3
+[1m[32m   Compiling[0m winnow v0.5.32
+[1m[32m   Compiling[0m toml_datetime v0.6.5
+[1m[32m   Compiling[0m typenum v1.17.0
+[1m[32m   Compiling[0m version_check v0.9.4
+[1m[32m   Compiling[0m once_cell v1.19.0
+[1m[32m   Compiling[0m libc v0.2.153
+[1m[32m   Compiling[0m cfg-if v1.0.0
+[1m[32m   Compiling[0m arrayvec v0.7.4
+[1m[32m   Compiling[0m subtle v2.5.0
+[1m[32m   Compiling[0m serde_json v1.0.114
+[1m[32m   Compiling[0m thiserror v1.0.58
+[1m[32m   Compiling[0m itoa v1.0.10
+[1m[32m   Compiling[0m xxhash-rust v0.8.8
+[1m[32m   Compiling[0m paste v1.0.14
+[1m[32m   Compiling[0m ryu v1.0.16
+[1m[32m   Compiling[0m memchr v2.7.1
+[1m[32m   Compiling[0m ucd-trie v0.1.6
+[1m[32m   Compiling[0m autocfg v1.1.0
+[1m[32m   Compiling[0m ink_prelude v5.0.0
+[1m[32m   Compiling[0m generic-array v0.14.7
+[1m[32m   Compiling[0m unicode-xid v0.2.4
+[1m[32m   Compiling[0m camino v1.1.6
+[1m[32m   Compiling[0m ink_prelude v4.3.0
+[1m[32m   Compiling[0m unicode-segmentation v1.10.1
+[1m[32m   Compiling[0m heck v0.4.1
+[1m[32m   Compiling[0m unwrap v1.2.1
+[1m[32m   Compiling[0m num-traits v0.2.17
+[1m[32m   Compiling[0m indexmap v2.1.0
+[1m[32m   Compiling[0m heck v0.3.3
+[1m[32m   Compiling[0m quote v1.0.35
+[1m[32m   Compiling[0m pallet-contracts-uapi-next v6.0.3
+[1m[32m   Compiling[0m syn v2.0.52
+[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
+[1m[32m   Compiling[0m cc v1.0.83
+[1m[32m   Compiling[0m fs2 v0.4.3
+[1m[32m   Compiling[0m const_format v0.2.32
+[1m[32m   Compiling[0m toml_edit v0.20.7
+[1m[32m   Compiling[0m toml_edit v0.19.15
+[1m[32m   Compiling[0m secp256k1-sys v0.9.2
+[1m[32m   Compiling[0m crypto-common v0.1.6
+[1m[32m   Compiling[0m block-buffer v0.10.4
+[1m[32m   Compiling[0m digest v0.10.7
+[1m[32m   Compiling[0m blake2 v0.10.6
+[1m[32m   Compiling[0m sha2 v0.10.8
+[1m[32m   Compiling[0m sha3 v0.10.8
+[1m[32m   Compiling[0m proc-macro-crate v2.0.0
+[1m[32m   Compiling[0m proc-macro-crate v1.3.1
+[1m[32m   Compiling[0m ink_ir v4.3.0
+[1m[32m   Compiling[0m synstructure v0.13.1
+[1m[32m   Compiling[0m darling_core v0.14.4
+[1m[32m   Compiling[0m serde_derive_internals v0.26.0
+[1m[32m   Compiling[0m const_env_impl v0.1.2
+[1m[32m   Compiling[0m synstructure v0.12.6
+[1m[32m   Compiling[0m serde_derive v1.0.197
+[1m[32m   Compiling[0m thiserror-impl v1.0.58
+[1m[32m   Compiling[0m zeroize_derive v1.4.2
+[1m[32m   Compiling[0m linkme-impl v0.3.25
+[1m[32m   Compiling[0m curve25519-dalek-derive v0.1.1
+[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
+[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
+[1m[32m   Compiling[0m derive_more v0.99.17
+[1m[32m   Compiling[0m scale-info-derive v2.10.0
+[1m[32m   Compiling[0m schemars_derive v0.8.16
+[1m[32m   Compiling[0m const_env v0.1.2
+[1m[32m   Compiling[0m zeroize v1.7.0
+[1m[32m   Compiling[0m linkme v0.3.25
+[1m[32m   Compiling[0m merlin v3.0.0
+[1m[32m   Compiling[0m curve25519-dalek v4.1.1
+[1m[32m   Compiling[0m pest v2.7.6
+[1m[32m   Compiling[0m darling_macro v0.14.4
+[1m[32m   Compiling[0m darling v0.14.4
+[1m[32m   Compiling[0m semver-parser v0.10.2
+[1m[32m   Compiling[0m scale-encode-derive v0.5.0
+[1m[32m   Compiling[0m scale-decode-derive v0.10.0
+[1m[32m   Compiling[0m secp256k1 v0.28.2
+[1m[32m   Compiling[0m parity-scale-codec v3.6.9
+[1m[32m   Compiling[0m impl-serde v0.4.0
+[1m[32m   Compiling[0m cargo-platform v0.1.6
+[1m[32m   Compiling[0m semver v0.11.0
+[1m[32m   Compiling[0m ink_ir v5.0.0
+[1m[32m   Compiling[0m serde_bytes v0.11.14
+[1m[32m   Compiling[0m schnorrkel v0.11.4
+[1m[32m   Compiling[0m scale-info v2.10.0
+[1m[32m   Compiling[0m ink_primitives v4.3.0
+[1m[32m   Compiling[0m cargo_metadata v0.13.1
+[1m[32m   Compiling[0m schemars v0.8.16
+[1m[32m   Compiling[0m scale-bits v0.4.0
+[1m[32m   Compiling[0m scale-encode v0.5.0
+[1m[32m   Compiling[0m pendzl_lang_codegen v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
+[1m[32m   Compiling[0m scale-decode v0.10.0
+[1m[32m   Compiling[0m pendzl_lang_macro v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
+[1m[32m   Compiling[0m ink_primitives v5.0.0
+[1m[32m   Compiling[0m ink_codegen v5.0.0
+[1m[32m   Compiling[0m ink_macro v5.0.0
+[1m[32m   Compiling[0m ink_metadata v5.0.0
+[1m[32m   Compiling[0m ink_engine v5.0.0
+[1m[32m   Compiling[0m ink_storage_traits v5.0.0
+[1m[32m   Compiling[0m ink_env v5.0.0
+[1m[32m   Compiling[0m ink_storage v5.0.0
+[1m[32m   Compiling[0m ink v5.0.0
+[1m[32m   Compiling[0m pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+[1m[32m   Compiling[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m   Compiling[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m   Compiling[0m my_psp22_vault v0.2.3 (/tmp/cargo-contract_mHXU2p)
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_mHXU2p/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 18.44s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 87.1K, Optimized: 37.4K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/vault/target/ink
+
+  - my_psp22_vault.contract (code + metadata)
+  - my_psp22_vault.wasm (the contract's code)
+  - my_psp22_vault.json (the contract's metadata)
+Running e2e-tests in ./examples/psp22_extensions//vault/
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.11s
+     Running unittests lib.rs (target/release/deps/my_psp22_vault-de12d4eaa3a75bce)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests my_psp22_vault
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp34/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.16s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_zJWfUc/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_LdlMCS/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_LdlMCS/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.48s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 42.1K, Optimized: 12.7K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp34/target/ink
+
+  - my_psp34.contract (code + metadata)
+  - my_psp34.wasm (the contract's code)
+  - my_psp34.json (the contract's metadata)
+Running e2e-tests in ./examples/psp34/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+warning: unused import: `ink_e2e::account_id`
+  --> lib.rs:40:13
+   |
+40 |         use ink_e2e::account_id;
+   |             ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Bob`
+  --> lib.rs:41:46
+   |
+41 |         use ink_e2e::AccountKeyring::{Alice, Bob};
+   |                                              ^^^
+
+warning: `my_psp34` (lib test) generated 2 warnings (run `cargo fix --lib -p my_psp34 --tests` to apply 2 suggestions)
+    Finished release [optimized] target(s) in 0.40s
+     Running unittests lib.rs (target/release/deps/my_psp34-e80f131774bfafdb)
+
+running 3 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_H2aK9u/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_cr3gbH/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_cr3gbH/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.21s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp34::tests::return_collection_id_of_account ... ok
+test my_psp34::tests::returns_total_supply ... ok
+test my_psp34::tests::can_mint_any_id ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.12s
+
+   Doc-tests my_psp34
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp34_extensions//burnable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.15s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_NmPOKq/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_H7hogE/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_H7hogE/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.25s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 41.8K, Optimized: 12.4K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/burnable/target/ink
+
+  - my_psp34_burnable.contract (code + metadata)
+  - my_psp34_burnable.wasm (the contract's code)
+  - my_psp34_burnable.json (the contract's metadata)
+Running e2e-tests in ./examples/psp34_extensions//burnable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.55s
+     Running unittests lib.rs (target/release/deps/my_psp34_burnable-981c0b0b7a9e1929)
+
+running 2 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.16s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_SR0JQp/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_yOpEXe/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_yOpEXe/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.43s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp34_burnable::tests::burn_works ... ok
+test my_psp34_burnable::tests::burn_from_works ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.59s
+
+   Doc-tests my_psp34_burnable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp34_extensions//metadata/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.15s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_kB9CB0/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.14s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_ZNcR6k/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_ZNcR6k/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.41s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 44.5K, Optimized: 14.0K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/metadata/target/ink
+
+  - my_psp34_metadata.contract (code + metadata)
+  - my_psp34_metadata.wasm (the contract's code)
+  - my_psp34_metadata.json (the contract's metadata)
+Running e2e-tests in ./examples/psp34_extensions//metadata/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+    Finished release [optimized] target(s) in 0.25s
+     Running unittests lib.rs (target/release/deps/my_psp34_metadata-212ab749153d2054)
+
+running 1 test
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_aS5dBi/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.13s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_L32je0/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_L32je0/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.42s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp34_metadata::tests::metadata_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.71s
+
+   Doc-tests my_psp34_metadata
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Building contract in ./examples/psp34_extensions//mintable/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.14s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_8lrwn7/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m    Finished[0m release [optimized] target(s) in 0.12s
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/mintable/target/ink
+
+  - my_psp34_mintable.contract (code + metadata)
+  - my_psp34_mintable.wasm (the contract's code)
+  - my_psp34_mintable.json (the contract's metadata)
+Running e2e-tests in ./examples/psp34_extensions//mintable/
+warning: unused manifest key: package.previous-authors
+warning: unused manifest key: package.previous-authors
+   Compiling sp-core v30.0.0
+   Compiling ring v0.17.7
+   Compiling ink_engine v5.0.0
+   Compiling wasm-opt-sys v0.116.0
+   Compiling bollard v0.16.0
+   Compiling ink_env v5.0.0
+   Compiling ink_storage v5.0.0
+   Compiling ink v5.0.0
+   Compiling pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+   Compiling pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+   Compiling pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+   Compiling my_psp34_mintable v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/psp34_extensions/mintable)
+   Compiling sp-trie v31.0.0
+   Compiling sp-state-machine v0.37.0
+   Compiling sp-keystore v0.36.0
+   Compiling sp-io v32.0.0
+   Compiling sp-application-crypto v32.0.0
+   Compiling sp-runtime v33.0.0
+   Compiling rustls v0.22.2
+   Compiling rustls-webpki v0.102.2
+   Compiling rustls-webpki v0.101.7
+   Compiling sct v0.7.1
+   Compiling rustls v0.21.10
+   Compiling sp-version v31.0.0
+   Compiling sp-inherents v28.0.0
+   Compiling sp-api v28.0.0
+   Compiling sp-genesis-builder v0.9.0
+   Compiling tokio-rustls v0.25.0
+   Compiling tokio-rustls v0.24.1
+   Compiling sp-staking v28.0.0
+   Compiling hyper-rustls v0.24.2
+   Compiling jsonrpsee-client-transport v0.21.0
+   Compiling jsonrpsee-http-client v0.21.0
+   Compiling frame-support v30.0.0
+   Compiling jsonrpsee v0.21.0
+   Compiling subxt-codegen v0.34.0
+   Compiling polkadot-core-primitives v9.0.0
+   Compiling jsonrpsee-client-transport v0.22.2
+   Compiling sp-keyring v33.0.0
+   Compiling polkadot-parachain-primitives v8.0.0
+   Compiling jsonrpsee-ws-client v0.22.2
+   Compiling jsonrpsee v0.22.2
+   Compiling subxt-macro v0.34.0
+   Compiling subxt v0.34.0
+   Compiling subxt-signer v0.34.0
+   Compiling frame-system v30.0.0
+   Compiling frame-benchmarking v30.0.0
+   Compiling pallet-transaction-payment v30.0.0
+   Compiling staging-xcm-executor v9.0.1
+   Compiling staging-xcm-builder v9.0.0
+   Compiling pallet-contracts v29.0.0
+   Compiling wasm-opt-cxx-sys v0.116.0
+   Compiling wasm-opt v0.116.0
+   Compiling contract-build v4.0.2
+   Compiling ink_e2e v5.0.0
+    Finished release [optimized] target(s) in 2m 07s
+     Running unittests lib.rs (target/release/deps/my_psp34_mintable-737827678f5cdfd7)
+
+running 2 tests
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 0.15s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_wHrHT5/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m core v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core)
+[1m[32m   Compiling[0m rustc-std-workspace-core v1.99.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/rustc-std-workspace-core)
+[1m[32m   Compiling[0m compiler_builtins v0.1.103
+[1m[32m   Compiling[0m alloc v0.0.0 (/home/lukas/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc)
+[1m[32m   Compiling[0m cfg-if v1.0.0
+[1m[32m   Compiling[0m byte-slice-cast v1.2.2
+[1m[32m   Compiling[0m arrayvec v0.7.4
+[1m[32m   Compiling[0m xxhash-rust v0.8.8
+[1m[32m   Compiling[0m bitflags v1.3.2
+[1m[32m   Compiling[0m static_assertions v1.1.0
+[1m[32m   Compiling[0m rlibc v1.0.0
+[1m[32m   Compiling[0m num-traits v0.2.17
+[1m[32m   Compiling[0m array-init v2.1.0
+[1m[32m   Compiling[0m ethnum v1.5.0
+[1m[32m   Compiling[0m const_format v0.2.32
+[1m[32m   Compiling[0m hex v0.4.3
+[1m[32m   Compiling[0m ink_prelude v5.0.0
+[1m[32m   Compiling[0m ink_allocator v5.0.0
+[1m[32m   Compiling[0m pallet-contracts-uapi-next v6.0.3
+[1m[32m   Compiling[0m parity-scale-codec v3.6.9
+[1m[32m   Compiling[0m ink_primitives v5.0.0
+[1m[32m   Compiling[0m scale-info v2.10.0
+[1m[32m   Compiling[0m ink_storage_traits v5.0.0
+[1m[32m   Compiling[0m ink_env v5.0.0
+[1m[32m   Compiling[0m ink_storage v5.0.0
+[1m[32m   Compiling[0m ink v5.0.0
+[1m[32m   Compiling[0m pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+[1m[32m   Compiling[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m   Compiling[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m   Compiling[0m my_psp34_mintable v0.2.3 (/tmp/cargo-contract_wHrHT5)
+[1m[32m    Finished[0m release [optimized] target(s) in 9.08s
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /tmp/cargo-contract_E3mbUB/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_E3mbUB/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 3.59s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+test my_psp34_mintable::tests::mint_existing_should_fail ... ok
+test my_psp34_mintable::tests::mint_works ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.73s
+
+   Doc-tests my_psp34_mintable
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+/home/lukas/repos/abax/simple_pendzl
+Ignoring ./examples/test_helpers/
+Building contract in ./examples/vester/
+ [==] Checking clippy linting rules
+[1m[33mwarning[0m[1m:[0m unused manifest key: package.previous-authors
+[1m[32m    Checking[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m    Checking[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m    Checking[0m my_psp22_mintable v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
+[1m[32m    Checking[0m vester v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/vester)
+[1m[32m    Finished[0m dev [unoptimized + debuginfo] target(s) in 1.07s
+ [==] Building cargo project
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m proc-macro2 v1.0.78
+[1m[32m   Compiling[0m unicode-ident v1.0.12
+[1m[32m   Compiling[0m syn v1.0.109
+[1m[32m   Compiling[0m hashbrown v0.14.3
+[1m[32m   Compiling[0m equivalent v1.0.1
+[1m[32m   Compiling[0m winnow v0.5.34
+[1m[32m   Compiling[0m toml_datetime v0.6.5
+[1m[32m   Compiling[0m version_check v0.9.4
+[1m[32m   Compiling[0m serde v1.0.197
+[1m[32m   Compiling[0m typenum v1.17.0
+[1m[32m   Compiling[0m cfg-if v1.0.0
+[1m[32m   Compiling[0m subtle v2.5.0
+[1m[32m   Compiling[0m arrayvec v0.7.4
+[1m[32m   Compiling[0m thiserror v1.0.58
+[1m[32m   Compiling[0m serde_json v1.0.114
+[1m[32m   Compiling[0m xxhash-rust v0.8.8
+[1m[32m   Compiling[0m itoa v1.0.10
+[1m[32m   Compiling[0m ryu v1.0.16
+[1m[32m   Compiling[0m memchr v2.7.1
+[1m[32m   Compiling[0m autocfg v1.1.0
+[1m[32m   Compiling[0m ucd-trie v0.1.6
+[1m[32m   Compiling[0m paste v1.0.14
+[1m[32m   Compiling[0m ink_prelude v5.0.0
+[1m[32m   Compiling[0m camino v1.1.6
+[1m[32m   Compiling[0m unicode-xid v0.2.4
+[1m[32m   Compiling[0m libc v0.2.152
+[1m[32m   Compiling[0m ink_prelude v4.3.0
+[1m[32m   Compiling[0m heck v0.4.1
+[1m[32m   Compiling[0m unicode-segmentation v1.10.1
+[1m[32m   Compiling[0m once_cell v1.19.0
+[1m[32m   Compiling[0m generic-array v0.14.7
+[1m[32m   Compiling[0m unwrap v1.2.1
+[1m[32m   Compiling[0m num-traits v0.2.17
+[1m[32m   Compiling[0m indexmap v2.1.0
+[1m[32m   Compiling[0m heck v0.3.3
+[1m[32m   Compiling[0m quote v1.0.35
+[1m[32m   Compiling[0m pallet-contracts-uapi-next v6.0.3
+[1m[32m   Compiling[0m syn v2.0.52
+[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
+[1m[32m   Compiling[0m fs2 v0.4.3
+[1m[32m   Compiling[0m const_format v0.2.32
+[1m[32m   Compiling[0m crypto-common v0.1.6
+[1m[32m   Compiling[0m block-buffer v0.10.4
+[1m[32m   Compiling[0m digest v0.10.7
+[1m[32m   Compiling[0m toml_edit v0.20.7
+[1m[32m   Compiling[0m toml_edit v0.19.15
+[1m[32m   Compiling[0m blake2 v0.10.6
+[1m[32m   Compiling[0m proc-macro-crate v1.3.1
+[1m[32m   Compiling[0m proc-macro-crate v2.0.0
+[1m[32m   Compiling[0m synstructure v0.13.1
+[1m[32m   Compiling[0m ink_ir v4.3.0
+[1m[32m   Compiling[0m const_env_impl v0.1.2
+[1m[32m   Compiling[0m synstructure v0.12.6
+[1m[32m   Compiling[0m serde_derive v1.0.197
+[1m[32m   Compiling[0m thiserror-impl v1.0.58
+[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
+[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
+[1m[32m   Compiling[0m derive_more v0.99.17
+[1m[32m   Compiling[0m const_env v0.1.2
+[1m[32m   Compiling[0m scale-info-derive v2.10.0
+[1m[32m   Compiling[0m pest v2.7.6
+[1m[32m   Compiling[0m semver-parser v0.10.2
+[1m[32m   Compiling[0m parity-scale-codec v3.6.9
+[1m[32m   Compiling[0m ink_primitives v5.0.0
+[1m[32m   Compiling[0m ink_primitives v4.3.0
+[1m[32m   Compiling[0m scale-info v2.10.0
+[1m[32m   Compiling[0m ink_storage_traits v5.0.0
+[1m[32m   Compiling[0m ink_env v5.0.0
+[1m[32m   Compiling[0m ink_storage v5.0.0
+[1m[32m   Compiling[0m impl-serde v0.4.0
+[1m[32m   Compiling[0m cargo-platform v0.1.6
+[1m[32m   Compiling[0m semver v0.11.0
+[1m[32m   Compiling[0m ink_ir v5.0.0
+[1m[32m   Compiling[0m cargo_metadata v0.13.1
+[1m[32m   Compiling[0m ink_codegen v5.0.0
+[1m[32m   Compiling[0m pendzl_lang_codegen v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
+[1m[32m   Compiling[0m pendzl_lang_macro v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
+[1m[32m   Compiling[0m ink_macro v5.0.0
+[1m[32m   Compiling[0m ink v5.0.0
+[1m[32m   Compiling[0m pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+[1m[32m   Compiling[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m   Compiling[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m   Compiling[0m my_psp22_mintable v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
+[1m[32m   Compiling[0m vester v0.2.3 (/tmp/cargo-contract_wnlLjL)
+[1m[32m    Finished[0m release [optimized] target(s) in 11.62s
+ [==] Post processing code
+ [==] Generating metadata
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable/Cargo.toml: unused manifest key: package.previous-authors
+[1m[33mwarning[0m[1m:[0m /home/lukas/repos/abax/simple_pendzl/Cargo.toml: unused manifest key: package.previous-authors
+[1m[32m   Compiling[0m proc-macro2 v1.0.78
+[1m[32m   Compiling[0m unicode-ident v1.0.12
+[1m[32m   Compiling[0m syn v1.0.109
+[1m[32m   Compiling[0m serde v1.0.197
+[1m[32m   Compiling[0m hashbrown v0.14.3
+[1m[32m   Compiling[0m equivalent v1.0.1
+[1m[32m   Compiling[0m winnow v0.5.34
+[1m[32m   Compiling[0m toml_datetime v0.6.5
+[1m[32m   Compiling[0m typenum v1.17.0
+[1m[32m   Compiling[0m version_check v0.9.4
+[1m[32m   Compiling[0m once_cell v1.19.0
+[1m[32m   Compiling[0m cfg-if v1.0.0
+[1m[32m   Compiling[0m libc v0.2.152
+[1m[32m   Compiling[0m arrayvec v0.7.4
+[1m[32m   Compiling[0m subtle v2.5.0
+[1m[32m   Compiling[0m thiserror v1.0.58
+[1m[32m   Compiling[0m serde_json v1.0.114
+[1m[32m   Compiling[0m xxhash-rust v0.8.8
+[1m[32m   Compiling[0m paste v1.0.14
+[1m[32m   Compiling[0m ryu v1.0.16
+[1m[32m   Compiling[0m itoa v1.0.10
+[1m[32m   Compiling[0m ucd-trie v0.1.6
+[1m[32m   Compiling[0m autocfg v1.1.0
+[1m[32m   Compiling[0m memchr v2.7.1
+[1m[32m   Compiling[0m ink_prelude v5.0.0
+[1m[32m   Compiling[0m camino v1.1.6
+[1m[32m   Compiling[0m unicode-xid v0.2.4
+[1m[32m   Compiling[0m generic-array v0.14.7
+[1m[32m   Compiling[0m ink_prelude v4.3.0
+[1m[32m   Compiling[0m unicode-segmentation v1.10.1
+[1m[32m   Compiling[0m heck v0.4.1
+[1m[32m   Compiling[0m unwrap v1.2.1
+[1m[32m   Compiling[0m num-traits v0.2.17
+[1m[32m   Compiling[0m indexmap v2.1.0
+[1m[32m   Compiling[0m heck v0.3.3
+[1m[32m   Compiling[0m quote v1.0.35
+[1m[32m   Compiling[0m pallet-contracts-uapi-next v6.0.3
+[1m[32m   Compiling[0m syn v2.0.52
+[1m[32m   Compiling[0m const_format_proc_macros v0.2.32
+[1m[32m   Compiling[0m cc v1.0.83
+[1m[32m   Compiling[0m fs2 v0.4.3
+[1m[32m   Compiling[0m const_format v0.2.32
+[1m[32m   Compiling[0m block-buffer v0.10.4
+[1m[32m   Compiling[0m crypto-common v0.1.6
+[1m[32m   Compiling[0m toml_edit v0.20.7
+[1m[32m   Compiling[0m toml_edit v0.19.15
+[1m[32m   Compiling[0m digest v0.10.7
+[1m[32m   Compiling[0m secp256k1-sys v0.9.2
+[1m[32m   Compiling[0m blake2 v0.10.6
+[1m[32m   Compiling[0m sha2 v0.10.8
+[1m[32m   Compiling[0m sha3 v0.10.8
+[1m[32m   Compiling[0m proc-macro-crate v1.3.1
+[1m[32m   Compiling[0m proc-macro-crate v2.0.0
+[1m[32m   Compiling[0m ink_ir v4.3.0
+[1m[32m   Compiling[0m synstructure v0.13.1
+[1m[32m   Compiling[0m serde_derive v1.0.197
+[1m[32m   Compiling[0m zeroize_derive v1.4.2
+[1m[32m   Compiling[0m thiserror-impl v1.0.58
+[1m[32m   Compiling[0m linkme-impl v0.3.25
+[1m[32m   Compiling[0m curve25519-dalek-derive v0.1.1
+[1m[32m   Compiling[0m darling_core v0.14.4
+[1m[32m   Compiling[0m serde_derive_internals v0.26.0
+[1m[32m   Compiling[0m const_env_impl v0.1.2
+[1m[32m   Compiling[0m synstructure v0.12.6
+[1m[32m   Compiling[0m zeroize v1.7.0
+[1m[32m   Compiling[0m merlin v3.0.0
+[1m[32m   Compiling[0m curve25519-dalek v4.1.1
+[1m[32m   Compiling[0m linkme v0.3.25
+[1m[32m   Compiling[0m impl-trait-for-tuples v0.2.2
+[1m[32m   Compiling[0m parity-scale-codec-derive v3.6.9
+[1m[32m   Compiling[0m derive_more v0.99.17
+[1m[32m   Compiling[0m scale-info-derive v2.10.0
+[1m[32m   Compiling[0m schemars_derive v0.8.16
+[1m[32m   Compiling[0m const_env v0.1.2
+[1m[32m   Compiling[0m pest v2.7.6
+[1m[32m   Compiling[0m darling_macro v0.14.4
+[1m[32m   Compiling[0m darling v0.14.4
+[1m[32m   Compiling[0m scale-decode-derive v0.10.0
+[1m[32m   Compiling[0m scale-encode-derive v0.5.0
+[1m[32m   Compiling[0m semver-parser v0.10.2
+[1m[32m   Compiling[0m secp256k1 v0.28.2
+[1m[32m   Compiling[0m parity-scale-codec v3.6.9
+[1m[32m   Compiling[0m impl-serde v0.4.0
+[1m[32m   Compiling[0m semver v0.11.0
+[1m[32m   Compiling[0m cargo-platform v0.1.6
+[1m[32m   Compiling[0m ink_ir v5.0.0
+[1m[32m   Compiling[0m serde_bytes v0.11.14
+[1m[32m   Compiling[0m schnorrkel v0.11.4
+[1m[32m   Compiling[0m scale-info v2.10.0
+[1m[32m   Compiling[0m ink_primitives v4.3.0
+[1m[32m   Compiling[0m cargo_metadata v0.13.1
+[1m[32m   Compiling[0m schemars v0.8.16
+[1m[32m   Compiling[0m scale-bits v0.4.0
+[1m[32m   Compiling[0m scale-encode v0.5.0
+[1m[32m   Compiling[0m pendzl_lang_codegen v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
+[1m[32m   Compiling[0m scale-decode v0.10.0
+[1m[32m   Compiling[0m pendzl_lang_macro v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
+[1m[32m   Compiling[0m ink_primitives v5.0.0
+[1m[32m   Compiling[0m ink_codegen v5.0.0
+[1m[32m   Compiling[0m ink_macro v5.0.0
+[1m[32m   Compiling[0m ink_metadata v5.0.0
+[1m[32m   Compiling[0m ink_engine v5.0.0
+[1m[32m   Compiling[0m ink_storage_traits v5.0.0
+[1m[32m   Compiling[0m ink_env v5.0.0
+[1m[32m   Compiling[0m ink_storage v5.0.0
+[1m[32m   Compiling[0m ink v5.0.0
+[1m[32m   Compiling[0m pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+[1m[32m   Compiling[0m pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+[1m[32m   Compiling[0m pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+[1m[32m   Compiling[0m my_psp22_mintable v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
+[1m[32m   Compiling[0m vester v0.2.3 (/tmp/cargo-contract_OyOJjx)
+[1m[32m   Compiling[0m metadata-gen v0.1.0 (/tmp/cargo-contract_OyOJjx/.ink/metadata_gen)
+[1m[32m    Finished[0m release [optimized] target(s) in 19.35s
+[1m[32m     Running[0m `target/ink/release/metadata-gen`
+ [==] Generating bundle
+
+Original wasm size: 60.4K, Optimized: 22.4K
+
+The contract was built in RELEASE mode.
+
+Your contract artifacts are ready. You can find them in:
+/home/lukas/repos/abax/simple_pendzl/examples/vester/target/ink
+
+  - vester.contract (code + metadata)
+  - vester.wasm (the contract's code)
+  - vester.json (the contract's metadata)
+Running e2e-tests in ./examples/vester/
+warning: unused manifest key: package.previous-authors
+   Compiling proc-macro2 v1.0.78
+   Compiling unicode-ident v1.0.12
+   Compiling version_check v0.9.4
+   Compiling libc v0.2.152
+   Compiling typenum v1.17.0
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.1.0
+   Compiling serde v1.0.197
+   Compiling syn v1.0.109
+   Compiling equivalent v1.0.1
+   Compiling hashbrown v0.14.3
+   Compiling once_cell v1.19.0
+   Compiling winnow v0.5.34
+   Compiling bytes v1.5.0
+   Compiling subtle v2.5.0
+   Compiling itoa v1.0.10
+   Compiling thiserror v1.0.58
+   Compiling radium v0.7.0
+   Compiling serde_json v1.0.114
+   Compiling ryu v1.0.16
+   Compiling convert_case v0.4.0
+   Compiling arrayvec v0.7.4
+   Compiling generic-array v0.14.7
+   Compiling ppv-lite86 v0.2.17
+   Compiling memchr v2.7.1
+   Compiling byteorder v1.5.0
+   Compiling indexmap v2.1.0
+   Compiling log v0.4.20
+   Compiling byte-slice-cast v1.2.2
+   Compiling anyhow v1.0.81
+   Compiling const-oid v0.9.6
+   Compiling quote v1.0.35
+   Compiling slab v0.4.9
+   Compiling cpufeatures v0.2.12
+   Compiling syn v2.0.52
+   Compiling jobserver v0.1.27
+   Compiling smallvec v1.13.1
+   Compiling dyn-clone v1.0.16
+   Compiling schemars v0.8.16
+   Compiling tap v1.0.1
+   Compiling pin-project-lite v0.2.13
+   Compiling cc v1.0.83
+   Compiling wyz v0.5.1
+   Compiling static_assertions v1.1.0
+   Compiling funty v2.0.0
+   Compiling num-traits v0.2.17
+   Compiling hex v0.4.3
+   Compiling tinyvec_macros v0.1.1
+   Compiling crunchy v0.2.2
+   Compiling tinyvec v1.6.0
+   Compiling keccak v0.1.5
+   Compiling tracing-core v0.1.32
+   Compiling paste v1.0.14
+   Compiling futures-core v0.3.30
+   Compiling getrandom v0.2.12
+   Compiling bitvec v1.0.1
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling rand_core v0.6.4
+   Compiling num_cpus v1.16.0
+   Compiling digest v0.10.7
+   Compiling arrayref v0.3.7
+   Compiling rand_chacha v0.3.1
+   Compiling futures-sink v0.3.30
+   Compiling rustc-hex v2.1.0
+   Compiling percent-encoding v2.3.1
+   Compiling rand v0.8.5
+   Compiling unicode-normalization v0.1.22
+   Compiling form_urlencoded v1.2.1
+   Compiling futures-io v0.3.30
+   Compiling fnv v1.0.7
+   Compiling unicode-bidi v0.3.15
+   Compiling futures-channel v0.3.30
+   Compiling uint v0.9.5
+   Compiling futures-task v0.3.30
+   Compiling pin-utils v0.1.0
+   Compiling blake2 v0.10.6
+   Compiling bitflags v1.3.2
+   Compiling semver v1.0.22
+   Compiling aho-corasick v1.1.2
+   Compiling ahash v0.7.7
+   Compiling regex-syntax v0.8.2
+   Compiling opaque-debug v0.3.0
+   Compiling idna v0.5.0
+   Compiling crc32fast v1.3.2
+   Compiling digest v0.9.0
+   Compiling platforms v3.3.0
+   Compiling fixed-hash v0.8.0
+   Compiling secp256k1-sys v0.9.2
+   Compiling indexmap v1.9.3
+   Compiling hashbrown v0.12.3
+   Compiling rustc_version v0.4.0
+   Compiling unicode-xid v0.2.4
+   Compiling lazy_static v1.4.0
+   Compiling ahash v0.8.7
+   Compiling rustix v0.38.31
+   Compiling bitflags v2.4.2
+   Compiling linux-raw-sys v0.4.13
+   Compiling zerocopy v0.7.32
+   Compiling curve25519-dalek v4.1.1
+   Compiling getrandom_or_panic v0.0.3
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.10.0
+   Compiling base64 v0.13.1
+   Compiling constant_time_eq v0.3.0
+   Compiling sp-std v14.0.0
+   Compiling hashbrown v0.13.2
+   Compiling blake2b_simd v1.0.2
+   Compiling ring v0.17.7
+   Compiling prettier-please v0.2.0
+   Compiling io-lifetimes v1.0.11
+   Compiling stable_deref_trait v1.2.0
+   Compiling fallible-iterator v0.2.0
+   Compiling target-lexicon v0.12.13
+   Compiling memoffset v0.8.0
+   Compiling fs-err v2.11.0
+   Compiling rustix v0.36.17
+   Compiling regex-automata v0.4.4
+   Compiling regex-syntax v0.6.29
+   Compiling wasmtime-runtime v8.0.1
+   Compiling generic-array v0.12.4
+   Compiling serde_derive_internals v0.26.0
+   Compiling linux-raw-sys v0.1.4
+   Compiling expander v2.1.0
+   Compiling cpp_demangle v0.3.5
+   Compiling rustc-demangle v0.1.23
+   Compiling rustversion v1.0.14
+   Compiling rand_core v0.5.1
+   Compiling either v1.9.0
+   Compiling termcolor v1.4.1
+   Compiling memfd v0.6.4
+   Compiling libsecp256k1-core v0.3.0
+   Compiling psm v0.1.21
+   Compiling regex-automata v0.1.10
+   Compiling wasmtime-jit-debug v8.0.1
+   Compiling lock_api v0.4.11
+   Compiling wasmtime-asm-macros v8.0.1
+   Compiling parking_lot_core v0.9.9
+   Compiling ref-cast v1.0.22
+   Compiling byte-tools v0.3.1
+   Compiling regex v1.10.3
+   Compiling crossbeam-utils v0.8.19
+   Compiling block-padding v0.1.5
+   Compiling digest v0.8.1
+   Compiling Inflector v0.11.4
+   Compiling serde_derive v1.0.197
+   Compiling zeroize_derive v1.4.2
+   Compiling thiserror-impl v1.0.58
+   Compiling tracing-attributes v0.1.27
+   Compiling futures-macro v0.3.30
+   Compiling curve25519-dalek-derive v0.1.1
+   Compiling impl-trait-for-tuples v0.2.2
+   Compiling derive_more v0.99.17
+   Compiling zeroize v1.7.0
+   Compiling schemars_derive v0.8.16
+   Compiling futures-util v0.3.30
+   Compiling merlin v3.0.0
+   Compiling block-buffer v0.9.0
+   Compiling tokio-macros v2.2.0
+   Compiling sha2 v0.10.8
+   Compiling tracing v0.1.40
+   Compiling sha3 v0.10.8
+   Compiling twox-hash v1.6.3
+   Compiling sha2 v0.9.9
+   Compiling sp-debug-derive v14.0.0
+   Compiling ref-cast-impl v1.0.22
+   Compiling darling_core v0.14.4
+   Compiling futures-executor v0.3.30
+   Compiling sharded-slab v0.1.7
+   Compiling futures v0.3.30
+   Compiling wasmtime-jit-icache-coherence v8.0.1
+   Compiling thread_local v1.1.7
+   Compiling httparse v1.8.0
+   Compiling scopeguard v1.2.0
+   Compiling wasmtime v8.0.1
+   Compiling iana-time-zone v0.1.59
+   Compiling bitcoin_hashes v0.11.0
+   Compiling chrono v0.4.31
+   Compiling crypto-mac v0.8.0
+   Compiling crypto-mac v0.11.0
+   Compiling secrecy v0.8.0
+   Compiling matchers v0.0.1
+   Compiling block-buffer v0.7.3
+   Compiling libsecp256k1-gen-genmult v0.3.0
+   Compiling libsecp256k1-gen-ecmult v0.3.0
+   Compiling tracing-log v0.1.4
+   Compiling hash-db v0.16.0
+   Compiling async-trait v0.1.77
+   Compiling environmental v1.1.4
+   Compiling ansi_term v0.12.1
+   Compiling fake-simd v0.1.2
+   Compiling opaque-debug v0.2.3
+   Compiling parking_lot v0.12.1
+   Compiling sha2 v0.8.2
+   Compiling libsecp256k1 v0.7.1
+   Compiling hmac v0.8.1
+   Compiling curve25519-dalek v2.1.3
+   Compiling merlin v2.0.1
+   Compiling arrayvec v0.5.2
+   Compiling hmac-drbg v0.3.0
+   Compiling schnorrkel v0.9.1
+   Compiling hmac v0.11.0
+   Compiling darling_macro v0.14.4
+   Compiling pbkdf2 v0.8.0
+   Compiling toml_datetime v0.6.5
+   Compiling toml_edit v0.20.7
+   Compiling toml_edit v0.19.15
+   Compiling toml_edit v0.21.0
+   Compiling curve25519-dalek v3.2.0
+   Compiling impl-serde v0.4.0
+   Compiling url v2.5.0
+   Compiling serde_bytes v0.11.14
+   Compiling cranelift-entity v0.95.1
+   Compiling schnorrkel v0.11.4
+   Compiling bincode v1.3.3
+   Compiling proc-macro-crate v2.0.0
+   Compiling proc-macro-crate v1.3.1
+   Compiling gimli v0.27.3
+   Compiling wasmparser v0.102.0
+   Compiling object v0.30.4
+   Compiling proc-macro-crate v3.1.0
+   Compiling bip39 v2.0.0
+   Compiling tracing-serde v0.1.3
+   Compiling ss58-registry v1.45.0
+   Compiling tracing-subscriber v0.2.25
+   Compiling parity-scale-codec-derive v3.6.9
+   Compiling darling v0.14.4
+   Compiling sp-runtime-interface-proc-macro v18.0.0
+   Compiling scale-info-derive v2.10.0
+   Compiling dyn-clonable-impl v0.9.0
+   Compiling derive-syn-parse v0.1.5
+   Compiling pin-project-internal v1.1.3
+   Compiling num-format v0.4.4
+   Compiling array-bytes v6.2.2
+   Compiling wasmtime-types v8.0.1
+   Compiling addr2line v0.19.0
+   Compiling parity-scale-codec v3.6.9
+   Compiling wasmtime-environ v8.0.1
+   Compiling dyn-clonable v0.9.0
+   Compiling ed25519-zebra v3.1.0
+   Compiling substrate-bip39 v0.4.5
+   Compiling scale-info v2.10.0
+   Compiling impl-codec v0.6.0
+   Compiling sp-storage v20.0.0
+   Compiling sp-tracing v16.0.0
+   Compiling sp-crypto-hashing v0.1.0
+   Compiling signature v2.2.0
+   Compiling sp-externalities v0.27.0
+   Compiling itertools v0.10.5
+   Compiling backtrace v0.3.69
+   Compiling hash256-std-hasher v0.15.2
+   Compiling wasmtime-jit v8.0.1
+   Compiling same-file v1.0.6
+   Compiling bs58 v0.5.0
+   Compiling primitive-types v0.12.2
+   Compiling bounded-collections v0.2.0
+   Compiling adler v1.0.2
+   Compiling gimli v0.28.1
+   Compiling miniz_oxide v0.7.1
+   Compiling walkdir v2.5.0
+   Compiling mio v0.8.10
+   Compiling object v0.32.2
+   Compiling heck v0.4.1
+   Compiling scale-encode-derive v0.5.0
+   Compiling sp-wasm-interface v20.0.0
+   Compiling scale-decode-derive v0.10.0
+   Compiling serde_spanned v0.6.5
+   Compiling trie-db v0.28.0
+   Compiling trie-root v0.18.0
+   Compiling memory-db v0.32.0
+   Compiling schnellru v0.2.1
+   Compiling sp-runtime-interface v26.0.0
+   Compiling winnow v0.6.5
+   Compiling addr2line v0.21.0
+   Compiling nohash-hasher v0.2.0
+   Compiling ed25519 v2.2.3
+   Compiling sp-io v32.0.0
+   Compiling integer-sqrt v0.1.5
+   Compiling socket2 v0.5.5
+   Compiling sp-arithmetic v25.0.0
+   Compiling ed25519-dalek v2.1.0
+   Compiling common-path v1.0.0
+   Compiling scale-bits v0.4.0
+   Compiling tokio v1.36.0
+   Compiling toml_edit v0.22.7
+   Compiling rustls v0.22.2
+   Compiling sp-panic-handler v13.0.0
+   Compiling spin v0.9.8
+   Compiling simple-mermaid v0.1.1
+   Compiling untrusted v0.9.0
+   Compiling tiny-keccak v2.0.2
+   Compiling sp-weights v29.0.0
+   Compiling scale-decode v0.10.0
+   Compiling scale-encode v0.5.0
+   Compiling toml v0.8.11
+   Compiling pin-project v1.1.3
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling camino v1.1.6
+   Compiling const-random-macro v0.1.16
+   Compiling frame-metadata v16.0.0
+   Compiling hmac v0.12.1
+   Compiling proc-macro-error v1.0.4
+   Compiling const-random v0.1.18
+   Compiling concurrent-queue v2.4.0
+   Compiling http v0.2.11
+   Compiling der v0.7.8
+   Compiling macro_magic_core_macros v0.5.0
+   Compiling ink_prelude v5.0.0
+   Compiling xxhash-rust v0.8.8
+   Compiling parking v2.2.0
+   Compiling docify_macros v0.2.7
+   Compiling rustls-pki-types v1.3.1
+   Compiling base64 v0.21.7
+   Compiling parity-wasm v0.45.0
+   Compiling event-listener v4.0.3
+   Compiling ink_primitives v5.0.0
+   Compiling macro_magic_core v0.5.0
+   Compiling tokio-util v0.7.10
+   Compiling beef v0.5.2
+   Compiling linkme-impl v0.3.25
+   Compiling ff v0.13.0
+   Compiling tower-service v0.3.2
+   Compiling scratch v1.0.7
+   Compiling base16ct v0.2.0
+   Compiling docify v0.2.7
+   Compiling try-lock v0.2.5
+   Compiling sec1 v0.7.3
+   Compiling want v0.3.1
+   Compiling h2 v0.3.24
+   Compiling linkme v0.3.25
+   Compiling group v0.13.0
+   Compiling macro_magic_macros v0.5.0
+   Compiling event-listener-strategy v0.4.0
+   Compiling tokio-stream v0.1.14
+   Compiling http-body v0.4.6
+   Compiling sp-crypto-hashing-proc-macro v0.1.0
+   Compiling sp-version-proc-macro v13.0.0
+   Compiling itertools v0.12.0
+   Compiling crypto-bigint v0.5.5
+   Compiling link-cplusplus v1.0.9
+   Compiling ucd-trie v0.1.6
+   Compiling openssl-probe v0.1.5
+   Compiling unicode-width v0.1.11
+   Compiling rustls v0.21.10
+   Compiling httpdate v1.0.3
+   Compiling codespan-reporting v0.11.1
+   Compiling pest v2.7.6
+   Compiling async-lock v3.3.0
+   Compiling ink_metadata v5.0.0
+   Compiling spki v0.7.3
+   Compiling sp-metadata-ir v0.6.0
+   Compiling rfc6979 v0.4.0
+   Compiling ink_ir v5.0.0
+   Compiling sp-api-proc-macro v16.0.0
+   Compiling elliptic-curve v0.13.8
+   Compiling frame-support-procedural-tools-derive v12.0.0
+   Compiling const_env_impl v0.1.2
+   Compiling pallet-contracts-uapi-next v6.0.3
+   Compiling include_dir_macros v0.7.3
+   Compiling num-integer v0.1.45
+   Compiling cxxbridge-flags v1.0.115
+   Compiling bytemuck v1.15.0
+   Compiling futures-timer v3.0.2
+   Compiling rustc-hash v1.1.0
+   Compiling frame-support-procedural-tools v11.0.0
+   Compiling safe_arch v0.7.1
+   Compiling include_dir v0.7.3
+   Compiling cxx v1.0.115
+   Compiling const_env v0.1.2
+   Compiling jsonrpsee-types v0.21.0
+   Compiling hyper v0.14.28
+   Compiling ecdsa v0.16.9
+   Compiling ink_storage_traits v5.0.0
+   Compiling semver-parser v0.10.2
+   Compiling cxx-build v1.0.115
+   Compiling macro_magic v0.5.0
+   Compiling rustls-pemfile v2.1.1
+   Compiling rustls-pemfile v1.0.4
+   Compiling cfg-expr v0.15.7
+   Compiling sha-1 v0.9.8
+   Compiling proc-macro-warning v1.0.2
+   Compiling num-rational v0.4.1
+   Compiling matrixmultiply v0.3.8
+   Compiling ink_allocator v5.0.0
+   Compiling rustls-native-certs v0.7.0
+   Compiling frame-support-procedural v25.0.0
+   Compiling soketto v0.7.1
+   Compiling semver v0.11.0
+   Compiling k256 v0.13.3
+   Compiling rustls-native-certs v0.6.3
+   Compiling ink_codegen v5.0.0
+   Compiling wide v0.7.15
+   Compiling aquamarine v0.5.0
+   Compiling http v1.1.0
+   Compiling cargo-platform v0.1.6
+   Compiling synstructure v0.13.1
+   Compiling num-complex v0.4.5
+   Compiling jsonrpsee-core v0.21.0
+   Compiling approx v0.5.1
+   Compiling ink_prelude v4.3.0
+   Compiling unicode-segmentation v1.10.1
+   Compiling array-init v2.1.0
+   Compiling tt-call v1.0.9
+   Compiling tower-layer v0.3.2
+   Compiling rawpointer v0.2.1
+   Compiling tower v0.4.13
+   Compiling heck v0.3.3
+   Compiling wasm-opt-sys v0.116.0
+   Compiling simba v0.8.1
+   Compiling ink_primitives v4.3.0
+   Compiling http-body v1.0.0
+   Compiling cargo_metadata v0.13.1
+   Compiling ink_ir v4.3.0
+   Compiling derivative v2.2.0
+   Compiling nalgebra-macros v0.2.1
+   Compiling ink_macro v5.0.0
+   Compiling synstructure v0.12.6
+   Compiling darling_core v0.20.8
+   Compiling fs2 v0.4.3
+   Compiling unwrap v1.2.1
+   Compiling pendzl_lang_codegen v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/codegen)
+   Compiling sp-core-hashing v15.0.0
+   Compiling cxxbridge-macro v1.0.115
+   Compiling const_format_proc_macros v0.2.32
+   Compiling utf8parse v0.2.1
+   Compiling libm v0.2.8
+   Compiling signal-hook v0.3.17
+   Compiling anstyle-parse v0.2.3
+   Compiling hyper v1.2.0
+   Compiling wasm-opt-cxx-sys v0.116.0
+   Compiling jsonrpsee-types v0.22.2
+   Compiling scale-typegen v0.1.1
+   Compiling const_format v0.2.32
+   Compiling pendzl_lang_macro v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang/macro)
+   Compiling subxt-metadata v0.34.0
+   Compiling strum_macros v0.24.3
+   Compiling xcm-procedural v8.0.0
+   Compiling secp256k1-sys v0.8.1
+   Compiling signal-hook-registry v1.4.1
+   Compiling ethnum v1.5.0
+   Compiling darling_macro v0.20.8
+   Compiling colorchoice v1.0.0
+   Compiling anstyle v1.0.4
+   Compiling anstyle-query v1.0.2
+   Compiling anstream v0.6.11
+   Compiling darling v0.20.8
+   Compiling hyper-util v0.1.3
+   Compiling jsonrpsee-core v0.22.2
+   Compiling zip v0.6.6
+   Compiling http-body-util v0.1.1
+   Compiling strum v0.24.1
+   Compiling frame-metadata v15.1.0
+   Compiling serde_with v3.5.0
+   Compiling nalgebra v0.32.4
+   Compiling staging-xcm v9.0.0
+   Compiling pbkdf2 v0.12.2
+   Compiling serde_repr v0.1.18
+   Compiling indexmap-nostd v0.4.0
+   Compiling strsim v0.11.0
+   Compiling base58 v0.2.0
+   Compiling downcast-rs v1.2.0
+   Compiling overload v0.1.1
+   Compiling yap v0.11.0
+   Compiling clap_lex v0.7.0
+   Compiling fastrand v2.0.1
+   Compiling subtle-ng v2.5.0
+   Compiling clap_builder v4.5.2
+   Compiling bollard-stubs v1.44.0-rc.2
+   Compiling curve25519-dalek-ng v4.1.1
+   Compiling tempfile v3.10.1
+   Compiling scale-value v0.13.0
+   Compiling nu-ansi-term v0.46.0
+   Compiling wasmi_core v0.13.0
+   Compiling wasmparser-nostd v0.100.1
+   Compiling matchers v0.1.0
+   Compiling hyperlocal-next v0.9.0
+   Compiling contract-build v4.0.2
+   Compiling signal-hook-mio v0.2.3
+   Compiling tracing-log v0.2.0
+   Compiling clap_derive v4.5.0
+   Compiling strum_macros v0.26.2
+   Compiling serde_urlencoded v0.7.1
+   Compiling os_pipe v1.1.5
+   Compiling shared_child v1.0.0
+   Compiling instant v0.1.12
+   Compiling home v0.5.9
+   Compiling pallet-contracts v29.0.0
+   Compiling wasmi_arena v0.4.1
+   Compiling sp-std v8.0.0
+   Compiling wasmi v0.31.2
+   Compiling which v6.0.0
+   Compiling sp-core-hashing v9.0.0
+   Compiling tracing-subscriber v0.3.18
+   Compiling clap v4.5.2
+   Compiling strum v0.26.2
+   Compiling duct v0.13.7
+   Compiling cargo_metadata v0.18.1
+   Compiling crossterm v0.27.0
+   Compiling schnorrkel v0.10.2
+   Compiling contract-metadata v4.0.2
+   Compiling pallet-contracts-uapi v7.0.0
+   Compiling pallet-contracts-proc-macro v20.0.0
+   Compiling linregress v0.5.3
+   Compiling colored v2.1.0
+   Compiling term_size v0.3.2
+   Compiling uzers v0.11.3
+   Compiling heck v0.5.0
+   Compiling ink_e2e_macro v5.0.0
+   Compiling wasm-instrument v0.4.0
+   Compiling bollard v0.16.0
+   Compiling secp256k1 v0.27.0
+   Compiling subxt-signer v0.32.1
+   Compiling test_helpers v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/test_helpers)
+   Compiling secp256k1 v0.28.2
+   Compiling sp-core v30.0.0
+   Compiling ink_engine v5.0.0
+   Compiling ink_env v5.0.0
+   Compiling ink_storage v5.0.0
+   Compiling ink v5.0.0
+   Compiling pendzl_lang v0.2.3 (/home/lukas/repos/abax/simple_pendzl/lang)
+   Compiling pendzl_contracts v0.2.3 (/home/lukas/repos/abax/simple_pendzl/contracts)
+   Compiling sp-trie v31.0.0
+   Compiling sp-keystore v0.36.0
+   Compiling pendzl v0.2.3 (/home/lukas/repos/abax/simple_pendzl)
+   Compiling my_psp22_mintable v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/psp22_extensions/mintable)
+   Compiling sp-state-machine v0.37.0
+   Compiling vester v0.2.3 (/home/lukas/repos/abax/simple_pendzl/examples/vester)
+   Compiling rustls-webpki v0.101.7
+   Compiling sct v0.7.1
+   Compiling rustls-webpki v0.102.2
+   Compiling sp-application-crypto v32.0.0
+   Compiling tokio-rustls v0.24.1
+   Compiling sp-runtime v33.0.0
+   Compiling tokio-rustls v0.25.0
+   Compiling hyper-rustls v0.24.2
+   Compiling jsonrpsee-client-transport v0.21.0
+   Compiling jsonrpsee-http-client v0.21.0
+   Compiling jsonrpsee-client-transport v0.22.2
+   Compiling jsonrpsee v0.21.0
+   Compiling subxt-codegen v0.34.0
+   Compiling jsonrpsee-ws-client v0.22.2
+   Compiling jsonrpsee v0.22.2
+   Compiling sp-version v31.0.0
+   Compiling sp-inherents v28.0.0
+   Compiling sp-api v28.0.0
+   Compiling sp-genesis-builder v0.9.0
+   Compiling sp-staking v28.0.0
+   Compiling polkadot-core-primitives v9.0.0
+   Compiling sp-keyring v33.0.0
+   Compiling polkadot-parachain-primitives v8.0.0
+   Compiling subxt-macro v0.34.0
+   Compiling frame-support v30.0.0
+   Compiling subxt v0.34.0
+   Compiling subxt-signer v0.34.0
+   Compiling frame-system v30.0.0
+   Compiling frame-benchmarking v30.0.0
+   Compiling pallet-transaction-payment v30.0.0
+   Compiling staging-xcm-executor v9.0.1
+   Compiling staging-xcm-builder v9.0.0
+   Compiling wasm-opt v0.116.0
+   Compiling ink_e2e v5.0.0
+error[E0432]: unresolved import `pendzl::test_utils`
+  --> lib.rs:35:9
+   |
+35 |         test_utils::{
+   |         ^^^^^^^^^^ could not find `test_utils` in `pendzl`
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+   --> lib.rs:549:24
+    |
+549 |                 .ok_or(MathError::Overflow)?
+    |                        ^^^^^^^^^ use of undeclared type `MathError`
+    |
+help: consider importing this enum
+    |
+24  +     use pendzl::math::errors::MathError;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+   --> lib.rs:771:24
+    |
+771 |                 .ok_or(MathError::Overflow)?
+    |                        ^^^^^^^^^ use of undeclared type `MathError`
+    |
+help: consider importing this enum
+    |
+24  +     use pendzl::math::errors::MathError;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+   --> lib.rs:844:28
+    |
+844 |                     .ok_or(MathError::Overflow)?,
+    |                            ^^^^^^^^^ use of undeclared type `MathError`
+    |
+help: consider importing this enum
+    |
+24  +     use pendzl::math::errors::MathError;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+   --> lib.rs:912:24
+    |
+912 |                 .ok_or(MathError::Overflow)?
+    |                        ^^^^^^^^^ use of undeclared type `MathError`
+    |
+help: consider importing this enum
+    |
+24  +     use pendzl::math::errors::MathError;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1091:24
+     |
+1091 |                 .ok_or(MathError::Overflow)?
+     |                        ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1113:20
+     |
+1113 |             .ok_or(MathError::Overflow)?;
+     |                    ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1219:24
+     |
+1219 |                 .ok_or(MathError::Overflow)?;
+     |                        ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1221:24
+     |
+1221 |                 .ok_or(MathError::Overflow)?;
+     |                        ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1261:24
+     |
+1261 |                 .ok_or(MathError::Overflow)?;
+     |                        ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1263:24
+     |
+1263 |                 .ok_or(MathError::Overflow)?;
+     |                        ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1298:20
+     |
+1298 |             .ok_or(MathError::Overflow)?;
+     |                    ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0433]: failed to resolve: use of undeclared type `MathError`
+    --> lib.rs:1303:16
+     |
+1303 |         .ok_or(MathError::Overflow)?;
+     |                ^^^^^^^^^ use of undeclared type `MathError`
+     |
+help: consider importing this enum
+     |
+24   +     use pendzl::math::errors::MathError;
+     |
+
+error[E0603]: module `token` is private
+  --> lib.rs:34:20
+   |
+34 |         contracts::token::psp22::{PSP22Error, Transfer, PSP22},
+   |                    ^^^^^          ---------- enum `PSP22Error` is not publicly re-exported
+   |                    |
+   |                    private module
+   |
+note: the module `token` is defined here
+  --> /home/lukas/repos/abax/simple_pendzl/contracts/src/lib.rs:8:1
+   |
+8  | mod token;
+   | ^^^^^^^^^
+
+error[E0603]: module `token` is private
+  --> lib.rs:34:20
+   |
+34 |         contracts::token::psp22::{PSP22Error, Transfer, PSP22},
+   |                    ^^^^^  ----- module `psp22` is not publicly re-exported
+   |                    |
+   |                    private module
+   |
+note: the module `token` is defined here
+  --> /home/lukas/repos/abax/simple_pendzl/contracts/src/lib.rs:8:1
+   |
+8  | mod token;
+   | ^^^^^^^^^
+
+error[E0603]: module `token` is private
+  --> lib.rs:34:20
+   |
+34 |         contracts::token::psp22::{PSP22Error, Transfer, PSP22},
+   |                    ^^^^^ private module                 ----- trait `PSP22` is not publicly re-exported
+   |
+note: the module `token` is defined here
+  --> /home/lukas/repos/abax/simple_pendzl/contracts/src/lib.rs:8:1
+   |
+8  | mod token;
+   | ^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:178:41
+    |
+178 |             vest_to: keypair_to_account(&ink_e2e::charlie()),
+    |                      ------------------ ^^^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                      |
+    |                      arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `call` found for struct `InstantiationResult` in the current scope
+   --> lib.rs:190:14
+    |
+185 |           let mut vester = client
+    |  __________________________-
+186 | |             .instantiate("vester", &vester_creator, &mut vester_constructor)
+187 | |             .submit()
+188 | |             .await
+189 | |             .expect("instantiate vester failed")
+190 | |             .call::<Vester>();
+    | |             -^^^^ method not found in `InstantiationResult<DefaultEnvironment, ExtrinsicEvents<PolkadotConfig>>`
+    | |_____________|
+    | 
+
+error[E0599]: no method named `increase_allowance` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:215:24
+    |
+215 |                 &psp22.increase_allowance(
+    |                  ------^^^^^^^^^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:100:8
+    |
+100 |     fn increase_allowance(
+    |        ------------------ the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:249:40
+    |
+249 |                     keypair_to_account(&vester_submitter),
+    |                     ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                     |
+    |                     arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:258:45
+    |
+258 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:266:24
+    |
+266 |                 &psp22.balance_of(keypair_to_account(&vester_submitter)),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:266:54
+    |
+266 |                 &psp22.balance_of(keypair_to_account(&vester_submitter)),
+    |                                   ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                                   |
+    |                                   arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:308:32
+    |
+308 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:315:32
+    |
+315 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:323:45
+    |
+323 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:330:24
+    |
+330 |                 &psp22.balance_of(keypair_to_account(&vester_submitter)),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:330:54
+    |
+330 |                 &psp22.balance_of(keypair_to_account(&vester_submitter)),
+    |                                   ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                                   |
+    |                                   arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:363:41
+    |
+363 |             vest_to: keypair_to_account(&ink_e2e::charlie()),
+    |                      ------------------ ^^^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                      |
+    |                      arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `call` found for struct `InstantiationResult` in the current scope
+   --> lib.rs:375:14
+    |
+370 |           let mut vester = client
+    |  __________________________-
+371 | |             .instantiate("vester", &vester_creator, &mut vester_constructor)
+372 | |             .submit()
+373 | |             .await
+374 | |             .expect("instantiate vester failed")
+375 | |             .call::<Vester>();
+    | |             -^^^^ method not found in `InstantiationResult<DefaultEnvironment, ExtrinsicEvents<PolkadotConfig>>`
+    | |_____________|
+    | 
+
+error[E0599]: no method named `increase_allowance` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:380:24
+    |
+380 |                 &psp22.increase_allowance(
+    |                  ------^^^^^^^^^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:100:8
+    |
+100 |     fn increase_allowance(
+    |        ------------------ the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:394:40
+    |
+394 |                     keypair_to_account(&vester_submitter),
+    |                     ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                     |
+    |                     arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:403:45
+    |
+403 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:441:32
+    |
+441 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:448:32
+    |
+448 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:456:45
+    |
+456 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:463:24
+    |
+463 |                 &psp22.balance_of(create_vest_args.vest_to),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:499:24
+    |
+499 |                 &psp22.balance_of(create_vest_args.vest_to),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:529:32
+    |
+529 |             keypair_to_account(&vest_to),
+    |             ------------------ ^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:582:41
+    |
+582 |             vest_to: keypair_to_account(&ink_e2e::charlie()),
+    |                      ------------------ ^^^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                      |
+    |                      arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `call` found for struct `InstantiationResult` in the current scope
+   --> lib.rs:594:14
+    |
+589 |           let mut vester = client
+    |  __________________________-
+590 | |             .instantiate("vester", &vester_creator, &mut vester_constructor)
+591 | |             .submit()
+592 | |             .await
+593 | |             .expect("instantiate vester failed")
+594 | |             .call::<Vester>();
+    | |             -^^^^ method not found in `InstantiationResult<DefaultEnvironment, ExtrinsicEvents<PolkadotConfig>>`
+    | |_____________|
+    | 
+
+error[E0599]: no method named `increase_allowance` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:599:24
+    |
+599 |                 &psp22.increase_allowance(
+    |                  ------^^^^^^^^^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:100:8
+    |
+100 |     fn increase_allowance(
+    |        ------------------ the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:613:40
+    |
+613 |                     keypair_to_account(&vester_submitter),
+    |                     ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                     |
+    |                     arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:658:32
+    |
+658 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:665:32
+    |
+665 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:673:45
+    |
+673 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:680:24
+    |
+680 |                 &psp22.balance_of(create_vest_args.vest_to),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:714:45
+    |
+714 |             .call(&ink_e2e::alice(), &psp22.balance_of(vester.to_account_id()))
+    |                                             ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0599]: no method named `balance_of` found for struct `my_psp22_mintable::_::CallBuilder` in the current scope
+   --> lib.rs:721:24
+    |
+721 |                 &psp22.balance_of(create_vest_args.vest_to),
+    |                        ^^^^^^^^^^ method not found in `CallBuilder`
+    |
+   ::: /home/lukas/repos/abax/simple_pendzl/contracts/src/token/psp22/psp22_trait.rs:27:8
+    |
+27  |     fn balance_of(&self, owner: AccountId) -> Balance;
+    |        ---------- the method is available for `my_psp22_mintable::_::CallBuilder` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: the following trait is implemented but not in scope; perhaps add a `use` for it:
+    |
+24  +     use pendzl::pendzl_contracts::psp22::PSP22;
+    |
+
+error[E0308]: mismatched types
+   --> lib.rs:751:32
+    |
+751 |             keypair_to_account(&vest_to),
+    |             ------------------ ^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:757:32
+    |
+757 |             keypair_to_account(&release_caller),
+    |             ------------------ ^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:788:41
+    |
+788 |             vest_to: keypair_to_account(&ink_e2e::charlie()),
+    |                      ------------------ ^^^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                      |
+    |                      arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `call` found for struct `InstantiationResult` in the current scope
+   --> lib.rs:800:14
+    |
+795 |           let mut vester = client
+    |  __________________________-
+796 | |             .instantiate("vester", &vester_creator, &mut vester_constructor)
+797 | |             .submit()
+798 | |             .await
+799 | |             .expect("instantiate vester failed")
+800 | |             .call::<Vester>();
+    | |             -^^^^ method not found in `InstantiationResult<DefaultEnvironment, ExtrinsicEvents<PolkadotConfig>>`
+    | |_____________|
+    | 
+
+error[E0308]: mismatched types
+   --> lib.rs:807:46
+    |
+807 |             .free_balance(keypair_to_account(&vester_submitter))
+    |                           ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                           |
+    |                           arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:892:32
+    |
+892 |             keypair_to_account(&vester_submitter),
+    |             ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> lib.rs:904:46
+    |
+904 |             .free_balance(keypair_to_account(&vester_submitter))
+    |                           ------------------ ^^^^^^^^^^^^^^^^^ expected `test_helpers::Keypair`, found `ink_e2e::Keypair`
+    |                           |
+    |                           arguments to this function are incorrect
+    |
+    = note: `ink_e2e::Keypair` and `test_helpers::Keypair` have similar names, but are actually distinct types
+note: `ink_e2e::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.34.0/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+note: `test_helpers::Keypair` is defined in crate `subxt_signer`
+   --> /home/lukas/.cargo/registry/src/index.crates.io-6f17d22bba15001f/subxt-signer-0.32.1/src/sr25519.rs:45:1
+    |
+45  | pub struct Keypair(schnorrkel::Keypair);
+    | ^^^^^^^^^^^^^^^^^^
+    = note: perhaps two different versions of crate `subxt_signer` are being used?
+note: function defined here
+   --> /home/lukas/repos/abax/simple_pendzl/examples/test_helpers/lib.rs:299:8
+    |
+299 | pub fn keypair_to_account<AccountId: From<[u8; 32]>>(
+    |        ^^^^^^^^^^^^^^^^^^
+
+error[E0689]: can't call method `checked_add` on ambiguous numeric type `{integer}`
+    --> lib.rs:1297:35
+     |
+1297 |             .fold(0, |acc, x| acc.checked_add(x.amount))
+     |                       ---         ^^^^^^^^^^^
+     |                       |
+     |                       you must specify a type for this binding, like `i32`
+
+error[E0599]: no method named `ok_or` found for type `{integer}` in the current scope
+    --> lib.rs:1298:14
+     |
+1295 |           let total_amount = create_vest_args_vec
+     |  ____________________________-
+1296 | |             .iter()
+1297 | |             .fold(0, |acc, x| acc.checked_add(x.amount))
+1298 | |             .ok_or(MathError::Overflow)?;
+     | |             -^^^^^ method not found in `{integer}`
+     | |_____________|
+     | 
+
+error[E0599]: no method named `ok_or` found for unit type `()` in the current scope
+    --> lib.rs:1303:10
+     |
+1299 | /         assert_eq!(
+1300 | |             vest_to_balance_post,
+1301 | |             vest_to_balance_pre.checked_add(total_amount)
+1302 | |         )
+1303 | |         .ok_or(MathError::Overflow)?;
+     | |         -^^^^^ method not found in `()`
+     | |_________|
+     | 
+
+Some errors have detailed explanations: E0308, E0432, E0433, E0599, E0603, E0689.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `vester` (lib test) due to 59 previous errors

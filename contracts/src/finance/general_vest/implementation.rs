@@ -57,12 +57,12 @@ impl GeneralVestStorage for GeneralVestData {
         data: &Vec<u8>,
     ) -> Result<Balance, VestingError> {
         let next_id = self.next_id.get((to, asset)).unwrap_or(0);
-        let mut tail_id = next_id.checked_sub(1).unwrap_or(0);
+        let mut tail_id = next_id.saturating_sub(1);
         let mut current_id = 0_u32;
         let mut total_amount = 0_u128;
         while current_id <= tail_id {
             let (was_swapped_for_tail, amount_released) =
-                self.release_by_vest_id(to, asset, current_id, &data)?;
+                self.release_by_vest_id(to, asset, current_id, data)?;
             total_amount = total_amount
                 .checked_add(amount_released)
                 .ok_or(MathError::Overflow)?;
@@ -83,7 +83,7 @@ impl GeneralVestStorage for GeneralVestData {
         id: u32,
         _data: &Vec<u8>,
     ) -> Result<(bool, Balance), VestingError> {
-        let mut data = match self.vesting_datas.get(&(to, asset, id)) {
+        let mut data = match self.vesting_datas.get((to, asset, id)) {
             Some(data) => data,
             None => return Ok((false, 0)),
         };
@@ -92,12 +92,10 @@ impl GeneralVestStorage for GeneralVestData {
             let leftover = data.amount - data.released;
             let next_id = self.next_id.get((to, asset)).unwrap(); // data is some => next_id must exist and be > 0
             let tail_id = next_id - 1;
-            let tail = self
-                .vesting_datas
-                .get(&(to, asset, tail_id))
-                .ok_or(VestingError::InvalidScheduleKey)?;
-            self.vesting_datas.remove(&(to, asset, tail_id));
+            let tail = self.vesting_datas.get((to, asset, tail_id)).unwrap(); // next_id must exist and be > 0 => tail must exist
+            self.vesting_datas.remove((to, asset, tail_id));
             if tail_id != id {
+                //insert tail to the place of the removed one
                 self.vesting_datas.insert((to, asset, id), &tail);
             }
             self.next_id.insert((to, asset), &(tail_id));
@@ -119,7 +117,7 @@ impl GeneralVestStorage for GeneralVestData {
         id: u32,
         _data: &Vec<u8>,
     ) -> Option<VestingData> {
-        self.vesting_datas.get(&(to, asset, id))
+        self.vesting_datas.get((to, asset, id))
     }
 }
 
@@ -207,8 +205,8 @@ where
     ) -> Result<u128, VestingError> {
         let caller = Self::env().caller();
         let receiver = receiver.unwrap_or(caller);
-        let amount_released = self.data().release(receiver, asset, &data)?;
-        self._handle_transfer_out(asset, receiver, amount_released, &data)?;
+        let amount_released = self.data().release(receiver, asset, data)?;
+        self._handle_transfer_out(asset, receiver, amount_released, data)?;
         Self::env().emit_event(TokenReleased {
             caller,
             asset,
@@ -227,8 +225,8 @@ where
         let caller = Self::env().caller();
         let receiver = receiver.unwrap_or(caller);
         let (_, amount_released) =
-            self.data().release_by_vest_id(receiver, asset, id, &data)?;
-        self._handle_transfer_out(asset, receiver, amount_released, &data)?;
+            self.data().release_by_vest_id(receiver, asset, id, data)?;
+        self._handle_transfer_out(asset, receiver, amount_released, data)?;
         Self::env().emit_event(TokenReleased {
             caller,
             asset,
@@ -286,7 +284,7 @@ where
         id: u32,
         _data: &Vec<u8>,
     ) -> Option<VestingData> {
-        self.data().vesting_datas.get(&(of, asset, id))
+        self.data().vesting_datas.get((of, asset, id))
     }
 
     fn _next_id_vest_of_default_impl(

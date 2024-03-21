@@ -58,7 +58,7 @@ pub mod my_pausable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(method_call!(client, contract, flip), Ok(()));
 
@@ -75,7 +75,7 @@ pub mod my_pausable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(method_call!(client, contract, pause), Ok(()));
             assert!(matches!(

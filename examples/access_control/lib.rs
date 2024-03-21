@@ -75,7 +75,7 @@ pub mod my_access_control {
         use ink_e2e::account_id;
         use ink_e2e::AccountKeyring::{Alice, Bob, Charlie};
         use ink_e2e::{alice, bob};
-        use pendzl::contracts::access::access_control::DEFAULT_ADMIN_ROLE;
+        use pendzl::contracts::access_control::DEFAULT_ADMIN_ROLE;
         use test_helpers::{grant_role, has_role, revoke_role};
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
@@ -90,7 +90,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
 
@@ -147,7 +147,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Alice), true);
             assert_eq!(
@@ -168,7 +168,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
             assert_eq!(
@@ -189,7 +189,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
 
@@ -210,7 +210,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
             assert_eq!(
@@ -249,7 +249,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Bob), false);
 
@@ -282,7 +282,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(has_role!(client, contract, MINTER, Alice), true);
 
@@ -311,7 +311,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(grant_role!(client, contract, MINTER, Bob), Ok(()));
 
@@ -350,7 +350,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(grant_role!(client, contract, MINTER, Bob), Ok(()));
             assert_eq!(has_role!(client, contract, MINTER, Bob), true);
@@ -382,7 +382,7 @@ pub mod my_access_control {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(grant_role!(client, contract, MINTER, Bob), Ok(()));
             assert_eq!(has_role!(client, contract, MINTER, Bob), true);

@@ -8,7 +8,7 @@ import {
   firstTokenId,
   secondTokenId,
   shouldBehaveLikePSP34,
-  transferWasSuccessful,
+  testPSP34TransferCorrectness,
 } from 'wookashwackomytest-pendzl-tests/src/behaviors/token/PSP34.behavior';
 import 'wookashwackomytest-polkahat-chai-matchers';
 import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
@@ -102,7 +102,7 @@ describe('PSP34', () => {
         beforeEach(function () {
           tx = tPSP34.withSigner(owner).tx.tTransfer(owner.address, to.address, tokenId, []);
         });
-        transferWasSuccessful(() => ({
+        testPSP34TransferCorrectness(() => ({
           tx: tx,
           token: tPSP34,
           from: owner.address,
@@ -115,7 +115,7 @@ describe('PSP34', () => {
         beforeEach(function () {
           tx = tPSP34.withSigner(approved).tx.tTransfer(owner.address, to.address, tokenId, []);
         });
-        transferWasSuccessful(() => ({
+        testPSP34TransferCorrectness(() => ({
           tx: tx,
           token: tPSP34,
           from: owner.address,
@@ -128,7 +128,7 @@ describe('PSP34', () => {
         beforeEach(function () {
           tx = tPSP34.withSigner(operator).tx.tTransfer(owner.address, to.address, tokenId, []);
         });
-        transferWasSuccessful(() => ({
+        testPSP34TransferCorrectness(() => ({
           tx: tx,
           token: tPSP34,
           from: owner.address,

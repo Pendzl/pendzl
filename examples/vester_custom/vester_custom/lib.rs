@@ -131,7 +131,7 @@ pub mod tests {
             .submit()
             .await
             .expect("instantiate psp22 failed")
-            .call::<Contract>();
+            .call_builder::<Contract>();
 
         let vest_to = ink_e2e::charlie();
 
@@ -272,7 +272,7 @@ pub mod tests {
             .submit()
             .await
             .expect("instantiate psp22 failed")
-            .call::<Contract>();
+            .call_builder::<Contract>();
 
         let vest_to = ink_e2e::charlie();
 

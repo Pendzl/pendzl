@@ -62,7 +62,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let balance_of_alice = balance_of!(client, contract, Alice);
 
@@ -83,7 +83,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(&ink_e2e::alice(), &contract.burn(account_id(Alice), 10))
@@ -114,7 +114,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert!(matches!(balance_of!(client, contract, Bob), 0));
             assert!(matches!(balance_of!(client, contract, Alice), 100));
@@ -148,7 +148,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let total_supply = client
                 .call(&ink_e2e::alice(), &contract.total_supply())
@@ -191,7 +191,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(
@@ -237,7 +237,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(
@@ -305,7 +305,7 @@ pub mod my_psp22_burnable {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let result = client
                 .call(

@@ -37,11 +37,10 @@ pub mod my_psp34 {
         use super::*;
         #[rustfmt::skip]
         use ink_e2e::ContractsBackend;
-        use ink_e2e::account_id;
-        use ink_e2e::AccountKeyring::{Alice, Bob};
-        use pendzl::contracts::token::psp34::Id;
+        use ink_e2e::AccountKeyring::Alice;
+        use pendzl::contracts::psp34::Id;
 
-        use test_helpers::{balance_of, owner_of};
+        use test_helpers::balance_of;
 
         type E2EResult<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -55,7 +54,7 @@ pub mod my_psp34 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let account_id = contract.account_id;
 
@@ -82,7 +81,7 @@ pub mod my_psp34 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             let expected_total_supply = 0;
             let actual_total_supply = client
@@ -129,7 +128,7 @@ pub mod my_psp34 {
                 .submit()
                 .await
                 .expect("instantiate failed")
-                .call::<Contract>();
+                .call_builder::<Contract>();
 
             assert_eq!(balance_of!(client, contract, Alice), 0);
 

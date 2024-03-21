@@ -6,17 +6,17 @@ import { SignAndSendSuccessResponse } from "wookashwackomytest-typechain-types";
 import { PSP22 } from "../../types/PSP22.type";
 import "wookashwackomytest-polkahat-chai-matchers";
 
-type ShouldBehaveLikeERC20Params = {
+type shouldBehaveLikePSP22Params = {
   token: PSP22;
   initialSupply: BN;
   holder: KeyringPair;
   recipient: KeyringPair;
   other: KeyringPair;
 };
-export function shouldBehaveLikeERC20(
-  getParams: () => ShouldBehaveLikeERC20Params
+export function shouldBehaveLikePSP22(
+  getParams: () => shouldBehaveLikePSP22Params
 ) {
-  const ctx: ShouldBehaveLikeERC20Params & {
+  const ctx: shouldBehaveLikePSP22Params & {
     tx: any;
     transfer: (
       from: KeyringPair,
@@ -62,7 +62,7 @@ export function shouldBehaveLikeERC20(
   });
 
   describe("transfer", function () {
-    shouldBehaveLikeERC20Transfer(() => ctx);
+    shouldBehaveLikePSP22Transfer(() => ctx);
   });
 
   describe("transfer from", function () {
@@ -235,11 +235,11 @@ export function shouldBehaveLikeERC20(
   });
 
   describe("approve", function () {
-    shouldBehaveLikeERC20Approve(() => ctx);
+    shouldBehaveLikePSP22Approve(() => ctx);
   });
 }
 
-type ShouldBehaveLikeERC20TransferParams = {
+type shouldBehaveLikePSP22TransferParams = {
   token: any;
   initialSupply: BN;
   holder: KeyringPair;
@@ -251,10 +251,10 @@ type ShouldBehaveLikeERC20TransferParams = {
   ) => Promise<SignAndSendSuccessResponse>;
 };
 
-export function shouldBehaveLikeERC20Transfer(
-  getParams: () => ShouldBehaveLikeERC20TransferParams
+export function shouldBehaveLikePSP22Transfer(
+  getParams: () => shouldBehaveLikePSP22TransferParams
 ) {
-  const ctx: ShouldBehaveLikeERC20TransferParams & {
+  const ctx: shouldBehaveLikePSP22TransferParams & {
     tx: any;
     transfer: (
       from: KeyringPair,
@@ -327,7 +327,7 @@ export function shouldBehaveLikeERC20Transfer(
     });
   });
 }
-type ShouldBehaveLikeERC20ApproveParams = {
+type shouldBehaveLikePSP22ApproveParams = {
   token: PSP22;
   initialSupply: BN;
   holder: KeyringPair;
@@ -339,10 +339,10 @@ type ShouldBehaveLikeERC20ApproveParams = {
   ) => Promise<SignAndSendSuccessResponse>;
 };
 
-export function shouldBehaveLikeERC20Approve(
-  getParams: () => ShouldBehaveLikeERC20ApproveParams
+export function shouldBehaveLikePSP22Approve(
+  getParams: () => shouldBehaveLikePSP22ApproveParams
 ) {
-  const ctx: ShouldBehaveLikeERC20ApproveParams & {
+  const ctx: shouldBehaveLikePSP22ApproveParams & {
     tx: any;
   } = {} as any;
   describe("when the spender is not the zero address", function () {
