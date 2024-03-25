@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 
 use ink::env::call::{build_call, ExecutionInput};

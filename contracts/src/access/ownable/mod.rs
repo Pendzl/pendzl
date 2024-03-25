@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 include!("ownable_error.rs");
 include!("ownable_events.rs");

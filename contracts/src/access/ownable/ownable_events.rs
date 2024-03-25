@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 
 /// Emitted when ownership of the contract is transferred.

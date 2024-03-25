@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 /// Represents a deposit event in the Vault contract.
 #[ink::event]

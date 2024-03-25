@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 include!("psp34_types.rs");
 include!("psp34_error.rs");

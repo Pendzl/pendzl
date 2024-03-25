@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 use ink::{prelude::vec, prelude::vec::Vec, storage::Mapping};
 use pendzl::{

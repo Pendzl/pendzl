@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 
 /// Trait based on the ERC-4626 "Tokenized Vault Standard", as defined in

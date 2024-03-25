@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 use crate::token::psp22::PSP22Error;
 use ink::prelude::string::String;

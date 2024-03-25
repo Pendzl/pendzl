@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 
 /// https://github.com/inkdevhub/standards/blob/master/PSPs/psp-34.md

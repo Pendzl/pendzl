@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 pub use crate::token::psp22::{PSP22Error, PSP22Ref};
 pub use ink::primitives::AccountId;

@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 use ink::contract_ref;
 use ink::{prelude::vec::Vec, primitives::AccountId};

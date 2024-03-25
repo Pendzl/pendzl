@@ -1,3 +1,4 @@
+// Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 use crate::token::psp34::Id;
 use ink::{prelude::string::String, storage::Mapping};
