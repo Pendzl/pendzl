@@ -1,6 +1,6 @@
 [package]
 name = "t_access_control"
-version = "0.2.3"
+version = "0.2.4"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",

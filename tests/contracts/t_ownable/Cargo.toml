@@ -1,6 +1,6 @@
 [package]
 name = "t_ownable"
-version = "0.2.3"
+version = "0.2.4"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
