@@ -6,7 +6,6 @@ exclude = ["examples", "tests/contracts"]
 [package]
 name = "pendzl"
 version = "0.2.4"
-previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
