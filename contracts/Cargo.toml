@@ -19,7 +19,7 @@ scale = { package = "parity-scale-codec", version = "3.6.9", default-features = 
     "derive",
 ] }
 ink = { version = "5.0.0", default-features = false }
-scale-info = { version = "2.10", default-features = false, features = [
+scale-info = { version = "2.11", default-features = false, features = [
     "derive",
 ], optional = true }
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
