@@ -139,6 +139,12 @@ $ pnpm build:debug
 $ pnpm test
 ```
 
+We are in the process of migrating all tests from ink-e2e to TS. Some tests remain in the examples folder.
+To run yet not migrated tests :
+```
+$ bash build_examples_and_run_tests.sh
+```
+
 ## FAQ
 
 ### Was it audited?
