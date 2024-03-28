@@ -3,16 +3,16 @@ import { BN } from 'bn.js';
 import { expect } from 'chai';
 import TPSP34MetadataContract from 'typechain/contracts/t_psp34_metadata';
 import TPSP34MetadataDeployer from 'typechain/deployers/t_psp34_metadata';
-import { nonExistentTokenId } from 'wookashwackomytest-pendzl-tests';
+import { nonExistentTokenId } from '@c-forge/pendzl-tests';
 import {
   firstTokenId,
   secondTokenId,
   shouldBehaveLikePSP34,
   testPSP34TransferCorrectness,
-} from 'wookashwackomytest-pendzl-tests/src/behaviors/token/PSP34.behavior';
-import 'wookashwackomytest-polkahat-chai-matchers';
-import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
-import { SignAndSendSuccessResponse } from 'wookashwackomytest-typechain-types';
+} from '@c-forge/pendzl-tests/src/behaviors/token/PSP34.behavior';
+import '@c-forge/polkahat-chai-matchers';
+import { getSigners, localApi } from '@c-forge/polkahat-network-helpers';
+import { SignAndSendSuccessResponse } from '@c-forge/typechain-types';
 
 const [deployer, owner, approved, operator, to] = getSigners();
 describe('PSP34', () => {

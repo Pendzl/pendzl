@@ -26,12 +26,12 @@ To use the test suites, you can import them in your test file and use them in yo
 
 ```typescript
 import { ApiPromise } from "@polkadot/api";
-import { localApi } from "wookashwackomytest-polkahat-network-helpers";
+import { localApi } from "@c-forge/polkahat-network-helpers";
 import MyAccessControlContract from "typechain/contracts/my_access_control";
 import MyAccessControlDeployer from "typechain/deployers/my_access_control";
-import { shouldBehaveLikeAccessControl } from "wookashwackomytest-pendzl-tests";
-import { getSigners } from "wookashwackomytest-polkahat-network-helpers";
-import "wookashwackomytest-polkahat-chai-matchers";
+import { shouldBehaveLikeAccessControl } from "@c-forge/pendzl-tests";
+import { getSigners } from "@c-forge/polkahat-network-helpers";
+import "@c-forge/polkahat-chai-matchers";
 
 const [defaultAdmin, ...others] = getSigners();
 

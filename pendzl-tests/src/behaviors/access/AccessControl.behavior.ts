@@ -5,7 +5,7 @@ import {
   AccessControlError,
 } from "../../types/AccessControl.type";
 import "chai-as-promised";
-import "wookashwackomytest-polkahat-chai-matchers";
+import "@c-forge/polkahat-chai-matchers";
 import { AccessControlInternal } from "../../types/AccessControlInternal.type";
 
 export const DEFAULT_ADMIN_ROLE = 0;

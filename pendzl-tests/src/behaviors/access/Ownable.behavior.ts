@@ -1,7 +1,7 @@
 import { KeyringPair } from "@polkadot/keyring/types";
 import { expect } from "chai";
-import "wookashwackomytest-polkahat-chai-matchers";
-import { SignAndSendSuccessResponse } from "wookashwackomytest-typechain-types";
+import "@c-forge/polkahat-chai-matchers";
+import { SignAndSendSuccessResponse } from "@c-forge/typechain-types";
 import { Ownable } from "../../types/Ownable.type";
 
 export type ShouldBehaveLikeOwnableParams = {

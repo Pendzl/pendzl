@@ -1,13 +1,16 @@
 {
-  "name": "wookashwackomytest-pendzl-tests",
-  "version": "0.0.12",
+  "name": "@c-forge/pendzl-tests",
+  "version": "0.0.20",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Utils for testing",
   "homepage": "https://github.com/TODO",
   "repository": "github:wookashwackomy/TODO",
   "author": "",
   "license": "MIT",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "smart-contracts",
     "polkadot",
@@ -23,9 +26,13 @@
     "test": "mocha --recursive \"test/**/*.ts\" --exit",
     "build": "tsc --build .",
     "prepublishOnly": "pnpm build",
-    "clean": "rimraf dist internal types ./**/*.{d.ts,js}{,.map} build-test tsconfig.tsbuildinfo"
+    "clean": "rimraf dist internal types *.{d.ts,js}{,.map} build-test tsconfig.tsbuildinfo"
   },
   "files": [
+    "dist/",
+    "dist/*.d.ts",
+    "dist/*.js",
+    "dist/*.js.map",
     "src/",
     "behaviors/",
     "types/",
@@ -36,10 +43,21 @@
     "LICENSE",
     "README.md"
   ],
-  "devDependencies": {
+  "dependencies": {
+    "@types/mocha": "^10.0.6",
+    "@c-forge/polkahat-chai-matchers": "^0.0.74",
+    "@c-forge/polkahat-network-helpers": "^0.0.74",
+    "@c-forge/typechain-types": "^0.0.55",
+    "@polkadot/api": "^10.12.4",
+    "@polkadot/api-augment": "^10.12.4",
+    "@polkadot/api-contract": "^10.12.4",
+    "@polkadot/keyring": "^12.6.2",
+    "@polkadot/types": "^10.12.4",
+    "@polkadot/util": "^12.6.2",
+    "@polkadot/util-crypto": "^12.6.2",
+    "@types/chai-as-promised": "^7.1.8",
     "@types/bn.js": "^5.1.5",
     "@types/chai": "^4.3.12",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^16.18.89",
     "@typescript-eslint/eslint-plugin": "5.61.0",
     "@typescript-eslint/parser": "5.61.0",
@@ -50,19 +68,6 @@
     "mocha": "^10.3.0",
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",
-    "typescript": "5.3.2",
-    "wookashwackomytest-polkahat-chai-matchers": "^0.0.72"
-  },
-  "dependencies": {
-    "@polkadot/api": "^10.12.2",
-    "@polkadot/api-augment": "^10.12.2",
-    "@polkadot/api-contract": "^10.12.2",
-    "@polkadot/keyring": "^12.6.2",
-    "@polkadot/types": "^10.12.2",
-    "@polkadot/util": "^12.6.2",
-    "@polkadot/util-crypto": "^12.6.2",
-    "@types/chai-as-promised": "^7.1.8",
-    "wookashwackomytest-polkahat-network-helpers": "^0.0.19",
-    "wookashwackomytest-typechain-types": "^0.0.43"
+    "typescript": "5.3.2"
   }
 }

@@ -1,10 +1,10 @@
 import { KeyringPair } from "@polkadot/keyring/types";
 import { expect } from "chai";
-import "wookashwackomytest-polkahat-chai-matchers";
-import { SignAndSendSuccessResponse } from "wookashwackomytest-typechain-types";
+import "@c-forge/polkahat-chai-matchers";
+import { SignAndSendSuccessResponse } from "@c-forge/typechain-types";
 import { BN } from "bn.js";
 import { Id, PSP34 } from "../../types/PSP34.type";
-import { getSigners } from "wookashwackomytest-polkahat-network-helpers";
+import { getSigners } from "@c-forge/polkahat-network-helpers";
 
 export const firstTokenId: Id = { u128: new BN(79216) };
 export const secondTokenId = { u64: new BN(19235217) };

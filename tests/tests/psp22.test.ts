@@ -1,14 +1,14 @@
 import { ApiPromise } from '@polkadot/api';
 import BN from 'bn.js';
-import { shouldBehaveLikePSP22, shouldBehaveLikePSP22Approve, shouldBehaveLikePSP22Transfer } from 'wookashwackomytest-pendzl-tests';
-import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
+import { shouldBehaveLikePSP22, shouldBehaveLikePSP22Approve, shouldBehaveLikePSP22Transfer } from '@c-forge/pendzl-tests';
+import { getSigners, localApi } from '@c-forge/polkahat-network-helpers';
 import TPsp22Deployer from 'typechain/deployers/t_psp22';
 import TPsp22Contract from 'typechain/contracts/t_psp22';
 import type { KeyringPair } from '@polkadot/keyring/types';
-import { MAX_U128 } from 'wookashwackomytest-polkahat-chai-matchers';
-import 'wookashwackomytest-polkahat-chai-matchers';
+import { MAX_U128 } from '@c-forge/polkahat-chai-matchers';
+import '@c-forge/polkahat-chai-matchers';
 import { expect } from 'chai';
-import { SignAndSendSuccessResponse } from 'wookashwackomytest-typechain-types';
+import { SignAndSendSuccessResponse } from '@c-forge/typechain-types';
 
 const [owner, ...others] = getSigners();
 const initialSupply = new BN(1000);

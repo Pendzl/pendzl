@@ -1,7 +1,7 @@
 import { ApiPromise } from '@polkadot/api';
-import 'wookashwackomytest-polkahat-chai-matchers';
-import type { SignAndSendSuccessResponse } from 'wookashwackomytest-typechain-types';
-import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
+import '@c-forge/polkahat-chai-matchers';
+import type { SignAndSendSuccessResponse } from '@c-forge/typechain-types';
+import { getSigners, localApi } from '@c-forge/polkahat-network-helpers';
 import TPausableDeployer from 'typechain/deployers/t_pausable';
 import TPausableContract from 'typechain/contracts/t_pausable';
 import { expect } from 'chai';

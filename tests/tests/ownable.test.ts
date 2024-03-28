@@ -1,11 +1,11 @@
 import { ApiPromise } from '@polkadot/api';
 import { expect } from 'chai';
-import { localApi } from 'wookashwackomytest-polkahat-network-helpers';
+import { localApi } from '@c-forge/polkahat-network-helpers';
 import TOwnableContract from 'typechain/contracts/t_ownable';
 import TOwnableDeployer from 'typechain/deployers/t_ownable';
-import { shouldBehaveLikeOwnable } from 'wookashwackomytest-pendzl-tests';
-import { getSigners } from 'wookashwackomytest-polkahat-network-helpers';
-import 'wookashwackomytest-polkahat-chai-matchers';
+import { shouldBehaveLikeOwnable } from '@c-forge/pendzl-tests';
+import { getSigners } from '@c-forge/polkahat-network-helpers';
+import '@c-forge/polkahat-chai-matchers';
 
 const [deployer, owner, ...others] = getSigners();
 describe('Ownable', () => {

@@ -2,37 +2,34 @@ import type { Abi, ContractPromise } from "@polkadot/api-contract";
 import type { ApiPromise } from "@polkadot/api";
 import type {
   EventDataTypeDescriptions,
-  GasLimit,
   Result,
   SignAndSendSuccessResponse,
-} from "wookashwackomytest-typechain-types";
-import type { QueryReturnType } from "wookashwackomytest-typechain-types";
+} from "@c-forge/typechain-types";
+import type { QueryReturnType } from "@c-forge/typechain-types";
 import type BN from "bn.js";
 import type { KeyringPair } from "@polkadot/keyring/types";
-import {
-  AccountId,
-  LangError,
-} from "wookashwackomytest-polkahat-chai-matchers";
+import { AccountId, LangError } from "@c-forge/polkahat-chai-matchers";
 import { AccessControlError } from "./AccessControl.type";
+import { ContractOptions } from "@polkadot/api-contract/types";
 
 interface AccessControlInternalQuery {
   tGrantRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
   tRevokeRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
   tEnsureHasRole(
     role: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
@@ -42,16 +39,16 @@ interface AccessControlInternalTx {
   tGrantRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   tRevokeRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   tEnsureHasRole(
     role: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
 }
 

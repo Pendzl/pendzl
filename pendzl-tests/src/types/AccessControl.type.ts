@@ -2,17 +2,14 @@ import type { Abi, ContractPromise } from "@polkadot/api-contract";
 import type { ApiPromise } from "@polkadot/api";
 import type {
   EventDataTypeDescriptions,
-  GasLimit,
   Result,
   SignAndSendSuccessResponse,
-} from "wookashwackomytest-typechain-types";
-import type { QueryReturnType } from "wookashwackomytest-typechain-types";
+} from "@c-forge/typechain-types";
+import type { QueryReturnType } from "@c-forge/typechain-types";
 import type BN from "bn.js";
 import type { KeyringPair } from "@polkadot/keyring/types";
-import {
-  AccountId,
-  LangError,
-} from "wookashwackomytest-polkahat-chai-matchers";
+import { AccountId, LangError } from "@c-forge/polkahat-chai-matchers";
+import { ContractOptions } from "@polkadot/api-contract/types";
 
 export enum AccessControlError {
   invalidCaller = "InvalidCaller",
@@ -24,30 +21,30 @@ interface AccessControlQuery {
   hasRole(
     role: number | string | BN,
     address: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<boolean, LangError>>>;
   getRoleAdmin(
     role: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<BN, LangError>>>;
   grantRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
   revokeRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
   renounceRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
@@ -55,7 +52,7 @@ interface AccessControlQuery {
   setRoleAdmin(
     role: number | string | BN,
     newRole: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<
     QueryReturnType<Result<Result<null, AccessControlError>, LangError>>
   >;
@@ -65,31 +62,31 @@ interface AccessControlTx {
   hasRole(
     role: number | string | BN,
     address: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   getRoleAdmin(
     role: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   grantRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   revokeRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   renounceRole(
     role: number | string | BN,
     account: AccountId | null,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
   setRoleAdmin(
     role: number | string | BN,
     newRole: number | string | BN,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
 }
 

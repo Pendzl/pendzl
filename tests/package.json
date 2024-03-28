@@ -9,7 +9,7 @@
     "build:prod": "env BUILD_PROD=1 ./build.sh path=./contracts $*",
     "localnode": "./substrate-contracts-node --dev --tmp -lerror,runtime::contracts=debug --rpc-max-connections 5000 --pruning=archive",
     "test": "./runTests.sh",
-    "generateTypes": "./forceArtifactLegacyVersion.sh && rm -rf typechain && npx tsx ./runWithoutWarnings.ts npx wookashwackomytest-typechain-polkadot --in artifacts --out typechain && npx tsx ./scripts/typechain/generateEventsEnum.ts",
+    "generateTypes": "./forceArtifactLegacyVersion.sh && rm -rf typechain && npx tsx ./runWithoutWarnings.ts npx @c-forge/typechain-polkadot --in artifacts --out typechain && npx tsx ./scripts/typechain/generateEventsEnum.ts",
     "lint": "pnpm lint:format && pnpm lint:fix",
     "lint:fix": "eslint . --ext .js,.ts --fix --ignore-path ./.gitignore",
     "lint:format": "pretty-quick  --loglevel warn --write \"./**/*.{js,ts,md,json}\" ",
@@ -17,10 +17,16 @@
     "prepare": "pnpm build-pendzl-tests && husky install"
   },
   "dependencies": {
-    "@polkadot/api": "^10.12.2",
-    "@polkadot/api-contract": "^10.12.2",
+    "@c-forge/pendzl-tests": "link:../pendzl-tests",
+    "@c-forge/polkahat-chai-matchers": "0.0.74",
+    "@c-forge/polkahat-network-helpers": "^0.0.74",
+    "@c-forge/typechain-compiler": "0.0.54",
+    "@c-forge/typechain-polkadot": "0.0.54",
+    "@c-forge/typechain-types": "0.0.54",
+    "@polkadot/api": "^10.12.4",
+    "@polkadot/api-contract": "^10.12.4",
     "@polkadot/keyring": "^12.6.2",
-    "@polkadot/types": "^10.12.2",
+    "@polkadot/types": "^10.12.4",
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -46,13 +52,7 @@
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
     "tsx": "^4.7.1",
-    "typescript": "5.4.2",
-    "wookashwackomytest-pendzl-tests": "link:../pendzl-tests",
-    "wookashwackomytest-polkahat-chai-matchers": "0.0.72",
-    "wookashwackomytest-polkahat-network-helpers": "^0.0.19",
-    "wookashwackomytest-typechain-compiler": "0.0.43",
-    "wookashwackomytest-typechain-polkadot": "0.0.43",
-    "wookashwackomytest-typechain-types": "0.0.43"
+    "typescript": "5.4.2"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.5",

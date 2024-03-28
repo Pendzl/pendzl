@@ -5,8 +5,8 @@ import TVesterContract from 'typechain/contracts/t_vester';
 import TPsp22Deployer from 'typechain/deployers/t_psp22';
 import TVesterDeployer from 'typechain/deployers/t_vester';
 import { VestingData, VestingSchedule } from 'typechain/types-arguments/t_vester';
-import { clock, duration, getSigners, localApi, time } from 'wookashwackomytest-polkahat-network-helpers';
-import 'wookashwackomytest-polkahat-chai-matchers';
+import { clock, duration, getSigners, localApi, time } from '@c-forge/polkahat-network-helpers';
+import '@c-forge/polkahat-chai-matchers';
 
 const [deployer, alice, bob, charlie, dave] = getSigners();
 describe('Vester', () => {

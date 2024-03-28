@@ -1,5 +1,5 @@
 import { ApiPromise } from '@polkadot/api';
-import { localApi } from 'wookashwackomytest-polkahat-network-helpers';
+import { localApi } from '@c-forge/polkahat-network-helpers';
 import TAccessControlContract from 'typechain/contracts/t_access_control';
 import TAccessControlDeployer from 'typechain/deployers/t_access_control';
 import {
@@ -7,9 +7,9 @@ import {
   AccessControlInternal,
   shouldBehaveLikeAccessControl,
   shouldBehaveLikeAccessControlInternal,
-} from 'wookashwackomytest-pendzl-tests';
-import { getSigners } from 'wookashwackomytest-polkahat-network-helpers';
-import 'wookashwackomytest-polkahat-chai-matchers';
+} from '@c-forge/pendzl-tests';
+import { getSigners } from '@c-forge/polkahat-network-helpers';
+import '@c-forge/polkahat-chai-matchers';
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { expect } from 'chai';
 

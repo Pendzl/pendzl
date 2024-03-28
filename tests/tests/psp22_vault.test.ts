@@ -4,10 +4,10 @@ import TPsp22Deployer from 'typechain/deployers/t_psp22';
 import TPsp22Contract from 'typechain/contracts/t_psp22';
 import TVault22Deployer from 'typechain/deployers/t_vault';
 import TVaultContract from 'typechain/contracts/t_vault';
-import 'wookashwackomytest-polkahat-chai-matchers';
+import '@c-forge/polkahat-chai-matchers';
 import { expect } from 'chai';
 import { Rounding } from 'typechain/types-arguments/t_vault';
-import { getSigners, localApi } from 'wookashwackomytest-polkahat-network-helpers';
+import { getSigners, localApi } from '@c-forge/polkahat-network-helpers';
 
 const name = 'My Token';
 const symbol = 'MTKN';

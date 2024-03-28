@@ -9,8 +9,8 @@ import TFlipperOwnableV1Deployer from 'typechain/deployers/t_flipper_ownable_v1'
 import TFlipperV0Deployer from 'typechain/deployers/t_flipper_v0';
 import TFlipperV1Deployer from 'typechain/deployers/t_flipper_v1';
 import { SetCodeHashErrorBuilder } from 'typechain/types-returns/t_flipper_v0';
-import 'wookashwackomytest-polkahat-chai-matchers';
-import { getSigners, localApi, time } from 'wookashwackomytest-polkahat-network-helpers';
+import '@c-forge/polkahat-chai-matchers';
+import { getSigners, localApi, time } from '@c-forge/polkahat-network-helpers';
 
 const CODE_UPGRADER_ROLE = stringToSelectorId('CODE_UPGRADER');
 

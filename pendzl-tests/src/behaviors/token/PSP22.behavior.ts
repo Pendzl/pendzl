@@ -2,9 +2,9 @@ import { SubmittableExtrinsic } from "@polkadot/api/types";
 import { KeyringPair } from "@polkadot/keyring/types";
 import BN from "bn.js";
 import { expect } from "chai";
-import { SignAndSendSuccessResponse } from "wookashwackomytest-typechain-types";
+import { SignAndSendSuccessResponse } from "@c-forge/typechain-types";
 import { PSP22 } from "../../types/PSP22.type";
-import "wookashwackomytest-polkahat-chai-matchers";
+import "@c-forge/polkahat-chai-matchers";
 
 type shouldBehaveLikePSP22Params = {
   token: PSP22;

@@ -2,35 +2,37 @@ import type { Abi, ContractPromise } from "@polkadot/api-contract";
 import type { ApiPromise } from "@polkadot/api";
 import type {
   EventDataTypeDescriptions,
-  GasLimit,
   Result,
   SignAndSendSuccessResponse,
-} from "wookashwackomytest-typechain-types";
-import type { QueryReturnType } from "wookashwackomytest-typechain-types";
+} from "@c-forge/typechain-types";
+import type { QueryReturnType } from "@c-forge/typechain-types";
 import type BN from "bn.js";
 import type { KeyringPair } from "@polkadot/keyring/types";
 import {
   AccountId,
   LangError,
   PSP22Error,
-} from "wookashwackomytest-polkahat-chai-matchers";
+} from "@c-forge/polkahat-chai-matchers";
+import { ContractOptions } from "@polkadot/api-contract/types";
 
 export interface PSP22MetadataQuery {
   tokenName(
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<string | null, LangError>>>;
   tokenSymbol(
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<string | null, LangError>>>;
   tokenDecimals(
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<BN, LangError>>>;
 }
 
 export interface PSP22MetadataTx {
-  tokenName(__options?: GasLimit): Promise<SignAndSendSuccessResponse>;
-  tokenSymbol(__options?: GasLimit): Promise<SignAndSendSuccessResponse>;
-  tokenDecimals(__options?: GasLimit): Promise<SignAndSendSuccessResponse>;
+  tokenName(__options?: ContractOptions): Promise<SignAndSendSuccessResponse>;
+  tokenSymbol(__options?: ContractOptions): Promise<SignAndSendSuccessResponse>;
+  tokenDecimals(
+    __options?: ContractOptions
+  ): Promise<SignAndSendSuccessResponse>;
 }
 
 export interface PSP22Metadata {

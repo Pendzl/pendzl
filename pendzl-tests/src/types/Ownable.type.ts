@@ -2,16 +2,13 @@ import type { Abi, ContractPromise } from "@polkadot/api-contract";
 import type { ApiPromise } from "@polkadot/api";
 import type {
   EventDataTypeDescriptions,
-  GasLimit,
   Result,
   SignAndSendSuccessResponse,
-} from "wookashwackomytest-typechain-types";
-import type { QueryReturnType } from "wookashwackomytest-typechain-types";
+} from "@c-forge/typechain-types";
+import type { QueryReturnType } from "@c-forge/typechain-types";
 import type { KeyringPair } from "@polkadot/keyring/types";
-import {
-  AccountId,
-  LangError,
-} from "wookashwackomytest-polkahat-chai-matchers";
+import { AccountId, LangError } from "@c-forge/polkahat-chai-matchers";
+import { ContractOptions } from "@polkadot/api-contract/types";
 
 export enum OwnableError {
   CallerIsNotOwner = "CallerIsNotOwner",
@@ -20,23 +17,25 @@ export enum OwnableError {
 
 interface OwnableQuery {
   owner(
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<AccountId | null, LangError>>>;
   renounceOwnership(
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<Result<null, OwnableError>, LangError>>>;
   transferOwnership(
     newOwner: AccountId,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<Result<null, OwnableError>, LangError>>>;
 }
 
 interface OwnableTx {
-  owner(__options?: GasLimit): Promise<SignAndSendSuccessResponse>;
-  renounceOwnership(__options?: GasLimit): Promise<SignAndSendSuccessResponse>;
+  owner(__options?: ContractOptions): Promise<SignAndSendSuccessResponse>;
+  renounceOwnership(
+    __options?: ContractOptions
+  ): Promise<SignAndSendSuccessResponse>;
   transferOwnership(
     newOwner: AccountId,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
 }
 

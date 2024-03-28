@@ -2,25 +2,25 @@ import type { Abi, ContractPromise } from "@polkadot/api-contract";
 import type { ApiPromise } from "@polkadot/api";
 import type {
   EventDataTypeDescriptions,
-  GasLimit,
   Result,
   SignAndSendSuccessResponse,
-} from "wookashwackomytest-typechain-types";
-import type { QueryReturnType } from "wookashwackomytest-typechain-types";
+} from "@c-forge/typechain-types";
+import type { QueryReturnType } from "@c-forge/typechain-types";
 import type BN from "bn.js";
 import type { KeyringPair } from "@polkadot/keyring/types";
 import {
   AccountId,
   LangError,
   PSP22Error,
-} from "wookashwackomytest-polkahat-chai-matchers";
+} from "@c-forge/polkahat-chai-matchers";
 import { Id } from "./PSP34.type";
+import { ContractOptions } from "@polkadot/api-contract/types";
 
 export interface PSP34MetadataQuery {
   getAttribute(
     id: Id,
     key: string,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<QueryReturnType<Result<string | null, LangError>>>;
 }
 
@@ -28,7 +28,7 @@ export interface PSP34MetadataTx {
   getAttribute(
     id: Id,
     key: string,
-    __options?: GasLimit
+    __options?: ContractOptions
   ): Promise<SignAndSendSuccessResponse>;
 }
 
