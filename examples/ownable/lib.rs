@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
+/// An PSP22 contract with ownable module.
+/// A creator of the contract becomes an owner.
+/// Owner is allowed to mint and burn PSP22 tokens.
 #[pendzl::implementation(PSP22, Ownable)]
 #[ink::contract]
 pub mod ownable {

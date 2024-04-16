@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A PSP22 contract.
+/// Anyone can burn tokens from anyone's account.
 #[pendzl::implementation(PSP22, PSP22Burnable)]
 #[ink::contract]
 pub mod my_psp22_burnable {

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A flipper contract with pausable module.
+/// A flip can happen only if contract is not paused.
 #[pendzl::implementation(Pausable)]
 #[ink::contract]
 pub mod my_pausable {

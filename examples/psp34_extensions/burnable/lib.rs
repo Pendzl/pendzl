@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// An PSP34 contract that allows anyone to burn any token.
+/// On construction create 3 tokens with ids 0, 1, 2 and mint them to the caller.
 #[pendzl::implementation(PSP34, PSP34Burnable)]
 #[ink::contract]
 pub mod my_psp34_burnable {

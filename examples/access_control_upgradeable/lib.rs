@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A PSP34 contract with access control and set code hash modules.
+/// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
+/// MINTER role is required to mint PSP34 tokens.
+/// CODE_UPGRADER role is rquired to change the contract code hash.
 #[pendzl::implementation(PSP34, AccessControl, SetCodeHash)]
 #[ink::contract]
 pub mod my_access_control {

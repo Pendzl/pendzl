@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A PSP34 contract with access control module.
+/// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
+/// MINTER role is required to mint PSP34 tokens.
 #[pendzl::implementation(PSP34, AccessControl)]
 #[ink::contract]
 pub mod my_access_control {

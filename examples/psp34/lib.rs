@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// An PSP34 cpmtract which allows everyone to mint token with the next id. Maximally U8::MAX tokens can be minted.
 #[pendzl::implementation(PSP34)]
 #[ink::contract]
 pub mod my_psp34 {

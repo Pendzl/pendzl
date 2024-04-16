@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A PSP22 contract with metadata.
 #[pendzl::implementation(PSP22, PSP22Metadata)]
 #[ink::contract]
 pub mod my_psp22_metadata {

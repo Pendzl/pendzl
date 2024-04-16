@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// A PSP22 vault contract with metadata decimal_offset and optional max_deposit_and_mint.
 #[pendzl::implementation(PSP22, PSP22Vault, PSP22Metadata)]
 #[ink::contract]
 pub mod my_psp22_vault {

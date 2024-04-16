@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
+
+/// A PSP22 contract with a 'hated account' that can not receive tokens.
 #[pendzl::implementation(PSP22)]
 #[ink::contract]
 pub mod my_psp22 {
