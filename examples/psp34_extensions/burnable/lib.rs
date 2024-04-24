@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// An PSP34 contract that allows anyone to burn any token.
 /// On construction create 3 tokens with ids 0, 1, 2 and mint them to the caller.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // and PSP34Burnable trait's default implementation (PSP34BurnableDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

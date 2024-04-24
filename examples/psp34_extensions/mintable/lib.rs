@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
+/// A PSP34 contract with mintable module.
+/// anyone can mint PSP34 tokens.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // and PSP34Mintable trait's default implementation (PSP34MintableDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

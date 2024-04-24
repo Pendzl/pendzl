@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-// the following contract implements ProvideVestScheduleInfo trait and is then used by `vester_custom` contract
+/// Contract Summary:
+// The following contract implements ProvideVestScheduleInfo trait and is then used by `vester_custom` contract
 // to provide the vesting schedule information
 #[ink::contract]
 pub mod ts_provider {

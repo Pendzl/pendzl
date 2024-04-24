@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
+/// A PSP34 contract with metadata module.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // and PSP34Metadata trait's default implementation (PSP34MetadataDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

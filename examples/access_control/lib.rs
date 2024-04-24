@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A PSP34 contract with access control module.
 /// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
 /// MINTER role is required to mint PSP34 tokens.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // inject AccessControl trait's default implementation (AccessControlDefaultImpl & AccessControlInternalDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

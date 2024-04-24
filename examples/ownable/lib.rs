@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
+/// Contract Summary:
 /// An PSP22 contract with ownable module.
 /// A creator of the contract becomes an owner.
 /// Owner is allowed to mint and burn PSP22 tokens.
-
+// ########################################################
 // inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
 // and Ownable trait's default implementation (OwnableDefaultImpl & OwnableInternalDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

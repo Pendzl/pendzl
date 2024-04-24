@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A GeneralVest contract.
+// ########################################################
 // inject GeneralVest trait's default implementation (GeneralVestDefaultImpl & GeneralVestInternalDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(GeneralVest)]

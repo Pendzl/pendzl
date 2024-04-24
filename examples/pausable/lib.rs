@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A flipper contract with pausable module.
 /// A flip can happen only if contract is not paused.
+// ########################################################
 // inject Pausable trait's default implementation (PausableDefaultImpl & PausableInternalDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(Pausable)]

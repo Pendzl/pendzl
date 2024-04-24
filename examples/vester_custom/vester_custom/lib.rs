@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
+/// A custom vester contract that uses GeneralVest trait.
+// ########################################################
 // inject GeneralVest trait's default implementation (GeneralVestDefaultImpl & GeneralVestInternalDefaultImpl)
 #[pendzl::implementation(GeneralVest)]
 #[ink::contract]

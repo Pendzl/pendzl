@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A PSP22 contract.
 /// Anyone can burn tokens from anyone's account.
+// ########################################################
 // inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
 // and PSP22Burnable trait's default implementation (PSP22BurnableDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

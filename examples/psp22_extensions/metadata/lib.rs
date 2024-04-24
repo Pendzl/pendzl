@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A PSP22 contract with metadata.
+// ########################################################
 // inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
 // and PSP22Metadata trait's default implementation (PSP22MetadataDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically

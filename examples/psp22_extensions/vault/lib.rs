@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A PSP22 vault contract with metadata decimal_offset and optional max_deposit_and_mint.
+// ########################################################
 // inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
 // and PSP22Vault trait's default implementation (PSP22VaultDefaultImpl & PSP22VaultInternalDefaultImpl)
 // and PSP22Metadata trait's default implementation (PSP22MetadataDefaultImpl)

@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-/// An PSP34 cpmtract which allows everyone to mint token with the next id. Maximally U8::MAX tokens can be minted.
+/// Contract summary:
+/// An PSP34 contract which allows everyone to mint token with the next id. Maximally U8::MAX tokens can be minted.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP34)]

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+/// Contract Summary:
 /// A PSP34 contract with access control and set code hash modules.
 /// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
 /// MINTER role is required to mint PSP34 tokens.
 /// CODE_UPGRADER role is rquired to change the contract code hash.
+// ########################################################
 // inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
 // and AccessControl trait's default implementation (AccessControlDefaultImpl)
 // and SetCodeHash trait's default implementation (SetCodeHashDefaultImpl)
