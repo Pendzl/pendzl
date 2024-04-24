@@ -1,17 +1,29 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+// inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
+// and PSP34Metadata trait's default implementation (PSP34MetadataDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP34, PSP34Metadata)]
 #[ink::contract]
 pub mod my_psp34_metadata {
     use ink::prelude::string::*;
     use pendzl::contracts::psp34::*;
-    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
+    // derive explained below
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP34>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP34Data is a struct that implements PSP34Storage - required by PSP34InternalDefaultImpl trait
+        // note it's not strictly required by PSP34 trait - just the default implementation
+        // name of the field is arbitrary
         psp34: PSP34Data,
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP34Metadata>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP34MetadataData is a struct that implements PSP34MetadataStorage - required by PSP34MetadataInternalDefaultImpl trait
+        // note it's not strictly required by PSP34Metadata trait - just the default implementation
+        // name of the field is arbitrary
         metadata: PSP34MetadataData,
     }
 
@@ -23,6 +35,7 @@ pub mod my_psp34_metadata {
 
             let name_key = String::from("name");
             let symbol_key = String::from("symbol");
+            // use _set_attribute from PSP34MetadataInternal (implemented by PSP34MetadataDefaultImpl)
             instance._set_attribute(&id.clone(), &name_key, &name);
             instance._set_attribute(&id, &symbol_key, &symbol);
 

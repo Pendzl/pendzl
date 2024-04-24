@@ -3,14 +3,22 @@
 
 /// A PSP22 contract.
 /// Anyone can burn tokens from anyone's account.
+// inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
+// and PSP22Burnable trait's default implementation (PSP22BurnableDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP22, PSP22Burnable)]
 #[ink::contract]
 pub mod my_psp22_burnable {
     use pendzl::contracts::psp22::*;
     #[ink(storage)]
+    // derive explained below
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP22>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP22Data is a struct that implements PSP22Storage - required by PSP22InternalDefaultImpl trait
+        // note it's not strictly required by PSP22 trait - just the default implementation
+        // name of the field is arbitrary
         psp22: PSP22Data,
     }
 
@@ -19,6 +27,7 @@ pub mod my_psp22_burnable {
         pub fn new(total_supply: Balance) -> Self {
             let mut instance = Self::default();
 
+            // mint total_supply to the caller using _mint_to from PSP22Internal (implemented by PSP22DefaultImpl)
             instance
                 ._mint_to(&Self::env().caller(), &total_supply)
                 .expect("Should mint");
@@ -32,6 +41,7 @@ pub mod my_psp22_burnable {
             accounts: Vec<(AccountId, Balance)>,
         ) -> Result<(), PSP22Error> {
             for account in accounts.iter() {
+                // use _burn_from to burn from the account from PSP22Internal (implemented by PSP22InternalDefaultImpl)
                 self._burn_from(&account.0, &account.1)?;
             }
             Ok(())

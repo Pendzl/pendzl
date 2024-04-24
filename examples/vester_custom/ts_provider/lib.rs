@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+// the following contract implements ProvideVestScheduleInfo trait and is then used by `vester_custom` contract
+// to provide the vesting schedule information
 #[ink::contract]
 pub mod ts_provider {
     use pendzl::contracts::general_vest::ProvideVestScheduleInfo;
@@ -49,6 +51,7 @@ pub mod ts_provider {
         }
     }
 
+    // implement ProvideVestScheduleInfo to be used by ExternalTimeConstraint (from VestingSchedule)
     impl ProvideVestScheduleInfo for TSProvider {
         #[ink(message)]
         fn get_waiting_and_vesting_durations(&self) -> (Timestamp, Timestamp) {

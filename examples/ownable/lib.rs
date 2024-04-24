@@ -3,6 +3,10 @@
 /// An PSP22 contract with ownable module.
 /// A creator of the contract becomes an owner.
 /// Owner is allowed to mint and burn PSP22 tokens.
+
+// inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
+// and Ownable trait's default implementation (OwnableDefaultImpl & OwnableInternalDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP22, Ownable)]
 #[ink::contract]
 pub mod ownable {
@@ -11,11 +15,19 @@ pub mod ownable {
     };
 
     #[ink(storage)]
-    #[derive(Default, StorageFieldGetter)]
+    // derive explained below
+    #[derive(StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP22>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP22Data is a struct that implements PSP22Storage - required by PSP22InternalDefaultImpl trait
+        // note it's not strictly required by PSP22 trait - just the default implementation
+        // name of the field is arbitrary
         psp22: PSP22Data,
         #[storage_field]
+        // OwnableData is a struct that implements OwnableStorage - required by OwnableInternalDefaultImpl trait
+        // note it's not strictly required by Ownable trait - just the default implementation
+        // name of the field is arbitrary
         ownable: OwnableData,
     }
 
@@ -23,11 +35,13 @@ pub mod ownable {
         #[ink(constructor)]
         pub fn new() -> Self {
             let mut instance = Contract::default();
+            // use _update_owner to set the owner to the caller from OwnableInternal (implemented by OwnableDefaultImpl)
             instance._update_owner(&Some(Self::env().caller()));
             instance
         }
     }
 
+    // implement PSP22Burnable for Contract
     impl PSP22Burnable for Contract {
         #[ink(message)]
         fn burn(
@@ -35,7 +49,9 @@ pub mod ownable {
             account: AccountId,
             amount: Balance,
         ) -> Result<(), PSP22Error> {
+            // use _only_owner to ensure only the owner can burn from OwnableInternal (implemented by OwnableDefaultImpl)
             self._only_owner()?;
+            // use _update to update the balance from PSP22Internal (implemented by PSP22InternalDefaultImpl)
             self._update(Some(&account), None, &amount)
         }
     }
@@ -47,7 +63,9 @@ pub mod ownable {
             account: AccountId,
             amount: Balance,
         ) -> Result<(), PSP22Error> {
+            // use _only_owner to ensure only the owner can burn from OwnableInternal (implemented by OwnableDefaultImpl)
             self._only_owner()?;
+            // use _update to update the balance from PSP22Internal (implemented by PSP22InternalDefaultImpl)
             self._update(None, Some(&account), &amount)
         }
     }

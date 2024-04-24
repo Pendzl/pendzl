@@ -3,14 +3,22 @@
 
 /// An PSP34 contract that allows anyone to burn any token.
 /// On construction create 3 tokens with ids 0, 1, 2 and mint them to the caller.
+// inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
+// and PSP34Burnable trait's default implementation (PSP34BurnableDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP34, PSP34Burnable)]
 #[ink::contract]
 pub mod my_psp34_burnable {
     use pendzl::contracts::psp34::*;
-    #[derive(Default, StorageFieldGetter)]
     #[ink(storage)]
+    // derive explained below
+    #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP34>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP34Data is a struct that implements PSP34Storage - required by PSP34InternalDefaultImpl trait
+        // note it's not strictly required by PSP34 trait - just the default implementation
+        // name of the field is arbitrary
         psp34: PSP34Data,
     }
 
@@ -20,6 +28,7 @@ pub mod my_psp34_burnable {
         pub fn new() -> Self {
             let mut instance = Self::default();
 
+            // mint 3 tokens to the caller using _mint_to from PSP34Internal (implemented by PSP34DefaultImpl)
             instance
                 ._mint_to(&Self::env().caller(), &Id::U8(0u8))
                 .expect("Should mint token with id 0");

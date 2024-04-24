@@ -2,6 +2,9 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 /// A PSP22 contract with metadata.
+// inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
+// and PSP22Metadata trait's default implementation (PSP22MetadataDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP22, PSP22Metadata)]
 #[ink::contract]
 pub mod my_psp22_metadata {
@@ -11,11 +14,20 @@ pub mod my_psp22_metadata {
     use pendzl::contracts::psp22::PSP22Internal;
 
     #[ink(storage)]
+    // derive explained below
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP22>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP22Data is a struct that implements PSP22Storage - required by PSP22InternalDefaultImpl trait
+        // note it's not strictly required by PSP22 trait - just the default implementation
+        // name of the field is arbitrary
         psp22: PSP22Data,
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP22Metadata>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP22MetadataData is a struct that implements PSP22MetadataStorage - required by PSP22MetadataInternalDefaultImpl trait
+        // note it's not strictly required by PSP22Metadata trait - just the default implementation
+        // name of the field is arbitrary
         metadata: PSP22MetadataData,
     }
 
@@ -30,10 +42,12 @@ pub mod my_psp22_metadata {
             let mut instance = Self::default();
             let caller = instance.env().caller();
 
+            // set metadata fields using lazy fields of PSP22MetadataData storage item
             instance.metadata.name.set(&name);
             instance.metadata.symbol.set(&symbol);
             instance.metadata.decimals.set(&decimal);
 
+            // mint total_supply to the caller using _update from PSP22Internal (implemented by PSP22DefaultImpl)
             instance
                 ._update(None, Some(&caller), &total_supply)
                 .expect("Should mint total_supply");

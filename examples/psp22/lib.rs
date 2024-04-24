@@ -2,6 +2,8 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 /// A PSP22 contract with a 'hated account' that can not receive tokens.
+// inject PSP22 trait's default implementation (PSP22DefaultImpl & PSP22InternalDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP22)]
 #[ink::contract]
 pub mod my_psp22 {
@@ -13,14 +15,21 @@ pub mod my_psp22 {
     }
 
     #[ink(storage)]
+    // derive explained below
     #[derive(StorageFieldGetter)]
     pub struct Contract {
+        // apply the storage_field attribute so it's accessible via `self.data::<PSP22>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP22Data is a struct that implements PSP22Storage - required by PSP22InternalDefaultImpl trait
+        // note it's not strictly required by PSP22 trait - just the default implementation
+        // name of the field is arbitrary
         psp22: PSP22Data,
+        // apply the storage_field attribute so it's accessible via `self.data::<HatedStorage>()` (provided by StorageFieldGetter derive)
         #[storage_field]
         hated_storage: HatedStorage,
     }
 
+    // override the default implementation of PSP22Internal trait's _update function (from PSP22InternalDefaultImpl) to inject custom logic
     #[overrider(PSP22Internal)]
     fn _update(
         &mut self,
@@ -33,6 +42,7 @@ pub mod my_psp22 {
                 "I hate this account!",
             )));
         }
+        // call the default implementation
         pendzl::contracts::psp22::PSP22InternalDefaultImpl::_update_default_impl(
             self, from, to, amount,
         )

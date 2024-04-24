@@ -5,6 +5,9 @@
 /// A PSP34 contract with access control module.
 /// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
 /// MINTER role is required to mint PSP34 tokens.
+// inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
+// inject AccessControl trait's default implementation (AccessControlDefaultImpl & AccessControlInternalDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP34, AccessControl)]
 #[ink::contract]
 pub mod my_access_control {
@@ -14,11 +17,20 @@ pub mod my_access_control {
     };
 
     #[ink(storage)]
+    // derive explained below
     #[derive(Default, StorageFieldGetter)]
     pub struct Contract {
+        /// apply the storage_field attribute so it's accessible via `self.data::<PSP34>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // PSP34Data is a struct that implements PSP34Storage - required by PSP34InternalDefaultImpl trait
+        // note it's not strictly required by PSP34 trait - just the default implementation
+        // name of the field is arbitrary
         psp34: PSP34Data,
+        // apply the storage_field attribute so it's accessible via `self.data::<AccessControl>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // AccessControlData is a struct that implements AccessControlStorage - required by AccessControlInternalDefaultImpl trait
+        // note it's not strictly required by AccessControl trait - just the default implementation
+        // name of the field is arbitrary
         access: AccessControlData,
     }
 
@@ -35,7 +47,9 @@ pub mod my_access_control {
             account: AccountId,
             id: Id,
         ) -> Result<(), PSP34Error> {
+            // use _ensure_has_role from AccessControlInternal (implemented by AccessControlDefaultImpl)
             self._ensure_has_role(MINTER, Some(self.env().caller()))?;
+            // call the default implementation of burn from PSP34Internal (implemented by PSP34DefaultImpl)
             self._burn_from(&account, &id)
         }
     }
@@ -47,7 +61,9 @@ pub mod my_access_control {
             account: AccountId,
             id: Id,
         ) -> Result<(), PSP34Error> {
+            // use _ensure_has_role from AccessControlInternal (implemented by AccessControlDefaultImpl)
             self._ensure_has_role(MINTER, Some(self.env().caller()))?;
+            // call the default implementation of mint from PSP34Internal (implemented by PSP34DefaultImpl)
             self._mint_to(&account, &id)
         }
     }
@@ -58,6 +74,7 @@ pub mod my_access_control {
             let mut instance = Self::default();
 
             let caller = instance.env().caller();
+            // use _grant_role from AccessControlInternal (implemented by AccessControlDefaultImpl)
             // grant a caller admin role in constructor so there exist an account that can grant roles
             instance
                 ._grant_role(Self::_default_admin(), Some(caller))

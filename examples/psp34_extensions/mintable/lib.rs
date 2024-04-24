@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
+// inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
+// and PSP34Mintable trait's default implementation (PSP34MintableDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(PSP34, PSP34Mintable)]
 #[ink::contract]
 pub mod my_psp34_mintable {

@@ -2,13 +2,20 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 /// A GeneralVest contract.
+// inject GeneralVest trait's default implementation (GeneralVestDefaultImpl & GeneralVestInternalDefaultImpl)
+// which reduces the amount of boilerplate code required to implement trait messages drastically
 #[pendzl::implementation(GeneralVest)]
 #[ink::contract]
 pub mod vester {
     #[ink(storage)]
+    // derive explained below
     #[derive(Default, StorageFieldGetter)]
     pub struct Vester {
+        // apply the storage_field attribute so it's accessible via `self.data::<GeneralVest>()` (provided by StorageFieldGetter derive)
         #[storage_field]
+        // GeneralVestData is a struct that implements GeneralVestStorage - required by GeneralVestInternalDefaultImpl trait
+        // note it's not strictly required by GeneralVest trait - just the default implementation
+        // name of the field is arbitrary
         general_vest: GeneralVestData,
     }
 

@@ -5,6 +5,10 @@
 /// A creator of the contract becomes an DEFAULT_ADMIN and MINTER.
 /// MINTER role is required to mint PSP34 tokens.
 /// CODE_UPGRADER role is rquired to change the contract code hash.
+// inject PSP34 trait's default implementation (PSP34DefaultImpl & PSP34InternalDefaultImpl)
+// and AccessControl trait's default implementation (AccessControlDefaultImpl)
+// and SetCodeHash trait's default implementation (SetCodeHashDefaultImpl)
+// SetCodeHash implementation allows for setting code hash of the contract thus enabling upgradeability
 #[pendzl::implementation(PSP34, AccessControl, SetCodeHash)]
 #[ink::contract]
 pub mod my_access_control {
@@ -22,10 +26,6 @@ pub mod my_access_control {
         access: AccessControlData,
     }
 
-    // You can manually set the number for the role.
-    // But better to use a hash of the variable name.
-    // It will generate a unique identifier of this role.
-    // And will reduce the chance to have overlapping roles.
     const MINTER: RoleType = ink::selector_id!("MINTER");
 
     impl PSP34Burnable for Contract {
