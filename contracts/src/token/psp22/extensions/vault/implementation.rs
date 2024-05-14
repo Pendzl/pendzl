@@ -34,7 +34,7 @@ impl PSP22VaultData {
         } else {
             let (success, decimals) = {
                 let call = build_call::<DefaultEnvironment>()
-                    .call(asset)
+                    .call_v1(asset)
                     .exec_input(ExecutionInput::new(
                         ink::env::call::Selector::new(ink::selector_bytes!(
                             "PSP22Metadata::token_decimals"
@@ -84,7 +84,7 @@ where
 
     fn _try_get_asset_decimals_default_impl(&self) -> (bool, u8) {
         let call = build_call::<DefaultEnvironment>()
-            .call(self.data::<PSP22VaultData>().asset().to_account_id())
+            .call_v1(self.data::<PSP22VaultData>().asset().to_account_id())
             .exec_input(ExecutionInput::new(ink::env::call::Selector::new(
                 ink::selector_bytes!("PSP22Metadata::token_decimals"),
             )))

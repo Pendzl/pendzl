@@ -16,6 +16,8 @@ use super::{
     VestingSchedule, VestingScheduled,
 };
 
+use ink::codegen::TraitCallBuilder;
+
 #[derive(Default, Debug)]
 #[pendzl::storage_item]
 pub struct GeneralVestData {
@@ -247,7 +249,11 @@ where
         match asset {
             Some(asset) => {
                 let mut psp22: PSP22Ref = asset.into();
-                psp22.transfer(to, amount as Balance, vec![])?
+                psp22
+                    .call_mut()
+                    .transfer(to, amount as Balance, vec![])
+                    .call_v1()
+                    .invoke()?
             }
             None => match Self::env().transfer(to, amount) {
                 Ok(_) => {}
@@ -267,7 +273,11 @@ where
             Some(asset) => {
                 let mut psp22: PSP22Ref = asset.into();
                 let to = Self::env().account_id();
-                psp22.transfer_from(from, to, amount as Balance, vec![])?
+                psp22
+                    .call_mut()
+                    .transfer_from(from, to, amount as Balance, vec![])
+                    .call_v1()
+                    .invoke()?
             }
             None => {
                 if Self::env().transferred_value() != amount {

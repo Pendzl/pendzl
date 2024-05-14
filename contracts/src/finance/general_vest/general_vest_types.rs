@@ -21,7 +21,7 @@ pub struct ExternalTimeConstraint {
 impl ExternalTimeConstraint {
     fn get_waiting_and_duration_times(&self) -> (Timestamp, Timestamp) {
         let call = build_call::<DefaultEnvironment>()
-            .call(self.account)
+            .call_v1(self.account)
             .exec_input(ExecutionInput::new(ink::env::call::Selector::new(
                 ink::selector_bytes!("ProvideVestScheduleInfo::get_waiting_and_vesting_durations"),
             )))
