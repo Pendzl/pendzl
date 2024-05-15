@@ -3823,7 +3823,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl"
-version = "0.2.4"
+version = "0.2.4-v1calls"
 dependencies = [
  "ink",
  "ink_e2e",
@@ -3837,7 +3837,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl_contracts"
-version = "0.2.4"
+version = "0.2.4-v1calls"
 dependencies = [
  "hex",
  "ink",
@@ -3848,7 +3848,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl_lang"
-version = "0.2.4"
+version = "0.2.4-v1calls"
 dependencies = [
  "const_format",
  "ethnum",
@@ -3861,7 +3861,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl_lang_codegen"
-version = "0.2.4"
+version = "0.2.4-v1calls"
 dependencies = [
  "blake2",
  "cargo_metadata 0.13.1",
@@ -3880,7 +3880,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl_lang_macro"
-version = "0.2.4"
+version = "0.2.4-v1calls"
 dependencies = [
  "ink",
  "parity-scale-codec",
