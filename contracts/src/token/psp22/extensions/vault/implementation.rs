@@ -14,6 +14,7 @@ use crate::token::psp22::{PSP22Internal, PSP22Ref, PSP22Storage};
 
 use ink::prelude::{string::ToString, vec::*};
 
+use ink::codegen::TraitCallBuilder;
 use pendzl::math::operations::Rounding;
 
 #[derive(Default, Debug)]
@@ -104,7 +105,11 @@ where
     }
 
     fn _total_assets_default_impl(&self) -> Balance {
-        self._asset().balance_of(Self::env().account_id())
+        self._asset()
+            .call()
+            .balance_of(Self::env().account_id())
+            .call_v1()
+            .invoke()
     }
 
     fn _convert_to_shares_default_impl(
@@ -199,12 +204,16 @@ where
             assets,
             shares
         );
-        self._asset().transfer_from(
-            *caller,
-            Self::env().account_id(),
-            *assets,
-            Vec::<u8>::new(),
-        )?;
+        self._asset()
+            .call_mut()
+            .transfer_from(
+                *caller,
+                Self::env().account_id(),
+                *assets,
+                Vec::<u8>::new(),
+            )
+            .call_v1()
+            .invoke()?;
         self._mint_to(receiver, shares)?;
 
         Self::env().emit_event(Deposit {
