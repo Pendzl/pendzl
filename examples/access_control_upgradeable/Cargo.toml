@@ -1,6 +1,6 @@
 [package]
 name = "access_control_upgradeable"
-version = "0.2.4-v1calls"
+version = "0.2.4-v1calls2"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",

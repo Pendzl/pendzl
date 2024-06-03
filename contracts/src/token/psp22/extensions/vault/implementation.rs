@@ -240,7 +240,10 @@ where
 
         self._burn_from(owner, shares)?;
         self._asset()
-            .transfer(*receiver, *assets, Vec::<u8>::new())?;
+            .call_mut()
+            .transfer(*receiver, *assets, Vec::<u8>::new())
+            .call_v1()
+            .invoke()?;
 
         Self::env().emit_event(Withdraw {
             sender: *caller,
