@@ -3823,7 +3823,7 @@ dependencies = [
 
 [[package]]
 name = "pendzl"
-version = "0.2.4-v1calls2"
+version = "0.2.4-v1calls3"
 dependencies = [
  "ink",
  "ink_e2e",
