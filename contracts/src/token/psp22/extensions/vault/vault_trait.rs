@@ -225,6 +225,11 @@ pub trait PSP22VaultInternal {
     /// Provides an offset for decimals, used in internal calculations.
     ///
     /// - Returns a fixed decimal offset value. Override as needed for specific implementations.
+    ///
+    /// # Note
+    ///
+    /// When overriding default decimal offset, ensure that value is smaller than 39 - otherwise it may cause overflow.
+    /// Usage of offsets greater than 6 is discouraged.
     fn _decimals_offset(&self) -> u8;
 
     /// Attempts to fetch the asset decimals.
