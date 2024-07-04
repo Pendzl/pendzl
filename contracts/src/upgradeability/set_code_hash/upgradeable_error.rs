@@ -24,9 +24,6 @@ impl From<crate::access::ownable::OwnableError> for SetCodeHashError {
                     "O::CallerIsNotOwner",
                 ))
             }
-            OwnableError::ActionRedundant => SetCodeHashError::PermissionError(
-                String::from("O::ActionRedundant"),
-            ),
         }
     }
 }
