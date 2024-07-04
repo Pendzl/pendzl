@@ -102,10 +102,14 @@ impl PSP34Storage for PSP34Data {
         };
         self.owner_of.remove(id);
         let balance = self.owned_tokens_count.get(from).unwrap_or(0);
-        self.owned_tokens_count.insert(from, &(balance - 1));
+        self.owned_tokens_count.insert(
+            from,
+            &(balance.checked_sub(1).ok_or(MathError::Underflow)?),
+        );
 
         let total_suply = self.total_supply.get().unwrap();
-        self.total_supply.set(&(total_suply - 1));
+        self.total_supply
+            .set(&(total_suply.checked_sub(1).ok_or(MathError::Underflow)?));
         Ok(())
     }
 }
