@@ -199,11 +199,6 @@ where
         assets: &Balance,
         shares: &Balance,
     ) -> Result<(), PSP22Error> {
-        ink::env::debug_println!(
-            "deposit_default_impl: assets: {}, shares: {}",
-            assets,
-            shares
-        );
         self._asset()
             .call_mut()
             .transfer_from(
@@ -336,11 +331,6 @@ pub trait PSP22VaultDefaultImpl:
             return Err(PSP22Error::Custom("V:MaxDeposit".to_string()));
         }
         let shares = self._preview_deposit(&assets)?;
-        ink::env::debug_println!(
-            "deposit_default_impl: assets: {}, shares: {}",
-            assets,
-            shares
-        );
         self._deposit(&Self::env().caller(), &receiver, &assets, &shares)?;
         Ok(shares)
     }
