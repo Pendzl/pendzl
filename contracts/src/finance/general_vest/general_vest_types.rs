@@ -83,7 +83,7 @@ impl VestingData {
             .ok_or(MathError::Overflow)?;
         Ok(amount_releaseable)
     }
-    pub fn amount_releaseable_rdown(&self) -> Result<Balance, VestingError> {
+    fn amount_releaseable_rdown(&self) -> Result<Balance, VestingError> {
         let now: Timestamp = Self::env().block_timestamp();
         let (waiting_duration, vesting_duration) =
             self.schedule.get_waiting_and_duration_times();
@@ -97,14 +97,17 @@ impl VestingData {
 
         let is_overdue = self.is_overdue()?;
         if is_overdue {
-            return Ok(self.amount - self.released);
+            return Ok(self.amount.checked_sub(self.released).unwrap_or(0));
         }
         if now <= start_time {
             return Ok(0);
         }
-        if start_time == end_time && now > start_time {
-            return Ok(self.amount - self.released);
+
+        // setting start_time to value greater than end_time results in an immediate release
+        if start_time >= end_time && now > start_time {
+            return Ok(self.amount.checked_sub(self.released).unwrap_or(0));
         }
+
         let total_to_release = self
             .amount
             .checked_mul(u128::try_from(now - start_time).unwrap())
