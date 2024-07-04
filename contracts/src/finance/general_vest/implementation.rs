@@ -90,9 +90,10 @@ impl GeneralVestStorage for GeneralVestData {
             Some(data) => data,
             None => return Ok((false, 0)),
         };
-        let amount_released = data.collect_releasable_rdown()?;
+        let amount_to_be_released = data.collect_releasable_rdown()?;
         if data.is_overdue()? {
-            let leftover = data.amount - data.released;
+            let leftover_amount =
+                data.amount.checked_sub(data.released).unwrap_or(0);
             let next_id = self.next_id.get((to, asset)).unwrap(); // data is some => next_id must exist and be > 0
             let tail_id = next_id - 1;
             let tail = self.vesting_datas.get((to, asset, tail_id)).unwrap(); // next_id must exist and be > 0 => tail must exist
@@ -104,13 +105,13 @@ impl GeneralVestStorage for GeneralVestData {
             self.next_id.insert((to, asset), &(tail_id));
             return Ok((
                 true,
-                amount_released
-                    .checked_add(leftover)
+                amount_to_be_released
+                    .checked_add(leftover_amount)
                     .ok_or(MathError::Overflow)?,
             ));
         }
         self.vesting_datas.insert((to, asset, id), &data);
-        Ok((false, amount_released))
+        Ok((false, amount_to_be_released))
     }
 
     fn get_schedule_by_id(

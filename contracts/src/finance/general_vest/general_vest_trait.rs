@@ -26,6 +26,10 @@ pub trait GeneralVest {
     /// Returns with `NativeTransferFailed` if the transfer of the native token fails.
     /// Returns with `InvalidAmountPaid` if the amount paid is invalid.
     /// Returns with `Custom` when custom error is returned.
+    ///
+    /// # Note
+    /// setting `start_time` in `VestingSchedule::Constant` to value greater than `end_time`
+    /// will result in an immediate release of the whole `amount` upon crossing the `start_time`.
     #[ink(message, payable)]
     fn create_vest(
         &mut self,
