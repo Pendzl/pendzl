@@ -31,9 +31,6 @@ impl From<OwnableError> for PSP34Error {
             OwnableError::CallerIsNotOwner => {
                 PSP34Error::Custom(String::from("O::CallerIsNotOwner"))
             }
-            OwnableError::ActionRedundant => {
-                PSP34Error::Custom(String::from("O::ActionRedundant"))
-            }
         }
     }
 }

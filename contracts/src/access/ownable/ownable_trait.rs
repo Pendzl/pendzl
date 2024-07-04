@@ -40,7 +40,9 @@ pub trait Ownable {
     ///
     /// Panics with `CallerIsNotOwner` error if caller is not owner.
     ///
-    /// Panics with `NewOwnerIsZero` error if new owner's address is zero.
+    /// # Note
+    ///
+    /// Zero Address private key is known. Do not transfer ownership to Zero Address unless it is intended.
     #[ink(message)]
     fn transfer_ownership(
         &mut self,

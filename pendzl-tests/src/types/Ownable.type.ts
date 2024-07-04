@@ -12,7 +12,6 @@ import { ContractOptions } from "@polkadot/api-contract/types";
 
 export enum OwnableError {
   CallerIsNotOwner = "CallerIsNotOwner",
-  ActionRedundant = "ActionRedundant",
 }
 
 interface OwnableQuery {

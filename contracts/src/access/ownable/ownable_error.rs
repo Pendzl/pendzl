@@ -7,6 +7,4 @@
 pub enum OwnableError {
     /// Error when the caller is not the current owner.
     CallerIsNotOwner,
-    /// Error when an action is redundant, such as transferring ownership to the current owner.
-    ActionRedundant,
 }
