@@ -109,11 +109,14 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
     }
 }
 
-//TODO verify
 fn cleanup_imports(imports: &mut HashMap<&str, syn::ItemUse>) {
     // we will remove unnecessary imports
-    let psp22_default_impls =
-        vec!["PSP22Mintable", "PSP22Burnable", "PSP22Metadata"];
+    let psp22_default_impls = vec![
+        "PSP22Mintable",
+        "PSP22Burnable",
+        "PSP22Metadata",
+        "PSP22Vault",
+    ];
     check_and_remove_import("PSP22", psp22_default_impls, imports);
 
     let psp34_default_impls =
