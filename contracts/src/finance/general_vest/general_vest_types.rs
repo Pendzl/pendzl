@@ -112,7 +112,7 @@ impl VestingData {
             .checked_div(u128::try_from(end_time - start_time).unwrap())
             .ok_or(MathError::DivByZero)?
             .checked_sub(1)
-            .ok_or(MathError::Underflow)?; //TODO ??
+            .ok_or(MathError::Underflow)?;
         let amount_releaseable = total_to_release - self.released;
         Ok(amount_releaseable)
     }
