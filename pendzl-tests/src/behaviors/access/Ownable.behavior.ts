@@ -100,7 +100,7 @@ export function shouldBehaveLikeOwnable(
       //     .to.emit(ctx.ownable, "OwnershipTransferred")
       //     .withArgs(ethers.ZeroAddress, ctx.other);
 
-      //   expect(await ctx.ownable.owner()).to.equal(ctx.other);
+      //   await expect(await ctx.ownable.owner()).to.equal(ctx.other);
       // });
     });
   });

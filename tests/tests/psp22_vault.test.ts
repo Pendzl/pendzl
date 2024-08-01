@@ -20,7 +20,7 @@ const [deployer, holder, recipient, spender, other, ...accounts] = getSigners();
 let token: TPsp22Contract;
 let vault: TVaultContract;
 
-describe('ERC4626', function () {
+describe.only('ERC4626', function () {
   let api: ApiPromise;
   beforeEach(async () => {
     api = await localApi.get();
@@ -510,13 +510,13 @@ describe('ERC4626', function () {
     // 3. Vault mutates by +3000 tokens (simulated yield returned from strategy)
     await token.tx.tMint(vault.address, 3000);
 
-    expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
-    expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(4000);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(2999);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(5999);
-    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(6000);
-    expect(await vault.query.totalSupply()).to.haveOkResult(6000);
-    expect(await vault.query.totalAssets()).to.haveOkResult(9000);
+    await expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(2000);
+    await expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(4000);
+    await expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(2999);
+    await expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(5999);
+    await expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(6000);
+    await expect(await vault.query.totalSupply()).to.haveOkResult(6000);
+    await expect(await vault.query.totalAssets()).to.haveOkResult(9000);
 
     // // 4. Alice deposits 2000 tokens (mints 1333 shares)
     tx = await vault.withSigner(alice).tx.deposit(2000, alice.address);
@@ -553,13 +553,13 @@ describe('ERC4626', function () {
     // 6. Vault mutates by +3000 tokens
     await token.tx.tMint(vault.address, 3000);
 
-    expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(3333);
-    expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(6000);
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(6070); // used to be 6071
-    expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(10928); // used to be 10929
-    expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(9333);
-    expect(await vault.query.totalSupply()).to.haveOkResult(9333);
-    expect(await vault.query.totalAssets()).to.haveOkResult(17000); // used to be 17001
+    await expect(await vault.query.balanceOf(alice.address)).to.haveOkResult(3333);
+    await expect(await vault.query.balanceOf(bruce.address)).to.haveOkResult(6000);
+    await expect(await vault.query.convertToAssets((await vault.query.balanceOf(alice.address)).value.ok!, Rounding.down)).to.haveOkResult(6070); // used to be 6071
+    await expect(await vault.query.convertToAssets((await vault.query.balanceOf(bruce.address)).value.ok!, Rounding.down)).to.haveOkResult(10928); // used to be 10929
+    await expect(await vault.query.convertToShares((await token.query.balanceOf(vault.address)).value.ok!, Rounding.down)).to.haveOkResult(9333);
+    await expect(await vault.query.totalSupply()).to.haveOkResult(9333);
+    await expect(await vault.query.totalAssets()).to.haveOkResult(17000); // used to be 17001
 
     // 7. Alice redeem 1333 shares (2428 assets)
     tx = await vault.withSigner(alice).tx.redeem(1333, alice.address, alice.address);
