@@ -1,6 +1,6 @@
 [package]
 name = "t_vester"
-version = "1.0.0-v1calls"
+version = "1.0.1-v1calls"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",

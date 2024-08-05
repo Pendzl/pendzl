@@ -1,6 +1,6 @@
 [package]
 name = "test_helpers"
-version = "1.0.0-v1calls"
+version = "1.0.1-v1calls"
 authors = [
     " Brushfam <varex.silver@727.ventures> (old author), Konrad Wierzbik <konrad.wierzbik@gmail.com> ",
 ]

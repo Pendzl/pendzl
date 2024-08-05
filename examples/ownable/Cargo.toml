@@ -1,6 +1,6 @@
 [package]
 name = "my_ownable"
-version = "1.0.0-v1calls"
+version = "1.0.1-v1calls"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",

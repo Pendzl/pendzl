@@ -5,7 +5,7 @@ exclude = ["examples", "tests/contracts"]
 
 [package]
 name = "pendzl"
-version = "1.0.0-v1calls"
+version = "1.0.1-v1calls"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -28,8 +28,8 @@ scale-info = { version = "2.11", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "=0.2.4-v1calls2", path = "contracts", default-features = false }
-pendzl_lang = { version = "=0.2.4-v1calls2", path = "lang", default-features = false }
+pendzl_contracts = { version = "=1.0.1-v1calls", path = "contracts", default-features = false }
+pendzl_lang = { version = "=1.0.1-v1calls", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"

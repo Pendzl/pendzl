@@ -1,6 +1,6 @@
 [package]
 name = "t_flipper"
-version = "1.0.0-v1calls"
+version = "1.0.1-v1calls"
 authors = [""]
 edition = "2021"
 
