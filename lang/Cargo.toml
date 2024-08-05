@@ -1,6 +1,6 @@
 [package]
 name = "pendzl_lang"
-version = "0.2.4-v1calls2"
+version = "1.0.0-v1calls"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com>",
@@ -15,7 +15,7 @@ categories = ["no-std", "embedded"]
 include = ["Cargo.toml", "src/**/*.rs"]
 
 [dependencies]
-pendzl_lang_macro = { version = "0.2.4-v1calls2", path = "macro", default-features = false }
+pendzl_lang_macro = { version = "1.0.0-v1calls", path = "macro", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = [
     "derive",

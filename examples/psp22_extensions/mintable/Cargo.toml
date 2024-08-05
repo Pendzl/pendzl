@@ -1,6 +1,6 @@
 [package]
 name = "my_psp22_mintable"
-version = "0.2.4-v1calls2"
+version = "1.0.0-v1calls"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
