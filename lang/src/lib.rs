@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 #![cfg_attr(not(feature = "std"), no_std)]
+#![doc = include_str!("../README.md")]
 
 mod macros;
 pub mod math;

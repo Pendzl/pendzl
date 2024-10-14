@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Brushfam. All Rights Reserved.
 // Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
+#![doc = include_str!("../README.md")]
 pub mod implementation;
 mod implementations;
 pub mod internal;

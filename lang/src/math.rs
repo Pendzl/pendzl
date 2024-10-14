@@ -21,6 +21,40 @@ pub mod operations {
 
     use super::errors::MathError;
     use ethnum::U256;
+
+    /// Performs multiplication followed by division with full precision, handling potential overflows,
+    /// and allows for rounding up or down.
+    ///
+    /// The `mul_div` function computes `(x * y) / denominator` with full precision, ensuring that
+    /// intermediate overflows are correctly handled using 256-bit arithmetic (`ethnum::U256`). It also
+    /// supports rounding the result up or down based on the `Rounding` parameter.
+    ///
+    /// # Arguments
+    ///
+    /// - `x`: The multiplicand (`u128`).
+    /// - `y`: The multiplier (`u128`).
+    /// - `denominator`: The divisor (`u128`). Must not be zero.
+    /// - `round`: Specifies whether to round the result up or down (`Rounding` enum).
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(u128)`: The computed result after multiplication and division, possibly rounded.
+    /// - `Err(MathError)`: An error if division by zero occurs or if the result overflows `u128`.
+    ///
+    /// # Errors
+    ///
+    /// - `MathError::DivByZero`: Returned if `denominator` is zero.
+    /// - `MathError::Overflow`: Returned if the result does not fit into `u128`.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    ///
+    /// let result = mul_div(100, 200, 50, Rounding::Down);
+    /// assert_eq!(result, Ok(400));
+    ///
+    /// let result = mul_div(u128::MAX, u128::MAX, 1, Rounding::Down);
+    /// assert_eq!(result, Err(MathError::Overflow));
     pub fn mul_div(
         x: u128,
         y: u128,
@@ -35,9 +69,9 @@ pub mod operations {
             return Ok(0);
         }
 
-        let x_u256 = U256::try_from(x).unwrap();
-        let y_u256 = U256::try_from(y).unwrap();
-        let denominator_u256 = U256::try_from(denominator).unwrap();
+        let x_u256 = U256::from(x);
+        let y_u256 = U256::from(y);
+        let denominator_u256 = U256::from(denominator);
 
         // this can not overflow
         let mul_u256 = x_u256.checked_mul(y_u256).unwrap();

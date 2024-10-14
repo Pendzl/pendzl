@@ -4,6 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
-
+#![doc = include_str!("../README.md")]
 pub use pendzl_contracts as contracts;
 pub use pendzl_lang::*;

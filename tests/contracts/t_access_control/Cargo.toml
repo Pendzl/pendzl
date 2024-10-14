@@ -1,6 +1,6 @@
 [package]
 name = "t_access_control"
-version = "1.0.1-v1calls"
+version = "1.0.2"
 previous-authors = ["Brushfam <green@727.ventures>"]
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
@@ -40,7 +40,7 @@ std = [
     "pendzl/std",
 ]
 ink-as-dependency = []
-e2e-tests = []
+
 
 [profile.dev]
 codegen-units = 16
