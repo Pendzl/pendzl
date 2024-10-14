@@ -47,16 +47,10 @@ pub trait StorageFieldGetter<Data>
 where
     Self: Flush + StorageAsRef + StorageAsMut + DefaultEnv,
 {
-    #[deprecated(
-        since = "2.1.0",
-        note = "please use `StorageAsRef::data` instead"
-    )]
+    #[deprecated(note = "please use `StorageAsRef::data` instead")]
     fn get(&self) -> &Data;
 
-    #[deprecated(
-        since = "2.1.0",
-        note = "please use `StorageAsMut::data` instead"
-    )]
+    #[deprecated(note = "please use `StorageAsMut::data` instead")]
     fn get_mut(&mut self) -> &mut Data;
 }
 

@@ -14,7 +14,19 @@ pub type OverridenFnMap = HashMap<
         (Box<Block>, Vec<syn::Attribute>, Punctuated<FnArg, Comma>),
     )>,
 >;
-
+/// Holds context and mutable references required during code generation.
+///
+/// The `ImplArgs` struct contains references to various components that are modified or accessed
+/// during the generation of trait implementations. It provides the necessary context and data
+/// structures needed to inject default implementations, handle overrides, and manage imports.
+///
+/// # Fields
+///
+/// - `map`: A reference to the map of overridden functions (`OverridenFnMap`).
+/// - `items`: A mutable reference to the vector of module items (`Vec<syn::Item>`).
+/// - `imports`: A mutable reference to the map of imports (`HashMap<&str, syn::ItemUse>`).
+/// - `overriden_traits`: A mutable reference to the map of overridden trait implementations (`HashMap<&str, syn::Item>`).
+/// - `storage_struct_name`: The name of the contract's storage struct (`String`).
 pub struct ImplArgs<'a> {
     pub map: &'a OverridenFnMap,
     pub items: &'a mut Vec<syn::Item>,
@@ -53,6 +65,17 @@ impl<'a> ImplArgs<'a> {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+////// START OF IMPLEMENTATIONS
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     let storage_struct_name = impl_args.contract_name();
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
@@ -1192,26 +1215,68 @@ pub(crate) fn impl_set_code_hash(impl_args: &mut ImplArgs) {
         .push(syn::Item::Impl(upgradeable_default_impl));
     impl_args.items.push(syn::Item::Impl(set_code_hash));
 }
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+////// END OF IMPLEMENTATIONS
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
+/// Overrides functions in a trait implementation with custom implementations provided by the user.
+///
+/// This function modifies the provided `implementation` by replacing the bodies and attributes
+/// of methods that are specified in the `map` for a given `trait_name`. It ensures that the function
+/// signatures match between the original implementation and the override, and panics if they do not.
+///
+/// Arguments:
+/// - `trait_name`: The name of the trait whose functions are being overridden.
+/// - `implementation`: A mutable reference to the `syn::ItemImpl` representing the trait implementation.
+/// - `map`: A map containing the overridden functions, keyed by trait name.
+///
+/// The function operates as follows:
+/// - Checks if there are any overrides for the given `trait_name` in the `map`.
+/// - For each overridden function:
+///   - Searches for the corresponding method in the `implementation`.
+///   - Compares the function signatures to ensure they match.
+///     - If they do not match, panics with a detailed error message showing the differences.
+///   - Replaces the method's body and attributes with the overridden ones.
+/// - If any overridden function is not found in the original implementation, panics.
 fn override_functions(
     trait_name: &str,
     implementation: &mut syn::ItemImpl,
     map: &OverridenFnMap,
 ) {
+    // Check if there are any overrides for the given `trait_name` in the `map`.
     if let Some(overrides) = map.get(trait_name) {
-        // we will find which fns we wanna override
+        // Iterate over each overridden function for the trait.
         for (fn_name, (fn_code, attributes, inputs)) in overrides {
+            // Flag to check if the original function is found in the implementation.
             let mut original_fn_found = false;
+
+            // Iterate over the items in the implementation (methods, associated items, etc.).
             for item in implementation.items.iter_mut() {
+                // Check if the item is a method.
                 if let syn::ImplItem::Method(method) = item {
+                    // Compare the method's name with the name of the function to override.
                     if &method.sig.ident.to_string() == fn_name {
+                        // Compare the function signatures to ensure they match.
+
+                        // Get the difference in inputs between the original method and the override.
                         let args_diff = crate::internal::inputs_diff(
                             method.sig.inputs.clone(),
                             inputs.clone(),
                         );
-                        if args_diff.added.len() > 0
-                            || args_diff.removed.len() > 0
+
+                        // If there are differences in the arguments, panic with an error.
+                        if !args_diff.added.is_empty()
+                            || !args_diff.removed.is_empty()
                         {
+                            // Format the original method's arguments as a string.
                             let original_args = method
                                 .sig
                                 .inputs
@@ -1224,6 +1289,8 @@ fn override_functions(
                                 })
                                 .collect::<Vec<_>>()
                                 .join(", ");
+
+                            // Format the override's arguments as a string.
                             let current_args = inputs
                                 .clone()
                                 .into_iter()
@@ -1235,24 +1302,30 @@ fn override_functions(
                                 .collect::<Vec<_>>()
                                 .join(", ");
 
+                            // Panic with a detailed error message showing the differences.
                             panic!(
-                                "Function arguments do not match for fn {} in trait {} \n
-                            original args: {:?} \n
-                            current args: {:?} \n
-                            diff: {:?}",
+                                "Function arguments do not match for fn {} in trait {}\n\
+                                original args: {}\n\
+                                current args: {}\n\
+                                diff: {:?}",
                                 fn_name, trait_name, original_args, current_args, args_diff
-                            )
+                            );
                         }
 
+                        // Replace the method's body with the overridden code.
                         method.block = *fn_code.clone();
+                        // Append the overridden attributes to the method's attributes.
                         method.attrs.append(&mut attributes.to_vec());
 
+                        // Mark that the original function was found and overridden.
                         original_fn_found = true;
                     }
                 }
             }
+
+            // If the original function was not found in the implementation, panic.
             if !original_fn_found {
-                panic!("Could not find fn {} in trait {}", fn_name, trait_name)
+                panic!("Could not find fn {} in trait {}", fn_name, trait_name);
             }
         }
     }

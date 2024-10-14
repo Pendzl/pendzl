@@ -31,40 +31,40 @@ pub fn storage_field_getter_derive(
     storage_field_getter_derive::storage_field_getter_derive(item.into()).into()
 }
 
-////This macro implements the default traits defined in pendzl, while also allowing users
-////to override them with `#[overrider]` attribute. `#[overrider]` is used when
-////you want to change the behavior of the method by your implementation.
-////# Example
-////```skip
-////#[pendzl::implementation(PSP22)]
-////#[ink::contract]
-////pub mod MyInkToken {
-////    use pendzl::traits::StorageFieldGetter;
-////
-////    #[ink(storage)]
-////    #[derive(StorageFieldGetter)]
-////    pub struct MyInkToken {
-////        #[storage_field]
-////        psp22: psp22::Data
-////    }
-////
-////    // this will override a function from PSP22Internal
-////    #[overrider(PSP22Internal)]
-////    fn _update(
-////        &mut self,
-////        from: Option<&AccountId>,
-////        to: Option<&AccountId>,
-////        amount: &Balance,
-////    ) -> Result<(), PSP22Error> {
-////        // here we can change the update fn behavior
-////    }
-////
-////    // this will override a function from PSP22
-////    #[overrider(PSP22)]
-////    fn balance_of(&self, owner: AccountId) -> Balance {
-////         // here we can change the behavior of balance_of
-////    }
-//// ```
+/// This macro implements the default traits defined in pendzl, while also allowing users
+/// to override them with `#[overrider]` attribute. `#[overrider]` is used when
+/// you want to change the behavior of the method by your implementation.
+/// # Example
+/// ```skip
+/// #[pendzl::implementation(PSP22)]
+/// #[ink::contract]
+/// pub mod MyInkToken {
+///     use pendzl::traits::StorageFieldGetter;
+///
+///     #[ink(storage)]
+///     #[derive(StorageFieldGetter)]
+///     pub struct MyInkToken {
+///         #[storage_field]
+///         psp22: psp22::Data
+///     }
+///
+///     // this will override a function from PSP22Internal
+///     #[overrider(PSP22Internal)]
+///     fn _update(
+///         &mut self,
+///         from: Option<&AccountId>,
+///         to: Option<&AccountId>,
+///         amount: &Balance,
+///     ) -> Result<(), PSP22Error> {
+///         // here we can change the update fn behavior
+///     }
+///
+///     // this will override a function from PSP22
+///     #[overrider(PSP22)]
+///     fn balance_of(&self, owner: AccountId) -> Balance {
+///          // here we can change the behavior of balance_of
+///     }
+///  ```
 #[proc_macro_attribute]
 pub fn implementation(
     attrs: TokenStream,
