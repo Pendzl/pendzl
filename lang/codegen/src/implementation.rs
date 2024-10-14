@@ -11,10 +11,21 @@ use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use std::collections::HashMap;
 use syn::{Item, Path};
-
+/// Generates the final TokenStream for the module, injecting default trait implementations and handling overrides.
+///
+/// This function is the core of the code generation process for the `implementation` macro.
+/// It parses the provided attributes and module, injects default implementations for specified traits,
+/// handles overridden functions, manages imports, and assembles the final module code.
+///
+/// # Arguments
+///
+/// - `attrs`: A `TokenStream` containing the attributes passed to the macro, specifying which default implementations to inject.
+/// - `ink_module`: A `TokenStream` representing the ink! module to process.
+///
+/// # Returns
+///
+/// - A `TokenStream` containing the modified module with injected implementations and imports.
 pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
-    let input: TokenStream = ink_module;
-
     // map attribute args to provide default impls
     let to_inject_default_impls_vec = syn::parse2::<AttributeArgs>(attrs)
         .expect("No traits to provide default impls for provided")
@@ -22,7 +33,7 @@ pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
         .map(|method| method.to_token_stream().to_string().replace(' ', ""))
         .collect::<Vec<String>>();
 
-    let mut module = syn::parse2::<syn::ItemMod>(input)
+    let mut module = syn::parse2::<syn::ItemMod>(ink_module)
         .expect("Can't parse contract module");
     let (braces, items) = match module.clone().content {
         Some((brace, items)) => (brace, items),
@@ -271,7 +282,7 @@ fn consume_overriders(
 /// assert_eq!(storage_struct_name, "MyContract");
 /// ```
 ///
-pub fn extract_storage_struct_name(items: &[syn::Item]) -> String {
+fn extract_storage_struct_name(items: &[syn::Item]) -> String {
     let contract_storage_struct = items
         .iter()
         .find(|item| {

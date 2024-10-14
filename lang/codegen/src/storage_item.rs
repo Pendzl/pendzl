@@ -457,7 +457,7 @@ fn generate_enum(
 /// to be a part of contract's storage. Also, inside of struct marked by this macro you can use
 /// `#[lazy]` attribute to mark fields, that should be lazily loaded and wrapped in `::ink::storage::Lazy`.
 /// The macro also generates constant storage keys for every mapping or lazy field and inserts them into
-/// type definition following recomendation from https://use.ink/datastructures/storage-layout
+/// type definition following recomendation from <https://use.ink/datastructures/storage-layout>
 ///
 /// # Example
 /// ```skip

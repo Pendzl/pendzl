@@ -32,7 +32,7 @@ Library allows for reusing implementations of the supported traits for any ink! 
 
 Deriving implementations of provided traits is easy. For example, in case of a PSP22:
 
-add a field of of type PSP22Storage and annotate it with #[storage_field]
+add a field of of type PSP22Storage and annotate it with #\[storage_field\]
 add StorageFieldGetter to storage struct's derive macro (with the above allows for access to the storage item via .data())
 make your contract reuse the PSP22 implementation via #[pendzl::implementation(PSP22)] annotation on top of your contract!
 The first two steps are to satisfy required boundaries by default implementations - contract's storage must implement StorageFieldGetter with appropariate generic T (in this case it's PSP22Storage).
@@ -41,18 +41,13 @@ The first two steps are to satisfy required boundaries by default implementation
 #[pendzl::implementation(PSP22)]
 #[ink::contract]
 pub mod my_psp22 {
-    .
-    .
-    .
+
     #[ink(storage)]
     #[derive(StorageFieldGetter)]
     pub struct Contract {
         #[storage_field]
         psp22: PSP22Data,
     }
-    .
-    .
-    .
 }
 ```
 
@@ -63,9 +58,6 @@ impl  pendzl::contracts::psp22::PSP22Internal for Contract {
             fn _total_supply(&self) -> Balance {
                 pendzl::contracts::psp22::implementation::PSP22InternalDefaultImpl::_total_supply_default_impl(self)
             }
-            .
-            .
-            .
 }
 
 impl pendzl::contracts::psp22::PSP22 for Contract {
@@ -73,9 +65,6 @@ impl pendzl::contracts::psp22::PSP22 for Contract {
         fn total_supply(&self) -> Balance {
             pendzl::contracts::psp22::implementation::PSP22DefaultImpl::total_supply_default_impl(self)
         }
-        .
-        .
-        .
 }
 ```
 
@@ -86,7 +75,11 @@ One can override the default_impl of functions from PSP22 and/or PSP22Internal a
 
     #[overrider(PSP22Internal)]
     fn _update(
-        &mut self,vault::PSP22VaultInternalDefaultImpl,
+        &mut self,
+        from: Option<&AccountId>,
+        to: Option<&AccountId>,
+        amount: &Balance,
+    )-> Result<(), PSP22Error> {
         /// one can use default_impl as in this example or provide completely new implementation.
         pendzl::contracts::psp22::implementation::PSP22InternalDefaultImpl::_update_default_impl(self, from, to, amount)
     }
@@ -139,18 +132,14 @@ $ pnpm build:debug
 $ pnpm test
 ```
 
-We are in the process of migrating all tests from ink-e2e to TS. Some tests remain in the examples folder.
-To run yet not migrated tests :
-```
-$ bash build_examples_and_run_tests.sh
-```
-
 ## FAQ
 
 ### Was it audited?
 
-Contracts in this repository have not yet been audited and may contain several vulnerabilities.
+Contracts & lang folder in this repository have been audited by Kudelski Security. The audit report can be found [here](./audits/Kudelski_Security_Abax_Finance_Pendzl_Secure_Code_Review_2.0.pdf).
+
+Findings that were not resolved have been addressed & explained [here](./audits/AddressingKudelskiSecurityAuditFindings.md).
 
 ## License
 
-pendzl is released under the [MIT License](LICENSE).
+pendzl is released under the [MIT License]("./LICENSE").
