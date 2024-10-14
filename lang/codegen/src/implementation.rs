@@ -3,30 +3,23 @@
 // Copyright (c) 2024 C Forge. All Rights Reserved.
 // SPDX-License-Identifier: MIT
 
-use crate::{implementations::*, internal, internal::*};
+use crate::{
+    implementations::*,
+    internal::{is_attr, AttributeArgs},
+};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use std::collections::HashMap;
 use syn::{Item, Path};
 
 pub fn generate(attrs: TokenStream, ink_module: TokenStream) -> TokenStream {
-    if internal::skip() {
-        return quote! {};
-    }
     let input: TokenStream = ink_module;
 
-    // map attribute args to default contract names
+    // map attribute args to provide default impls
     let args = syn::parse2::<AttributeArgs>(attrs)
-        .expect("No default contracts to implement provided")
+        .expect("No traits to provide default impls for provided")
         .iter()
-        .map(|arg| match arg {
-            NestedMeta::Path(method) => {
-                method.to_token_stream().to_string().replace(' ', "")
-            }
-            _ => panic!(
-                "Expected names of pendzl traits to implement in the contract!"
-            ),
-        })
+        .map(|method| method.to_token_stream().to_string().replace(' ', ""))
         .collect::<Vec<String>>();
 
     let mut module = syn::parse2::<syn::ItemMod>(input)
