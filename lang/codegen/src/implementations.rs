@@ -7,6 +7,9 @@ use quote::{format_ident, quote};
 use std::collections::HashMap;
 use syn::{punctuated::Punctuated, token::Comma, Block, FnArg};
 
+const DEFAULT_PARSE_ERR_MSG: &str = "Should parse";
+const DEFAULT_PARSE_IMPORT_ERR_MSG: &str = "Should parse import";
+
 pub type OverridenFnMap = HashMap<
     String,
     Vec<(
@@ -60,7 +63,7 @@ impl<'a> ImplArgs<'a> {
         let vec_import = syn::parse2::<syn::ItemUse>(quote!(
             use ink::prelude::vec::Vec;
         ))
-        .expect("Should parse");
+        .expect(DEFAULT_PARSE_ERR_MSG);
         self.imports.insert("vec", vec_import);
     }
 }
@@ -81,7 +84,7 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::PSP22InternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl  pendzl::contracts::psp22::PSP22Internal for #storage_struct_name {
@@ -160,12 +163,12 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let psp22_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::PSP22DefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut psp22 = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::PSP22 for #storage_struct_name {
@@ -216,17 +219,17 @@ pub(crate) fn impl_psp22(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::PSP22Data;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("PSP22", import);
     impl_args.imports.insert("PSP22Data", import_data);
@@ -246,7 +249,7 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
     let burnable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::burnable::PSP22BurnableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut burnable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::burnable::PSP22Burnable for #storage_struct_name {
@@ -256,12 +259,12 @@ pub(crate) fn impl_psp22_burnable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::burnable::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("PSP22Burnable", import);
     impl_args.vec_import();
@@ -277,7 +280,7 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
     let mintable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::mintable::PSP22MintableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut mintable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::mintable::PSP22Mintable for #storage_struct_name {
@@ -287,12 +290,12 @@ pub(crate) fn impl_psp22_mintable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::mintable::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("PSP22Mintable", import);
     impl_args.vec_import();
@@ -308,7 +311,7 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
     let metadata_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::metadata::PSP22MetadataDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut metadata = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::metadata::PSP22Metadata for #storage_struct_name {
@@ -328,16 +331,16 @@ pub(crate) fn impl_psp22_metadata(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::metadata::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::metadata::PSP22MetadataData;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("PSP22Metadata", import);
     impl_args.imports.insert("PSP22MetadataData", import_data);
@@ -354,7 +357,7 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::vault::PSP22VaultInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::vault::PSP22VaultInternal for #storage_struct_name {
@@ -437,12 +440,12 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let psp22_vault_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::vault::PSP22VaultDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut psp22_vault = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp22::vault::PSP22Vault for #storage_struct_name {
@@ -527,22 +530,22 @@ pub(crate) fn impl_psp22_vault(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::vault::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::vault::PSP22VaultData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     let import_rounding = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp22::vault::Rounding;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("PSP22Vault", import);
     impl_args.imports.insert("PSP22VaultData", import_data);
@@ -567,7 +570,7 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::PSP34InternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::PSP34Internal for #storage_struct_name {
@@ -615,12 +618,12 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
 
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let psp34_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::PSP34DefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut psp34 = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::PSP34 for #storage_struct_name {
@@ -660,17 +663,17 @@ pub(crate) fn impl_psp34(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::PSP34Data;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("PSP34", import);
     impl_args.imports.insert("PSP34Data", import_data);
@@ -691,7 +694,7 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
     let burnable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::burnable::PSP34BurnableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut burnable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::burnable::PSP34Burnable for #storage_struct_name {
@@ -701,12 +704,12 @@ pub(crate) fn impl_psp34_burnable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::burnable::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("PSP34Burnable", import);
     impl_args.vec_import();
@@ -722,7 +725,7 @@ pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
     let mintable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::mintable::PSP34MintableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut mintable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::mintable::PSP34Mintable for #storage_struct_name {
@@ -732,12 +735,12 @@ pub(crate) fn impl_psp34_mintable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::mintable::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("PSP34Mintable", import);
     impl_args.vec_import();
@@ -753,7 +756,7 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::metadata::PSP34MetadataInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::metadata::PSP34MetadataInternal for #storage_struct_name {
@@ -763,12 +766,12 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let metadata_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::metadata::PSP34MetadataDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut metadata = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::psp34::metadata::PSP34Metadata for #storage_struct_name {
@@ -778,17 +781,17 @@ pub(crate) fn impl_psp34_metadata(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::metadata::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::psp34::metadata::PSP34MetadataData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("PSP34Metadata", import);
     impl_args.imports.insert("PSP34MetadataData", import_data);
@@ -809,7 +812,7 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::ownable::OwnableInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::ownable::OwnableInternal for #storage_struct_name {
@@ -825,12 +828,12 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let ownable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::ownable::OwnableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut ownable = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::ownable::Ownable for #storage_struct_name {
@@ -850,17 +853,17 @@ pub(crate) fn impl_ownable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::ownable::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::ownable::OwnableData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("Ownable", import);
     impl_args.imports.insert("OwnableData", import_data);
@@ -879,7 +882,7 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::access_control::AccessControlInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::access_control::AccessControlInternal for #storage_struct_name {
@@ -913,12 +916,12 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
 
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let access_control_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::access_control::AccessControlDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut access_control = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::access_control::AccessControl for #storage_struct_name {
@@ -953,17 +956,17 @@ pub(crate) fn impl_access_control(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::access_control::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::access_control::AccessControlData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     impl_args.imports.insert("AccessControl", import);
     impl_args.imports.insert("AccessControlData", import_data);
@@ -984,7 +987,7 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::pausable::PausableInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::pausable::PausableInternal for #storage_struct_name {
@@ -1009,12 +1012,12 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let pausable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl  pendzl::contracts::pausable::PausableDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut pausable = syn::parse2::<syn::ItemImpl>(quote!(
         impl  pendzl::contracts::pausable::Pausable for #storage_struct_name {
@@ -1024,17 +1027,17 @@ pub(crate) fn impl_pausable(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::pausable::*;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::pausable::PausableData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
     impl_args.imports.insert("Pausable", import);
     impl_args.imports.insert("PausableData", import_data);
 
@@ -1051,7 +1054,7 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::general_vest::GeneralVestInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::general_vest::GeneralVestInternal for #storage_struct_name {
@@ -1097,12 +1100,12 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let vesting_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl  pendzl::contracts::general_vest::GeneralVestDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut general_vest = syn::parse2::<syn::ItemImpl>(quote!(
         impl  pendzl::contracts::general_vest::GeneralVest for #storage_struct_name {
@@ -1142,17 +1145,17 @@ pub(crate) fn impl_vesting(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::general_vest::*;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
 
     let import_data = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::general_vest::GeneralVestData;
     ))
-    .expect("Should parse import");
+    .expect(DEFAULT_PARSE_IMPORT_ERR_MSG);
     impl_args.imports.insert("GeneralVest", import);
     impl_args.imports.insert("GeneralVestData", import_data);
 
@@ -1172,7 +1175,7 @@ pub(crate) fn impl_set_code_hash(impl_args: &mut ImplArgs) {
     let internal_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::set_code_hash::SetCodeHashInternalDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut internal = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::set_code_hash::SetCodeHashInternal for #storage_struct_name {
@@ -1181,12 +1184,12 @@ pub(crate) fn impl_set_code_hash(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let upgradeable_default_impl = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::set_code_hash::SetCodeHashDefaultImpl for #storage_struct_name {}
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let mut set_code_hash = syn::parse2::<syn::ItemImpl>(quote!(
         impl pendzl::contracts::set_code_hash::SetCodeHash for #storage_struct_name {
@@ -1196,12 +1199,12 @@ pub(crate) fn impl_set_code_hash(impl_args: &mut ImplArgs) {
             }
         }
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     let import = syn::parse2::<syn::ItemUse>(quote!(
         pub use pendzl::contracts::set_code_hash::*;
     ))
-    .expect("Should parse");
+    .expect(DEFAULT_PARSE_ERR_MSG);
 
     impl_args.imports.insert("SetCodeHash", import);
 
