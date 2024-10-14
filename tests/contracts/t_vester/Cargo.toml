@@ -36,7 +36,7 @@ std = [
     "pendzl/std",
 ]
 ink-as-dependency = []
-e2e-tests = []
+
 
 [profile.dev]
 codegen-units = 16

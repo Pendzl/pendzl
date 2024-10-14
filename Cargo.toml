@@ -39,7 +39,6 @@ crate-type = ["rlib"]
 [dev-dependencies]
 ink_env = "5.0.0"
 trybuild = "1.0.80"
-ink_e2e = "5.0.0"
 
 [features]
 default = ["std"]
