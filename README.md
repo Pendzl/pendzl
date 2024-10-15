@@ -136,7 +136,7 @@ $ pnpm test
 
 ### Was it audited?
 
-Contracts & lang folder in this repository have been audited by Kudelski Security. The audit report can be found [here](./audits/Kudelski_Security_Abax_Finance_Pendzl_Secure_Code_Review_2.0.pdf).
+Contracts & lang folder in this repository have been audited by Kudelski Security. The audit report can be found [here](https://pendzl.github.io/pendzl/audits/Kudelski_Security_Abax_Finance_Pendzl_Secure_Code_Review_2.0.pdf).
 
 Findings that were not resolved have been addressed & explained [here](./audits/AddressingKudelskiSecurityAuditFindings.md).
 
