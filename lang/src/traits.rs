@@ -47,16 +47,10 @@ pub trait StorageFieldGetter<Data>
 where
     Self: Flush + StorageAsRef + StorageAsMut + DefaultEnv,
 {
-    #[deprecated(
-        since = "2.1.0",
-        note = "please use `StorageAsRef::data` instead"
-    )]
+    #[deprecated(note = "please use `StorageAsRef::data` instead")]
     fn get(&self) -> &Data;
 
-    #[deprecated(
-        since = "2.1.0",
-        note = "please use `StorageAsMut::data` instead"
-    )]
+    #[deprecated(note = "please use `StorageAsMut::data` instead")]
     fn get_mut(&mut self) -> &mut Data;
 }
 
@@ -112,12 +106,43 @@ pub trait Flush: Storable + Sized + StorageKey {
 
 impl<T: Storable + Sized + StorageKey> Flush for T {}
 
-/// The value 0 is a valid seed.
+/// Define a valid seed.
 const XXH32_SEED: u32 = 0;
 
+/// Provides compile-time hashing functionality using the `xxh32` algorithm.
+///
+/// The `ConstHasher` struct offers a `const` function `hash` that computes the `xxh32` hash
+/// of a given string slice. This allows for hashing at compile time, which can be useful
+/// for generating unique identifiers or keys that are needed during compilation, such as
+/// storage keys in smart contracts.
+///
 pub struct ConstHasher;
 
 impl ConstHasher {
+    /// Computes the `xxh32` hash of the provided string slice at compile time.
+    ///
+    /// This function takes a string slice and returns a `u32` representing the hash value.
+    /// It uses the `xxh32` hashing algorithm with a seed value of `0`.
+    ///
+    /// # Arguments
+    ///
+    /// - `str`: A string slice to be hashed.
+    ///
+    /// # Returns
+    ///
+    /// - `u32`: The `xxh32` hash of the input string.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    ///
+    /// const HASH_VALUE: u32 = ConstHasher::hash("example_string");
+    /// assert_eq!(HASH_VALUE, 0x12345678); // Replace with the actual hash value
+    /// ```
+    ///
+    /// # Notes
+    ///
+    /// - The function is `const`, meaning it can be evaluated at compile time.
     pub const fn hash(str: &str) -> u32 {
         xxh32(str.as_bytes(), XXH32_SEED)
     }

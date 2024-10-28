@@ -5,7 +5,7 @@ exclude = ["examples", "tests/contracts"]
 
 [package]
 name = "pendzl"
-version = "1.0.1-v1calls"
+version = "1.0.2"
 authors = [
     "Konrad Wierzbik <konrad.wierzbik@gmail.com",
     "Łukasz Łakomy <wookie.xp.07@gmail.com>",
@@ -28,8 +28,8 @@ scale-info = { version = "2.11", default-features = false, features = [
     "derive",
 ] }
 
-pendzl_contracts = { version = "=1.0.1-v1calls", path = "contracts", default-features = false }
-pendzl_lang = { version = "=1.0.1-v1calls", path = "lang", default-features = false }
+pendzl_contracts = { version = "~1.0.2", path = "contracts", default-features = false }
+pendzl_lang = { version = "~1.0.2", path = "lang", default-features = false }
 
 [lib]
 name = "pendzl"
@@ -39,7 +39,6 @@ crate-type = ["rlib"]
 [dev-dependencies]
 ink_env = "5.0.0"
 trybuild = "1.0.80"
-ink_e2e = "5.0.0"
 
 [features]
 default = ["std"]

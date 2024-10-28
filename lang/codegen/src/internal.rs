@@ -9,18 +9,12 @@ use quote::ToTokens;
 use std::collections::HashSet;
 use syn::{
     ext::IdentExt,
-    parenthesized,
     parse::{Parse, ParseStream},
     punctuated::Punctuated,
     token::Comma,
     FnArg,
 };
 
-pub(crate) struct MetaList {
-    pub _path: syn::Path,
-    pub _paren_token: syn::token::Paren,
-    pub _nested: syn::punctuated::Punctuated<syn::Expr, syn::Token![,]>,
-}
 #[derive(Debug)]
 pub struct InputsDiff {
     pub added: HashSet<String>,
@@ -86,74 +80,7 @@ pub fn format_arg_string(arg: &str) -> String {
     formatted
 }
 
-// Like Path::parse_mod_style but accepts keywords in the path.
-fn parse_meta_path(input: ParseStream) -> syn::Result<syn::Path> {
-    Ok(syn::Path {
-        leading_colon: input.parse()?,
-        segments: {
-            let mut segments = syn::punctuated::Punctuated::new();
-            while input.peek(syn::Ident::peek_any) {
-                let ident = syn::Ident::parse_any(input)?;
-                segments.push_value(syn::PathSegment::from(ident));
-                if !input.peek(syn::Token![::]) {
-                    break;
-                }
-                let punct = input.parse()?;
-                segments.push_punct(punct);
-            }
-            if segments.is_empty() {
-                return Err(input.error("expected path"));
-            } else if segments.trailing_punct() {
-                return Err(input.error("expected path segment"));
-            }
-            segments
-        },
-    })
-}
-
-fn parse_meta_list_after_path(
-    path: syn::Path,
-    input: ParseStream,
-) -> syn::Result<MetaList> {
-    let content;
-    Ok(MetaList {
-        _path: path,
-        _paren_token: parenthesized!(content in input),
-        _nested: content.parse_terminated(syn::Expr::parse)?,
-    })
-}
-
-fn parse_meta_after_path(
-    path: syn::Path,
-    input: ParseStream,
-) -> syn::Result<NestedMeta> {
-    if input.peek(syn::token::Paren) {
-        parse_meta_list_after_path(path, input).map(NestedMeta::List)
-    } else {
-        Ok(NestedMeta::Path(path))
-    }
-}
-
-impl Parse for MetaList {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        let path = input.call(parse_meta_path)?;
-        parse_meta_list_after_path(path, input)
-    }
-}
-
-pub(crate) enum NestedMeta {
-    Path(syn::Path),
-    List(MetaList),
-}
-
-impl Parse for NestedMeta {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        let path = input.call(parse_meta_path)?;
-        parse_meta_after_path(path, input)
-    }
-}
-
-pub(crate) struct AttributeArgs(Vec<NestedMeta>);
+pub(crate) struct AttributeArgs(Vec<syn::Path>);
 
 impl Parse for AttributeArgs {
     fn parse(input: ParseStream) -> syn::Result<Self> {
@@ -170,7 +97,7 @@ impl Parse for AttributeArgs {
 }
 
 impl std::ops::Deref for AttributeArgs {
-    type Target = Vec<NestedMeta>;
+    type Target = Vec<syn::Path>;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -178,16 +105,8 @@ impl std::ops::Deref for AttributeArgs {
 }
 
 impl std::ops::DerefMut for AttributeArgs {
-    fn deref_mut(&mut self) -> &mut Vec<NestedMeta> {
+    fn deref_mut(&mut self) -> &mut Vec<syn::Path> {
         &mut self.0
-    }
-}
-
-pub(crate) struct Attributes(Vec<syn::Attribute>);
-
-impl Parse for Attributes {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        Ok(Self(syn::Attribute::parse_outer(input)?))
     }
 }
 
@@ -201,11 +120,4 @@ pub(crate) fn is_attr(attrs: &[syn::Attribute], ident: &str) -> bool {
             .ident
             == ident
     })
-}
-
-pub(crate) const INK_PREFIX: &str = "ink=";
-
-#[inline]
-pub(crate) fn skip() -> bool {
-    !std::env::args().any(|arg| arg.contains(INK_PREFIX))
 }
